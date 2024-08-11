@@ -8,17 +8,32 @@ documentation: https://github.com/FreeFEOS/FreeFEOS/blob/master/README.md
 
 environment:
   sdk: ^3.5.0
-  flutter: '>=3.3.0'
+  flutter: ">=3.3.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  flutter_rust_bridge: 2.2.0
-  plugin_platform_interface: ^2.0.2
+  flutter_web_plugins:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  flutter_rust_bridge: ^2.2.0
+  flutter_plugin_android_lifecycle: ^2.0.21
+  plugin_platform_interface: ^2.1.8
+  provider: ^6.1.2
+  vm_service: ^14.2.1
+  shared_preferences: ^2.3.1
+  sensors_plus: ^6.0.0
+  package_info_plus: ^8.0.1
+  url_launcher: ^6.3.0
+  flutter_adaptive_scaffold: ^0.1.11+1
+  animations: ^2.0.11
+  logging: ^1.2.0
+  stack_trace: ^1.11.1
 
 dev_dependencies:
-  ffi: ^2.1.0
-  ffigen: ^11.0.0
+  ffi: ^2.1.2
+  ffigen: ^13.0.0
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
@@ -26,15 +41,43 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
+  uses-material-design: true
   plugin:
     platforms:
       android:
+        # package: io.libecosed.flutter_ecosed
+        # dartPluginClass: EcosedPlatformRegister
+        # pluginClass: FlutterEcosedPlugin
         ffiPlugin: true
       ios:
+        # dartPluginClass: EcosedPlatformRegister
+        # pluginClass: FlutterEcosedPlugin
         ffiPlugin: true
       linux:
+        # dartPluginClass: EcosedPlatformRegister
         ffiPlugin: true
       macos:
+        # dartPluginClass: EcosedPlatformRegister
         ffiPlugin: true
       windows:
+        # dartPluginClass: EcosedPlatformRegister
         ffiPlugin: true
+      # web:
+      #   pluginClass: EcosedWebRegister
+      #   fileName: flutter_ecosed_web.dart
+      #   ffiPlugin: true
+  assets:
+    - AUTHORS
+    - LICENSE
+    - README.md
+    - CHANGELOG.md
+    - screenshot.png
+
+screenshots:
+  - description: "Screenshots 0"
+    path: screenshot.png
+
+topics:
+  - framework
+  - flutter
+  - libraryos
