@@ -1,9 +1,9 @@
 import Flutter
 
-public class FreeFEOSPlatform: NSObject, FlutterPlugin {
+public class FreeFEOSEmbedder: NSObject, FlutterPlugin {
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "freefeos", binaryMessenger: registrar.messenger())
-        let instance = FreeFEOSPlatform()
+        let instance = FreeFEOSEmbedder()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
 

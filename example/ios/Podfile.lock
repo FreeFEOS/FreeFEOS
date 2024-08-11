@@ -1,0 +1,53 @@
+PODS:
+  - Flutter (1.0.0)
+  - freefeos (0.0.1):
+    - Flutter
+  - integration_test (0.0.1):
+    - Flutter
+  - package_info_plus (0.4.5):
+    - Flutter
+  - sensors_plus (0.0.1):
+    - Flutter
+  - shared_preferences_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - url_launcher_ios (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - freefeos (from `.symlinks/plugins/freefeos/ios`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
+  - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
+  - sensors_plus (from `.symlinks/plugins/sensors_plus/ios`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  freefeos:
+    :path: ".symlinks/plugins/freefeos/ios"
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
+  package_info_plus:
+    :path: ".symlinks/plugins/package_info_plus/ios"
+  sensors_plus:
+    :path: ".symlinks/plugins/sensors_plus/ios"
+  shared_preferences_foundation:
+    :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  freefeos: 789631bd3c2746d6963d2242dccbd5f9d3177020
+  integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
+  package_info_plus: 58f0028419748fad15bf008b270aaa8e54380b1c
+  sensors_plus: 4b7c4bd9c9be2efbd575649368fe77ef09b429ad
+  shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
+  url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
+
+PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
+
+COCOAPODS: 1.15.2
