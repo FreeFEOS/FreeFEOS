@@ -1,0 +1,40 @@
+name: freefeos
+description: "FreeFEOS"
+version: 0.0.0-publishtest.0
+homepage: https://github.com/FreeFEOS/FreeFEOS
+repository: https://github.com/FreeFEOS/FreeFEOS
+issue_tracker: https://github.com/FreeFEOS/FreeFEOS/issues
+documentation: https://github.com/FreeFEOS/FreeFEOS/blob/master/README.md
+
+environment:
+  sdk: ^3.5.0
+  flutter: '>=3.3.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_rust_bridge: 2.2.0
+  plugin_platform_interface: ^2.0.2
+
+dev_dependencies:
+  ffi: ^2.1.0
+  ffigen: ^11.0.0
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  integration_test:
+    sdk: flutter
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        ffiPlugin: true
+      ios:
+        ffiPlugin: true
+      linux:
+        ffiPlugin: true
+      macos:
+        ffiPlugin: true
+      windows:
+        ffiPlugin: true
