@@ -109,7 +109,7 @@ final class SystemRuntime extends SystemBase {
   /// 管理器布局
   @override
   Widget buildLayout(BuildContext context) {
-    return const EcosedManager();
+    return const SystemManager();
   }
 
   /// 构建调试菜单

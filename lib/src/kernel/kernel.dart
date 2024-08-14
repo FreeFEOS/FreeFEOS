@@ -1,5 +1,5 @@
 import 'kernel_module.dart';
 
-final class EcosedLibKernel extends KernelModule {
-  EcosedLibKernel();
+final class FreeFEOSKernel extends KernelModule {
+  FreeFEOSKernel();
 }

@@ -44,8 +44,8 @@ abstract base class EnginePlugin extends ContextWrapper {
 
   /// 执行插件方法
   Future<void> onPluginMethodCall(
-    EcosedMethodCall call,
-    EcosedResult result,
+    EngineMethodCall call,
+    EngineResult result,
   );
 
   /// 执行插件方法

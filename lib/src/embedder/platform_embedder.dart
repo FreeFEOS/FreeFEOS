@@ -170,8 +170,8 @@ final class ServiceInvoke extends EnginePlugin {
 
   @override
   Future<void> onPluginMethodCall(
-    EcosedMethodCall call,
-    EcosedResult result,
+    EngineMethodCall call,
+    EngineResult result,
   ) async {}
 
   @override
@@ -190,8 +190,8 @@ final class ServiceDelegate extends EnginePlugin {
 
   @override
   Future<void> onPluginMethodCall(
-    EcosedMethodCall call,
-    EcosedResult result,
+    EngineMethodCall call,
+    EngineResult result,
   ) async {}
 
   @override

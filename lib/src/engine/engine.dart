@@ -51,8 +51,8 @@ final class SystemEngine extends EnginePlugin
   /// 调用插件方法
   @override
   Future<void> onPluginMethodCall(
-    EcosedMethodCall call,
-    EcosedResult result,
+    EngineMethodCall call,
+    EngineResult result,
   ) async {
     switch (call.method) {
       case 'get_engine_plugins':

@@ -38,8 +38,8 @@ final class EngineEmbedder extends EnginePlugin {
 
   @override
   Future<void> onPluginMethodCall(
-    EcosedMethodCall call,
-    EcosedResult result,
+    EngineMethodCall call,
+    EngineResult result,
   ) async {
     switch (call.method) {
       case 'getPlugins':

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import 'result.dart';
 
-final class ResultImport implements EcosedResult {
+final class ResultImport implements EngineResult {
   const ResultImport({
     required this.callback,
   });

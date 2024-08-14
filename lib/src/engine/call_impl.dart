@@ -1,6 +1,6 @@
 import 'method_call.dart';
 
-final class CallImport implements EcosedMethodCall {
+final class CallImport implements EngineMethodCall {
   const CallImport({
     required this.callMethod,
     required this.callArguments,

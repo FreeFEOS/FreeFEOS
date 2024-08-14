@@ -1,4 +1,4 @@
-abstract interface class EcosedResult {
+abstract interface class EngineResult {
   /// 成功
   void success(dynamic result);
 

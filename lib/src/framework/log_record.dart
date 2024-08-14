@@ -107,9 +107,9 @@ class LoggerRecord {
   static Frame? _getLogFrame() {
     try {
       const loggingLibrary = "package:logging/src/logger.dart";
-      const ecosedLibrary = "package:flutter_ecosed/flutter_ecosed.dart";
+      const freefeosLibrary = "package:freefeos/freefeos.dart";
       final currentFrames = Trace.current().frames.toList();
-      currentFrames.removeWhere((element) => element.library == ecosedLibrary);
+      currentFrames.removeWhere((element) => element.library == freefeosLibrary);
       // Capture the last frame from the logging library
       final lastLoggerIndex = currentFrames.lastIndexWhere(
         (element) => element.library == loggingLibrary,

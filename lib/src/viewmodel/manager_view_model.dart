@@ -199,7 +199,7 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
   @override
   String getPluginAction(PluginDetails details) {
     return _isAllowPush(details)
-        ? details.channel != 'ecosed_runtime'
+        ? details.channel != 'system_runtime'
             ? '打开'
             : '关于'
         : '无界面';
@@ -209,7 +209,7 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
   @override
   String getPluginTooltip(PluginDetails details) {
     return _isAllowPush(details)
-        ? details.channel != 'ecosed_runtime'
+        ? details.channel != 'system_runtime'
             ? '打开插件的界面'
             : '关于本框架'
         : '此插件没有界面';
@@ -230,7 +230,7 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
                 context: context,
                 applicationName: appName,
                 applicationVersion: appVersion,
-                applicationLegalese: 'Powered by FlutterEcosed',
+                applicationLegalese: 'Powered by FreeFEOS',
                 useRootNavigator: true,
               );
             }

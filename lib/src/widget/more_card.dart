@@ -19,12 +19,12 @@ class MoreCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '了解 flutter_ecosed',
+                    '了解 FreeFEOS',
                     textAlign: TextAlign.start,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   Text(
-                    '了解如何使用 flutter_ecosed 进行开发。',
+                    '了解如何使用 FreeFEOS 进行开发。',
                     textAlign: TextAlign.start,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),

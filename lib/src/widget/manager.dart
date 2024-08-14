@@ -9,14 +9,14 @@ import 'log_page.dart';
 import 'plugin_page.dart';
 import 'settings_page.dart';
 
-class EcosedManager extends StatefulWidget {
-  const EcosedManager({super.key});
+class SystemManager extends StatefulWidget {
+  const SystemManager({super.key});
 
   @override
-  State<EcosedManager> createState() => _EcosedManagerState();
+  State<SystemManager> createState() => _SystemManagerState();
 }
 
-class _EcosedManagerState extends State<EcosedManager> {
+class _SystemManagerState extends State<SystemManager> {
   /// 滚动控制器
   final ScrollController _scrollController = ScrollController();
 

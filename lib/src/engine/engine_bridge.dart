@@ -28,8 +28,8 @@ final class EngineBridge extends EnginePlugin
 
   @override
   Future<void> onPluginMethodCall(
-    EcosedMethodCall call,
-    EcosedResult result,
+    EngineMethodCall call,
+    EngineResult result,
   ) async {
     return await null;
   }
