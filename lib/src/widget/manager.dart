@@ -62,9 +62,9 @@ class _EcosedManagerState extends State<EcosedManager> {
           enabled: true,
         ),
       ],
-      smallBreakpoint: const WidthPlatformBreakpoint(end: 600),
-      mediumBreakpoint: const WidthPlatformBreakpoint(begin: 600, end: 840),
-      largeBreakpoint: const WidthPlatformBreakpoint(begin: 840),
+      smallBreakpoint: const Breakpoint(endWidth: 600),
+      mediumBreakpoint: const Breakpoint(beginWidth: 600, endWidth: 840),
+      largeBreakpoint: const Breakpoint(beginWidth: 840),
       selectedIndex: _currentIndex,
       body: (context) => PageTransitionSwitcher(
         duration: const Duration(
