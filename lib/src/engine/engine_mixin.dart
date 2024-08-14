@@ -3,8 +3,8 @@ import 'engine.dart';
 import 'plugin_engine.dart';
 import 'proxy.dart';
 
-base mixin EngineMixin on EcosedEnginePlugin implements EngineProxy {
-  final EcosedEngine engineScope = EcosedEngine()();
+base mixin EngineMixin on EnginePlugin implements EngineProxy {
+  final SystemEngine engineScope = SystemEngine()();
 
   @override
   Future<void> onCreateEngine(Context context) async {

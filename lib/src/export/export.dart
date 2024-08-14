@@ -1,14 +1,14 @@
 import 'package:flutter/widgets.dart';
 
 import '../entry/ecosed_entry.dart';
-import '../interface/ecosed_interface.dart';
+import '../interface/system_interface.dart';
 import '../plugin/plugin_runtime.dart';
 
 /// 注册 flutter_ecosed 插件
 ///
 /// 此方法用于通过注册器向Flutter框架注册此插件.
 /// 插件注册由Flutter框架接管, 请勿手动注册.
-void registerFreeFEOS() => EcosedInterface.instance = EcosedEntry();
+void registerFreeFEOS() => FreeFEOSInterface.instance = EcosedEntry();
 
 /// 实现插件的接口
 ///
@@ -67,7 +67,7 @@ void registerFreeFEOS() => EcosedInterface.instance = EcosedEntry();
 ///   }
 /// }
 /// ```
-abstract interface class FreeFEOSPlugin extends EcosedRuntimePlugin {}
+abstract interface class FreeFEOSPlugin extends RuntimePlugin {}
 
 /// 启动应用
 ///
@@ -91,15 +91,15 @@ Future<void> runFreeFEOSApp({
   required List<FreeFEOSPlugin> Function() plugins,
   required Widget Function(
     BuildContext context,
-    Future<void> Function() openDebugMenu,
+    Future<void> Function() open,
     Future<dynamic> Function(
       String channel,
       String method, [
       dynamic arguments,
-    ]) execPluginMethod,
+    ]) exec,
   ) app,
 }) async {
-  return await EcosedInterface.instance.runEcosedApp(
+  return await FreeFEOSInterface.instance.runFreeFEOSApp(
     runner,
     plugins,
     app,

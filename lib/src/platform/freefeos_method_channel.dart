@@ -1,10 +1,10 @@
 import 'package:flutter/services.dart';
 
-import '../interface/ecosed_platform.dart';
+import '../interface/platform_interface.dart';
 
-final class MethodChannelEcosed extends EcosedPlatform {
+final class MethodChannelFreeFEOS extends FreeFEOSPlatform {
   /// 方法通道
-  final _methodChannel = const MethodChannel('flutter_ecosed');
+  final _methodChannel = const MethodChannel('freefeos');
 
   /// 方法通道调用参数
   final Map<String, String> _arguments = const {'channel': 'ecosed_engine'};

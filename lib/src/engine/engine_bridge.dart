@@ -4,7 +4,7 @@ import 'engine_mixin.dart';
 import 'proxy.dart';
 import 'plugin_engine.dart';
 
-final class EngineBridge extends EcosedEnginePlugin
+final class EngineBridge extends EnginePlugin
     with EngineMixin
     implements EngineProxy {
   /// 插件入口
@@ -27,7 +27,7 @@ final class EngineBridge extends EcosedEnginePlugin
   String get title => 'EngineBridge';
 
   @override
-  Future<void> onEcosedMethodCall(
+  Future<void> onPluginMethodCall(
     EcosedMethodCall call,
     EcosedResult result,
   ) async {

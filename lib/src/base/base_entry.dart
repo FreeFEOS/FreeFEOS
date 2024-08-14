@@ -1,21 +1,21 @@
-import '../interface/ecosed_interface.dart';
+import '../interface/system_interface.dart';
 import '../type/runner.dart';
 import 'base.dart';
 
-base mixin BaseEntry on EcosedInterface {
+base mixin BaseEntry on FreeFEOSInterface {
   /// 入口
   @override
-  Future<void> runEcosedApp(
+  Future<void> runFreeFEOSApp(
     AppRunner runner,
     PluginList plugins,
     AppBuilder app,
     Object? error,
   ) async {
-    final EcosedInterface interface = EcosedBase()();
+    final FreeFEOSInterface interface = SystemBase()();
     try {
-      return await interface.runEcosedApp(runner, plugins, app, error);
+      return await interface.runFreeFEOSApp(runner, plugins, app, error);
     } catch (exception) {
-      return await super.runEcosedApp(runner, plugins, app, exception);
+      return await super.runFreeFEOSApp(runner, plugins, app, exception);
     }
   }
 }

@@ -4,5 +4,5 @@ import 'platform_embedder.dart';
 
 base mixin EmbedderMixin implements BaseWrapper {
   @override
-  EcosedRuntimePlugin get embedder => PlatformEmbedder();
+  RuntimePlugin get embedder => PlatformEmbedder();
 }

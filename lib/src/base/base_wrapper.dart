@@ -2,22 +2,22 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../interface/ecosed_interface.dart';
+import '../interface/system_interface.dart';
 import '../plugin/plugin_runtime.dart';
 
 /// 绑定层包装器
 abstract interface class BaseWrapper {
   /// 运行时入口
-  EcosedInterface call();
+  FreeFEOSInterface call();
 
   /// 绑定通信层插件
-  EcosedRuntimePlugin get base;
+  RuntimePlugin get base;
 
   /// 平台嵌入层插件
-  EcosedRuntimePlugin get embedder;
+  RuntimePlugin get embedder;
 
   /// 初始化
-  Future<void> init(List<EcosedRuntimePlugin> plugins);
+  Future<void> init(List<RuntimePlugin> plugins);
 
   /// 获取管理器
   Widget buildManager(BuildContext context);

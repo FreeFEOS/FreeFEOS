@@ -3,15 +3,15 @@ import 'dart:io';
 import 'package:flutter/widgets.dart';
 
 import '../framework/log.dart';
-import '../interface/ecosed_interface.dart';
+import '../interface/system_interface.dart';
 import '../type/runner.dart';
 import '../values/tag.dart';
 
 /// 无法正确加载平台时的实现
-final class DefaultEntry extends EcosedInterface {
+final class DefaultEntry extends FreeFEOSInterface {
   /// Entry
   @override
-  Future<void> runEcosedApp(
+  Future<void> runFreeFEOSApp(
     AppRunner runner,
     PluginList plugins,
     AppBuilder app,

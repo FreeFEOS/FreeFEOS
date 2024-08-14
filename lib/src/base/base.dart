@@ -15,7 +15,7 @@ import '../framework/context_wrapper.dart';
 import '../framework/log.dart';
 import '../kernel/kernel_bridge.dart';
 import '../kernel/kernel_module.dart';
-import '../interface/ecosed_interface.dart';
+import '../interface/system_interface.dart';
 import '../runtime/runtime_mixin.dart';
 import '../values/drawable.dart';
 import '../server/server.dart';
@@ -24,7 +24,7 @@ import '../widget/banner.dart';
 import 'base_mixin.dart';
 import 'base_wrapper.dart';
 
-base class EcosedBase extends ContextWrapper
+base class SystemBase extends ContextWrapper
     with
         RuntimeMixin,
         BaseMixin,
@@ -34,12 +34,12 @@ base class EcosedBase extends ContextWrapper
         EngineBridgeMixin,
         ChangeNotifier
     implements
-        EcosedRuntimePlugin,
-        EcosedInterface,
-        EcosedKernelModule,
+        RuntimePlugin,
+        FreeFEOSInterface,
+        KernelModule,
         BaseWrapper {
   /// 构造函数
-  EcosedBase() : super(attach: true);
+  SystemBase() : super(attach: true);
 
   /// 插件作者
   @override
@@ -47,7 +47,7 @@ base class EcosedBase extends ContextWrapper
 
   /// 插件通道
   @override
-  String get pluginChannel => 'ecosed_base';
+  String get pluginChannel => 'system_base';
 
   /// 插件描述
   @override
@@ -55,7 +55,7 @@ base class EcosedBase extends ContextWrapper
 
   /// 插件名称
   @override
-  String get pluginName => 'EcosedBase';
+  String get pluginName => 'SystemBase';
 
   /// 插件界面
   @override
@@ -81,7 +81,7 @@ base class EcosedBase extends ContextWrapper
 
   /// 运行应用
   @override
-  Future<void> runEcosedApp(
+  Future<void> runFreeFEOSApp(
     AppRunner runner,
     PluginList plugins,
     AppBuilder app,
@@ -96,7 +96,6 @@ base class EcosedBase extends ContextWrapper
     // 初始化内核桥接
     await initKernelBridge();
     // await RustLib.init();
-    // Log.i(baseTag, greet(name: 'flutter_ecosed'));
     // TODO: 内核相关操作
 
     // 初始化服务桥接
@@ -185,7 +184,7 @@ base class EcosedBase extends ContextWrapper
   }
 
   @override
-  Future<void> init(List<EcosedRuntimePlugin> plugins) async {}
+  Future<void> init(List<RuntimePlugin> plugins) async {}
 
   /// 获取管理器
   @override

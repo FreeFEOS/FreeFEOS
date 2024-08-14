@@ -14,4 +14,4 @@ typedef AppBuilder = Widget Function(
   DebugMenuLauncher openDebugMenu,
   PluginMetthodExecer execPluginMethod,
 );
-typedef PluginList = List<EcosedRuntimePlugin> Function();
+typedef PluginList = List<RuntimePlugin> Function();

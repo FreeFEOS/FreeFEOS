@@ -1,3 +1,3 @@
 import 'kernel_module.dart';
 
-final class SystemCall extends EcosedKernelModule {}
+final class SystemCall extends KernelModule {}

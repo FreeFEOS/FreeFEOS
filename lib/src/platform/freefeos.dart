@@ -1,8 +1,8 @@
-import '../interface/ecosed_platform.dart';
+import '../interface/platform_interface.dart';
 
-final class FlutterEcosed implements EcosedPlatform {
+final class FreeFEOSLinker implements FreeFEOSPlatform {
   /// 平台实例
-  final EcosedPlatform _platform = EcosedPlatform.instance;
+  final FreeFEOSPlatform _platform = FreeFEOSPlatform.instance;
 
   @override
   Future<bool?> closePlatformDialog() async {

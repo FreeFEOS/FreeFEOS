@@ -7,7 +7,7 @@ import 'method_call.dart';
 import 'plugin_engine.dart';
 import 'result.dart';
 
-final class EngineEmbedder extends EcosedEnginePlugin {
+final class EngineEmbedder extends EnginePlugin {
   @override
   String get author => 'wyq0918dev';
 
@@ -24,8 +24,8 @@ final class EngineEmbedder extends EcosedEnginePlugin {
   late PlatformEmbedder _embedder;
 
   @override
-  Future<void> onEcosedAdded(PluginBinding binding) async {
-    return await super.onEcosedAdded(binding).then((added) {
+  Future<void> onPluginAdded(PluginBinding binding) async {
+    return await super.onPluginAdded(binding).then((added) {
       final Want want = Want(classes: PlatformEmbedder());
       final EmbedderConnection connect = EmbedderConnection(
         calback: (embedder) => _embedder = embedder,
@@ -37,7 +37,7 @@ final class EngineEmbedder extends EcosedEnginePlugin {
   }
 
   @override
-  Future<void> onEcosedMethodCall(
+  Future<void> onPluginMethodCall(
     EcosedMethodCall call,
     EcosedResult result,
   ) async {

@@ -31,7 +31,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
-  freefeos: 47b62c58b598772602a3f1b721df682ef0f9f103
+  freefeos: 9f57889badea18dc4cf99b696f8b09554f956ea5
   package_info_plus: fa739dd842b393193c5ca93c26798dff6e3d0e0c
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   url_launcher_macos: 5f437abeda8c85500ceb03f5c1938a8c5a705399

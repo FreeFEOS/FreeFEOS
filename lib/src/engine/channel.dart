@@ -14,12 +14,12 @@ final class PluginChannel {
   final PluginBinding binding;
   final String channel;
 
-  EcosedEnginePlugin? _plugin;
+  EnginePlugin? _plugin;
   String? _method;
   dynamic _arguments;
   dynamic _result;
 
-  void setMethodCallHandler(EcosedEnginePlugin handler) {
+  void setMethodCallHandler(EnginePlugin handler) {
     _plugin = handler;
   }
 
@@ -35,7 +35,7 @@ final class PluginChannel {
     _method = method;
     _arguments = arguments;
     if (name == channel) {
-      await _plugin?.onEcosedMethodCall(
+      await _plugin?.onPluginMethodCall(
         CallImport(
           callMethod: _method,
           callArguments: _arguments,

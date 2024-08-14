@@ -1,4 +1,4 @@
 import '../base/base_entry.dart';
-import '../interface/ecosed_interface.dart';
+import '../interface/system_interface.dart';
 
-final class EcosedEntry extends EcosedInterface with BaseEntry {}
+final class EcosedEntry extends FreeFEOSInterface with BaseEntry {}

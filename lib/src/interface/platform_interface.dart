@@ -1,14 +1,14 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-import '../platform/ecosed_method_channel.dart';
+import '../platform/freefeos_method_channel.dart';
 
-abstract class EcosedPlatform extends PlatformInterface {
-  EcosedPlatform() : super(token: _token);
+abstract class FreeFEOSPlatform extends PlatformInterface {
+  FreeFEOSPlatform() : super(token: _token);
 
   static final Object _token = Object();
-  static EcosedPlatform _instance = MethodChannelEcosed();
-  static EcosedPlatform get instance => _instance;
-  static set instance(EcosedPlatform instance) {
+  static FreeFEOSPlatform _instance = MethodChannelFreeFEOS();
+  static FreeFEOSPlatform get instance => _instance;
+  static set instance(FreeFEOSPlatform instance) {
     PlatformInterface.verifyToken(instance, _token);
     _instance = instance;
   }

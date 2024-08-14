@@ -12,19 +12,19 @@ import 'plugin_mixin.dart';
 import '../values/tag.dart';
 import 'plugin_engine.dart';
 
-final class EcosedEngine extends EcosedEnginePlugin
+final class SystemEngine extends EnginePlugin
     with PluginMixin
     implements EngineWrapper {
-  EcosedEngine();
+  SystemEngine();
 
   /// 引擎入口函数
-  EcosedEngine call() => this;
+  SystemEngine call() => this;
 
   /// 引擎初始化状态
   bool initialized = false;
 
   /// 插件列表
-  final List<EcosedEnginePlugin> _pluginList = [];
+  final List<EnginePlugin> _pluginList = [];
 
   /// 插件信息列表
   final List<Map<String, dynamic>> _infoList = [];
@@ -50,7 +50,7 @@ final class EcosedEngine extends EcosedEnginePlugin
 
   /// 调用插件方法
   @override
-  Future<void> onEcosedMethodCall(
+  Future<void> onPluginMethodCall(
     EcosedMethodCall call,
     EcosedResult result,
   ) async {
@@ -80,7 +80,11 @@ final class EcosedEngine extends EcosedEnginePlugin
         engine: this,
       );
       // 遍历插件列表
-      [EngineBridge(), this, ...plugins].forEach(load);
+      [
+        EngineBridge(),
+        this,
+        ...plugins,
+      ].forEach(load);
       // 将引擎状态设为已加载
       initialized = true;
     } else {
@@ -92,10 +96,10 @@ final class EcosedEngine extends EcosedEnginePlugin
     }
   }
 
-  Future<void> load(EcosedEnginePlugin element) async {
+  Future<void> load(EnginePlugin element) async {
     // 加载插件
     try {
-      await element.onEcosedAdded(_binding);
+      await element.onPluginAdded(_binding);
       Log.d(
         tag: engineTag,
         message: '插件${element.channel}已加载',

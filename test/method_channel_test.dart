@@ -1,12 +1,12 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:freefeos/src/platform/ecosed_method_channel.dart';
+import 'package:freefeos/src/platform/freefeos_method_channel.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  MethodChannelEcosed platform = MethodChannelEcosed();
-  const MethodChannel channel = MethodChannel('flutter_ecosed');
+  MethodChannelFreeFEOS platform = MethodChannelFreeFEOS();
+  const MethodChannel channel = MethodChannel('freefeos');
 
   setUp(() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger

@@ -6,15 +6,15 @@ import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../base/base.dart';
-import '../plugin/plugin_runtime.dart';
 import '../plugin/plugin_details.dart';
+import '../plugin/plugin_runtime.dart';
 import '../plugin/plugin_type.dart';
 import '../values/placeholder.dart';
 import '../viewmodel/manager_view_model.dart';
 import '../widget/manager.dart';
 
 /// 运行时
-final class EcosedRuntime extends EcosedBase {
+final class SystemRuntime extends SystemBase {
   /// 应用名称
   late String _appName;
 
@@ -22,7 +22,7 @@ final class EcosedRuntime extends EcosedBase {
   late String _appVersion;
 
   /// 插件列表
-  final List<EcosedRuntimePlugin> _pluginList = [];
+  final List<RuntimePlugin> _pluginList = [];
 
   /// 插件详细信息列表
   final List<PluginDetails> _pluginDetailsList = [];
@@ -60,7 +60,7 @@ final class EcosedRuntime extends EcosedBase {
   }
 
   @override
-  Future<void> init(List<EcosedRuntimePlugin> plugins) async {
+  Future<void> init(List<RuntimePlugin> plugins) async {
     // 初始化包信息
     await _initPackage();
     // 初始化运行时
@@ -262,7 +262,7 @@ final class EcosedRuntime extends EcosedBase {
 
   /// 初始化普通插件
   Future<void> _initPlugins({
-    required List<EcosedRuntimePlugin> plugins,
+    required List<RuntimePlugin> plugins,
   }) async {
     if (plugins.isNotEmpty) {
       for (var element in plugins) {
@@ -322,7 +322,7 @@ final class EcosedRuntime extends EcosedBase {
   }
 
   /// 获取插件
-  EcosedRuntimePlugin? _getPlugin(PluginDetails details) {
+  RuntimePlugin? _getPlugin(PluginDetails details) {
     if (_pluginList.isNotEmpty) {
       for (var element in _pluginList) {
         if (element.pluginChannel == details.channel) {

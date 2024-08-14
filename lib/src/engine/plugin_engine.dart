@@ -5,13 +5,13 @@ import 'engine_wrapper.dart';
 import 'method_call.dart';
 import 'result.dart';
 
-abstract base class EcosedEnginePlugin extends ContextWrapper {
-  EcosedEnginePlugin() : super(attach: false);
+abstract base class EnginePlugin extends ContextWrapper {
+  EnginePlugin() : super(attach: false);
   late PluginChannel _pluginChannel;
   late EngineWrapper _engine;
 
   /// 插件添加时执行
-  Future<void> onEcosedAdded(
+  Future<void> onPluginAdded(
     PluginBinding binding,
   ) async {
     // 初始化插件通道
@@ -43,7 +43,7 @@ abstract base class EcosedEnginePlugin extends ContextWrapper {
   String get description;
 
   /// 执行插件方法
-  Future<void> onEcosedMethodCall(
+  Future<void> onPluginMethodCall(
     EcosedMethodCall call,
     EcosedResult result,
   );

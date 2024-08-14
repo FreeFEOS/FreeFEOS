@@ -1,21 +1,20 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-
 import '../engine/method_call.dart';
 import '../engine/plugin_engine.dart';
 import '../engine/result.dart';
 import '../framework/service.dart';
 import '../framework/want.dart';
-import '../interface/ecosed_platform.dart';
-import '../platform/ecosed.dart';
+import '../interface/platform_interface.dart';
+import '../platform/freefeos.dart';
 import '../plugin/plugin_runtime.dart';
 import '../utils/platform.dart';
 import '../values/strings.dart';
 
 final class PlatformEmbedder extends Service
-    implements EcosedRuntimePlugin, EcosedPlatform {
-  late FlutterEcosed _instance;
+    implements RuntimePlugin, FreeFEOSPlatform {
+  late FreeFEOSLinker _linker;
   @override
   String get pluginAuthor => developerName;
 
@@ -31,7 +30,7 @@ final class PlatformEmbedder extends Service
   @override
   void onCreate() {
     super.onCreate();
-    if (kUseNative) _instance = FlutterEcosed();
+    if (kUseNative) _linker = FreeFEOSLinker();
   }
 
   @override
@@ -54,8 +53,8 @@ final class PlatformEmbedder extends Service
       invoke: () async {
         return List.empty();
       },
-      mobile: (instance) async {
-        return await instance.getPlatformPluginList();
+      mobile: (linker) async {
+        return await linker.getPlatformPluginList();
       },
       error: (exception) async {
         return List.empty();
@@ -69,8 +68,8 @@ final class PlatformEmbedder extends Service
       invoke: () async {
         return true;
       },
-      mobile: (instance) async {
-        return await instance.openPlatformDialog();
+      mobile: (linker) async {
+        return await linker.openPlatformDialog();
       },
       error: (exception) async {
         return false;
@@ -84,8 +83,8 @@ final class PlatformEmbedder extends Service
       invoke: () async {
         return true;
       },
-      mobile: (instance) async {
-        return await instance.closePlatformDialog();
+      mobile: (linker) async {
+        return await linker.closePlatformDialog();
       },
       error: (exception) async {
         return false;
@@ -95,14 +94,14 @@ final class PlatformEmbedder extends Service
 
   Future<dynamic> _invoke({
     required Future<dynamic> Function() invoke,
-    required Future<dynamic> Function(FlutterEcosed instance) mobile,
+    required Future<dynamic> Function(FreeFEOSLinker linker) mobile,
     required Future<dynamic> Function(Exception exception) error,
   }) async {
     if (kIsWeb || kIsWasm) {
       return await invoke.call();
     } else if (kUseNative) {
       try {
-        return await mobile.call(_instance);
+        return await mobile.call(_linker);
       } on Exception catch (exception) {
         return await error.call(exception);
       }
@@ -159,7 +158,7 @@ final class ServiceBinder extends Binder {
   Service get getService => service;
 }
 
-final class ServiceInvoke extends EcosedEnginePlugin {
+final class ServiceInvoke extends EnginePlugin {
   @override
   String get author => developerName;
 
@@ -170,7 +169,7 @@ final class ServiceInvoke extends EcosedEnginePlugin {
   String get description => 'ServiceInvoke';
 
   @override
-  Future<void> onEcosedMethodCall(
+  Future<void> onPluginMethodCall(
     EcosedMethodCall call,
     EcosedResult result,
   ) async {}
@@ -179,7 +178,7 @@ final class ServiceInvoke extends EcosedEnginePlugin {
   String get title => 'ServiceInvoke';
 }
 
-final class ServiceDelegate extends EcosedEnginePlugin {
+final class ServiceDelegate extends EnginePlugin {
   @override
   String get author => developerName;
 
@@ -190,7 +189,7 @@ final class ServiceDelegate extends EcosedEnginePlugin {
   String get description => 'ServiceDelegate';
 
   @override
-  Future<void> onEcosedMethodCall(
+  Future<void> onPluginMethodCall(
     EcosedMethodCall call,
     EcosedResult result,
   ) async {}

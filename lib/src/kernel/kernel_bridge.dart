@@ -1,6 +1,6 @@
 import 'kernel_module.dart';
 
-final class KernelBridge extends EcosedKernelModule {}
+final class KernelBridge extends KernelModule {}
 
 base mixin KernelBridgeMixin {
   late KernelBridge _kernelBridge;
