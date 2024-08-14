@@ -45,9 +45,9 @@ flutter:
   plugin:
     platforms:
       android:
-        # package: io.libecosed.flutter_ecosed
+        package: com.freefeos.freefeos
         dartPluginClass: FreeFEOSRegister
-        # pluginClass: FlutterEcosedPlugin
+        pluginClass: FreeFEOSEmbedder
         ffiPlugin: true
       ios:
         dartPluginClass: FreeFEOSRegister

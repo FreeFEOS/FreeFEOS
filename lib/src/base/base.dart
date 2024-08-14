@@ -33,11 +33,7 @@ base class SystemBase extends ContextWrapper
         ServerBridgeMixin,
         EngineBridgeMixin,
         ChangeNotifier
-    implements
-        RuntimePlugin,
-        FreeFEOSInterface,
-        KernelModule,
-        BaseWrapper {
+    implements RuntimePlugin, FreeFEOSInterface, KernelModule, BaseWrapper {
   /// 构造函数
   SystemBase() : super(attach: true);
 
@@ -134,23 +130,24 @@ base class SystemBase extends ContextWrapper
                         return MaterialPageRoute(
                           builder: (context) {
                             super.attachBuildContext(context);
-                            return EcosedBanner(
-                              child: app(
-                                context,
-                                () async => await buildDialog(
-                                  super.getBuildContext(),
+                            return AppBanner(
+                              app: app,
+                              host: context,
+                              open: () async {
+                                return await buildDialog(
+                                  context,
                                   false,
-                                ),
-                                (
-                                  String channel,
-                                  String method, [
-                                  dynamic arguments,
-                                ]) async =>
-                                    await exec(
-                                  channel,
-                                  method,
-                                  arguments,
-                                ),
+                                );
+                              },
+                              exec: (
+                                String channel,
+                                String method, [
+                                dynamic arguments,
+                              ]) async =>
+                                  await exec(
+                                channel,
+                                method,
+                                arguments,
                               ),
                             );
                           },
@@ -199,7 +196,7 @@ base class SystemBase extends ContextWrapper
   Widget buildLayout(BuildContext context) => const Placeholder();
 
   @override
-  Future<SimpleDialog?> buildDialog(
+  Future<dynamic> buildDialog(
     BuildContext context,
     bool isManager,
   ) async {
@@ -213,7 +210,7 @@ base class SystemBase extends ContextWrapper
   }
 
   @override
-  Future<SimpleDialog?> launchDialog() async {
+  Future<dynamic> launchDialog() async {
     return await buildDialog(getBuildContext(), true);
   }
 
@@ -236,7 +233,7 @@ base class SystemBase extends ContextWrapper
   ]) async {
     return await engineBridgerScope.onMethodCall(
       method,
-      {'channel': 'ecosed_engine', ...?arguments},
+      {'channel': 'system_engine', ...?arguments},
     );
   }
 

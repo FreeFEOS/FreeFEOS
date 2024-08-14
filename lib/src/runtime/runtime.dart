@@ -29,15 +29,15 @@ final class SystemRuntime extends SystemBase {
 
   /// 插件通道
   @override
-  String get pluginChannel => 'ecosed_runtime';
+  String get pluginChannel => 'system_runtime';
 
   /// 插件描述
   @override
-  String get pluginDescription => 'FlutterEcosed框架运行时';
+  String get pluginDescription => '操作系统运行时';
 
   /// 插件名称
   @override
-  String get pluginName => 'EcosedRuntime';
+  String get pluginName => 'SystemRuntime';
 
   /// 方法调用
   @override

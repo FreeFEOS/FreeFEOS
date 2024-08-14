@@ -38,15 +38,15 @@ final class SystemEngine extends EnginePlugin
 
   /// 插件通道
   @override
-  String get channel => 'ecosed_engine';
+  String get channel => 'system_engine';
 
   /// 插件描述
   @override
-  String get description => 'EcosedEngine';
+  String get description => 'SystemEngine';
 
   /// 插件名称
   @override
-  String get title => 'EcosedEngine';
+  String get title => 'SystemEngine';
 
   /// 调用插件方法
   @override

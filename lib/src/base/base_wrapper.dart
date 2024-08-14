@@ -29,13 +29,13 @@ abstract interface class BaseWrapper {
   Widget buildLayout(BuildContext context);
 
   /// 构建对话框
-  Future<SimpleDialog?> buildDialog(
+  Future<dynamic> buildDialog(
     BuildContext context,
     bool isManager,
   );
 
   /// 打开对话框
-  Future<SimpleDialog?> launchDialog();
+  Future<dynamic> launchDialog();
 
   /// 打开管理器
   Future<dynamic> launchManager();
