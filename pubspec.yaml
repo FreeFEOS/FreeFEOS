@@ -46,26 +46,26 @@ flutter:
     platforms:
       android:
         # package: io.libecosed.flutter_ecosed
-        # dartPluginClass: EcosedPlatformRegister
+        dartPluginClass: FreeFEOSRegister
         # pluginClass: FlutterEcosedPlugin
         ffiPlugin: true
       ios:
-        # dartPluginClass: EcosedPlatformRegister
-        # pluginClass: FlutterEcosedPlugin
+        dartPluginClass: FreeFEOSRegister
+        pluginClass: FreeFEOSEmbedder
         ffiPlugin: true
       linux:
-        # dartPluginClass: EcosedPlatformRegister
+        dartPluginClass: FreeFEOSRegister
         ffiPlugin: true
       macos:
-        # dartPluginClass: EcosedPlatformRegister
+        dartPluginClass: FreeFEOSRegister
         ffiPlugin: true
       windows:
-        # dartPluginClass: EcosedPlatformRegister
+        dartPluginClass: FreeFEOSRegister
         ffiPlugin: true
-      # web:
-      #   pluginClass: EcosedWebRegister
-      #   fileName: flutter_ecosed_web.dart
-      #   ffiPlugin: true
+      web:
+        pluginClass: FreeFEOSRegister
+        fileName: freefeos_web.dart
+        ffiPlugin: true
   assets:
     - AUTHORS
     - LICENSE
