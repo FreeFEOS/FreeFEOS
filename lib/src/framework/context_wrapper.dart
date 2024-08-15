@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart' hide Intent;
+import 'package:flutter/widgets.dart';
 
 import 'context.dart';
 import 'context_impl.dart';

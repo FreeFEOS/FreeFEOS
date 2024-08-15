@@ -24,29 +24,28 @@ class _PluginPageState extends State<PluginPage> {
   Widget build(BuildContext context) {
     return Scrollbar(
       controller: _scrollController,
-      child: ListView(
-        controller: _scrollController,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
-            child: Consumer<ManagerViewModel>(
-              builder: (context, viewModel, child) => ListBody(
-                children: viewModel.getPluginDetailsList
-                    .map(
-                      (element) => Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
-                        child: Builder(
-                          builder: (context) => PluginCard(
-                            details: element,
-                          ),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 840),
+        child: ListView(
+          controller: _scrollController,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+              child: Consumer<ManagerViewModel>(
+                builder: (context, viewModel, child) => ListBody(
+                  children: viewModel.getPluginDetailsList
+                      .map(
+                        (element) => Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: PluginCard(details: element),
                         ),
-                      ),
-                    )
-                    .toList(),
+                      )
+                      .toList(),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

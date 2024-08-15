@@ -1,3 +1,5 @@
+import '../values/channel.dart';
+import '../values/strings.dart';
 import 'method_call.dart';
 import 'result.dart';
 import 'engine_mixin.dart';
@@ -12,11 +14,11 @@ final class EngineBridge extends EnginePlugin
 
   /// 插件作者
   @override
-  String get author => 'wyq0918dev';
+  String get author => developerName;
 
   /// 插件通道
   @override
-  String get channel => 'engine_bridge';
+  String get channel => bridgeChannel;
 
   /// 插件描述
   @override

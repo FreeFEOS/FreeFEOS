@@ -1,5 +1,7 @@
 import '../interface/system_interface.dart';
-import '../type/runner.dart';
+import '../type/app_builder.dart';
+import '../type/app_runner.dart';
+import '../type/plugin_list.dart';
 import 'base.dart';
 
 base mixin BaseEntry on FreeFEOSInterface {

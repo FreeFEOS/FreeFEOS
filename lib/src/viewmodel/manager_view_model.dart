@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:freefeos/src/values/channel.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../plugin/plugin_details.dart';
@@ -41,7 +42,10 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
   /// 打开对话框
   final DialogLauncher launchDialog;
 
+  /// 应用名称
   final String appName;
+
+  /// 应用版本
   final String appVersion;
 
   /// 打开对话框
@@ -186,9 +190,9 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
       // 普通插件
       case PluginType.flutter:
         return '普通插件';
-      // 未知插件类型
+      // 未知类型插件
       case PluginType.unknown:
-        return '未知插件类型';
+        return '未知类型插件';
       // 未知
       default:
         return 'Unknown';
@@ -199,7 +203,7 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
   @override
   String getPluginAction(PluginDetails details) {
     return _isAllowPush(details)
-        ? details.channel != 'system_runtime'
+        ? details.channel != runtimeChannel
             ? '打开'
             : '关于'
         : '无界面';
@@ -209,7 +213,7 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
   @override
   String getPluginTooltip(PluginDetails details) {
     return _isAllowPush(details)
-        ? details.channel != 'system_runtime'
+        ? details.channel != runtimeChannel
             ? '打开插件的界面'
             : '关于本框架'
         : '此插件没有界面';
@@ -265,9 +269,15 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
       builder: (context) {
         final dialogContent = Scaffold(
           appBar: AppBar(
+            leading: IconButton(
+              onPressed: () => Navigator.of(context).pop(),
+              icon: const Icon(Icons.close),
+            ),
             title: Text(details.title),
+            backgroundColor: Colors.transparent,
           ),
           body: getPluginWidget(context, details),
+          backgroundColor: Colors.transparent,
         );
         if (MediaQuery.sizeOf(context).width < 600) {
           return Dialog.fullscreen(

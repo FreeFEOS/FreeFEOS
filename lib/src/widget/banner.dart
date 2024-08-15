@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../type/runner.dart';
+import '../type/app_builder.dart';
+import '../type/menu_launcher.dart';
+import '../type/method_execer.dart';
 
 /// 角标横幅
 final class AppBanner extends StatelessWidget {
@@ -15,8 +17,8 @@ final class AppBanner extends StatelessWidget {
 
   final AppBuilder app;
   final BuildContext host;
-  final DebugMenuLauncher open;
-  final PluginMetthodExecer exec;
+  final MenuLauncher open;
+  final MethodExecer exec;
 
   @override
   Widget build(BuildContext context) {

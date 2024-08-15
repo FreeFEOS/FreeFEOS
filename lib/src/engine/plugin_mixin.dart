@@ -5,7 +5,7 @@ import 'engine_embedder.dart';
 base mixin PluginMixin {
   /// 插件列表
   List<EnginePlugin> get plugins => [
-        EngineEmbedder(),
+        EngineConnectors(),
         ServiceInvoke(),
         ServiceDelegate(),
       ];

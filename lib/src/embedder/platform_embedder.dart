@@ -10,6 +10,7 @@ import '../interface/platform_interface.dart';
 import '../platform/freefeos.dart';
 import '../plugin/plugin_runtime.dart';
 import '../utils/platform.dart';
+import '../values/channel.dart';
 import '../values/strings.dart';
 
 final class PlatformEmbedder extends Service
@@ -19,7 +20,7 @@ final class PlatformEmbedder extends Service
   String get pluginAuthor => developerName;
 
   @override
-  String get pluginChannel => 'platform_embedder';
+  String get pluginChannel => embedderChannel;
 
   @override
   String get pluginDescription => 'PlatformEmbedder';
@@ -163,7 +164,7 @@ final class ServiceInvoke extends EnginePlugin {
   String get author => developerName;
 
   @override
-  String get channel => 'service_invoke';
+  String get channel => invokeChannel;
 
   @override
   String get description => 'ServiceInvoke';
@@ -183,7 +184,7 @@ final class ServiceDelegate extends EnginePlugin {
   String get author => developerName;
 
   @override
-  String get channel => 'service_delegate';
+  String get channel => delegateChannel;
 
   @override
   String get description => 'ServiceDelegate';

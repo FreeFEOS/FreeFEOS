@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:freefeos/src/entry/default_entry.dart';
 import 'package:freefeos/src/interface/system_interface.dart';
-import 'package:freefeos/src/type/runner.dart';
+import 'package:freefeos/src/type/app_builder.dart';
+import 'package:freefeos/src/type/app_runner.dart';
+import 'package:freefeos/src/type/plugin_list.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockFreeFEOSInterface

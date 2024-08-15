@@ -1,24 +1,24 @@
-import 'dart:async';
-
 import '../embedder/platform_embedder.dart';
 import '../framework/want.dart';
+import '../values/channel.dart';
+import '../values/strings.dart';
 import 'binding.dart';
 import 'method_call.dart';
 import 'plugin_engine.dart';
 import 'result.dart';
 
-final class EngineEmbedder extends EnginePlugin {
+final class EngineConnectors extends EnginePlugin {
   @override
-  String get author => 'wyq0918dev';
+  String get author => developerName;
 
   @override
-  String get channel => 'engine_embedder';
+  String get channel => connectChannel;
 
   @override
-  String get description => '服务嵌入';
+  String get description => 'EngineConnectors';
 
   @override
-  String get title => 'EngineEmbedder';
+  String get title => 'EngineConnectors';
 
   /// 服务实例
   late PlatformEmbedder _embedder;

@@ -1,7 +1,6 @@
-import 'dart:async';
-
 import '../framework/context.dart';
 import '../framework/log.dart';
+import '../values/channel.dart';
 import '../values/strings.dart';
 import 'binding.dart';
 import 'engine_bridge.dart';
@@ -38,7 +37,7 @@ final class SystemEngine extends EnginePlugin
 
   /// 插件通道
   @override
-  String get channel => 'system_engine';
+  String get channel => engineChannel;
 
   /// 插件描述
   @override

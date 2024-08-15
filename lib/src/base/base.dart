@@ -7,7 +7,10 @@ import 'package:provider/provider.dart';
 import '../embedder/embedder_mixin.dart';
 import '../engine/bridge_mixin.dart';
 import '../plugin/plugin_runtime.dart';
-import '../type/runner.dart';
+import '../type/app_builder.dart';
+import '../type/app_runner.dart';
+import '../type/plugin_list.dart';
+import '../values/channel.dart';
 import '../values/route.dart';
 import '../values/strings.dart';
 import '../values/tag.dart';
@@ -43,7 +46,7 @@ base class SystemBase extends ContextWrapper
 
   /// 插件通道
   @override
-  String get pluginChannel => 'system_base';
+  String get pluginChannel => baseChannel;
 
   /// 插件描述
   @override
@@ -233,7 +236,7 @@ base class SystemBase extends ContextWrapper
   ]) async {
     return await engineBridgerScope.onMethodCall(
       method,
-      {'channel': 'system_engine', ...?arguments},
+      {'channel': engineChannel, ...?arguments},
     );
   }
 

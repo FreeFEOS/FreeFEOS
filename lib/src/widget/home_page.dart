@@ -24,25 +24,28 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scrollbar(
       controller: _scrollController,
-      child: ListView(
-        controller: _scrollController,
-        children: const <Widget>[
-          Padding(
-            padding: EdgeInsets.fromLTRB(12, 12, 12, 6),
-            child: StateCard(),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: 6,
-              horizontal: 12,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 840),
+        child: ListView(
+          controller: _scrollController,
+          children: const <Widget>[
+            Padding(
+              padding: EdgeInsets.fromLTRB(12, 12, 12, 6),
+              child: StateCard(),
             ),
-            child: InfoCard(),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(12, 6, 12, 12),
-            child: MoreCard(),
-          ),
-        ],
+            Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 6,
+                horizontal: 12,
+              ),
+              child: InfoCard(),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(12, 6, 12, 12),
+              child: MoreCard(),
+            ),
+          ],
+        ),
       ),
     );
   }

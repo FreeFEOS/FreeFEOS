@@ -4,7 +4,9 @@ import 'package:flutter/widgets.dart';
 
 import '../framework/log.dart';
 import '../interface/system_interface.dart';
-import '../type/runner.dart';
+import '../type/app_builder.dart';
+import '../type/app_runner.dart';
+import '../type/plugin_list.dart';
 import '../values/tag.dart';
 
 /// 无法正确加载平台时的实现

@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -9,6 +8,7 @@ import '../base/base.dart';
 import '../plugin/plugin_details.dart';
 import '../plugin/plugin_runtime.dart';
 import '../plugin/plugin_type.dart';
+import '../values/channel.dart';
 import '../values/placeholder.dart';
 import '../viewmodel/manager_view_model.dart';
 import '../widget/manager.dart';
@@ -29,7 +29,7 @@ final class SystemRuntime extends SystemBase {
 
   /// 插件通道
   @override
-  String get pluginChannel => 'system_runtime';
+  String get pluginChannel => runtimeChannel;
 
   /// 插件描述
   @override
