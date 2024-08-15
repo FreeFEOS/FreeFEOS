@@ -114,7 +114,7 @@ final class SystemRuntime extends SystemBase {
 
   /// 构建调试菜单
   @override
-  Future<SimpleDialog?> buildDialog(
+  Future<dynamic> buildDialog(
     BuildContext context,
     bool isManager,
   ) async {

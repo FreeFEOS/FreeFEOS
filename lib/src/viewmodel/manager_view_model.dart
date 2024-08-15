@@ -256,19 +256,34 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
   }
 
   /// 打开插件
-  Future<MaterialPageRoute?> _launchPlugin(
+  Future<dynamic> _launchPlugin(
     BuildContext host,
     PluginDetails details,
   ) async {
-    return await Navigator.of(host, rootNavigator: true).push(
-      MaterialPageRoute(
-        builder: (context) => Scaffold(
+    return await showDialog(
+      context: context,
+      builder: (context) {
+        final dialogContent = Scaffold(
           appBar: AppBar(
             title: Text(details.title),
           ),
           body: getPluginWidget(context, details),
-        ),
-      ),
+        );
+        if (MediaQuery.sizeOf(context).width < 600) {
+          return Dialog.fullscreen(
+            child: dialogContent,
+          );
+        } else {
+          return Dialog(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxWidth: 400,
+              ),
+              child: dialogContent,
+            ),
+          );
+        }
+      },
     );
   }
 }

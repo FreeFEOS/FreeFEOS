@@ -78,12 +78,14 @@ class _SystemManagerState extends State<SystemManager> {
             child: child,
           );
         },
-        child: [
-          const HomePage(),
-          const LogPage(),
-          const PluginPage(),
-          const SettingsPage(),
-        ][_currentIndex],
+        child: SafeArea(
+          child: [
+            const HomePage(),
+            const LogPage(),
+            const PluginPage(),
+            const SettingsPage(),
+          ][_currentIndex],
+        ),
       ),
       transitionDuration: const Duration(
         milliseconds: 500,
