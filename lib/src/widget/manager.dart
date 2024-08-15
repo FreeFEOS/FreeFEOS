@@ -102,7 +102,7 @@ class _SystemManagerState extends State<SystemManager> {
       onSelectedIndexChange: (index) => setState(
         () => _currentIndex = index,
       ),
-      useDrawer: true,
+      useDrawer: false,
       appBar: AppBar(
         title: const Text('管理器'),
         actions: [

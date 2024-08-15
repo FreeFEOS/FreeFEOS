@@ -264,36 +264,44 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
     BuildContext host,
     PluginDetails details,
   ) async {
-    return await showDialog(
-      context: context,
-      builder: (context) {
-        final dialogContent = Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              onPressed: () => Navigator.of(context).pop(),
-              icon: const Icon(Icons.close),
-            ),
-            title: Text(details.title),
-            backgroundColor: Colors.transparent,
-          ),
-          body: getPluginWidget(context, details),
-          backgroundColor: Colors.transparent,
-        );
-        if (MediaQuery.sizeOf(context).width < 600) {
-          return Dialog.fullscreen(
-            child: dialogContent,
-          );
-        } else {
+    if (MediaQuery.sizeOf(context).width < 600) {
+      return await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) {
+            return Scaffold(
+              appBar: AppBar(
+                title: Text(details.title),
+              ),
+              body: getPluginWidget(context, details),
+            );
+          },
+        ),
+      );
+    } else {
+      return await showDialog(
+        context: context,
+        builder: (context) {
           return Dialog(
             child: ConstrainedBox(
               constraints: const BoxConstraints(
                 maxWidth: 400,
               ),
-              child: dialogContent,
+              child: Scaffold(
+                appBar: AppBar(
+                  leading: IconButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    icon: const Icon(Icons.close),
+                  ),
+                  title: Text(details.title),
+                  backgroundColor: Colors.transparent,
+                ),
+                body: getPluginWidget(context, details),
+                backgroundColor: Colors.transparent,
+              ),
             ),
           );
-        }
-      },
-    );
+        },
+      );
+    }
   }
 }
