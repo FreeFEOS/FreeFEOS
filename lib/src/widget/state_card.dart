@@ -16,11 +16,7 @@ class StateCard extends StatelessWidget {
         padding: const EdgeInsets.all(24),
         child: Row(
           children: [
-            Icon(
-              Icons.keyboard_command_key,
-              size: Theme.of(context).iconTheme.size,
-              color: Theme.of(context).colorScheme.onPrimaryContainer,
-            ),
+            const FlutterLogo(),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(left: 24),
