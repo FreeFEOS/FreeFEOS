@@ -1,6 +1,6 @@
 name: freefeos
 description: "FreeFEOS"
-version: 0.0.1-dev.0
+version: 0.0.0
 homepage: https://github.com/FreeFEOS/FreeFEOS
 repository: https://github.com/FreeFEOS/FreeFEOS
 issue_tracker: https://github.com/FreeFEOS/FreeFEOS/issues

@@ -142,11 +142,6 @@ final class EmbedderConnection implements ServiceConnection {
 
 final class FEPlugin extends Service {
   @override
-  void onCreate() {
-    super.onCreate();
-  }
-
-  @override
   IBinder onBind(Want want) => ServiceBinder(service: this);
 }
 
