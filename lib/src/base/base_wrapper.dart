@@ -28,9 +28,9 @@ abstract interface class BaseWrapper {
 
   /// 构建对话框
   Future<dynamic> buildDialog(
-    BuildContext context,
-    bool isManager,
-  );
+    BuildContext context, {
+    bool isManager = true,
+  });
 
   /// 打开对话框
   Future<dynamic> launchDialog();

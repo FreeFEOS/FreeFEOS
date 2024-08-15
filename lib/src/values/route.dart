@@ -1,2 +1,2 @@
-const String routeApp = '/app';
+const String routeApp = '/';
 const String routeManager = '/manager';

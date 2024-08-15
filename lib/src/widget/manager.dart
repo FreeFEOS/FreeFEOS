@@ -79,6 +79,12 @@ class _SystemManagerState extends State<SystemManager> {
           );
         },
         child: SafeArea(
+          left: true,
+          top: false,
+          right: true,
+          bottom: false,
+          minimum: EdgeInsets.zero,
+          maintainBottomViewPadding: true,
           child: Container(
             alignment: Alignment.topCenter,
             child: [
@@ -96,7 +102,7 @@ class _SystemManagerState extends State<SystemManager> {
       onSelectedIndexChange: (index) => setState(
         () => _currentIndex = index,
       ),
-      useDrawer: false,
+      useDrawer: true,
       appBar: AppBar(
         title: const Text('管理器'),
         actions: [

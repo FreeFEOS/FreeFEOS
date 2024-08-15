@@ -109,69 +109,100 @@ base class SystemBase extends ContextWrapper
     await init(plugins.call());
     // 启动应用
     return await runner(
-      Builder(
-        builder: (context) => Theme(
-          data: ThemeData(
-            useMaterial3: true,
-            brightness: MediaQuery.platformBrightnessOf(context),
-          ),
-          child: Material(
-            child: Directionality(
-              textDirection: TextDirection.ltr,
-              child: Localizations(
-                locale: const Locale('zh', 'CN'),
-                delegates: const [
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                child: Navigator(
-                  initialRoute: routeApp,
-                  onGenerateRoute: (settings) {
-                    switch (settings.name) {
-                      case routeApp:
-                        return MaterialPageRoute(
-                          builder: (context) {
-                            super.attachBuildContext(context);
-                            return AppBanner(
-                              app: app,
-                              host: context,
-                              open: () async {
-                                return await buildDialog(
-                                  context,
-                                  false,
-                                );
-                              },
-                              exec: (
-                                String channel,
-                                String method, [
-                                dynamic arguments,
-                              ]) async =>
-                                  await exec(
-                                channel,
-                                method,
-                                arguments,
-                              ),
-                            );
-                          },
-                        );
-                      case routeManager:
-                        return MaterialPageRoute(
-                          builder: (context) => buildManager(context),
-                        );
-                      default:
-                        return MaterialPageRoute(
-                          builder: (context) => const Placeholder(),
-                        );
-                    }
-                  },
+      WidgetsApp(
+        color: Colors.transparent,
+        debugShowCheckedModeBanner: false,
+        locale: const Locale('zh', 'CN'),
+        supportedLocales: const [Locale('zh', 'CN')],
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        pageRouteBuilder: <T>(RouteSettings settings, WidgetBuilder builder) {
+          return MaterialPageRoute(builder: builder, settings: settings);
+        },
+        initialRoute: routeApp,
+        routes: {
+          routeApp: (context) {
+            return AppBanner(
+              app: app,
+              host: context,
+              attach: super.attachBuildContext,
+              open: () async => await buildDialog(
+                super.getBuildContext(),
+              ),
+              exec: exec,
+            );
+          },
+          routeManager: (context) {
+            return Theme(
+              data: ThemeData(
+                useMaterial3: true,
+                brightness: MediaQuery.platformBrightnessOf(context),
+              ),
+              child: Material(
+                child: Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: buildManager(context),
                 ),
               ),
-            ),
-          ),
-        ),
+            );
+          },
+        },
       ),
     );
+
+    // return await runner(
+    //   Builder(
+    //     builder: (context) => Theme(
+    //       data: ThemeData(
+    //         useMaterial3: true,
+    //         brightness: MediaQuery.platformBrightnessOf(context),
+    //       ),
+    //       child: Material(
+    //         child: Directionality(
+    //           textDirection: TextDirection.ltr,
+    //           child: Localizations(
+    //             locale: const Locale('zh', 'CN'),
+    //             delegates: const [
+    //               GlobalMaterialLocalizations.delegate,
+    //               GlobalWidgetsLocalizations.delegate,
+    //               GlobalCupertinoLocalizations.delegate,
+    //             ],
+    //             child: Navigator(
+    //               initialRoute: routeApp,
+    //               onGenerateRoute: (settings) {
+    //                 switch (settings.name) {
+    //                   case routeApp:
+    //                     return MaterialPageRoute(
+    //                       builder: (context) {
+    //                         return AppBanner(
+    //                           app: app,
+    //                           host: context,
+    //                           attach: super.attachBuildContext,
+    //                           open: buildDialog,
+    //                           exec: exec,
+    //                         );
+    //                       },
+    //                     );
+    //                   case routeManager:
+    //                     return MaterialPageRoute(
+    //                       builder: (context) => buildManager(context),
+    //                     );
+    //                   default:
+    //                     return MaterialPageRoute(
+    //                       builder: (context) => const Placeholder(),
+    //                     );
+    //                 }
+    //               },
+    //             ),
+    //           ),
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 
   /// 方法调用
@@ -200,9 +231,9 @@ base class SystemBase extends ContextWrapper
 
   @override
   Future<dynamic> buildDialog(
-    BuildContext context,
-    bool isManager,
-  ) async {
+    BuildContext context, {
+    bool isManager = false,
+  }) async {
     return await showDialog(
       context: context,
       useRootNavigator: false,
@@ -214,7 +245,7 @@ base class SystemBase extends ContextWrapper
 
   @override
   Future<dynamic> launchDialog() async {
-    return await buildDialog(getBuildContext(), true);
+    return await buildDialog(getBuildContext(), isManager: true);
   }
 
   /// 打开管理器
