@@ -1,13 +1,13 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../framework/context_wrapper.dart';
 import '../type/app_builder.dart';
 import '../type/dialog_builder.dart';
 import '../type/method_execer.dart';
+import '../utils/platform.dart';
 
 /// 角标横幅
-final class AppBanner extends StatelessWidget {
+class AppBanner extends StatefulWidget {
   const AppBanner({
     super.key,
     required this.app,
@@ -24,14 +24,32 @@ final class AppBanner extends StatelessWidget {
   final MethodExecer exec;
 
   @override
-  Widget build(BuildContext context) {
-    wrapper.attachBuildContext.call(host);
-    final child = app(
-      host,
-      () async => await open(host),
-      exec,
+  State<AppBanner> createState() => _AppBannerState();
+}
+
+class _AppBannerState extends State<AppBanner> {
+  late Widget child;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    widget.wrapper.attachBuildContext.call(
+      widget.host,
     );
-    if (!kDebugMode) return child;
+    child = widget.app(
+      widget.host,
+      () async {
+        return await widget.open(
+          widget.host,
+        );
+      },
+      widget.exec,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!kShowBanner) return child;
     return Banner(
       message: 'FreeFEOS',
       textDirection: TextDirection.ltr,

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import 'info_card.dart';
-import 'more_card.dart';
-import 'state_card.dart';
+import '../viewmodel/manager_view_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -28,25 +27,167 @@ class _HomePageState extends State<HomePage> {
         constraints: const BoxConstraints(maxWidth: 840),
         child: ListView(
           controller: _scrollController,
-          children: const <Widget>[
+          children: <Widget>[
             Padding(
-              padding: EdgeInsets.fromLTRB(12, 12, 12, 6),
-              child: StateCard(),
+              padding: const EdgeInsets.fromLTRB(12, 12, 12, 6),
+              child: Card(
+                color: Theme.of(context).colorScheme.primaryContainer,
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Row(
+                    children: [
+                      const FlutterLogo(),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 24),
+                          child: Consumer<ManagerViewModel>(
+                            builder: (context, viewModel, child) => Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  viewModel.getAppName,
+                                  textAlign: TextAlign.left,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  viewModel.getAppVersion,
+                                  textAlign: TextAlign.left,
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 vertical: 6,
                 horizontal: 12,
               ),
-              child: InfoCard(),
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: Consumer<ManagerViewModel>(
+                          builder: (context, viewModel, child) => Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              InfoItem(
+                                title: '应用名称',
+                                subtitle: viewModel.getAppName,
+                              ),
+                              const SizedBox(height: 16),
+                              InfoItem(
+                                title: '应用版本',
+                                subtitle: viewModel.getAppVersion,
+                              ),
+                              const SizedBox(height: 16),
+                              InfoItem(
+                                title: '当前平台',
+                                subtitle: Theme.of(context).platform.name,
+                              ),
+                              const SizedBox(height: 16),
+                              InfoItem(
+                                title: '插件数量',
+                                subtitle: viewModel.pluginCount().toString(),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(12, 6, 12, 12),
-              child: MoreCard(),
+              padding: const EdgeInsets.fromLTRB(12, 6, 12, 12),
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '了解 FreeFEOS',
+                              textAlign: TextAlign.start,
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                            Text(
+                              '了解如何使用 FreeFEOS 进行开发。',
+                              textAlign: TextAlign.start,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Tooltip(
+                        message: '了解更多',
+                        child: Consumer<ManagerViewModel>(
+                          builder: (context, viewModel, child) => IconButton(
+                            onPressed: viewModel.launchPubDev,
+                            icon: Icon(
+                              Icons.open_in_browser,
+                              size: Theme.of(context).iconTheme.size,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class InfoItem extends StatelessWidget {
+  const InfoItem({
+    super.key,
+    required this.title,
+    required this.subtitle,
+  });
+
+  final String title;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Text>[
+        Text(
+          title,
+          textAlign: TextAlign.start,
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+        Text(
+          subtitle,
+          textAlign: TextAlign.start,
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+      ],
     );
   }
 }

@@ -1,8 +1,7 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
+
 bool get kUseNative => Platform.isAndroid || Platform.isIOS;
 
-bool get kIsDesktop =>
-    Platform.isLinux || Platform.isMacOS || Platform.isWindows;
-
-bool get kIsMobile => Platform.isAndroid || Platform.isIOS;
+bool get kShowBanner => kDebugMode;

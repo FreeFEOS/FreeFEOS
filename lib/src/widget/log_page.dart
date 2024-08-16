@@ -2,12 +2,12 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
-import 'package:toastification/toastification.dart';
 
 import '../event/event_buffer.dart';
 import '../event/rendered_event.dart';
 import '../framework/ansi_parser.dart';
 import '../framework/log_level.dart';
+import '../framework/toast.dart';
 
 class LogPage extends StatefulWidget {
   const LogPage({super.key});
@@ -20,23 +20,7 @@ class _LogPageState extends State<LogPage> {
   final ListQueue<RenderedEvent> _renderedBuffer = ListQueue();
   final ScrollController _scrollController = ScrollController();
   final StringBuffer _logs = StringBuffer('Start: ');
-
   List<RenderedEvent> _filteredBuffer = [];
-  // bool _scrollListenerEnabled = true;
-  // bool _followBottom = true;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _scrollController.addListener(
-  //     () {
-  //       if (!_scrollListenerEnabled) return;
-  //       final scrolledToBottom = _scrollController.offset >=
-  //           _scrollController.position.maxScrollExtent;
-  //       setState(() => _followBottom = scrolledToBottom);
-  //     },
-  //   );
-  // }
 
   @override
   void didChangeDependencies() async {
@@ -45,11 +29,10 @@ class _LogPageState extends State<LogPage> {
     for (var event in EventBuffer.outputEventBuffer) {
       final ParserWrapper parser = AnsiParser(
         context: context,
-        showTips: () => toastification.show(
+        showTips: () => Toast.makeToast(
           context: context,
-          title: const Text('已复制到剪贴板!'),
-          icon: const Icon(Icons.check)
-        ),
+          text: '已复制到剪贴板!',
+        ).show(),
       );
       final String text = event.lines.join('\n');
       int currentId = 0;
@@ -74,21 +57,6 @@ class _LogPageState extends State<LogPage> {
         },
       ).toList(),
     );
-    // if (_followBottom) {
-    //   Future.delayed(
-    //     Duration.zero,
-    //     () async {
-    //       _scrollListenerEnabled = false;
-    //       setState(() => _followBottom = true);
-    //       await _scrollController.animateTo(
-    //         _scrollController.position.maxScrollExtent,
-    //         duration: const Duration(milliseconds: 400),
-    //         curve: Curves.easeOut,
-    //       );
-    //       _scrollListenerEnabled = true;
-    //     },
-    //   );
-    // }
   }
 
   @override
