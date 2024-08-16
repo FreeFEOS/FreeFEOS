@@ -68,6 +68,7 @@ cargokit {
 
 dependencies {
     implementation(rootProject.findProject("flutter_plugin_android_lifecycle"))
+    implementation(rootProject.findProject("super_native_extensions"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("com.google.android.gms:play-services-base:18.5.0")

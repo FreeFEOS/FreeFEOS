@@ -62,17 +62,15 @@ base class SystemBase extends ContextWrapper
   Widget pluginWidget(BuildContext context) {
     return ChangeNotifierProvider<ManagerViewModel>(
       create: (context) {
-        // 初始化View Model
         final viewModel = buildViewModel(context);
         assert(() {
-          // 判断View Model类型
           if (viewModel is! ManagerViewModel) {
-            // 抛出异常
-            throw FlutterError('View Model 类型错误');
+            throw FlutterError(
+              'View Model 类型错误!',
+            );
           }
           return true;
         }());
-        // 转换类型后返回
         return viewModel as ManagerViewModel;
       },
       child: buildLayout(context),
@@ -122,9 +120,14 @@ base class SystemBase extends ContextWrapper
           child: ToastificationWrapper(
             child: WidgetsApp(
               initialRoute: routeApp,
-              pageRouteBuilder:
-                  <T>(RouteSettings settings, WidgetBuilder builder) {
-                return MaterialPageRoute(builder: builder, settings: settings);
+              pageRouteBuilder: <T>(
+                RouteSettings settings,
+                WidgetBuilder builder,
+              ) {
+                return MaterialPageRoute(
+                  builder: builder,
+                  settings: settings,
+                );
               },
               routes: {
                 routeApp: (context) {
@@ -138,7 +141,9 @@ base class SystemBase extends ContextWrapper
                 },
                 routeManager: (context) {
                   return Material(
-                    child: buildManager(context),
+                    child: buildManager(
+                      context,
+                    ),
                   );
                 },
               },
