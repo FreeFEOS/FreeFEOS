@@ -1,10 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-
+import '../framework/context_wrapper.dart';
 import '../type/app_builder.dart';
-import '../type/context_attacher.dart';
-import '../type/menu_launcher.dart';
+import '../type/dialog_builder.dart';
 import '../type/method_execer.dart';
 
 /// 角标横幅
@@ -13,23 +12,23 @@ final class AppBanner extends StatelessWidget {
     super.key,
     required this.app,
     required this.host,
-    required this.attach,
+    required this.wrapper,
     required this.open,
     required this.exec,
   });
 
   final AppBuilder app;
   final BuildContext host;
-  final ContextAttacher attach;
-  final MenuLauncher open;
+  final ContextWrapper wrapper;
+  final DialogBuilder open;
   final MethodExecer exec;
 
   @override
   Widget build(BuildContext context) {
-    attach.call(host);
+    wrapper.attachBuildContext.call(host);
     final child = app(
       host,
-      open,
+      () async => await open(host),
       exec,
     );
     if (!kDebugMode) return child;

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:toastification/toastification.dart';
 
 import '../embedder/embedder_mixin.dart';
 import '../engine/bridge_mixin.dart';
@@ -107,102 +108,55 @@ base class SystemBase extends ContextWrapper
     await engineBridgerScope.onCreateEngine(this);
     // 初始化应用
     await init(plugins.call());
+
     // 启动应用
     return await runner(
-      WidgetsApp(
-        color: Colors.transparent,
-        debugShowCheckedModeBanner: false,
-        locale: const Locale('zh', 'CN'),
-        supportedLocales: const [Locale('zh', 'CN')],
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        pageRouteBuilder: <T>(RouteSettings settings, WidgetBuilder builder) {
-          return MaterialPageRoute(builder: builder, settings: settings);
-        },
-        initialRoute: routeApp,
-        routes: {
-          routeApp: (context) {
-            return AppBanner(
-              app: app,
-              host: context,
-              attach: super.attachBuildContext,
-              open: () async => await buildDialog(
-                super.getBuildContext(),
-              ),
-              exec: exec,
-            );
-          },
-          routeManager: (context) {
-            return Theme(
-              data: ThemeData(
-                useMaterial3: true,
-                brightness: MediaQuery.platformBrightnessOf(context),
-              ),
-              child: Material(
-                child: Directionality(
-                  textDirection: TextDirection.ltr,
-                  child: buildManager(context),
-                ),
-              ),
-            );
-          },
-        },
+      Builder(
+        builder: (context) => Theme(
+          data: ThemeData(
+            useMaterial3: true,
+            brightness: MediaQuery.platformBrightnessOf(
+              context,
+            ),
+          ),
+          child: ToastificationWrapper(
+            child: WidgetsApp(
+              initialRoute: routeApp,
+              pageRouteBuilder:
+                  <T>(RouteSettings settings, WidgetBuilder builder) {
+                return MaterialPageRoute(builder: builder, settings: settings);
+              },
+              routes: {
+                routeApp: (context) {
+                  return AppBanner(
+                    app: app,
+                    host: context,
+                    wrapper: this,
+                    open: buildDialog,
+                    exec: exec,
+                  );
+                },
+                routeManager: (context) {
+                  return Material(
+                    child: buildManager(context),
+                  );
+                },
+              },
+              title: packageName,
+              color: Colors.transparent,
+              locale: const Locale('zh', 'CN'),
+              localizationsDelegates: const [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: const [Locale('zh', 'CN')],
+              debugShowCheckedModeBanner: false,
+            ),
+          ),
+        ),
       ),
     );
-
-    // return await runner(
-    //   Builder(
-    //     builder: (context) => Theme(
-    //       data: ThemeData(
-    //         useMaterial3: true,
-    //         brightness: MediaQuery.platformBrightnessOf(context),
-    //       ),
-    //       child: Material(
-    //         child: Directionality(
-    //           textDirection: TextDirection.ltr,
-    //           child: Localizations(
-    //             locale: const Locale('zh', 'CN'),
-    //             delegates: const [
-    //               GlobalMaterialLocalizations.delegate,
-    //               GlobalWidgetsLocalizations.delegate,
-    //               GlobalCupertinoLocalizations.delegate,
-    //             ],
-    //             child: Navigator(
-    //               initialRoute: routeApp,
-    //               onGenerateRoute: (settings) {
-    //                 switch (settings.name) {
-    //                   case routeApp:
-    //                     return MaterialPageRoute(
-    //                       builder: (context) {
-    //                         return AppBanner(
-    //                           app: app,
-    //                           host: context,
-    //                           attach: super.attachBuildContext,
-    //                           open: buildDialog,
-    //                           exec: exec,
-    //                         );
-    //                       },
-    //                     );
-    //                   case routeManager:
-    //                     return MaterialPageRoute(
-    //                       builder: (context) => buildManager(context),
-    //                     );
-    //                   default:
-    //                     return MaterialPageRoute(
-    //                       builder: (context) => const Placeholder(),
-    //                     );
-    //                 }
-    //               },
-    //             ),
-    //           ),
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 
   /// 方法调用
@@ -245,7 +199,10 @@ base class SystemBase extends ContextWrapper
 
   @override
   Future<dynamic> launchDialog() async {
-    return await buildDialog(getBuildContext(), isManager: true);
+    return await buildDialog(
+      super.getBuildContext(),
+      isManager: true,
+    );
   }
 
   /// 打开管理器
@@ -253,7 +210,7 @@ base class SystemBase extends ContextWrapper
   @override
   Future<dynamic> launchManager() async {
     return await Navigator.of(
-      getBuildContext(),
+      super.getBuildContext(),
       rootNavigator: true,
     ).pushNamed(routeManager);
   }

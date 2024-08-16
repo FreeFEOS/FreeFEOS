@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:toastification/toastification.dart';
 
 import '../event/event_buffer.dart';
 import '../event/rendered_event.dart';
@@ -42,7 +43,14 @@ class _LogPageState extends State<LogPage> {
     super.didChangeDependencies();
     _renderedBuffer.clear();
     for (var event in EventBuffer.outputEventBuffer) {
-      final ParserWrapper parser = AnsiParser(context: context);
+      final ParserWrapper parser = AnsiParser(
+        context: context,
+        showTips: () => toastification.show(
+          context: context,
+          title: const Text('已复制到剪贴板!'),
+          icon: const Icon(Icons.check)
+        ),
+      );
       final String text = event.lines.join('\n');
       int currentId = 0;
       parser.parse(text);

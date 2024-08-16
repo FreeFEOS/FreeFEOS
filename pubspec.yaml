@@ -30,6 +30,8 @@ dependencies:
   animations: ^2.0.11
   logging: ^1.2.0
   stack_trace: ^1.11.1
+  super_clipboard: ^0.8.19
+  toastification: ^2.1.0
 
 dev_dependencies:
   ffi: ^2.1.3
@@ -67,6 +69,7 @@ flutter:
         fileName: freefeos_web.dart
         ffiPlugin: true
   assets:
+    - assets/
     - AUTHORS
     - LICENSE
     - README.md
