@@ -6,6 +6,8 @@ enum PluginType {
   /// 运行时基础绑定
   base,
 
+  embedder,
+
   /// 库操作系统内核
   kernel,
 

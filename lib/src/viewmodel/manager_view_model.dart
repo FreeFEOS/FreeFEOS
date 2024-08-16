@@ -94,6 +94,12 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
           size: Theme.of(context).iconTheme.size,
           color: Colors.pinkAccent,
         );
+      case PluginType.embedder:
+        return Icon(
+          Icons.bubble_chart,
+          size: Theme.of(context).iconTheme.size,
+          color: Colors.pinkAccent,
+        );
       case PluginType.engine:
         return Icon(
           Icons.miscellaneous_services,
@@ -178,6 +184,8 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
       // 绑定通信层
       case PluginType.base:
         return '绑定通信层';
+      case PluginType.embedder:
+        return '平台嵌入层';
       // 平台插件
       case PluginType.engine:
         return '引擎插件';

@@ -60,7 +60,7 @@ final class SystemEngine extends EnginePlugin
       case 'get_platform_plugins':
         result.success(
           execPluginMethod(
-            'engine_embedder',
+            connectChannel,
             'getPlugins',
           ),
         );

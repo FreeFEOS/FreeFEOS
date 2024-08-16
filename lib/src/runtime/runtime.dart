@@ -27,6 +27,12 @@ final class SystemRuntime extends SystemBase {
   /// 插件详细信息列表
   final List<PluginDetails> _pluginDetailsList = [];
 
+  List<RuntimePlugin> get innerList => [
+        super.base,
+        this,
+        super.embedder,
+      ];
+
   /// 插件通道
   @override
   String get pluginChannel => runtimeChannel;
@@ -186,7 +192,24 @@ final class SystemRuntime extends SystemBase {
   /// 初始化运行时
   Future<void> _initRuntime() async {
     // 初始化运行时
-    for (var element in [super.base, this, super.embedder]) {
+    for (var element in innerList) {
+      // 类型
+      PluginType type = PluginType.unknown;
+      // 判断
+      switch (element.pluginChannel) {
+        case baseChannel:
+          type = PluginType.base;
+          break;
+        case runtimeChannel:
+          type = PluginType.runtime;
+          break;
+        case embedderChannel:
+          type = PluginType.embedder;
+          break;
+        default:
+          type = PluginType.unknown;
+          break;
+      }
       // 添加到内置插件列表
       _pluginList.add(element);
       // 添加到插件详细信息列表
@@ -196,7 +219,7 @@ final class SystemRuntime extends SystemBase {
           title: element.pluginName,
           description: element.pluginDescription,
           author: element.pluginAuthor,
-          type: element == this ? PluginType.runtime : PluginType.base,
+          type: type,
         ),
       );
     }
@@ -292,7 +315,7 @@ final class SystemRuntime extends SystemBase {
       // 遍历插件列表
       for (var element in _pluginList) {
         // 遍历内部插件列表
-        for (var internalPlugin in [super.base, this, super.embedder]) {
+        for (var internalPlugin in innerList) {
           // 判断是否为内部插件, 且是否不允许访问内部插件
           if (internalPlugin.pluginChannel == channel && !internal) {
             // 返回空结束函数
