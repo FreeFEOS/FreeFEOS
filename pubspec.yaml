@@ -66,12 +66,7 @@ flutter:
       windows:
         dartPluginClass: FreeFEOSRegister
         ffiPlugin: true
-      web:
-        pluginClass: FreeFEOSRegister
-        fileName: freefeos_web.dart
-        ffiPlugin: true
   assets:
-    - assets/
     - AUTHORS
     - LICENSE
     - README.md

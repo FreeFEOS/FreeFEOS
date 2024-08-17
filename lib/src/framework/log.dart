@@ -9,6 +9,8 @@ import '../type/logger_listener.dart';
 import 'log_record.dart';
 
 final class Log {
+  static bool _instanced = false;
+
   /// 初始化日志
   static void init() {
     Logger.root.level = Level.ALL;
@@ -33,6 +35,7 @@ final class Log {
         );
       },
     );
+    _instanced = true;
   }
 
   /// Debug级别
@@ -95,13 +98,21 @@ final class Log {
     dynamic error,
     StackTrace? stackTrace,
   }) {
-    return Logger(tag).log(
-      level,
-      message,
-      error,
-      stackTrace,
-      null,
-    );
+    if (_instanced) {
+      return Logger(tag).log(
+        level,
+        message,
+        error,
+        stackTrace,
+        null,
+      );
+    } else {
+      debugPrint(
+        'tag: $tag, '
+        'message: $message, '
+        'error: $error',
+      );
+    }
   }
 
   static void registerListener(LoggerListener onRecord) {
