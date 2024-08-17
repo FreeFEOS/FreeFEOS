@@ -93,8 +93,8 @@ base class SystemBase extends ContextWrapper
     WidgetsFlutterBinding.ensureInitialized();
     // 初始化内核桥接
     await initKernelBridge();
-    // await RustLib.init();
     // TODO: 内核相关操作
+    //kernelBridgeScope.
 
     // 初始化服务桥接
     await initServerBridge();
@@ -115,6 +115,17 @@ base class SystemBase extends ContextWrapper
             useMaterial3: true,
             brightness: MediaQuery.platformBrightnessOf(
               context,
+            ),
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.blue,
+              brightness: MediaQuery.platformBrightnessOf(
+                context,
+              ),
+            ),
+            pageTransitionsTheme: const PageTransitionsTheme(
+              builders: <TargetPlatform, PageTransitionsBuilder>{
+                TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
+              },
             ),
           ),
           child: ToastificationWrapper(

@@ -4,24 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:freefeos/freefeos.dart';
 
 typedef Open = Future<void> Function();
-typedef Exec = Future<dynamic> Function(String channel, String method,
-    [dynamic arguments]);
+typedef Exec = Future<dynamic> Function(
+  String channel,
+  String method, [
+  dynamic arguments,
+]);
+
+late Open mOpen;
+late Exec mExec;
 
 Future<void> main() async {
   await runFreeFEOSApp(
     runner: (app) async => runApp(app),
     plugins: () => const [ExamplePlugin()],
     app: (context, open, exec) {
-      return MyApp(open, exec);
+      mOpen = open;
+      mExec = exec;
+      return const MyApp();
     },
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp(this.open, this.exec, {super.key});
-
-  final Open? open;
-  final Exec? exec;
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +36,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.deepPurple,
+          brightness: MediaQuery.platformBrightnessOf(
+            context,
+          ),
         ),
         pageTransitionsTheme: const PageTransitionsTheme(
           builders: <TargetPlatform, PageTransitionsBuilder>{
@@ -38,23 +46,13 @@ class MyApp extends StatelessWidget {
           },
         ),
       ),
-      home: MyHomePage(
-        open: open!,
-        exec: exec!,
-      ),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({
-    super.key,
-    required this.open,
-    required this.exec,
-  });
-
-  final Open open;
-  final Exec exec;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -65,7 +63,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text(Global.appName),
       ),
       body: Center(
@@ -73,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             FilledButton(
-              onPressed: () => widget.open(),
+              onPressed: () => mOpen(),
               child: const Text('调试菜单'),
             ),
             const Text(
@@ -88,12 +85,26 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
+            FilledButton(
+              onPressed: () => Navigator.of(context, rootNavigator: false)
+                  .push(MaterialPageRoute(builder: (context) {
+                return Scaffold(
+                  appBar: AppBar(
+                    title: Text('title'),
+                  ),
+                  body: Center(
+                    child: Text('body'),
+                  ),
+                );
+              })),
+              child: const Text('2'),
+            ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await widget.exec(
+          await mExec(
             'example_channel',
             Global.add,
           );
