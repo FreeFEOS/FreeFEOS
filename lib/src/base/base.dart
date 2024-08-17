@@ -247,7 +247,7 @@ base class SystemBase extends ContextWrapper
   ]) async {
     return await engineBridgerScope.onMethodCall(
       method,
-      {channel: engineChannel, ...?arguments},
+      {'channel': engineChannel, ...?arguments},
     );
   }
 

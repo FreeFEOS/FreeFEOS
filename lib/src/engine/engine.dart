@@ -143,7 +143,7 @@ final class SystemEngine extends EnginePlugin
     dynamic argumentsProxy,
   ]) async {
     return await execMethodCall(
-      argumentsProxy[channel],
+      argumentsProxy['channel'],
       methodProxy,
       argumentsProxy,
     );
