@@ -1,18 +1,17 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:freefeos/src/intl/l10n.dart';
-import 'package:freefeos/src/values/tag.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../base/base.dart';
 import '../framework/log.dart';
+import '../intl/l10n.dart';
 import '../plugin/plugin_details.dart';
 import '../plugin/plugin_runtime.dart';
 import '../plugin/plugin_type.dart';
 import '../values/channel.dart';
 import '../values/placeholder.dart';
+import '../values/tag.dart';
 import '../viewmodel/manager_view_model.dart';
 import '../widget/manager.dart';
 
@@ -246,6 +245,7 @@ final class SystemRuntime extends SystemBase {
         }
       }
     } catch (exception) {
+      Log.e(tag: runtimeTag, message: '_initEnginePlugin', error: exception);
       // 平台错误添加未知插件占位
       _pluginDetailsList.add(
         PluginDetails.formMap(
@@ -273,7 +273,8 @@ final class SystemRuntime extends SystemBase {
           ),
         );
       }
-    } on PlatformException {
+    } catch (exception) {
+      Log.e(tag: runtimeTag, message: '_initPlatformPlugin', error: exception);
       // 平台错误添加未知插件占位
       _pluginDetailsList.add(
         PluginDetails.formJSON(
@@ -319,35 +320,15 @@ final class SystemRuntime extends SystemBase {
         for (var internalPlugin in innerList) {
           // 判断是否为内部插件, 且是否不允许访问内部插件
           if (internalPlugin.pluginChannel == channel && !internal) {
-            Log.e(
-              tag: runtimeTag,
-              message: '插件代码调用失败!\n'
-                  '未经允许的访问: $channel!\n',
-            );
             // 返回空结束函数
             return await null;
           }
         }
         if (element.pluginChannel == channel) {
           try {
-            return await element.onMethodCall(method, arguments).then((result) {
-              Log.d(
-                tag: runtimeTag,
-                message: '插件代码调用成功!\n'
-                    '通道名称:$channel.\n'
-                    '方法名称:$method.\n'
-                    '返回结果:$result.',
-              );
-            });
+            return await element.onMethodCall(method, arguments);
           } catch (exception) {
-            Log.e(
-              tag: runtimeTag,
-              message: '插件代码调用失败!\n'
-                  '通道名称:$channel.\n'
-                  '方法名称:$method.\n',
-              error: exception,
-            );
-            return await null;
+            rethrow;
           }
         }
       }
