@@ -7,6 +7,7 @@ import 'package:toastification/toastification.dart';
 
 import '../embedder/embedder_mixin.dart';
 import '../engine/bridge_mixin.dart';
+import '../intl/l10n.dart';
 import '../plugin/plugin_runtime.dart';
 import '../type/app_builder.dart';
 import '../type/app_runner.dart';
@@ -160,11 +161,12 @@ base class SystemBase extends ContextWrapper
               color: Colors.transparent,
               locale: const Locale('zh', 'CN'),
               localizationsDelegates: const [
+                IntlLocalizations.delegate,
                 GlobalMaterialLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,
               ],
-              supportedLocales: const [Locale('zh', 'CN')],
+              supportedLocales: IntlLocalizations.delegate.supportedLocales,
               debugShowCheckedModeBanner: false,
             ),
           ),
