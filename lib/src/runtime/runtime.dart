@@ -39,7 +39,7 @@ final class SystemRuntime extends SystemBase {
 
   /// 插件描述
   @override
-  String get pluginDescription => '操作系统运行时';
+  String get pluginDescription => '系统运行时';
 
   /// 插件名称
   @override

@@ -25,6 +25,7 @@ Logo先欠着
   
 * 完整的[Flutter](https://docs.flutter.dev/get-started/install)开发环境
 * [Rust](https://www.rust-lang.org/tools/install)工具链
+* [LLVM]()
 
 2.创建新的Flutter项目
 

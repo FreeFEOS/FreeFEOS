@@ -23,7 +23,7 @@ final class PlatformEmbedder extends Service
   String get pluginChannel => embedderChannel;
 
   @override
-  String get pluginDescription => 'PlatformEmbedder';
+  String get pluginDescription => '系统与平台通信';
 
   @override
   String get pluginName => 'PlatformEmbedder';

@@ -51,11 +51,11 @@ base class SystemBase extends ContextWrapper
 
   /// 插件描述
   @override
-  String get pluginDescription => '框架各个部分的绑定与通信';
+  String get pluginDescription => baseDescription;
 
   /// 插件名称
   @override
-  String get pluginName => 'SystemBase';
+  String get pluginName => baseName;
 
   /// 插件界面
   @override
@@ -65,9 +65,7 @@ base class SystemBase extends ContextWrapper
         final viewModel = buildViewModel(context);
         assert(() {
           if (viewModel is! ManagerViewModel) {
-            throw FlutterError(
-              'View Model 类型错误!',
-            );
+            throw FlutterError(viewModelTypeError);
           }
           return true;
         }());

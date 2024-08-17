@@ -96,7 +96,7 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
         );
       case PluginType.embedder:
         return Icon(
-          Icons.bubble_chart,
+          Icons.keyboard_double_arrow_down,
           size: Theme.of(context).iconTheme.size,
           color: Colors.pinkAccent,
         );
