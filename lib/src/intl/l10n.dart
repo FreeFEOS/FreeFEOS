@@ -50,11 +50,61 @@ class IntlLocalizations {
     return Localizations.of<IntlLocalizations>(context, IntlLocalizations);
   }
 
-  /// `title`
-  String get title {
+  /// `FreeFEOS`
+  String get bannerTitle {
     return Intl.message(
-      'title',
-      name: 'title',
+      'FreeFEOS',
+      name: 'bannerTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View Model 类型错误!`
+  String get viewModelTypeError {
+    return Intl.message(
+      'View Model 类型错误!',
+      name: 'viewModelTypeError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `调试菜单`
+  String get debugMenuTitle {
+    return Intl.message(
+      '调试菜单',
+      name: 'debugMenuTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `打开管理器`
+  String get openManager {
+    return Intl.message(
+      '打开管理器',
+      name: 'openManager',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `关闭对话框`
+  String get closeDebugMenu {
+    return Intl.message(
+      '关闭对话框',
+      name: 'closeDebugMenu',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `系统管理器`
+  String get managerTitle {
+    return Intl.message(
+      '系统管理器',
+      name: 'managerTitle',
       desc: '',
       args: [],
     );

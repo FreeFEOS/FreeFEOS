@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freefeos/src/intl/l10n.dart';
 
 import '../framework/context_wrapper.dart';
 import '../type/app_builder.dart';
@@ -51,7 +52,9 @@ class _AppBannerState extends State<AppBanner> {
   Widget build(BuildContext context) {
     if (!kShowBanner) return child;
     return Banner(
-      message: 'FreeFEOS',
+      message: IntlLocalizations.of(
+        context,
+      ).bannerTitle,
       textDirection: TextDirection.ltr,
       location: BannerLocation.topStart,
       layoutDirection: TextDirection.ltr,

@@ -2,9 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:freefeos/src/intl/l10n.dart';
+import 'package:freefeos/src/values/tag.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../base/base.dart';
+import '../framework/log.dart';
 import '../plugin/plugin_details.dart';
 import '../plugin/plugin_runtime.dart';
 import '../plugin/plugin_type.dart';
@@ -77,11 +80,6 @@ final class SystemRuntime extends SystemBase {
     await _initPlatformPlugin();
     // 初始化普通插件
     await _initPlugins(plugins: plugins);
-
-    // await super.execEngine(
-    //   'openDialog',
-    //   {'channel': 'engine_embedder'},
-    // );
   }
 
   /// 获取管理器
@@ -128,15 +126,15 @@ final class SystemRuntime extends SystemBase {
       context: context,
       useRootNavigator: false,
       builder: (context) => SimpleDialog(
-        title: const Text('调试菜单'),
+        title: Text(IntlLocalizations.of(context).debugMenuTitle),
         children: <SimpleDialogOption>[
           if (!isManager)
             SimpleDialogOption(
               padding: const EdgeInsets.all(0),
               child: Tooltip(
-                message: '打开管理器',
+                message: IntlLocalizations.of(context).openManager,
                 child: ListTile(
-                  title: const Text('打开管理器'),
+                  title: Text(IntlLocalizations.of(context).openManager),
                   leading: const Icon(Icons.open_in_new),
                   contentPadding: const EdgeInsets.symmetric(horizontal: 24.0),
                   enabled: true,
@@ -147,9 +145,9 @@ final class SystemRuntime extends SystemBase {
           SimpleDialogOption(
             padding: const EdgeInsets.all(0),
             child: Tooltip(
-              message: '关闭对话框',
+              message: IntlLocalizations.of(context).closeDebugMenu,
               child: ListTile(
-                title: const Text('关闭对话框'),
+                title: Text(IntlLocalizations.of(context).closeDebugMenu),
                 leading: const Icon(Icons.close),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 24.0),
                 enabled: true,
@@ -185,11 +183,11 @@ final class SystemRuntime extends SystemBase {
     // 获取包信息
     PackageInfo info = await PackageInfo.fromPlatform();
     // 获取应用名称
-    _appName = info.appName.isNotEmpty ? info.appName : "未知";
+    _appName = info.appName.isNotEmpty ? info.appName : "unknown";
     // 获取应用版本
-    String name = info.version.isNotEmpty ? info.version : "未知";
-    String code = info.buildNumber.isNotEmpty ? info.buildNumber : "未知";
-    _appVersion = "版本\t$name\t(版本号\t$code)";
+    String name = info.version.isNotEmpty ? info.version : "unknown";
+    String code = info.buildNumber.isNotEmpty ? info.buildNumber : "unknown";
+    _appVersion = "$name\t($code)";
   }
 
   /// 初始化运行时
@@ -321,12 +319,36 @@ final class SystemRuntime extends SystemBase {
         for (var internalPlugin in innerList) {
           // 判断是否为内部插件, 且是否不允许访问内部插件
           if (internalPlugin.pluginChannel == channel && !internal) {
+            Log.e(
+              tag: runtimeTag,
+              message: '插件代码调用失败!\n'
+                  '未经允许的访问: $channel!\n',
+            );
             // 返回空结束函数
             return await null;
           }
         }
         if (element.pluginChannel == channel) {
-          return await element.onMethodCall(method, arguments);
+          try {
+            return await element.onMethodCall(method, arguments).then((result) {
+              Log.d(
+                tag: runtimeTag,
+                message: '插件代码调用成功!\n'
+                    '通道名称:$channel.\n'
+                    '方法名称:$method.\n'
+                    '返回结果:$result.',
+              );
+            });
+          } catch (exception) {
+            Log.e(
+              tag: runtimeTag,
+              message: '插件代码调用失败!\n'
+                  '通道名称:$channel.\n'
+                  '方法名称:$method.\n',
+              error: exception,
+            );
+            return await null;
+          }
         }
       }
     } else {

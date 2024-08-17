@@ -66,7 +66,11 @@ base class SystemBase extends ContextWrapper
         final viewModel = buildViewModel(context);
         assert(() {
           if (viewModel is! ManagerViewModel) {
-            throw FlutterError(viewModelTypeError);
+            throw FlutterError(
+              IntlLocalizations.of(
+                context,
+              ).viewModelTypeError,
+            );
           }
           return true;
         }());
@@ -87,7 +91,10 @@ base class SystemBase extends ContextWrapper
     // 初始化日志
     Log.init();
     // 打印横幅
-    Log.d(tag: baseTag, message: '\n${utf8.decode(base64Decode(banner))}');
+    Log.d(
+      tag: baseTag,
+      message: '\n${utf8.decode(base64Decode(banner))}',
+    );
     // 初始化控件绑定
     WidgetsFlutterBinding.ensureInitialized();
     // 初始化内核桥接
@@ -240,7 +247,7 @@ base class SystemBase extends ContextWrapper
   ]) async {
     return await engineBridgerScope.onMethodCall(
       method,
-      {'channel': engineChannel, ...?arguments},
+      {channel: engineChannel, ...?arguments},
     );
   }
 

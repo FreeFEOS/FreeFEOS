@@ -1,4 +1,9 @@
 {
     "@@locale": "zh",
-    "title": "title"
+    "bannerTitle": "FreeFEOS",
+    "viewModelTypeError": "View Model 类型错误!",
+    "debugMenuTitle": "调试菜单",
+    "openManager": "打开管理器",
+    "closeDebugMenu": "关闭对话框",
+    "managerTitle": "系统管理器"
 }

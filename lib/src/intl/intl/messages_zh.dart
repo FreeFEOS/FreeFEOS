@@ -22,6 +22,12 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "title": MessageLookupByLibrary.simpleMessage("title")
+        "bannerTitle": MessageLookupByLibrary.simpleMessage("FreeFEOS"),
+        "closeDebugMenu": MessageLookupByLibrary.simpleMessage("关闭对话框"),
+        "debugMenuTitle": MessageLookupByLibrary.simpleMessage("调试菜单"),
+        "managerTitle": MessageLookupByLibrary.simpleMessage("系统管理器"),
+        "openManager": MessageLookupByLibrary.simpleMessage("打开管理器"),
+        "viewModelTypeError":
+            MessageLookupByLibrary.simpleMessage("View Model 类型错误!")
       };
 }

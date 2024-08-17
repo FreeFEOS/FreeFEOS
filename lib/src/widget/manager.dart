@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:provider/provider.dart';
 
+import '../intl/l10n.dart';
 import '../viewmodel/manager_view_model.dart';
 import 'home_page.dart';
 import 'log_page.dart';
@@ -104,10 +105,10 @@ class _SystemManagerState extends State<SystemManager> {
       ),
       useDrawer: false,
       appBar: AppBar(
-        title: const Text('管理器'),
+        title: Text(IntlLocalizations.of(context).managerTitle),
         actions: [
           Tooltip(
-            message: '调试菜单',
+            message: IntlLocalizations.of(context).debugMenuTitle,
             child: Consumer<ManagerViewModel>(
               builder: (context, viewModel, child) => IconButton(
                 onPressed: viewModel.openDebugMenu,

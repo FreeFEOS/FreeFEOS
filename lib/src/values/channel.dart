@@ -1,3 +1,4 @@
+const String channel = 'channel';
 // runtime
 const String baseChannel = 'system_base';
 const String runtimeChannel = 'system_runtime';

@@ -143,7 +143,7 @@ final class SystemEngine extends EnginePlugin
     dynamic argumentsProxy,
   ]) async {
     return await execMethodCall(
-      argumentsProxy['channel'],
+      argumentsProxy[channel],
       methodProxy,
       argumentsProxy,
     );
@@ -174,7 +174,7 @@ final class SystemEngine extends EnginePlugin
         }
       }
     } catch (exception) {
-      Log.d(
+      Log.e(
         tag: engineTag,
         message: '插件代码调用失败!\n$exception'
             '通道名称:$channel.\n'
