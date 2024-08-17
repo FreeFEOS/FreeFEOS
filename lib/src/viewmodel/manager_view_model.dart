@@ -273,7 +273,10 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
     PluginDetails details,
   ) async {
     if (MediaQuery.sizeOf(context).width < 600) {
-      return await Navigator.of(context).push(
+      return await Navigator.of(
+        context,
+        rootNavigator: true,
+      ).push(
         MaterialPageRoute(
           builder: (context) {
             return Scaffold(
@@ -288,6 +291,7 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
     } else {
       return await showDialog(
         context: context,
+        useRootNavigator: true,
         builder: (context) {
           return Dialog(
             child: ConstrainedBox(
@@ -297,7 +301,10 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
               child: Scaffold(
                 appBar: AppBar(
                   leading: IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: () => Navigator.of(
+                      context,
+                      rootNavigator: true,
+                    ).pop(),
                     icon: const Icon(Icons.close),
                   ),
                   title: Text(details.title),

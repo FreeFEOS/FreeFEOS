@@ -153,7 +153,10 @@ final class SystemRuntime extends SystemBase {
                 leading: const Icon(Icons.close),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 24.0),
                 enabled: true,
-                onTap: () => Navigator.of(context).pop(),
+                onTap: () => Navigator.of(
+                  context,
+                  rootNavigator: true,
+                ).pop(),
               ),
             ),
           ),

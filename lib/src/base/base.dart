@@ -206,7 +206,7 @@ base class SystemBase extends ContextWrapper
   }) async {
     return await showDialog(
       context: context,
-      useRootNavigator: false,
+      useRootNavigator: true,
       builder: (_) => Text(
         isManager.toString(),
       ),
