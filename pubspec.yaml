@@ -75,6 +75,13 @@ flutter:
     - CHANGELOG.md
     - screenshot.png
 
+flutter_intl:
+  enabled: true
+  class_name: IntlLocalizations
+  main_locale: zh
+  arb_dir: lib/src/l10n
+  output_dir: lib/src/intl
+
 screenshots:
   - description: "Screenshots 0"
     path: screenshot.png
@@ -83,10 +90,3 @@ topics:
   - framework
   - flutter
   - libraryos
-
-flutter_intl:
-  enabled: true
-  class_name: IntlLocalizations
-  main_locale: zh
-  arb_dir: lib/src/l10n
-  output_dir: lib/src/intl

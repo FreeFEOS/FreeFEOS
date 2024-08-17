@@ -86,17 +86,20 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             FilledButton(
-              onPressed: () => Navigator.of(context, rootNavigator: false)
-                  .push(MaterialPageRoute(builder: (context) {
-                return Scaffold(
-                  appBar: AppBar(
-                    title: Text('title'),
-                  ),
-                  body: Center(
-                    child: Text('body'),
-                  ),
-                );
-              })),
+              onPressed: () => Navigator.of(context, rootNavigator: false).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return Scaffold(
+                      appBar: AppBar(
+                        title: const Text('title'),
+                      ),
+                      body: const Center(
+                        child: Text('body'),
+                      ),
+                    );
+                  },
+                ),
+              ),
               child: const Text('2'),
             ),
           ],
