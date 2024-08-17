@@ -1,7 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.freefeos.freefeos">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.FAKE_PACKAGE_SIGNATURE" />
 
     <queries>
@@ -16,7 +14,7 @@
             android:value="@string/fake_signature" />
 
         <service
-            android:name=".FreeFEOSEmbedder"
+            android:name="com.freefeos.freefeos.FreeFEOSEmbedder"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
