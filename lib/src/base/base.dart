@@ -26,12 +26,14 @@ import '../values/drawable.dart';
 import '../server/server.dart';
 import '../viewmodel/manager_view_model.dart';
 import '../widget/banner.dart';
+import 'base_entry.dart';
 import 'base_mixin.dart';
 import 'base_wrapper.dart';
 
 base class SystemBase extends ContextWrapper
     with
         RuntimeMixin,
+        BaseEntry,
         BaseMixin,
         EmbedderMixin,
         KernelBridgeMixin,
@@ -82,18 +84,18 @@ base class SystemBase extends ContextWrapper
 
   /// 运行应用
   @override
-  Future<void> runFreeFEOSApp(
-    AppRunner runner,
-    PluginList plugins,
-    AppBuilder app,
-    Object? error,
-  ) async {
+  Future<void> runFreeFEOSApp({
+    required AppRunner runner,
+    required PluginList plugins,
+    required AppBuilder app,
+    dynamic error,
+  }) async {
     // 初始化日志
     Log.init();
     // 打印横幅
     Log.d(
       tag: baseTag,
-      message: '\n${utf8.decode(base64Decode(banner))}',
+      message: utf8.decode(base64Decode(banner)),
     );
     // 初始化控件绑定
     WidgetsFlutterBinding.ensureInitialized();
@@ -112,9 +114,8 @@ base class SystemBase extends ContextWrapper
     await engineBridgerScope.onCreateEngine(this);
     // 初始化应用
     await init(plugins.call());
-
     // 启动应用
-    return await runner(
+    return await runner.call(
       Builder(
         builder: (context) => Theme(
           data: ThemeData(
@@ -192,7 +193,9 @@ base class SystemBase extends ContextWrapper
   }
 
   @override
-  Future<void> init(List<RuntimePlugin> plugins) async {}
+  Future<void> init(List<RuntimePlugin> plugins) async {
+    return await null;
+  }
 
   /// 获取管理器
   @override

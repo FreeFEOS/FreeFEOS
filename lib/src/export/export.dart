@@ -26,9 +26,8 @@ Future<void> runFreeFEOSApp({
   ) app,
 }) async {
   return await FreeFEOSInterface.instance.runFreeFEOSApp(
-    runner,
-    plugins,
-    app,
-    null,
+    runner: runner,
+    plugins: plugins,
+    app: app,
   );
 }

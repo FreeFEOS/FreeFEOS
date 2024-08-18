@@ -37,7 +37,7 @@ class _AppBannerState extends State<AppBanner> {
     widget.wrapper.attachBuildContext.call(
       widget.host,
     );
-    child = widget.app(
+    child = widget.app.call(
       widget.host,
       () async {
         return await widget.open(
