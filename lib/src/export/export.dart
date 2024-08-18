@@ -1,14 +1,21 @@
 import 'package:flutter/widgets.dart';
 
 import '../entry/system_entry.dart';
+import '../interface/platform_interface.dart';
 import '../interface/system_interface.dart';
+import '../platform/freefeos_method_channel.dart';
 import '../plugin/plugin_runtime.dart';
 
 /// 注册 freefeos 插件
 ///
 /// 此方法用于通过注册器向Flutter框架注册此插件.
 /// 插件注册由Flutter框架接管, 请勿手动注册.
-void registerFreeFEOS() => FreeFEOSInterface.instance = SystemEntry();
+///
+/// 此方法为内部方法通过导出接口时的权限控制选择性导出.
+void registerFreeFEOS() {
+  FreeFEOSInterface.instance = SystemEntry();
+  FreeFEOSPlatform.instance = MethodChannelFreeFEOS();
+}
 
 abstract interface class FreeFEOSPlugin extends RuntimePlugin {}
 
