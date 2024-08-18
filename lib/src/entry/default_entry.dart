@@ -29,50 +29,51 @@ final class DefaultEntry extends FreeFEOSInterface {
     } else {
       platformName = Platform.operatingSystem;
     }
-    try {
-      return await runner(
-        Builder(
-          builder: (context) => app(
-            context,
-            () async {
-              Log.w(
-                tag: entryTag,
-                message: '不支持当前平台: $platformName, '
-                    '无法打开调试对话框.',
-              );
-            },
-            (
-              String channel,
-              String method, [
-              dynamic arguments,
-            ]) async {
-              Log.w(
-                tag: entryTag,
-                message: '不支持当前平台: $platformName, '
-                    '当前调用的插件通道: $channel, '
-                    '方法名: $method, '
-                    '携带参数: $arguments, '
-                    '无法执行操作, 将返回空.',
-              );
-              return await null;
-            },
+    return await () async {
+      try {
+        return await runner(
+          Builder(
+            builder: (context) => app(
+              context,
+              () async {
+                Log.w(
+                  tag: entryTag,
+                  message: '不支持当前平台: $platformName, '
+                      '无法打开调试对话框.',
+                );
+              },
+              (
+                String channel,
+                String method, [
+                dynamic arguments,
+              ]) async {
+                Log.w(
+                  tag: entryTag,
+                  message: '不支持当前平台: $platformName, '
+                      '当前调用的插件通道: $channel, '
+                      '方法名: $method, '
+                      '携带参数: $arguments, '
+                      '无法执行操作, 将返回空.',
+                );
+              },
+            ),
           ),
-        ),
-      ).then(
-        (_) => Log.w(
-          tag: entryTag,
-          message: '不支持当前平台: $platformName, '
-              '框架所有代码将不会参与执行, '
-              '${plugins().length}个插件不会被加载.',
-        ),
-      );
-    } catch (exception) {
-      return await super.runFreeFEOSApp(
-        runner: runner,
-        plugins: plugins,
-        app: app,
-        error: exception,
-      );
-    }
+        ).then(
+          (_) => Log.w(
+            tag: entryTag,
+            message: '不支持当前平台: $platformName, '
+                '框架所有代码将不会参与执行, '
+                '${plugins().length}个插件不会被加载.',
+          ),
+        );
+      } catch (exception) {
+        return await super.runFreeFEOSApp(
+          runner: runner,
+          plugins: plugins,
+          app: app,
+          error: exception,
+        );
+      }
+    }();
   }
 }

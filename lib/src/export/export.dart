@@ -11,7 +11,7 @@ import '../plugin/plugin_runtime.dart';
 /// 此方法用于通过注册器向Flutter框架注册此插件.
 /// 插件注册由Flutter框架接管, 请勿手动注册.
 ///
-/// 此方法为内部方法通过导出接口时的权限控制选择性导出.
+/// 此方法为内部方法通过导出接口时的权限控制.
 void registerFreeFEOS() {
   FreeFEOSInterface.instance = SystemEntry();
   FreeFEOSPlatform.instance = MethodChannelFreeFEOS();

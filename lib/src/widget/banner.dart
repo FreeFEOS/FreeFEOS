@@ -39,11 +39,9 @@ class _AppBannerState extends State<AppBanner> {
     );
     child = widget.app.call(
       widget.host,
-      () async {
-        return await widget.open(
-          widget.host,
-        );
-      },
+      () async => await widget.open(
+        widget.host,
+      ),
       widget.exec,
     );
   }

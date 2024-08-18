@@ -15,20 +15,22 @@ final class SystemEntry extends FreeFEOSInterface with BaseEntry {
     required AppBuilder app,
     dynamic error,
   }) async {
-    try {
-      return await interface.runFreeFEOSApp(
-        runner: runner,
-        plugins: plugins,
-        app: app,
-        error: error,
-      );
-    } catch (exception) {
-      return await super.runFreeFEOSApp(
-        runner: runner,
-        plugins: plugins,
-        app: app,
-        error: exception,
-      );
-    }
+    return await () async {
+      try {
+        return await interface.runFreeFEOSApp(
+          runner: runner,
+          plugins: plugins,
+          app: app,
+          error: error,
+        );
+      } catch (exception) {
+        return await super.runFreeFEOSApp(
+          runner: runner,
+          plugins: plugins,
+          app: app,
+          error: exception,
+        );
+      }
+    }();
   }
 }
