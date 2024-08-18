@@ -272,51 +272,23 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
     BuildContext host,
     PluginDetails details,
   ) async {
-    if (MediaQuery.sizeOf(context).width < 600) {
-      return await Navigator.of(
-        context,
-        rootNavigator: true,
-      ).push(
-        MaterialPageRoute(
-          builder: (context) {
-            return Scaffold(
-              appBar: AppBar(
-                title: Text(details.title),
-              ),
-              body: getPluginWidget(context, details),
-            );
-          },
-        ),
-      );
-    } else {
-      return await showDialog(
-        context: context,
-        useRootNavigator: true,
+    return await Navigator.of(
+      context,
+      rootNavigator: true,
+    ).push(
+      MaterialPageRoute(
         builder: (context) {
-          return Dialog(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(
-                maxWidth: 400,
-              ),
-              child: Scaffold(
-                appBar: AppBar(
-                  leading: IconButton(
-                    onPressed: () => Navigator.of(
-                      context,
-                      rootNavigator: true,
-                    ).pop(),
-                    icon: const Icon(Icons.close),
-                  ),
-                  title: Text(details.title),
-                  backgroundColor: Colors.transparent,
-                ),
-                body: getPluginWidget(context, details),
-                backgroundColor: Colors.transparent,
-              ),
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(details.title),
+            ),
+            body: getPluginWidget(
+              context,
+              details,
             ),
           );
         },
-      );
-    }
+      ),
+    );
   }
 }
