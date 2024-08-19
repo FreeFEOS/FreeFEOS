@@ -6,7 +6,7 @@ Logo先欠着
 
 
 [![Pub Version](https://img.shields.io/pub/v/freefeos?include_prereleases&style=flat-square&logo=dart&logoColor=white&label=Pub&color=blue)](https://pub.dev/packages/freefeos)
-[![GitHub Repo stars](https://img.shields.io/github/stars/FreeFEOS/FreeFEOS?style=flat-square&logo=github&logoColor=white&label=Stars&color=blue)](https://github.com/FreeFEOS/FreeFEOS)
+[![GitHub Repo stars](https://img.shields.io/github/stars/FreeFEOS/FreeFEOS?style=flat-square&logo=github&logoColor=white&label=Stars&color=blue)](https://github.com/FreeFEOS/FreeFEOS/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/FreeFEOS/FreeFEOS?style=flat-square&logo=github&logoColor=white&label=Forks&color=blue)](https://github.com/FreeFEOS/FreeFEOS/fork)
 [![GitHub License](https://img.shields.io/github/license/FreeFEOS/FreeFEOS?style=flat-square&logo=github&logoColor=white&label=License)](https://github.com/FreeFEOS/FreeFEOS/blob/master/LICENSE)
 [![Powered by FreeFEOS](https://img.shields.io/badge/Powered_by-FreeFEOS-deeppink?style=flat-square&logo=flutter&logoColor=white)](https://github.com/FreeFEOS/FreeFEOS)
@@ -25,7 +25,7 @@ Logo先欠着
   
 * 完整的[Flutter](https://docs.flutter.dev/get-started/install)开发环境
 * [Rust](https://www.rust-lang.org/tools/install)工具链
-* [LLVM]()
+* [LLVM](https://pub.dev/packages/ffigen#installing-llvm)
 
 2.创建新的Flutter项目
 
@@ -72,7 +72,7 @@ flutter pub get
 
 ## 致谢
 
-* [FreeRTOS]() : [FreeFEOS]()项目命名的灵感来源.
+* [FreeRTOS](https://github.com/FreeRTOS) : FreeFEOS项目命名的灵感来源.
 
 ## 许可
 该项目采用 BSD-3-Clause 许可证 - 有关详细信息，请参阅 [LICENSE](https://github.com/FreeFEOS/FreeFEOS/blob/master/LICENSE) 文件.
