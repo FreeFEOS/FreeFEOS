@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../intl/l10n.dart';
 import '../plugin/plugin_details.dart';
 import '../plugin/plugin_type.dart';
 import '../type/dialog_launcher.dart';
@@ -177,60 +178,103 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
 
   /// 获取插件类型
   @override
-  String getPluginType(PluginDetails details) {
+  String getPluginType(
+    BuildContext context,
+    PluginDetails details,
+  ) {
     switch (details.type) {
       // 框架运行时
       case PluginType.runtime:
-        return '框架运行时';
+        return IntlLocalizations.of(
+          context,
+        ).pluginTypeRuntime;
       // 绑定通信层
       case PluginType.base:
-        return '绑定通信层';
+        return IntlLocalizations.of(
+          context,
+        ).pluginTypeBase;
+      // 平台嵌入层
       case PluginType.embedder:
-        return '平台嵌入层';
+        return IntlLocalizations.of(
+          context,
+        ).pluginTypeEmbedder;
       // 平台插件
       case PluginType.engine:
-        return '引擎插件';
+        return IntlLocalizations.of(
+          context,
+        ).pluginTypeEngine;
       // 平台插件
       case PluginType.platform:
-        return '平台插件';
+        return IntlLocalizations.of(
+          context,
+        ).pluginTypePlatform;
       // 内核模块
       case PluginType.kernel:
-        return '内核模块';
+        return IntlLocalizations.of(
+          context,
+        ).pluginTypeKernel;
       // 普通插件
       case PluginType.flutter:
-        return '普通插件';
+        return IntlLocalizations.of(
+          context,
+        ).pluginTypeFlutter;
       // 未知类型插件
       case PluginType.unknown:
-        return '未知类型插件';
+        return IntlLocalizations.of(
+          context,
+        ).pluginTypeUnknown;
       // 未知
       default:
-        return 'Unknown';
+        return IntlLocalizations.of(
+          context,
+        ).unknown;
     }
   }
 
   /// 获取插件的动作名
   @override
-  String getPluginAction(PluginDetails details) {
+  String getPluginAction(
+    BuildContext context,
+    PluginDetails details,
+  ) {
     return _isAllowPush(details)
         ? isRuntime(details)
-            ? '打开'
-            : '关于'
-        : '无界面';
+            ? IntlLocalizations.of(
+                context,
+              ).pluginActionOpen
+            : IntlLocalizations.of(
+                context,
+              ).pluginActionAbout
+        : IntlLocalizations.of(
+            context,
+          ).pluginActionNoUI;
   }
 
   /// 获取插件的提示
   @override
-  String getPluginTooltip(PluginDetails details) {
+  String getPluginTooltip(
+    BuildContext context,
+    PluginDetails details,
+  ) {
     return _isAllowPush(details)
         ? isRuntime(details)
-            ? '打开插件的界面'
-            : '关于本框架'
-        : '此插件没有界面';
+            ? IntlLocalizations.of(
+                context,
+              ).pluginTooltipOpen
+            : IntlLocalizations.of(
+                context,
+              ).pluginTooltipAbout
+        : IntlLocalizations.of(
+            context,
+          ).pluginTooltipNoUI;
   }
 
   /// 打开卡片
   @override
-  VoidCallback? openPlugin(PluginDetails details) {
+  VoidCallback? openPlugin(
+    BuildContext context,
+    PluginDetails details,
+  ) {
     // 无法打开的返回空
     return _isAllowPush(details)
         ? () {
@@ -243,7 +287,9 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
                 context: context,
                 applicationName: appName,
                 applicationVersion: appVersion,
-                applicationLegalese: 'Powered by FreeFEOS',
+                applicationLegalese: IntlLocalizations.of(
+                  context,
+                ).openPluginText,
                 useRootNavigator: true,
               );
             }

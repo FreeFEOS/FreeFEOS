@@ -79,9 +79,16 @@ class _SystemManagerState extends State<SystemManager> {
           enabled: true,
         ),
       ],
-      smallBreakpoint: const Breakpoint(endWidth: 600),
-      mediumBreakpoint: const Breakpoint(beginWidth: 600, endWidth: 840),
-      largeBreakpoint: const Breakpoint(beginWidth: 840),
+      smallBreakpoint: const Breakpoint(
+        endWidth: 600,
+      ),
+      mediumBreakpoint: const Breakpoint(
+        beginWidth: 600,
+        endWidth: 840,
+      ),
+      largeBreakpoint: const Breakpoint(
+        beginWidth: 840,
+      ),
       selectedIndex: _currentIndex,
       body: (context) => PageTransitionSwitcher(
         duration: const Duration(
@@ -121,10 +128,16 @@ class _SystemManagerState extends State<SystemManager> {
       ),
       useDrawer: false,
       appBar: AppBar(
-        title: Text(IntlLocalizations.of(context).managerTitle),
+        title: Text(
+          IntlLocalizations.of(
+            context,
+          ).managerTitle,
+        ),
         actions: [
           Tooltip(
-            message: IntlLocalizations.of(context).debugMenuTitle,
+            message: IntlLocalizations.of(
+              context,
+            ).debugMenuTitle,
             child: Consumer<ManagerViewModel>(
               builder: (context, viewModel, child) => IconButton(
                 onPressed: viewModel.openDebugMenu,

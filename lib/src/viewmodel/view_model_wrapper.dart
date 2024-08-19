@@ -19,16 +19,28 @@ abstract interface class ViewModelWrapper {
   Widget getPluginIcon(PluginDetails details);
 
   /// 获取插件类型
-  String getPluginType(PluginDetails details);
+  String getPluginType(
+    BuildContext context,
+    PluginDetails details,
+  );
 
   /// 获取插件的动作名
-  String getPluginAction(PluginDetails details);
+  String getPluginAction(
+    BuildContext context,
+    PluginDetails details,
+  );
 
   /// 获取插件的提示
-  String getPluginTooltip(PluginDetails details);
+  String getPluginTooltip(
+    BuildContext context,
+    PluginDetails details,
+  );
 
   /// 打开卡片
-  VoidCallback? openPlugin(PluginDetails details);
+  VoidCallback? openPlugin(
+    BuildContext context,
+    PluginDetails details,
+  );
 
   String get getAppName;
   String get getAppVersion;

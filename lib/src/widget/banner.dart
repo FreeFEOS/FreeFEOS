@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:freefeos/src/intl/l10n.dart';
 
 import '../framework/context_wrapper.dart';
+import '../intl/l10n.dart';
 import '../type/app_builder.dart';
 import '../type/dialog_builder.dart';
 import '../type/method_execer.dart';

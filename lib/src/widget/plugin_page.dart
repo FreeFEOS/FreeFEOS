@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:freefeos/src/intl/l10n.dart';
 import 'package:provider/provider.dart';
 
+import '../intl/l10n.dart';
 import '../plugin/plugin_details.dart';
 import '../viewmodel/manager_view_model.dart';
 
@@ -26,7 +26,9 @@ class _PluginPageState extends State<PluginPage> {
     return Scrollbar(
       controller: _scrollController,
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 840),
+        constraints: const BoxConstraints(
+          maxWidth: 840,
+        ),
         child: ListView(
           controller: _scrollController,
           children: [
@@ -79,13 +81,15 @@ class PluginCard extends StatelessWidget {
                         details.title,
                         textAlign: TextAlign.start,
                         style: TextStyle(
-                          fontSize:
-                              Theme.of(context).textTheme.titleMedium?.fontSize,
-                          fontFamily: Theme.of(context)
-                              .textTheme
-                              .titleMedium
-                              ?.fontFamily,
-                          height: Theme.of(context).textTheme.bodySmall?.height,
+                          fontSize: Theme.of(
+                            context,
+                          ).textTheme.titleMedium?.fontSize,
+                          fontFamily: Theme.of(
+                            context,
+                          ).textTheme.titleMedium?.fontFamily,
+                          height: Theme.of(
+                            context,
+                          ).textTheme.bodySmall?.height,
                           fontWeight: FontWeight.bold,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -94,22 +98,30 @@ class PluginCard extends StatelessWidget {
                         '${IntlLocalizations.of(context).managerPluginChannel}: ${details.channel}',
                         textAlign: TextAlign.start,
                         style: TextStyle(
-                          fontSize:
-                              Theme.of(context).textTheme.bodySmall?.fontSize,
-                          fontFamily:
-                              Theme.of(context).textTheme.bodySmall?.fontFamily,
-                          height: Theme.of(context).textTheme.bodySmall?.height,
+                          fontSize: Theme.of(
+                            context,
+                          ).textTheme.bodySmall?.fontSize,
+                          fontFamily: Theme.of(
+                            context,
+                          ).textTheme.bodySmall?.fontFamily,
+                          height: Theme.of(
+                            context,
+                          ).textTheme.bodySmall?.height,
                         ),
                       ),
                       Text(
                         '${IntlLocalizations.of(context).managerPluginChannel}: ${details.author}',
                         textAlign: TextAlign.start,
                         style: TextStyle(
-                          fontSize:
-                              Theme.of(context).textTheme.bodySmall?.fontSize,
-                          fontFamily:
-                              Theme.of(context).textTheme.bodySmall?.fontFamily,
-                          height: Theme.of(context).textTheme.bodySmall?.height,
+                          fontSize: Theme.of(
+                            context,
+                          ).textTheme.bodySmall?.fontSize,
+                          fontFamily: Theme.of(
+                            context,
+                          ).textTheme.bodySmall?.fontFamily,
+                          height: Theme.of(
+                            context,
+                          ).textTheme.bodySmall?.height,
                         ),
                       ),
                     ],
@@ -126,7 +138,9 @@ class PluginCard extends StatelessWidget {
             Text(
               details.description,
               textAlign: TextAlign.start,
-              style: Theme.of(context).textTheme.bodySmall?.apply(
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall?.apply(
                     overflow: TextOverflow.ellipsis,
                   ),
               maxLines: 4,
@@ -138,17 +152,31 @@ class PluginCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      viewModel.getPluginType(details),
+                      viewModel.getPluginType(
+                        context,
+                        details,
+                      ),
                       textAlign: TextAlign.start,
-                      style: Theme.of(context).textTheme.bodySmall,
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodySmall,
                     ),
                   ),
                   Tooltip(
-                    message: viewModel.getPluginTooltip(details),
+                    message: viewModel.getPluginTooltip(
+                      context,
+                      details,
+                    ),
                     child: TextButton(
-                      onPressed: viewModel.openPlugin(details),
+                      onPressed: viewModel.openPlugin(
+                        context,
+                        details,
+                      ),
                       child: Text(
-                        viewModel.getPluginAction(details),
+                        viewModel.getPluginAction(
+                          context,
+                          details,
+                        ),
                       ),
                     ),
                   ),

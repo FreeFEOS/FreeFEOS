@@ -46,6 +46,23 @@ class MessageLookup extends MessageLookupByLibrary {
         "managerPluginAuthor": MessageLookupByLibrary.simpleMessage("作者"),
         "managerPluginChannel": MessageLookupByLibrary.simpleMessage("通道"),
         "managerTitle": MessageLookupByLibrary.simpleMessage("系统管理器"),
+        "openPluginText":
+            MessageLookupByLibrary.simpleMessage("Powered by FreeFEOS"),
+        "pluginActionAbout": MessageLookupByLibrary.simpleMessage("关于"),
+        "pluginActionNoUI": MessageLookupByLibrary.simpleMessage("无界面"),
+        "pluginActionOpen": MessageLookupByLibrary.simpleMessage("打开"),
+        "pluginTooltipAbout": MessageLookupByLibrary.simpleMessage("关于本框架"),
+        "pluginTooltipNoUI": MessageLookupByLibrary.simpleMessage("此插件没有界面"),
+        "pluginTooltipOpen": MessageLookupByLibrary.simpleMessage("打开插件的界面"),
+        "pluginTypeBase": MessageLookupByLibrary.simpleMessage("绑定通信层"),
+        "pluginTypeEmbedder": MessageLookupByLibrary.simpleMessage("平台嵌入层"),
+        "pluginTypeEngine": MessageLookupByLibrary.simpleMessage("引擎插件"),
+        "pluginTypeFlutter": MessageLookupByLibrary.simpleMessage("普通插件"),
+        "pluginTypeKernel": MessageLookupByLibrary.simpleMessage("内核模块"),
+        "pluginTypePlatform": MessageLookupByLibrary.simpleMessage("平台插件"),
+        "pluginTypeRuntime": MessageLookupByLibrary.simpleMessage("框架运行时"),
+        "pluginTypeUnknown": MessageLookupByLibrary.simpleMessage("未知类型插件"),
+        "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),
         "viewModelTypeError":
             MessageLookupByLibrary.simpleMessage("View Model 类型错误!")
       };

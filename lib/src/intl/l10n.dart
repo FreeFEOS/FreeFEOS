@@ -249,6 +249,166 @@ class IntlLocalizations {
       args: [],
     );
   }
+
+  /// `框架运行时`
+  String get pluginTypeRuntime {
+    return Intl.message(
+      '框架运行时',
+      name: 'pluginTypeRuntime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `绑定通信层`
+  String get pluginTypeBase {
+    return Intl.message(
+      '绑定通信层',
+      name: 'pluginTypeBase',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `平台嵌入层`
+  String get pluginTypeEmbedder {
+    return Intl.message(
+      '平台嵌入层',
+      name: 'pluginTypeEmbedder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `引擎插件`
+  String get pluginTypeEngine {
+    return Intl.message(
+      '引擎插件',
+      name: 'pluginTypeEngine',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `平台插件`
+  String get pluginTypePlatform {
+    return Intl.message(
+      '平台插件',
+      name: 'pluginTypePlatform',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `内核模块`
+  String get pluginTypeKernel {
+    return Intl.message(
+      '内核模块',
+      name: 'pluginTypeKernel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `普通插件`
+  String get pluginTypeFlutter {
+    return Intl.message(
+      '普通插件',
+      name: 'pluginTypeFlutter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `未知类型插件`
+  String get pluginTypeUnknown {
+    return Intl.message(
+      '未知类型插件',
+      name: 'pluginTypeUnknown',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown`
+  String get unknown {
+    return Intl.message(
+      'Unknown',
+      name: 'unknown',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `打开`
+  String get pluginActionOpen {
+    return Intl.message(
+      '打开',
+      name: 'pluginActionOpen',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `关于`
+  String get pluginActionAbout {
+    return Intl.message(
+      '关于',
+      name: 'pluginActionAbout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `无界面`
+  String get pluginActionNoUI {
+    return Intl.message(
+      '无界面',
+      name: 'pluginActionNoUI',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `打开插件的界面`
+  String get pluginTooltipOpen {
+    return Intl.message(
+      '打开插件的界面',
+      name: 'pluginTooltipOpen',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `关于本框架`
+  String get pluginTooltipAbout {
+    return Intl.message(
+      '关于本框架',
+      name: 'pluginTooltipAbout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `此插件没有界面`
+  String get pluginTooltipNoUI {
+    return Intl.message(
+      '此插件没有界面',
+      name: 'pluginTooltipNoUI',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Powered by FreeFEOS`
+  String get openPluginText {
+    return Intl.message(
+      'Powered by FreeFEOS',
+      name: 'openPluginText',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<IntlLocalizations> {
