@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../intl/l10n.dart';
 import '../viewmodel/manager_view_model.dart';
 
 class HomePage extends StatefulWidget {
@@ -83,22 +84,30 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               InfoItem(
-                                title: '应用名称',
+                                title: IntlLocalizations.of(
+                                  context,
+                                ).managerHomeInfoAppName,
                                 subtitle: viewModel.getAppName,
                               ),
                               const SizedBox(height: 16),
                               InfoItem(
-                                title: '应用版本',
+                                title: IntlLocalizations.of(
+                                  context,
+                                ).managerHomeInfoAppVersion,
                                 subtitle: viewModel.getAppVersion,
                               ),
                               const SizedBox(height: 16),
                               InfoItem(
-                                title: '当前平台',
+                                title: IntlLocalizations.of(
+                                  context,
+                                ).managerHomeInfoPlatform,
                                 subtitle: Theme.of(context).platform.name,
                               ),
                               const SizedBox(height: 16),
                               InfoItem(
-                                title: '插件数量',
+                                title: IntlLocalizations.of(
+                                  context,
+                                ).managerHomeInfoPluginCount,
                                 subtitle: viewModel.pluginCount().toString(),
                               ),
                             ],
@@ -123,12 +132,16 @@ class _HomePageState extends State<HomePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '了解 FreeFEOS',
+                              IntlLocalizations.of(
+                                context,
+                              ).managerHomeLearnTitle,
                               textAlign: TextAlign.start,
                               style: Theme.of(context).textTheme.bodyLarge,
                             ),
                             Text(
-                              '了解如何使用 FreeFEOS 进行开发。',
+                              IntlLocalizations.of(
+                                context,
+                              ).managerHomeLearnDescription,
                               textAlign: TextAlign.start,
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
@@ -136,7 +149,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       Tooltip(
-                        message: '了解更多',
+                        message: IntlLocalizations.of(
+                          context,
+                        ).managerHomeLearnTooltip,
                         child: Consumer<ManagerViewModel>(
                           builder: (context, viewModel, child) => IconButton(
                             onPressed: viewModel.launchPubDev,

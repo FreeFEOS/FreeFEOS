@@ -4,14 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../base/base.dart';
-import '../framework/log.dart';
 import '../intl/l10n.dart';
 import '../plugin/plugin_details.dart';
 import '../plugin/plugin_runtime.dart';
 import '../plugin/plugin_type.dart';
 import '../values/channel.dart';
 import '../values/placeholder.dart';
-import '../values/tag.dart';
 import '../viewmodel/manager_view_model.dart';
 import '../widget/manager.dart';
 
@@ -131,9 +129,15 @@ final class SystemRuntime extends SystemBase {
             SimpleDialogOption(
               padding: const EdgeInsets.all(0),
               child: Tooltip(
-                message: IntlLocalizations.of(context).openManager,
+                message: IntlLocalizations.of(
+                  context,
+                ).debugMenuOpenManager,
                 child: ListTile(
-                  title: Text(IntlLocalizations.of(context).openManager),
+                  title: Text(
+                    IntlLocalizations.of(
+                      context,
+                    ).debugMenuOpenManager,
+                  ),
                   leading: const Icon(Icons.open_in_new),
                   contentPadding: const EdgeInsets.symmetric(horizontal: 24.0),
                   enabled: true,
@@ -144,9 +148,15 @@ final class SystemRuntime extends SystemBase {
           SimpleDialogOption(
             padding: const EdgeInsets.all(0),
             child: Tooltip(
-              message: IntlLocalizations.of(context).closeDebugMenu,
+              message: IntlLocalizations.of(
+                context,
+              ).debugMenuCloseDebugMenu,
               child: ListTile(
-                title: Text(IntlLocalizations.of(context).closeDebugMenu),
+                title: Text(
+                  IntlLocalizations.of(
+                    context,
+                  ).debugMenuCloseDebugMenu,
+                ),
                 leading: const Icon(Icons.close),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 24.0),
                 enabled: true,
@@ -245,7 +255,6 @@ final class SystemRuntime extends SystemBase {
         }
       }
     } catch (exception) {
-      Log.e(tag: runtimeTag, message: '_initEnginePlugin', error: exception);
       // 平台错误添加未知插件占位
       _pluginDetailsList.add(
         PluginDetails.formMap(
@@ -274,7 +283,6 @@ final class SystemRuntime extends SystemBase {
         );
       }
     } catch (exception) {
-      Log.e(tag: runtimeTag, message: '_initPlatformPlugin', error: exception);
       // 平台错误添加未知插件占位
       _pluginDetailsList.add(
         PluginDetails.formJSON(

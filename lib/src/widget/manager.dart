@@ -33,33 +33,49 @@ class _SystemManagerState extends State<SystemManager> {
   @override
   Widget build(BuildContext context) {
     return AdaptiveScaffold(
-      destinations: const [
+      destinations: [
         NavigationDestination(
-          icon: Icon(Icons.home_outlined),
-          selectedIcon: Icon(Icons.home),
-          label: '主页',
-          tooltip: '主页',
+          icon: const Icon(Icons.home_outlined),
+          selectedIcon: const Icon(Icons.home),
+          label: IntlLocalizations.of(
+            context,
+          ).managerDestinationHome,
+          tooltip: IntlLocalizations.of(
+            context,
+          ).managerDestinationHome,
           enabled: true,
         ),
         NavigationDestination(
-          icon: Icon(Icons.bug_report_outlined),
-          selectedIcon: Icon(Icons.bug_report),
-          label: '日志',
-          tooltip: '日志',
+          icon: const Icon(Icons.bug_report_outlined),
+          selectedIcon: const Icon(Icons.bug_report),
+          label: IntlLocalizations.of(
+            context,
+          ).managerDestinationLog,
+          tooltip: IntlLocalizations.of(
+            context,
+          ).managerDestinationLog,
           enabled: true,
         ),
         NavigationDestination(
-          icon: Icon(Icons.extension_outlined),
-          selectedIcon: Icon(Icons.extension),
-          label: '插件',
-          tooltip: '插件',
+          icon: const Icon(Icons.extension_outlined),
+          selectedIcon: const Icon(Icons.extension),
+          label: IntlLocalizations.of(
+            context,
+          ).managerDestinationPlugin,
+          tooltip: IntlLocalizations.of(
+            context,
+          ).managerDestinationPlugin,
           enabled: true,
         ),
         NavigationDestination(
-          icon: Icon(Icons.settings_outlined),
-          selectedIcon: Icon(Icons.settings),
-          label: '设置',
-          tooltip: '设置',
+          icon: const Icon(Icons.settings_outlined),
+          selectedIcon: const Icon(Icons.settings),
+          label: IntlLocalizations.of(
+            context,
+          ).managerDestinationSetting,
+          tooltip: IntlLocalizations.of(
+            context,
+          ).managerDestinationSetting,
           enabled: true,
         ),
       ],

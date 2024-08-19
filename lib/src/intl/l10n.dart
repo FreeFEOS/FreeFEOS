@@ -81,20 +81,20 @@ class IntlLocalizations {
   }
 
   /// `打开管理器`
-  String get openManager {
+  String get debugMenuOpenManager {
     return Intl.message(
       '打开管理器',
-      name: 'openManager',
+      name: 'debugMenuOpenManager',
       desc: '',
       args: [],
     );
   }
 
   /// `关闭对话框`
-  String get closeDebugMenu {
+  String get debugMenuCloseDebugMenu {
     return Intl.message(
       '关闭对话框',
-      name: 'closeDebugMenu',
+      name: 'debugMenuCloseDebugMenu',
       desc: '',
       args: [],
     );
@@ -105,6 +105,146 @@ class IntlLocalizations {
     return Intl.message(
       '系统管理器',
       name: 'managerTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `主页`
+  String get managerDestinationHome {
+    return Intl.message(
+      '主页',
+      name: 'managerDestinationHome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `日志`
+  String get managerDestinationLog {
+    return Intl.message(
+      '日志',
+      name: 'managerDestinationLog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `插件`
+  String get managerDestinationPlugin {
+    return Intl.message(
+      '插件',
+      name: 'managerDestinationPlugin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `设置`
+  String get managerDestinationSetting {
+    return Intl.message(
+      '设置',
+      name: 'managerDestinationSetting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `应用名称`
+  String get managerHomeInfoAppName {
+    return Intl.message(
+      '应用名称',
+      name: 'managerHomeInfoAppName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `应用版本`
+  String get managerHomeInfoAppVersion {
+    return Intl.message(
+      '应用版本',
+      name: 'managerHomeInfoAppVersion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `当前平台`
+  String get managerHomeInfoPlatform {
+    return Intl.message(
+      '当前平台',
+      name: 'managerHomeInfoPlatform',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `插件数量`
+  String get managerHomeInfoPluginCount {
+    return Intl.message(
+      '插件数量',
+      name: 'managerHomeInfoPluginCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `了解 FreeFEOS`
+  String get managerHomeLearnTitle {
+    return Intl.message(
+      '了解 FreeFEOS',
+      name: 'managerHomeLearnTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `了解如何使用 FreeFEOS 进行开发。`
+  String get managerHomeLearnDescription {
+    return Intl.message(
+      '了解如何使用 FreeFEOS 进行开发。',
+      name: 'managerHomeLearnDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `了解更多`
+  String get managerHomeLearnTooltip {
+    return Intl.message(
+      '了解更多',
+      name: 'managerHomeLearnTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `已复制到剪贴板!`
+  String get managerLogCopyTips {
+    return Intl.message(
+      '已复制到剪贴板!',
+      name: 'managerLogCopyTips',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `通道`
+  String get managerPluginChannel {
+    return Intl.message(
+      '通道',
+      name: 'managerPluginChannel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `作者`
+  String get managerPluginAuthor {
+    return Intl.message(
+      '作者',
+      name: 'managerPluginAuthor',
       desc: '',
       args: [],
     );

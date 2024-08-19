@@ -8,6 +8,7 @@ import '../event/rendered_event.dart';
 import '../framework/ansi_parser.dart';
 import '../framework/log_level.dart';
 import '../framework/toast.dart';
+import '../intl/l10n.dart';
 
 class LogPage extends StatefulWidget {
   const LogPage({super.key});
@@ -31,7 +32,9 @@ class _LogPageState extends State<LogPage> {
         context: context,
         showTips: () => Toast.makeToast(
           context: context,
-          text: '已复制到剪贴板!',
+          text: IntlLocalizations.of(
+            context,
+          ).managerLogCopyTips,
         ).show(),
       );
       final String text = event.lines.join('\n');

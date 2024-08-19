@@ -23,10 +23,29 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "bannerTitle": MessageLookupByLibrary.simpleMessage("FreeFEOS"),
-        "closeDebugMenu": MessageLookupByLibrary.simpleMessage("关闭对话框"),
+        "debugMenuCloseDebugMenu":
+            MessageLookupByLibrary.simpleMessage("关闭对话框"),
+        "debugMenuOpenManager": MessageLookupByLibrary.simpleMessage("打开管理器"),
         "debugMenuTitle": MessageLookupByLibrary.simpleMessage("调试菜单"),
+        "managerDestinationHome": MessageLookupByLibrary.simpleMessage("主页"),
+        "managerDestinationLog": MessageLookupByLibrary.simpleMessage("日志"),
+        "managerDestinationPlugin": MessageLookupByLibrary.simpleMessage("插件"),
+        "managerDestinationSetting": MessageLookupByLibrary.simpleMessage("设置"),
+        "managerHomeInfoAppName": MessageLookupByLibrary.simpleMessage("应用名称"),
+        "managerHomeInfoAppVersion":
+            MessageLookupByLibrary.simpleMessage("应用版本"),
+        "managerHomeInfoPlatform": MessageLookupByLibrary.simpleMessage("当前平台"),
+        "managerHomeInfoPluginCount":
+            MessageLookupByLibrary.simpleMessage("插件数量"),
+        "managerHomeLearnDescription":
+            MessageLookupByLibrary.simpleMessage("了解如何使用 FreeFEOS 进行开发。"),
+        "managerHomeLearnTitle":
+            MessageLookupByLibrary.simpleMessage("了解 FreeFEOS"),
+        "managerHomeLearnTooltip": MessageLookupByLibrary.simpleMessage("了解更多"),
+        "managerLogCopyTips": MessageLookupByLibrary.simpleMessage("已复制到剪贴板!"),
+        "managerPluginAuthor": MessageLookupByLibrary.simpleMessage("作者"),
+        "managerPluginChannel": MessageLookupByLibrary.simpleMessage("通道"),
         "managerTitle": MessageLookupByLibrary.simpleMessage("系统管理器"),
-        "openManager": MessageLookupByLibrary.simpleMessage("打开管理器"),
         "viewModelTypeError":
             MessageLookupByLibrary.simpleMessage("View Model 类型错误!")
       };
