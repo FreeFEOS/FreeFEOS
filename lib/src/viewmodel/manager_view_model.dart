@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:freefeos/src/values/channel.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../plugin/plugin_details.dart';
@@ -50,7 +49,9 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
 
   /// 打开对话框
   @override
-  Future<void> openDebugMenu() async => await launchDialog();
+  Future<void> openDebugMenu() async {
+    return await launchDialog();
+  }
 
   /// 统计普通插件数量
   @override
@@ -211,7 +212,7 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
   @override
   String getPluginAction(PluginDetails details) {
     return _isAllowPush(details)
-        ? details.channel != runtimeChannel
+        ? isRuntime(details)
             ? '打开'
             : '关于'
         : '无界面';
@@ -221,7 +222,7 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
   @override
   String getPluginTooltip(PluginDetails details) {
     return _isAllowPush(details)
-        ? details.channel != runtimeChannel
+        ? isRuntime(details)
             ? '打开插件的界面'
             : '关于本框架'
         : '此插件没有界面';
