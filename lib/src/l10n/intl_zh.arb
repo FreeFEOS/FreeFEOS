@@ -20,7 +20,7 @@
     "managerLogCopyTips": "已复制到剪贴板!",
     "managerPluginChannel": "通道",
     "managerPluginAuthor": "作者",
-    "pluginTypeRuntime": "框架运行时",
+    "pluginTypeRuntime": "系统运行时",
     "pluginTypeBase": "绑定通信层",
     "pluginTypeEmbedder": "平台嵌入层",
     "pluginTypeEngine": "引擎插件",

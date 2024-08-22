@@ -60,7 +60,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pluginTypeFlutter": MessageLookupByLibrary.simpleMessage("普通插件"),
         "pluginTypeKernel": MessageLookupByLibrary.simpleMessage("内核模块"),
         "pluginTypePlatform": MessageLookupByLibrary.simpleMessage("平台插件"),
-        "pluginTypeRuntime": MessageLookupByLibrary.simpleMessage("框架运行时"),
+        "pluginTypeRuntime": MessageLookupByLibrary.simpleMessage("系统运行时"),
         "pluginTypeUnknown": MessageLookupByLibrary.simpleMessage("未知类型插件"),
         "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),
         "viewModelTypeError":

@@ -241,10 +241,10 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
         ? isRuntime(details)
             ? IntlLocalizations.of(
                 context,
-              ).pluginActionOpen
+              ).pluginActionAbout
             : IntlLocalizations.of(
                 context,
-              ).pluginActionAbout
+              ).pluginActionOpen
         : IntlLocalizations.of(
             context,
           ).pluginActionNoUI;

@@ -250,10 +250,10 @@ class IntlLocalizations {
     );
   }
 
-  /// `框架运行时`
+  /// `系统运行时`
   String get pluginTypeRuntime {
     return Intl.message(
-      '框架运行时',
+      '系统运行时',
       name: 'pluginTypeRuntime',
       desc: '',
       args: [],
