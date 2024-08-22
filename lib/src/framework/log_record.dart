@@ -109,7 +109,8 @@ class LoggerRecord {
       const loggingLibrary = "package:logging/src/logger.dart";
       const freefeosLibrary = "package:freefeos/freefeos.dart";
       final currentFrames = Trace.current().frames.toList();
-      currentFrames.removeWhere((element) => element.library == freefeosLibrary);
+      currentFrames
+          .removeWhere((element) => element.library == freefeosLibrary);
       // Capture the last frame from the logging library
       final lastLoggerIndex = currentFrames.lastIndexWhere(
         (element) => element.library == loggingLibrary,
