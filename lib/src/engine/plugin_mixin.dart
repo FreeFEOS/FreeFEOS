@@ -1,6 +1,6 @@
 import '../embedder/platform_embedder.dart';
 import 'plugin_engine.dart';
-import 'engine_embedder.dart';
+import 'engine_connectors.dart';
 
 base mixin PluginMixin {
   /// 插件列表

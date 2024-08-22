@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/widgets.dart';
 
 import '../framework/log.dart';
@@ -7,7 +5,6 @@ import '../interface/system_interface.dart';
 import '../type/app_builder.dart';
 import '../type/app_runner.dart';
 import '../type/plugin_list.dart';
-import '../utils/platform.dart';
 import '../values/tag.dart';
 
 /// 无法正确加载平台时的实现
@@ -22,13 +19,6 @@ final class DefaultEntry extends FreeFEOSInterface {
     required AppBuilder app,
     dynamic error,
   }) async {
-    late String platformName;
-    // 获取当前操作系统名称
-    if (kIsWebBroser) {
-      platformName = 'Web浏览器';
-    } else {
-      platformName = Platform.operatingSystem;
-    }
     return await () async {
       try {
         return await runner(
@@ -38,7 +28,7 @@ final class DefaultEntry extends FreeFEOSInterface {
               () async {
                 Log.w(
                   tag: entryTag,
-                  message: '不支持当前平台: $platformName, '
+                  message: '不支持当前平台, '
                       '无法打开调试对话框.',
                 );
               },
@@ -49,7 +39,7 @@ final class DefaultEntry extends FreeFEOSInterface {
               ]) async {
                 Log.w(
                   tag: entryTag,
-                  message: '不支持当前平台: $platformName, '
+                  message: '不支持当前平台, '
                       '当前调用的插件通道: $channel, '
                       '方法名: $method, '
                       '携带参数: $arguments, '
@@ -61,7 +51,7 @@ final class DefaultEntry extends FreeFEOSInterface {
         ).then(
           (_) => Log.w(
             tag: entryTag,
-            message: '不支持当前平台: $platformName, '
+            message: '不支持当前平台, '
                 '框架所有代码将不会参与执行, '
                 '${plugins().length}个插件不会被加载.',
           ),

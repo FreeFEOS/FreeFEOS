@@ -12,9 +12,17 @@ import '../plugin/plugin_runtime.dart';
 /// 插件注册由Flutter框架接管, 请勿手动注册.
 ///
 /// 此方法为内部方法通过导出接口时的权限控制.
-void registerFreeFEOS() {
-  FreeFEOSInterface.instance = SystemEntry();
-  FreeFEOSPlatform.instance = MethodChannelFreeFEOS();
+void registerFreeFEOS({
+  FreeFEOSInterface? interface,
+  FreeFEOSPlatform? platform,
+}) {
+  if (interface == null || platform == null) {
+    FreeFEOSInterface.instance = SystemEntry();
+    FreeFEOSPlatform.instance = MethodChannelFreeFEOS();
+  } else {
+    FreeFEOSInterface.instance = interface;
+    FreeFEOSPlatform.instance = platform;
+  }
 }
 
 abstract interface class FreeFEOSPlugin extends RuntimePlugin {}

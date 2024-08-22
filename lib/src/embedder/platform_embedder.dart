@@ -1,5 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:freefeos/src/platform/freefeos.dart';
 
 import '../engine/method_call.dart';
 import '../engine/plugin_engine.dart';
@@ -7,15 +7,13 @@ import '../engine/result.dart';
 import '../framework/service.dart';
 import '../framework/want.dart';
 import '../interface/platform_interface.dart';
-import '../platform/freefeos.dart';
 import '../plugin/plugin_runtime.dart';
-import '../utils/platform.dart';
 import '../values/channel.dart';
 import '../values/strings.dart';
 
 final class PlatformEmbedder extends Service
     implements RuntimePlugin, FreeFEOSPlatform {
-  late FreeFEOSLinker _linker;
+  late FreeFEOSPlatform _linker;
   @override
   String get pluginAuthor => developerName;
 
@@ -31,7 +29,7 @@ final class PlatformEmbedder extends Service
   @override
   void onCreate() {
     super.onCreate();
-    if (kUseNative) _linker = FreeFEOSLinker();
+    _linker = FreeFEOSLinker();
   }
 
   @override
@@ -51,10 +49,7 @@ final class PlatformEmbedder extends Service
   @override
   Future<List?> getPlatformPluginList() async {
     return await _invoke(
-      invoke: () async {
-        return List.empty();
-      },
-      mobile: (linker) async {
+      invoke: (linker) async {
         return await linker.getPlatformPluginList();
       },
       error: (exception) async {
@@ -66,10 +61,7 @@ final class PlatformEmbedder extends Service
   @override
   Future<bool?> openPlatformDialog() async {
     return await _invoke(
-      invoke: () async {
-        return true;
-      },
-      mobile: (linker) async {
+      invoke: (linker) async {
         return await linker.openPlatformDialog();
       },
       error: (exception) async {
@@ -81,10 +73,7 @@ final class PlatformEmbedder extends Service
   @override
   Future<bool?> closePlatformDialog() async {
     return await _invoke(
-      invoke: () async {
-        return true;
-      },
-      mobile: (linker) async {
+      invoke: (linker) async {
         return await linker.closePlatformDialog();
       },
       error: (exception) async {
@@ -94,24 +83,13 @@ final class PlatformEmbedder extends Service
   }
 
   Future<dynamic> _invoke({
-    required Future<dynamic> Function() invoke,
-    required Future<dynamic> Function(FreeFEOSLinker linker) mobile,
+    required Future<dynamic> Function(FreeFEOSPlatform linker) invoke,
     required Future<dynamic> Function(Exception exception) error,
   }) async {
-    if (kIsWeb || kIsWasm) {
-      return await invoke.call();
-    } else if (kUseNative) {
-      try {
-        return await mobile.call(_linker);
-      } on Exception catch (exception) {
-        return await error.call(exception);
-      }
-    } else {
-      try {
-        return await invoke.call();
-      } on Exception catch (exception) {
-        return await error.call(exception);
-      }
+    try {
+      return await invoke.call(_linker);
+    } on Exception catch (exception) {
+      return await error.call(exception);
     }
   }
 }

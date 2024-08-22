@@ -1,6 +1,6 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-final class DefaultPlatform extends FreeFEOSPlatform {}
+import '../platform/default_platform.dart';
 
 abstract class FreeFEOSPlatform extends PlatformInterface {
   FreeFEOSPlatform() : super(token: _token);
