@@ -23,8 +23,8 @@ Logo先欠着
 
 1.搭建开发环境:
   
-* 完整的[Flutter](https://docs.flutter.dev/get-started/install)开发环境
-* [Rust](https://www.rust-lang.org/tools/install)工具链
+* [Flutter](https://docs.flutter.dev/get-started/install)
+* [Rust](https://www.rust-lang.org/tools/install)
 * [LLVM](https://pub.dev/packages/ffigen#installing-llvm)
 
 2.创建新的Flutter项目
