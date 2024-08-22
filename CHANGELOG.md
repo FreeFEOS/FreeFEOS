@@ -1,4 +1,4 @@
-## 0.1.0-dev.0
+## 0.1.0
 * Optimize program entry code.
 * Navigator navigation is changed to use WidgetsApp, and the manager interface navigation problem is fixed.
 * Modify the manager interface theme style.
