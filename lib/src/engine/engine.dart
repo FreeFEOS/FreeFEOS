@@ -56,7 +56,9 @@ final class SystemEngine extends EnginePlugin
   ) async {
     switch (call.method) {
       case engineGetEnginePlugins:
-        result.success(_infoList);
+        result.success(
+          _infoList,
+        );
         break;
       case engineGetPlatformPlugins:
         result.success(

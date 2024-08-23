@@ -11,6 +11,7 @@ import '../plugin/plugin_runtime.dart';
 import '../utils/platform.dart';
 import '../values/channel.dart';
 import '../values/strings.dart';
+import 'embedder_binder.dart';
 
 final class PlatformEmbedder extends Service
     implements RuntimePlugin, FreeFEOSPlatform {
@@ -34,7 +35,11 @@ final class PlatformEmbedder extends Service
   }
 
   @override
-  IBinder onBind(Want want) => EmbedderBinder(embedder: this);
+  IBinder onBind(Want want) {
+    return EmbedderBinder(
+      embedder: this,
+    );
+  }
 
   @override
   Future<dynamic> onMethodCall(
@@ -51,7 +56,9 @@ final class PlatformEmbedder extends Service
   Future<List?> getPlatformPluginList() async {
     return await _invoke(
       invoke: () async => List.empty(),
-      mobile: (linker) async => await linker.getPlatformPluginList(),
+      mobile: (linker) async {
+        return await linker.getPlatformPluginList();
+      },
       error: (exception) async {
         return List.empty();
       },
@@ -104,30 +111,6 @@ final class PlatformEmbedder extends Service
       }
     }
   }
-}
-
-final class EmbedderBinder extends Binder {
-  EmbedderBinder({required this.embedder});
-
-  final PlatformEmbedder embedder;
-
-  @override
-  Service get getService => embedder;
-}
-
-final class EmbedderConnection implements ServiceConnection {
-  EmbedderConnection({required this.calback});
-
-  final void Function(PlatformEmbedder embedder) calback;
-
-  @override
-  void onServiceConnected(String name, IBinder service) {
-    EmbedderBinder binder = service as EmbedderBinder;
-    calback.call(binder.getService as PlatformEmbedder);
-  }
-
-  @override
-  void onServiceDisconnected(String name) {}
 }
 
 final class FEPlugin extends Service {

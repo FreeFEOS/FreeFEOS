@@ -8,3 +8,5 @@ const String engineGetPlatformPlugins = 'get_platform_plugins';
 
 // connect
 const String connectGetPlugin = 'getPlugins';
+const String connectOpenDialog = 'openDialog';
+const String connectCloseDialog = 'closeDialog';

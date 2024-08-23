@@ -1,3 +1,4 @@
+import '../embedder/embedder_connection.dart';
 import '../embedder/platform_embedder.dart';
 import '../framework/want.dart';
 import '../values/channel.dart';
@@ -44,11 +45,17 @@ final class EngineConnectors extends EnginePlugin {
   ) async {
     switch (call.method) {
       case connectGetPlugin:
-        result.success(_embedder.getPlatformPluginList());
-      case 'openDialog':
-        result.success(_embedder.openPlatformDialog());
-      case 'closeDialog':
-        result.success(_embedder.closePlatformDialog());
+        result.success(
+          _embedder.getPlatformPluginList(),
+        );
+      case connectOpenDialog:
+        result.success(
+          _embedder.openPlatformDialog(),
+        );
+      case connectCloseDialog:
+        result.success(
+          _embedder.closePlatformDialog(),
+        );
       default:
         result.notImplemented();
     }
