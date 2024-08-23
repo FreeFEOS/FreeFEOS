@@ -10,16 +10,13 @@ typedef Exec = Future<dynamic> Function(
   dynamic arguments,
 ]);
 
-late Open mOpen;
-late Exec mExec;
-
 Future<void> main() async {
   await runFreeFEOSApp(
     runner: (app) async => runApp(app),
     plugins: () => const [ExamplePlugin()],
     app: (context, open, exec) {
-      mOpen = open;
-      mExec = exec;
+      Global.mOpen = open;
+      Global.mExec = exec;
       return const MyApp();
     },
   );
@@ -70,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             FilledButton(
-              onPressed: () => mOpen(),
+              onPressed: () => Global.mOpen(),
               child: const Text('调试菜单'),
             ),
             const Text(
@@ -107,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await mExec(
+          await Global.mExec(
             'example_channel',
             Global.add,
           );
@@ -122,6 +119,9 @@ class _MyHomePageState extends State<MyHomePage> {
 /// Global全局类
 class Global {
   const Global();
+
+  static late Open mOpen;
+  static late Exec mExec;
 
   /// 应用名称
   static const String appName = 'FreeFEOS 示例应用';
