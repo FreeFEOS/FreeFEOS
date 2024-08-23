@@ -23,22 +23,57 @@ abstract base class FreeFEOSBase {
 
 abstract interface class FreeFEOSPlugin extends RuntimePlugin {}
 
-Future<void> runFreeFEOSApp({
-  required Future<void> Function(Widget app) runner,
-  required List<FreeFEOSPlugin> Function() plugins,
-  required Widget Function(
-    BuildContext context,
-    Future<void> Function() open,
-    Future<dynamic> Function(
-      String channel,
-      String method, [
-      dynamic arguments,
-    ]) exec,
-  ) app,
-}) async {
-  return await FreeFEOSInterface.instance.runFreeFEOSApp(
-    runner: runner,
-    plugins: plugins,
-    app: app,
-  );
+typedef FreeFEOSOpen = Future<void> Function();
+
+typedef FreeFEOSExec = Future<dynamic> Function(
+  String channel,
+  String method, [
+  dynamic arguments,
+]);
+
+final class FreeFEOSRunner {
+  const FreeFEOSRunner({
+    required this.runner,
+    required this.plugins,
+    required this.initApi,
+  });
+
+  final Future<void> Function(Widget app) runner;
+  final List<FreeFEOSPlugin> Function() plugins;
+  final void Function(FreeFEOSOpen open, FreeFEOSExec exec) initApi;
+
+  // final instance = FreeFEOSInterface.instance;
+
+  Future<void> runApp(Widget app) async {
+    return await FreeFEOSInterface.instance.runFreeFEOSApp(
+      runner: runner,
+      plugins: plugins,
+      app: (context, open, exec) {
+        initApi.call(open, exec);
+        return app;
+      },
+    );
+  }
 }
+
+
+
+// Future<void> runFreeFEOSApp({
+//   required Future<void> Function(Widget app) runner,
+//   required List<FreeFEOSPlugin> Function() plugins,
+//   required Widget Function(
+//     BuildContext context,
+//     Future<void> Function() open,
+//     Future<dynamic> Function(
+//       String channel,
+//       String method, [
+//       dynamic arguments,
+//     ]) exec,
+//   ) app,
+// }) async {
+//   return await FreeFEOSInterface.instance.runFreeFEOSApp(
+//     runner: runner,
+//     plugins: plugins,
+//     app: app,
+//   );
+// }

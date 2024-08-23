@@ -3,23 +3,19 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:freefeos/freefeos.dart';
 
-typedef Open = Future<void> Function();
-typedef Exec = Future<dynamic> Function(
-  String channel,
-  String method, [
-  dynamic arguments,
-]);
+class RunApp {
+  
+}
 
 Future<void> main() async {
-  await runFreeFEOSApp(
+  await FreeFEOSRunner(
     runner: (app) async => runApp(app),
     plugins: () => const [ExamplePlugin()],
-    app: (context, open, exec) {
+    initApi: (open, exec) {
       Global.open = open;
       Global.exec = exec;
-      return const MyApp();
     },
-  );
+  ).runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -120,8 +116,8 @@ class _MyHomePageState extends State<MyHomePage> {
 class Global {
   const Global();
 
-  static Open open = () async {};
-  static Exec exec = (_, __, [___]) async => null;
+  static FreeFEOSOpen open = () async {};
+  static FreeFEOSExec exec = (_, __, [___]) async => null;
 
   /// 应用名称
   static const String appName = 'FreeFEOS 示例应用';
