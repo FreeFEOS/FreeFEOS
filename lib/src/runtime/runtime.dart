@@ -9,7 +9,9 @@ import '../plugin/plugin_details.dart';
 import '../plugin/plugin_runtime.dart';
 import '../plugin/plugin_type.dart';
 import '../values/channel.dart';
+import '../values/method.dart';
 import '../values/placeholder.dart';
+import '../values/strings.dart';
 import '../viewmodel/manager_view_model.dart';
 import '../widget/manager.dart';
 
@@ -39,11 +41,11 @@ final class SystemRuntime extends SystemBase {
 
   /// 插件描述
   @override
-  String get pluginDescription => '系统运行时';
+  String get pluginDescription => runtimeDescription;
 
   /// 插件名称
   @override
-  String get pluginName => 'SystemRuntime';
+  String get pluginName => runtimeName;
 
   /// 方法调用
   @override
@@ -52,13 +54,13 @@ final class SystemRuntime extends SystemBase {
     dynamic arguments,
   ]) async {
     switch (method) {
-      case 'get_engine_plugins':
+      case runtimeGetEnginePlugins:
         return await super.execEngine(
-          'get_engine_plugins',
+          engineGetEnginePlugins,
         );
-      case 'get_platform_plugins':
+      case runtimeGetPlatformPlugins:
         return await super.execEngine(
-          'get_platform_plugins',
+          engineGetPlatformPlugins,
         );
       default:
         return await null;
@@ -239,7 +241,8 @@ final class SystemRuntime extends SystemBase {
   Future<void> _initEnginePlugin() async {
     // 初始化平台插件
     try {
-      dynamic plugins = await _exec(pluginChannel, 'get_engine_plugins', true);
+      dynamic plugins =
+          await _exec(pluginChannel, runtimeGetEnginePlugins, true);
       List list = plugins as List? ?? [unknownPluginWithMap];
       // 判断列表是否为空
       if (list.isNotEmpty) {
@@ -271,7 +274,7 @@ final class SystemRuntime extends SystemBase {
     try {
       // 遍历原生插件
       for (var element
-          in (await _exec(pluginChannel, 'get_platform_plugins', true)
+          in (await _exec(pluginChannel, runtimeGetPlatformPlugins, true)
                   as List? ??
               [unknownPluginWithJSON])) {
         // 添加到插件详细信息列表

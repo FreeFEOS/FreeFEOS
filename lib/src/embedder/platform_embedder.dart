@@ -22,10 +22,10 @@ final class PlatformEmbedder extends Service
   String get pluginChannel => embedderChannel;
 
   @override
-  String get pluginDescription => '系统与平台通信';
+  String get pluginDescription => embedderDescription;
 
   @override
-  String get pluginName => 'PlatformEmbedder';
+  String get pluginName => embedderName;
 
   @override
   void onCreate() {
@@ -152,7 +152,7 @@ final class ServiceInvoke extends EnginePlugin {
   String get channel => invokeChannel;
 
   @override
-  String get description => 'ServiceInvoke';
+  String get description => invokeDescription;
 
   @override
   Future<void> onPluginMethodCall(
@@ -161,7 +161,7 @@ final class ServiceInvoke extends EnginePlugin {
   ) async {}
 
   @override
-  String get title => 'ServiceInvoke';
+  String get title => invokeTitle;
 }
 
 final class ServiceDelegate extends EnginePlugin {
@@ -172,7 +172,7 @@ final class ServiceDelegate extends EnginePlugin {
   String get channel => delegateChannel;
 
   @override
-  String get description => 'ServiceDelegate';
+  String get description => delegateDescription;
 
   @override
   Future<void> onPluginMethodCall(
@@ -181,5 +181,5 @@ final class ServiceDelegate extends EnginePlugin {
   ) async {}
 
   @override
-  String get title => 'ServiceDelegate';
+  String get title => delegateTitle;
 }

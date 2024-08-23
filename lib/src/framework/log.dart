@@ -107,7 +107,7 @@ final class Log {
         null,
       );
     } else {
-      debugPrint(
+      return debugPrint(
         'tag: $tag, '
         'message: $message, '
         'error: $error',

@@ -1,6 +1,7 @@
 import '../framework/context.dart';
 import '../framework/log.dart';
 import '../values/channel.dart';
+import '../values/method.dart';
 import '../values/strings.dart';
 import 'binding.dart';
 import 'engine_bridge.dart';
@@ -41,11 +42,11 @@ final class SystemEngine extends EnginePlugin
 
   /// 插件描述
   @override
-  String get description => 'SystemEngine';
+  String get description => engineDescription;
 
   /// 插件名称
   @override
-  String get title => 'SystemEngine';
+  String get title => engineTitle;
 
   /// 调用插件方法
   @override
@@ -54,14 +55,14 @@ final class SystemEngine extends EnginePlugin
     EngineResult result,
   ) async {
     switch (call.method) {
-      case 'get_engine_plugins':
+      case engineGetEnginePlugins:
         result.success(_infoList);
         break;
-      case 'get_platform_plugins':
+      case engineGetPlatformPlugins:
         result.success(
           execPluginMethod(
             connectChannel,
-            'getPlugins',
+            connectGetPlugin,
           ),
         );
         break;

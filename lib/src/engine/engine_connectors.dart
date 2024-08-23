@@ -1,6 +1,7 @@
 import '../embedder/platform_embedder.dart';
 import '../framework/want.dart';
 import '../values/channel.dart';
+import '../values/method.dart';
 import '../values/strings.dart';
 import 'binding.dart';
 import 'method_call.dart';
@@ -15,10 +16,10 @@ final class EngineConnectors extends EnginePlugin {
   String get channel => connectChannel;
 
   @override
-  String get description => 'EngineConnectors';
+  String get description => connectDescription;
 
   @override
-  String get title => 'EngineConnectors';
+  String get title => connectTitle;
 
   /// 服务实例
   late PlatformEmbedder _embedder;
@@ -42,7 +43,7 @@ final class EngineConnectors extends EnginePlugin {
     EngineResult result,
   ) async {
     switch (call.method) {
-      case 'getPlugins':
+      case connectGetPlugin:
         result.success(_embedder.getPlatformPluginList());
       case 'openDialog':
         result.success(_embedder.openPlatformDialog());

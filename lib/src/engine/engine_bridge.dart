@@ -22,11 +22,11 @@ final class EngineBridge extends EnginePlugin
 
   /// 插件描述
   @override
-  String get description => '引擎桥接';
+  String get description => bridgeDescription;
 
   /// 插件名称
   @override
-  String get title => 'EngineBridge';
+  String get title => bridgeTitle;
 
   @override
   Future<void> onPluginMethodCall(
