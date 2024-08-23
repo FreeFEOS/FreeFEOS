@@ -8,7 +8,7 @@ import 'src/export/export.dart';
 /// 平台插件注册
 ///
 /// 插件注册由Flutter框架接管, 请勿手动注册.
-final class FreeFEOSRegister extends FreeFEOSReg {
+final class FreeFEOSRegister extends FreeFEOSBase {
   const FreeFEOSRegister();
 
   /// 注册插件
