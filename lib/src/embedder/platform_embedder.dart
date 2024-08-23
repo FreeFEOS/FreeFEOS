@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:freefeos/src/platform/freefeos.dart';
 
 import '../engine/method_call.dart';
 import '../engine/plugin_engine.dart';
@@ -7,7 +6,9 @@ import '../engine/result.dart';
 import '../framework/service.dart';
 import '../framework/want.dart';
 import '../interface/platform_interface.dart';
+import '../platform/freefeos.dart';
 import '../plugin/plugin_runtime.dart';
+import '../utils/platform.dart';
 import '../values/channel.dart';
 import '../values/strings.dart';
 
@@ -49,9 +50,8 @@ final class PlatformEmbedder extends Service
   @override
   Future<List?> getPlatformPluginList() async {
     return await _invoke(
-      invoke: (linker) async {
-        return await linker.getPlatformPluginList();
-      },
+      invoke: () async => List.empty(),
+      mobile: (linker) async => await linker.getPlatformPluginList(),
       error: (exception) async {
         return List.empty();
       },
@@ -61,7 +61,8 @@ final class PlatformEmbedder extends Service
   @override
   Future<bool?> openPlatformDialog() async {
     return await _invoke(
-      invoke: (linker) async {
+      invoke: () async {},
+      mobile: (linker) async {
         return await linker.openPlatformDialog();
       },
       error: (exception) async {
@@ -73,7 +74,8 @@ final class PlatformEmbedder extends Service
   @override
   Future<bool?> closePlatformDialog() async {
     return await _invoke(
-      invoke: (linker) async {
+      invoke: () async {},
+      mobile: (linker) async {
         return await linker.closePlatformDialog();
       },
       error: (exception) async {
@@ -83,13 +85,23 @@ final class PlatformEmbedder extends Service
   }
 
   Future<dynamic> _invoke({
-    required Future<dynamic> Function(FreeFEOSPlatform linker) invoke,
-    required Future<dynamic> Function(Exception exception) error,
+    required Future<dynamic> Function() invoke,
+    required Future<dynamic> Function(FreeFEOSPlatform linker) mobile,
+    required Future<dynamic> Function(dynamic exception) error,
   }) async {
-    try {
-      return await invoke.call(_linker);
-    } on Exception catch (exception) {
-      return await error.call(exception);
+    if (kIsWebBroser) return invoke.call();
+    if (kUseNative) {
+      try {
+        return await mobile.call(_linker);
+      } catch (exception) {
+        return await error.call(exception);
+      }
+    } else {
+      try {
+        return await invoke.call();
+      } catch (exception) {
+        return await error.call(exception);
+      }
     }
   }
 }
