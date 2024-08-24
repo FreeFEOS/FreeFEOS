@@ -3,19 +3,16 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:freefeos/freefeos.dart';
 
-class RunApp {
-  
-}
-
 Future<void> main() async {
-  await FreeFEOSRunner(
+  runFreeFEOSApp(
     runner: (app) async => runApp(app),
-    plugins: () => const [ExamplePlugin()],
-    initApi: (open, exec) {
+    plugins: () => [ExamplePlugin()],
+    app: (context, open, exec) {
       Global.open = open;
       Global.exec = exec;
+      return const MyApp();
     },
-  ).runApp(const MyApp());
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -129,8 +126,8 @@ class Global {
   static const String add = 'add';
 }
 
-final class ExamplePlugin extends StatelessWidget implements FreeFEOSPlugin {
-  const ExamplePlugin({super.key});
+final class ExamplePlugin implements FreeFEOSPlugin {
+  ExamplePlugin();
 
   /// “ExampleAuthor”为作者信息,替换为你自己的名字即可,通过[pluginAuthor]方法定义.
   @override
@@ -149,7 +146,11 @@ final class ExamplePlugin extends StatelessWidget implements FreeFEOSPlugin {
   String get pluginName => 'ExamplePlugin';
 
   @override
-  Widget pluginWidget(BuildContext context) => this;
+  Widget pluginWidget(BuildContext context) {
+    return const Center(
+      child: Text('Hello, World!'),
+    );
+  }
 
   /// [onMethodCall]方法为插件的方法调用.
   @override
@@ -160,12 +161,5 @@ final class ExamplePlugin extends StatelessWidget implements FreeFEOSPlugin {
       default:
         return await null;
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Hello, World!'),
-    );
   }
 }

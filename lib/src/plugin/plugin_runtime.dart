@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-abstract class RuntimePlugin {
+abstract interface class RuntimePlugin {
   ///插件通道
   String get pluginChannel;
 
