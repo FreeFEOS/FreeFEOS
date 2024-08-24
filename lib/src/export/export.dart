@@ -31,9 +31,13 @@ abstract base class FreeFEOSBase {
 /// 插件
 typedef FreeFEOSPlugin = RuntimePlugin;
 
+/// 打开调试对话框API的类型定义
+///
 /// 实在不明白这个类型定义的用处, 可以读一下示例程序的源码.
 typedef FreeFEOSOpen = MenuLauncher;
 
+/// 调用插件方法API的类型定义
+///
 /// 实在不明白这个类型定义的用处, 可以读一下示例程序的源码.
 typedef FreeFEOSExec = MethodExecer;
 
