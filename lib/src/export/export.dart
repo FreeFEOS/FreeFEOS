@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../entry/system_entry.dart';
 import '../interface/platform_interface.dart';
 import '../interface/system_interface.dart';
-import '../platform/freefeos_method_channel.dart';
+import '../platform/method_channel.dart';
 import '../plugin/plugin_runtime.dart';
 import '../type/menu_launcher.dart';
 import '../type/method_execer.dart';
@@ -28,6 +28,7 @@ abstract base class FreeFEOSBase {
   }
 }
 
+/// 插件
 typedef FreeFEOSPlugin = RuntimePlugin;
 
 /// 实在不明白这个类型定义的用处, 可以读一下示例程序的源码.

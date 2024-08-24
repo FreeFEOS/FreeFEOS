@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:freefeos/src/platform/freefeos_method_channel.dart';
+import 'package:freefeos/src/platform/method_channel.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
