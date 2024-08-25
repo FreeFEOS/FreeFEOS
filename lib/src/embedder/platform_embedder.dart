@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../engine/method_call.dart';
@@ -8,7 +9,6 @@ import '../framework/want.dart';
 import '../interface/platform_interface.dart';
 import '../platform/freefeos.dart';
 import '../plugin/plugin_runtime.dart';
-import '../utils/platform.dart';
 import '../values/channel.dart';
 import '../values/strings.dart';
 import 'embedder_binder.dart';
@@ -96,8 +96,9 @@ final class PlatformEmbedder extends Service
     required Future<dynamic> Function(FreeFEOSPlatform linker) mobile,
     required Future<dynamic> Function(dynamic exception) error,
   }) async {
-    if (kIsWebBroser) return invoke.call();
-    if (kUseNative) {
+    if (kIsWeb || kIsWasm) return invoke.call();
+    if (defaultTargetPlatform == TargetPlatform.android ||
+        defaultTargetPlatform == TargetPlatform.iOS) {
       try {
         return await mobile.call(_linker);
       } catch (exception) {
