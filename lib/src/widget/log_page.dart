@@ -10,14 +10,14 @@ import '../framework/log_level.dart';
 import '../framework/toast.dart';
 import '../intl/l10n.dart';
 
-class LogPage extends StatefulWidget {
-  const LogPage({super.key});
+class LogcatPage extends StatefulWidget {
+  const LogcatPage({super.key});
 
   @override
-  State<LogPage> createState() => _LogPageState();
+  State<LogcatPage> createState() => _LogcatPageState();
 }
 
-class _LogPageState extends State<LogPage> {
+class _LogcatPageState extends State<LogcatPage> {
   final ListQueue<RenderedEvent> _renderedBuffer = ListQueue();
   final ScrollController _scrollController = ScrollController();
   final StringBuffer _logs = StringBuffer('Start: ');

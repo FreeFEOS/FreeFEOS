@@ -113,7 +113,7 @@ class _SystemManagerState extends State<SystemManager> {
             alignment: Alignment.topCenter,
             child: [
               const HomePage(),
-              const LogPage(),
+              const LogcatPage(),
               const PluginPage(),
               const SettingsPage(),
             ][_currentIndex],
