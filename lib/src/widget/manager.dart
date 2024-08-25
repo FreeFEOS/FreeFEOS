@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../intl/l10n.dart';
 import '../viewmodel/manager_view_model.dart';
 import 'home_page.dart';
-import 'log_page.dart';
+import 'logcat_page.dart';
 import 'plugin_page.dart';
 import 'settings_page.dart';
 

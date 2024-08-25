@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import '../entry/default_entry.dart';
@@ -31,8 +32,9 @@ abstract class FreeFEOSInterface extends PlatformInterface {
   Future<void> runFreeFEOSApp({
     required AppRunner runner,
     required PluginList plugins,
-    required AppBuilder app,
-    dynamic error,
+    required ApiBuilder api,
+    required Widget app,
+    required dynamic error,
   }) async {
     if (error != null) {
       throw Exception(error);

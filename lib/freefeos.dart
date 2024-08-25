@@ -4,13 +4,13 @@ library freefeos;
 import 'src/export/export.dart';
 
 export 'src/export/export.dart'
-    show FreeFEOSPlugin, FreeFEOSOpen, FreeFEOSExec, runFreeFEOSApp
-    hide FreeFEOSBase;
+    show FreeFEOSPlugin, FreeFEOSOpen, FreeFEOSExec, FreeFEOSAppBuilder
+    hide BaseRegister;
 
 /// 平台插件注册
 ///
 /// 插件注册由Flutter框架接管, 请勿手动注册.
-final class FreeFEOSRegister extends FreeFEOSBase {
+final class FreeFEOSRegister extends BaseRegister {
   const FreeFEOSRegister();
 
   /// 注册插件

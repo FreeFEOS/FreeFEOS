@@ -21,8 +21,9 @@ class MockFreeFEOSInterface
   Future<void> runFreeFEOSApp({
     required AppRunner runner,
     required PluginList plugins,
-    required AppBuilder app,
-    dynamic error,
+    required ApiBuilder api,
+    required Widget app,
+    required dynamic error,
   }) async {
     isInitialized = true;
   }
@@ -64,7 +65,9 @@ void main() {
     await FreeFEOSInterface.instance.runFreeFEOSApp(
       runner: (app) async => runApp(app),
       plugins: () => [fakeInterface],
-      app: (_, __, ___) => const Placeholder(),
+      api: (open, exec) async => {},
+      app: const Placeholder(),
+      error: null,
     );
     expect(fakeInterface.isInitialized, true);
   });

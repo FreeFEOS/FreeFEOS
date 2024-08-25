@@ -1,10 +1,7 @@
-import 'package:flutter/widgets.dart';
-
 import 'menu_launcher.dart';
 import 'method_execer.dart';
 
-typedef AppBuilder = Widget Function(
-  BuildContext context,
+typedef ApiBuilder = Future<void> Function(
   MenuLauncher openDebugMenu,
   MethodExecer execPluginMethod,
 );

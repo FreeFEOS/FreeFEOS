@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:freefeos/freefeos.dart';
 
 Future<void> main() async {
-  runFreeFEOSApp(
+  final run = FreeFEOSAppBuilder(
     runner: (app) async => runApp(app),
     plugins: () => [ExamplePlugin()],
-    app: (context, open, exec) {
+    initApi: (open, exec) async {
       Global.open = open;
       Global.exec = exec;
-      return const MyApp();
     },
   );
+  await run(app: const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -118,11 +118,22 @@ class _MyHomePageState extends State<MyHomePage> {
 class Global {
   const Global();
 
-  static FreeFEOSOpen open = () async {};
-  static FreeFEOSExec exec = (_, __, [___]) async => null;
+  static FreeFEOSOpen open = () async {
+    return await Future.value();
+  };
+
+  static FreeFEOSExec exec = (
+    String channel,
+    String method, [
+    dynamic arguments,
+  ]) async {
+    return await null;
+  };
 
   /// 应用名称
   static const String appName = 'FreeFEOS 示例应用';
+
+  static const String developerName = 'wyq0918dev';
 
   /// 计数
   static final ValueNotifier<int> counter = ValueNotifier(0);

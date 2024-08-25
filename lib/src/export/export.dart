@@ -5,8 +5,11 @@ import '../interface/platform_interface.dart';
 import '../interface/system_interface.dart';
 import '../platform/method_channel.dart';
 import '../plugin/plugin_runtime.dart';
+import '../type/app_builder.dart';
+import '../type/app_runner.dart';
 import '../type/menu_launcher.dart';
 import '../type/method_execer.dart';
+import '../type/plugin_list.dart';
 
 /// 注册器基类
 ///
@@ -19,8 +22,8 @@ import '../type/method_execer.dart';
 /// 那注册器是不是公开访问的? 废话! 不公开插件怎么被Flutter注册?
 /// 虽然说不听老人言开心好几年, 但是你不听话确实会有不可预测的情况出现, 为了代码稳定起见还是别不信邪了.
 /// 实在不信邪也可以试试, 崩了跟我可无关. ╮(╯_╰)╭
-abstract base class FreeFEOSBase {
-  const FreeFEOSBase();
+abstract base class BaseRegister {
+  const BaseRegister();
 
   void call() {
     FreeFEOSInterface.instance = SystemEntry();
@@ -60,20 +63,58 @@ typedef FreeFEOSExec = MethodExecer;
 ///   );
 /// }
 /// ```
-Future<void> runFreeFEOSApp({
-  required Future<void> Function(Widget app) runner,
-  required List<FreeFEOSPlugin> Function() plugins,
-  required Widget Function(
-    BuildContext context,
-    FreeFEOSOpen open,
-    FreeFEOSExec exec,
-  ) app,
-}) async {
-  return await FreeFEOSInterface.instance.runFreeFEOSApp(
-    runner: runner,
-    plugins: plugins,
-    app: app,
-  );
+final class FreeFEOSAppBuilder {
+  /// Runner
+  final AppRunner runner;
+
+  /// 插件
+  final PluginList plugins;
+
+  /// initApi
+  final ApiBuilder initApi;
+
+  /// 单例模式
+  static FreeFEOSAppBuilder? _instance;
+
+  /// 工厂
+  factory FreeFEOSAppBuilder({
+    required Future<void> Function(Widget app) runner,
+    required List<FreeFEOSPlugin> Function() plugins,
+    required Future<void> Function(
+      FreeFEOSOpen open,
+      FreeFEOSExec exec,
+    ) initApi,
+  }) {
+    _instance ??= FreeFEOSAppBuilder._(
+      runner: runner,
+      plugins: plugins,
+      initApi: initApi,
+    );
+    return _instance!;
+  }
+
+  /// 构造
+  const FreeFEOSAppBuilder._({
+    required this.runner,
+    required this.plugins,
+    required this.initApi,
+  });
+
+  FreeFEOSInterface get _interface {
+    return FreeFEOSInterface.instance;
+  }
+
+  Future<void> call({
+    required Widget app,
+  }) async {
+    return await _interface.runFreeFEOSApp(
+      runner: runner,
+      plugins: plugins,
+      api: initApi,
+      app: app,
+      error: null,
+    );
+  }
 }
 
 /// 此文件为导出的, 可被外部访问的公共API接口, 但 [FreeFEOSBase] 类除外.

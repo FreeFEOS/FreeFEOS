@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:provider/provider.dart';
 import 'package:toastification/toastification.dart';
 
 import '../embedder/embedder_mixin.dart';
@@ -24,8 +23,8 @@ import '../interface/system_interface.dart';
 import '../runtime/runtime_mixin.dart';
 import '../values/drawable.dart';
 import '../server/server.dart';
-import '../viewmodel/manager_view_model.dart';
 import '../widget/banner.dart';
+import '../widget/provider.dart';
 import 'base_entry.dart';
 import 'base_mixin.dart';
 import 'base_wrapper.dart';
@@ -63,22 +62,9 @@ base class SystemBase extends ContextWrapper
   /// 插件界面
   @override
   Widget pluginWidget(BuildContext context) {
-    return ChangeNotifierProvider<ManagerViewModel>(
-      create: (context) {
-        final viewModel = buildViewModel(context);
-        assert(() {
-          if (viewModel is! ManagerViewModel) {
-            throw FlutterError(
-              IntlLocalizations.of(
-                context,
-              ).viewModelTypeError,
-            );
-          }
-          return true;
-        }());
-        return viewModel as ManagerViewModel;
-      },
-      child: buildLayout(context),
+    return ManagerProvider(
+      viewModel: buildViewModel(context),
+      layout: buildLayout(context),
     );
   }
 
@@ -87,8 +73,9 @@ base class SystemBase extends ContextWrapper
   Future<void> runFreeFEOSApp({
     required AppRunner runner,
     required PluginList plugins,
-    required AppBuilder app,
-    dynamic error,
+    required ApiBuilder api,
+    required Widget app,
+    required dynamic error,
   }) async {
     // 初始化日志
     Log.init();
@@ -114,6 +101,26 @@ base class SystemBase extends ContextWrapper
     await engineBridgerScope.onCreateEngine(this);
     // 初始化应用
     await init(plugins.call());
+    // 初始化API
+    await api.call(
+      () async {
+        return await buildDialog(
+          super.getBuildContext(),
+          isManager: false,
+        );
+      },
+      (
+        String channel,
+        String method, [
+        dynamic arguments,
+      ]) async {
+        return await exec(
+          channel,
+          method,
+          arguments,
+        );
+      },
+    );
     // 启动应用
     return await runner.call(
       Builder(
@@ -157,9 +164,7 @@ base class SystemBase extends ContextWrapper
                   return AppBanner(
                     app: app,
                     host: context,
-                    wrapper: this,
-                    open: buildDialog,
-                    exec: exec,
+                    attach: super.attachBuildContext,
                   );
                 },
                 routeManager: (context) {
@@ -204,21 +209,32 @@ base class SystemBase extends ContextWrapper
 
   /// 获取管理器
   @override
-  Widget buildManager(BuildContext context) => pluginWidget(context);
+  Widget buildManager(BuildContext context) {
+    return pluginWidget(context);
+  }
 
   /// 构建ViewModel
   @override
-  ChangeNotifier buildViewModel(BuildContext context) => this;
+  ChangeNotifier buildViewModel(BuildContext context) {
+    return this;
+  }
 
   /// 管理器布局
   @override
-  Widget buildLayout(BuildContext context) => const Placeholder();
+  Widget buildLayout(BuildContext context) {
+    return const Placeholder();
+  }
 
   @override
   Future<dynamic> buildDialog(
     BuildContext context, {
     bool isManager = false,
   }) async {
+    // showModalBottomSheet(
+    //   context: context,
+    //   useRootNavigator: true,
+    //   builder: (context) {},
+    // );
     return await showDialog(
       context: context,
       useRootNavigator: true,

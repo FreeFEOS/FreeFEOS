@@ -1,11 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../framework/context_wrapper.dart';
 import '../intl/l10n.dart';
-import '../type/app_builder.dart';
-import '../type/dialog_builder.dart';
-import '../type/method_execer.dart';
+import '../utils/platform.dart';
 
 /// 角标横幅
 class AppBanner extends StatefulWidget {
@@ -13,42 +9,31 @@ class AppBanner extends StatefulWidget {
     super.key,
     required this.app,
     required this.host,
-    required this.wrapper,
-    required this.open,
-    required this.exec,
+    required this.attach,
   });
 
-  final AppBuilder app;
+  final Widget app;
   final BuildContext host;
-  final ContextWrapper wrapper;
-  final DialogBuilder open;
-  final MethodExecer exec;
+  final Function(BuildContext context) attach;
 
   @override
   State<AppBanner> createState() => _AppBannerState();
 }
 
 class _AppBannerState extends State<AppBanner> {
+  /// 子组件
   late Widget child;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    widget.wrapper.attachBuildContext.call(
-      widget.host,
-    );
-    child = widget.app.call(
-      widget.host,
-      () async => await widget.open(
-        widget.host,
-      ),
-      widget.exec,
-    );
+    widget.attach.call(widget.host);
+    child = widget.app;
   }
 
   @override
   Widget build(BuildContext context) {
-    if (!kDebugMode) return child;
+    if (kNoBanner) return child;
     return Banner(
       message: IntlLocalizations.of(
         context,

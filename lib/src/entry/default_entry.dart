@@ -16,39 +16,36 @@ final class DefaultEntry extends FreeFEOSInterface {
   Future<void> runFreeFEOSApp({
     required AppRunner runner,
     required PluginList plugins,
-    required AppBuilder app,
-    dynamic error,
+    required ApiBuilder api,
+    required Widget app,
+    required dynamic error,
   }) async {
     return await () async {
       try {
-        return await runner(
-          Builder(
-            builder: (context) => app(
-              context,
-              () async {
-                Log.w(
-                  tag: entryTag,
-                  message: '不支持当前平台, '
-                      '无法打开调试对话框.',
-                );
-              },
-              (
-                String channel,
-                String method, [
-                dynamic arguments,
-              ]) async {
-                Log.w(
-                  tag: entryTag,
-                  message: '不支持当前平台, '
-                      '当前调用的插件通道: $channel, '
-                      '方法名: $method, '
-                      '携带参数: $arguments, '
-                      '无法执行操作, 将返回空.',
-                );
-              },
-            ),
-          ),
-        ).then(
+        await api.call(
+          () async {
+            return Log.w(
+              tag: entryTag,
+              message: '不支持当前平台, '
+                  '无法打开调试对话框.',
+            );
+          },
+          (
+            String channel,
+            String method, [
+            dynamic arguments,
+          ]) async {
+            return Log.w(
+              tag: entryTag,
+              message: '不支持当前平台, '
+                  '当前调用的插件通道: $channel, '
+                  '方法名: $method, '
+                  '携带参数: $arguments, '
+                  '无法执行操作, 将返回空.',
+            );
+          },
+        );
+        return await runner(app).then(
           (_) => Log.w(
             tag: entryTag,
             message: '不支持当前平台, '
@@ -60,6 +57,7 @@ final class DefaultEntry extends FreeFEOSInterface {
         return await super.runFreeFEOSApp(
           runner: runner,
           plugins: plugins,
+          api: api,
           app: app,
           error: exception,
         );
