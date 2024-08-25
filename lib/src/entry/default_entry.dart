@@ -13,7 +13,7 @@ final class DefaultEntry extends FreeFEOSInterface {
 
   /// 入口函数
   @override
-  Future<void> runFreeFEOSApp({
+  Future<void> runApp({
     required AppRunner runner,
     required PluginList plugins,
     required ApiBuilder api,
@@ -54,7 +54,7 @@ final class DefaultEntry extends FreeFEOSInterface {
           ),
         );
       } catch (exception) {
-        return await super.runFreeFEOSApp(
+        return await super.runApp(
           runner: runner,
           plugins: plugins,
           api: api,

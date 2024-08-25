@@ -11,26 +11,6 @@ import '../type/menu_launcher.dart';
 import '../type/method_execer.dart';
 import '../type/plugin_list.dart';
 
-/// 注册器基类
-///
-/// 此类用于通过注册器继承向Flutter框架注册此插件.
-/// 插件注册由Flutter框架接管, 请勿手动注册.
-/// 此类为内部方法通过导出接口时hide无法被外部访问.
-///
-/// 来来来, 让我看看到底是谁不信邪, 自己又注册一遍?
-/// 不要问我是不是注册器继承这个类了, 不过确实是这样.
-/// 那注册器是不是公开访问的? 废话! 不公开插件怎么被Flutter注册?
-/// 虽然说不听老人言开心好几年, 但是你不听话确实会有不可预测的情况出现, 为了代码稳定起见还是别不信邪了.
-/// 实在不信邪也可以试试, 崩了跟我可无关. ╮(╯_╰)╭
-abstract base class BaseRegister {
-  const BaseRegister();
-
-  void call() {
-    FreeFEOSInterface.instance = SystemEntry();
-    FreeFEOSPlatform.instance = MethodChannelFreeFEOS();
-  }
-}
-
 /// 插件
 typedef FreeFEOSPlugin = RuntimePlugin;
 
@@ -43,6 +23,26 @@ typedef FreeFEOSOpen = MenuLauncher;
 ///
 /// 实在不明白这个类型定义的用处, 可以读一下示例程序的源码.
 typedef FreeFEOSExec = MethodExecer;
+
+/// 注册器基类
+///
+/// 此类用于通过注册器继承向Flutter框架注册此插件.
+/// 插件注册由Flutter框架接管, 请勿手动注册.
+/// 此类为内部方法通过导出接口时hide无法被外部访问.
+///
+/// 来来来, 让我看看到底是谁不信邪, 自己又注册一遍?
+/// 不要问我是不是注册器继承这个类了, 不过确实是这样.
+/// 那注册器是不是公开访问的? 废话! 不公开插件怎么被Flutter注册?
+/// 虽然说不听老人言开心好几年, 但是你不听话确实会有不可预测的情况出现, 为了代码稳定起见还是别不信邪了.
+/// 实在不信邪也可以试试, 崩了跟我可无关. ╮(╯_╰)╭
+abstract base class FreeFEOSBase {
+  const FreeFEOSBase();
+
+  void call() {
+    FreeFEOSInterface.instance = SystemEntry();
+    FreeFEOSPlatform.instance = MethodChannelFreeFEOS();
+  }
+}
 
 /// 启动应用
 ///
@@ -63,7 +63,7 @@ typedef FreeFEOSExec = MethodExecer;
 ///   );
 /// }
 /// ```
-final class FreeFEOSAppBuilder {
+final class FreeFEOSRunner {
   /// Runner
   final AppRunner runner;
 
@@ -74,10 +74,14 @@ final class FreeFEOSAppBuilder {
   final ApiBuilder initApi;
 
   /// 单例模式
-  static FreeFEOSAppBuilder? _instance;
+  static FreeFEOSRunner? _runner;
+
+  FreeFEOSInterface get _entry {
+    return FreeFEOSInterface.instance;
+  }
 
   /// 工厂
-  factory FreeFEOSAppBuilder({
+  factory FreeFEOSRunner({
     required Future<void> Function(Widget app) runner,
     required List<FreeFEOSPlugin> Function() plugins,
     required Future<void> Function(
@@ -85,29 +89,25 @@ final class FreeFEOSAppBuilder {
       FreeFEOSExec exec,
     ) initApi,
   }) {
-    _instance ??= FreeFEOSAppBuilder._(
+    _runner ??= FreeFEOSRunner._(
       runner: runner,
       plugins: plugins,
       initApi: initApi,
     );
-    return _instance!;
+    return _runner!;
   }
 
   /// 构造
-  const FreeFEOSAppBuilder._({
+  const FreeFEOSRunner._({
     required this.runner,
     required this.plugins,
     required this.initApi,
   });
 
-  FreeFEOSInterface get _interface {
-    return FreeFEOSInterface.instance;
-  }
-
   Future<void> call({
     required Widget app,
   }) async {
-    return await _interface.runFreeFEOSApp(
+    return await _entry.runApp(
       runner: runner,
       plugins: plugins,
       api: initApi,

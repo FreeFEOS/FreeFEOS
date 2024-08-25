@@ -11,7 +11,7 @@ final class SystemEntry extends FreeFEOSInterface with BaseEntry {
 
   /// 入口函数
   @override
-  Future<void> runFreeFEOSApp({
+  Future<void> runApp({
     required AppRunner runner,
     required PluginList plugins,
     required ApiBuilder api,
@@ -20,7 +20,7 @@ final class SystemEntry extends FreeFEOSInterface with BaseEntry {
   }) async {
     return await () async {
       try {
-        return await interface.runFreeFEOSApp(
+        return await interface.runApp(
           runner: runner,
           plugins: plugins,
           api: api,
@@ -28,7 +28,7 @@ final class SystemEntry extends FreeFEOSInterface with BaseEntry {
           error: error,
         );
       } catch (exception) {
-        return await super.runFreeFEOSApp(
+        return await super.runApp(
           runner: runner,
           plugins: plugins,
           api: api,

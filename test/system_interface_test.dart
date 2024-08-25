@@ -18,7 +18,7 @@ class MockFreeFEOSInterface
   FreeFEOSInterface get interface => this;
 
   @override
-  Future<void> runFreeFEOSApp({
+  Future<void> runApp({
     required AppRunner runner,
     required PluginList plugins,
     required ApiBuilder api,
@@ -62,7 +62,7 @@ void main() {
   test('runFreeFEOSApp 接口调用正常.', () async {
     MockFreeFEOSInterface fakeInterface = MockFreeFEOSInterface();
     FreeFEOSInterface.instance = fakeInterface;
-    await FreeFEOSInterface.instance.runFreeFEOSApp(
+    await FreeFEOSInterface.instance.runApp(
       runner: (app) async => runApp(app),
       plugins: () => [fakeInterface],
       api: (open, exec) async => {},

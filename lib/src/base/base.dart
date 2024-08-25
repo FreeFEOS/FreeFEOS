@@ -70,7 +70,7 @@ base class SystemBase extends ContextWrapper
 
   /// 运行应用
   @override
-  Future<void> runFreeFEOSApp({
+  Future<void> runApp({
     required AppRunner runner,
     required PluginList plugins,
     required ApiBuilder api,

@@ -29,7 +29,7 @@ abstract class FreeFEOSInterface extends PlatformInterface {
   FreeFEOSInterface get interface => instance;
 
   /// 运行应用
-  Future<void> runFreeFEOSApp({
+  Future<void> runApp({
     required AppRunner runner,
     required PluginList plugins,
     required ApiBuilder api,
@@ -39,9 +39,7 @@ abstract class FreeFEOSInterface extends PlatformInterface {
     if (error != null) {
       throw Exception(error);
     } else {
-      throw UnimplementedError(
-        '未实现runFreeFEOSApp()方法',
-      );
+      throw UnimplementedError('未实现runFreeFEOSApp()方法');
     }
   }
 }

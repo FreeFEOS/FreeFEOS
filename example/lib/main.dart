@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:freefeos/freefeos.dart';
 
 Future<void> main() async {
-  final run = FreeFEOSAppBuilder(
+  final run = FreeFEOSRunner(
     runner: (app) async => runApp(app),
     plugins: () => [ExamplePlugin()],
     initApi: (open, exec) async {
