@@ -103,7 +103,7 @@ final class SystemRuntime extends SystemBase {
       getPlugin: _getPlugin,
       getPluginWidget: _getPluginWidget,
       isRuntime: _isRuntime,
-      launchDialog: super.launchDialog,
+      launchBottomSheet: super.launchBottomSheet,
       appName: _appName,
       appVersion: _appVersion,
     );
@@ -117,7 +117,7 @@ final class SystemRuntime extends SystemBase {
 
   /// 构建调试菜单
   @override
-  Future<dynamic> buildDialog(
+  Future<dynamic> buildBottomSheet(
     BuildContext context, {
     bool isManager = false,
   }) async {

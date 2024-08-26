@@ -1,3 +1,5 @@
+import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -19,7 +21,7 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
     required this.getPlugin,
     required this.getPluginWidget,
     required this.isRuntime,
-    required this.launchDialog,
+    required this.launchBottomSheet,
     required this.appName,
     required this.appVersion,
   });
@@ -40,7 +42,7 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
   final RuntimeChecker isRuntime;
 
   /// 打开对话框
-  final DialogLauncher launchDialog;
+  final DialogLauncher launchBottomSheet;
 
   /// 应用名称
   final String appName;
@@ -50,8 +52,8 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
 
   /// 打开对话框
   @override
-  Future<void> openDebugMenu() async {
-    return await launchDialog();
+  Future<void> openBottomSheet() async {
+    return await launchBottomSheet.call();
   }
 
   /// 统计普通插件数量

@@ -1,12 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:toastification/toastification.dart';
 
 import '../embedder/embedder_mixin.dart';
 import '../engine/bridge_mixin.dart';
-import '../intl/l10n.dart';
 import '../plugin/plugin_runtime.dart';
 import '../type/api_builder.dart';
 import '../type/app_runner.dart';
@@ -23,7 +20,7 @@ import '../interface/system_interface.dart';
 import '../runtime/runtime_mixin.dart';
 import '../values/drawable.dart';
 import '../server/server.dart';
-import '../widget/builder.dart';
+import '../widget/app.dart';
 import '../widget/provider.dart';
 import 'base_entry.dart';
 import 'base_mixin.dart';
@@ -116,74 +113,11 @@ base class SystemBase extends ContextWrapper
     );
     // 启动应用
     return await runner.call(
-      Builder(
-        builder: (context) => Theme(
-          data: ThemeData(
-            useMaterial3: true,
-            brightness: MediaQuery.platformBrightnessOf(
-              context,
-            ),
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.blue,
-              brightness: MediaQuery.platformBrightnessOf(
-                context,
-              ),
-            ),
-            pageTransitionsTheme: const PageTransitionsTheme(
-              builders: <TargetPlatform, PageTransitionsBuilder>{
-                TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
-                TargetPlatform.fuchsia: ZoomPageTransitionsBuilder(),
-                TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-                TargetPlatform.linux: ZoomPageTransitionsBuilder(),
-                TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
-                TargetPlatform.windows: ZoomPageTransitionsBuilder(),
-              },
-            ),
-          ),
-          child: ToastificationWrapper(
-            child: WidgetsApp(
-              initialRoute: routeApp,
-              pageRouteBuilder: <T>(
-                RouteSettings settings,
-                WidgetBuilder builder,
-              ) {
-                return MaterialPageRoute(
-                  builder: builder,
-                  settings: settings,
-                );
-              },
-              routes: {
-                routeApp: (context) {
-                  return AppBuilder(
-                    context: context,
-                    attach: super.attachBuildContext,
-                    host: super.getBuildContext,
-                    open: buildDialog,
-                    app: app,
-                  );
-                },
-                routeManager: (context) {
-                  return Material(
-                    child: buildManager(
-                      context,
-                    ),
-                  );
-                },
-              },
-              title: packageName,
-              color: Colors.transparent,
-              locale: const Locale('zh', 'CN'),
-              localizationsDelegates: const [
-                IntlLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              supportedLocales: IntlLocalizations.delegate.supportedLocales,
-              debugShowCheckedModeBanner: false,
-            ),
-          ),
-        ),
+      FreeFEOSApp(
+        wrapper: this,
+        open: buildBottomSheet,
+        manager: buildManager,
+        app: app,
       ),
     );
   }
@@ -221,7 +155,7 @@ base class SystemBase extends ContextWrapper
   }
 
   @override
-  Future<dynamic> buildDialog(
+  Future<dynamic> buildBottomSheet(
     BuildContext context, {
     bool isManager = false,
   }) async {
@@ -240,8 +174,8 @@ base class SystemBase extends ContextWrapper
   }
 
   @override
-  Future<dynamic> launchDialog() async {
-    return await buildDialog(
+  Future<dynamic> launchBottomSheet() async {
+    return await buildBottomSheet(
       super.getBuildContext(),
       isManager: true,
     );

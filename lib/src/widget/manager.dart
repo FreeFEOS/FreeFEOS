@@ -140,7 +140,7 @@ class _SystemManagerState extends State<SystemManager> {
             ).debugMenuTitle,
             child: Consumer<ManagerViewModel>(
               builder: (context, viewModel, child) => IconButton(
-                onPressed: viewModel.openDebugMenu,
+                onPressed: viewModel.openBottomSheet,
                 icon: const Icon(Icons.more_vert),
               ),
             ),

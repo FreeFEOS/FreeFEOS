@@ -13,6 +13,7 @@ import '../type/plugin_list.dart';
 /// 插件
 typedef FreeFEOSPlugin = RuntimePlugin;
 
+/// 执行器
 typedef FreeFEOSExec = MethodExecer;
 
 /// 注册器基类

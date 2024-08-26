@@ -27,13 +27,13 @@ abstract interface class BaseWrapper {
   Widget buildLayout(BuildContext context);
 
   /// 构建对话框
-  Future<dynamic> buildDialog(
+  Future<dynamic> buildBottomSheet(
     BuildContext context, {
     bool isManager = true,
   });
 
   /// 打开对话框
-  Future<dynamic> launchDialog();
+  Future<dynamic> launchBottomSheet();
 
   /// 打开管理器
   Future<dynamic> launchManager();
