@@ -68,10 +68,8 @@ final class FreeFEOSRunner {
   /// 插件
   final PluginList plugins;
 
+  /// api
   final ApiBuilder initApi;
-
-  /// 单例模式
-  static FreeFEOSRunner? _runner;
 
   /// 工厂
   factory FreeFEOSRunner({
@@ -79,12 +77,11 @@ final class FreeFEOSRunner {
     required List<FreeFEOSPlugin> Function() plugins,
     required Future<void> Function(FreeFEOSExec exec) initApi,
   }) {
-    _runner ??= FreeFEOSRunner._(
+    return FreeFEOSRunner._(
       runner: runner,
       plugins: plugins,
       initApi: initApi,
     );
-    return _runner!;
   }
 
   Future<void> call({
