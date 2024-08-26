@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:freefeos/src/entry/default_entry.dart';
 import 'package:freefeos/src/interface/system_interface.dart';
 import 'package:freefeos/src/plugin/plugin_runtime.dart';
-import 'package:freefeos/src/type/app_builder.dart';
 import 'package:freefeos/src/type/app_runner.dart';
 import 'package:freefeos/src/type/plugin_list.dart';
 import 'package:freefeos/src/values/strings.dart';
@@ -21,7 +20,6 @@ class MockFreeFEOSInterface
   Future<void> runApp({
     required AppRunner runner,
     required PluginList plugins,
-    required ApiBuilder api,
     required Widget app,
     required dynamic error,
   }) async {
@@ -65,7 +63,6 @@ void main() {
     await FreeFEOSInterface.instance.runApp(
       runner: (app) async => runApp(app),
       plugins: () => [fakeInterface],
-      api: (open, exec) async => {},
       app: const Placeholder(),
       error: null,
     );
