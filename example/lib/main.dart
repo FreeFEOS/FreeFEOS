@@ -7,6 +7,9 @@ Future<void> main() async {
   final run = FreeFEOSRunner(
     runner: (app) async => runApp(app),
     plugins: () => [ExamplePlugin()],
+    initApi: (exec) async {
+      Global.exec = exec;
+    },
   );
   await run(app: const MyApp());
 }
@@ -77,8 +80,8 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await execPluginMethod(
-            'example_channel',
+          await Global.exec(
+            Global.channel,
             Global.add,
           );
         },
@@ -114,6 +117,14 @@ class _DetailsPageState extends State<DetailsPage> {
 class Global {
   const Global();
 
+  static FreeFEOSExec exec = (
+    String channel,
+    String method, [
+    dynamic arguments,
+  ]) async {
+    return await null;
+  };
+
   /// 应用名称
   static const String appName = 'FreeFEOS 示例应用';
 
@@ -124,6 +135,7 @@ class Global {
 
   /// 计数器
   static const String add = 'add';
+  static const String channel = 'example_channel';
 }
 
 final class ExamplePlugin implements FreeFEOSPlugin {
@@ -135,7 +147,7 @@ final class ExamplePlugin implements FreeFEOSPlugin {
 
   /// “example_channel”为插件的通道,可以理解为插件的唯一标识,我们通常使用全小写英文字母加下划线的命名方式,通过[pluginChannel]方法定义.
   @override
-  String get pluginChannel => 'example_channel';
+  String get pluginChannel => Global.channel;
 
   /// "Example description"为插件的描述,通过[pluginDescription]方法定.
   @override
@@ -157,7 +169,8 @@ final class ExamplePlugin implements FreeFEOSPlugin {
   Future<dynamic> onMethodCall(String method, [dynamic arguments]) async {
     switch (method) {
       case Global.add:
-        return Global.counter.value++;
+        Global.counter.value++;
+        return Global.counter.value;
       default:
         return await null;
     }

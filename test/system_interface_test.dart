@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:freefeos/src/entry/default_entry.dart';
 import 'package:freefeos/src/interface/system_interface.dart';
 import 'package:freefeos/src/plugin/plugin_runtime.dart';
+import 'package:freefeos/src/type/api_builder.dart';
 import 'package:freefeos/src/type/app_runner.dart';
 import 'package:freefeos/src/type/plugin_list.dart';
 import 'package:freefeos/src/values/strings.dart';
@@ -20,19 +21,12 @@ class MockFreeFEOSInterface
   Future<void> runFreeFEOSApp({
     required AppRunner runner,
     required PluginList plugins,
+    required ApiBuilder initApi,
     required Widget app,
     required dynamic error,
   }) async {
     isInitialized = true;
   }
-
-  @override
-  Future execPluginMethod(
-    String channel,
-    String method,
-    dynamic error, [
-    dynamic arguments,
-  ]) async {}
 
   @override
   String get pluginAuthor => developerName;
@@ -71,6 +65,7 @@ void main() {
     await FreeFEOSInterface.instance.runFreeFEOSApp(
       runner: (app) async => runApp(app),
       plugins: () => [fakeInterface],
+      initApi: (exec) async {},
       app: const Placeholder(),
       error: null,
     );

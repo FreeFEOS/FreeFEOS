@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:freefeos/src/type/api_builder.dart';
 
 import '../base/base_entry.dart';
 import '../interface/system_interface.dart';
@@ -13,6 +14,7 @@ final class SystemEntry extends FreeFEOSInterface with BaseEntry {
   Future<void> runFreeFEOSApp({
     required AppRunner runner,
     required PluginList plugins,
+    required ApiBuilder initApi,
     required Widget app,
     required dynamic error,
   }) async {
@@ -21,6 +23,7 @@ final class SystemEntry extends FreeFEOSInterface with BaseEntry {
         return await interface.runFreeFEOSApp(
           runner: runner,
           plugins: plugins,
+          initApi: initApi,
           app: app,
           error: error,
         );
@@ -28,34 +31,9 @@ final class SystemEntry extends FreeFEOSInterface with BaseEntry {
         return await super.runFreeFEOSApp(
           runner: runner,
           plugins: plugins,
+          initApi: initApi,
           app: app,
           error: exception,
-        );
-      }
-    }();
-  }
-
-  @override
-  Future<dynamic> execPluginMethod(
-    String channel,
-    String method,
-    dynamic error, [
-    dynamic arguments,
-  ]) async {
-    return await () async {
-      try {
-        return await interface.execPluginMethod(
-          channel,
-          method,
-          error,
-          arguments,
-        );
-      } catch (exception) {
-        return await super.execPluginMethod(
-          channel,
-          method,
-          exception,
-          arguments,
         );
       }
     }();

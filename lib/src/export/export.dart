@@ -1,4 +1,6 @@
 import 'package:flutter/widgets.dart';
+import 'package:freefeos/src/type/api_builder.dart';
+import 'package:freefeos/src/type/method_execer.dart';
 
 import '../entry/system_entry.dart';
 import '../interface/platform_interface.dart';
@@ -10,6 +12,8 @@ import '../type/plugin_list.dart';
 
 /// 插件
 typedef FreeFEOSPlugin = RuntimePlugin;
+
+typedef FreeFEOSExec = MethodExecer;
 
 /// 注册器基类
 ///
@@ -55,6 +59,7 @@ final class FreeFEOSRunner {
   const FreeFEOSRunner._({
     required this.runner,
     required this.plugins,
+    required this.initApi,
   });
 
   /// Runner
@@ -63,6 +68,8 @@ final class FreeFEOSRunner {
   /// 插件
   final PluginList plugins;
 
+  final ApiBuilder initApi;
+
   /// 单例模式
   static FreeFEOSRunner? _runner;
 
@@ -70,10 +77,12 @@ final class FreeFEOSRunner {
   factory FreeFEOSRunner({
     required Future<void> Function(Widget app) runner,
     required List<FreeFEOSPlugin> Function() plugins,
+    required Future<void> Function(FreeFEOSExec exec) initApi,
   }) {
     _runner ??= FreeFEOSRunner._(
       runner: runner,
       plugins: plugins,
+      initApi: initApi,
     );
     return _runner!;
   }
@@ -84,42 +93,11 @@ final class FreeFEOSRunner {
     return await FreeFEOSInterface.instance.runFreeFEOSApp(
       runner: runner,
       plugins: plugins,
+      initApi: initApi,
       app: app,
       error: null,
     );
   }
-}
-
-// /// 调用插件方法
-// extension FreeFEOSExecutor on BuildContext {
-//   /// 调用插件方法
-//   ///
-//   /// ```dart
-//   /// context.execPluginMethod('example_plugin', 'hello');
-//   /// ```
-//   Future<dynamic> execPluginMethod(
-//     String channel,
-//     String method, [
-//     dynamic arguments,
-//   ]) async {
-//     return await FreeFEOSInterface.instance.execPluginMethod(
-//       channel,
-//       method,
-//       arguments,
-//     );
-//   }
-// }
-
-Future<dynamic> execPluginMethod(
-  String channel,
-  String method, [
-  dynamic arguments,
-]) async {
-  return await FreeFEOSInterface.instance.execPluginMethod(
-    channel,
-    method,
-    arguments,
-  );
 }
 
 /// 此文件为导出的, 可被外部访问的公共API接口, 但 [FreeFEOSBase] 类除外.

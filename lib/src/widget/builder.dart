@@ -28,14 +28,10 @@ class AppBuilder extends StatefulWidget {
 }
 
 class _AppBuilderState extends State<AppBuilder> {
-  /// 子组件
-  late Widget child;
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     widget.attach.call(widget.context);
-    child = widget.app;
   }
 
   @override
@@ -49,7 +45,7 @@ class _AppBuilderState extends State<AppBuilder> {
         ConstrainedBox(
           constraints: const BoxConstraints.expand(),
           child: kNoBanner
-              ? child
+              ? widget.app
               : Banner(
                   message: IntlLocalizations.of(
                     context,
@@ -58,7 +54,7 @@ class _AppBuilderState extends State<AppBuilder> {
                   location: BannerLocation.topStart,
                   layoutDirection: TextDirection.ltr,
                   color: Colors.pink,
-                  child: child,
+                  child: widget.app,
                 ),
         ),
         Positioned(

@@ -8,6 +8,7 @@ import '../embedder/embedder_mixin.dart';
 import '../engine/bridge_mixin.dart';
 import '../intl/l10n.dart';
 import '../plugin/plugin_runtime.dart';
+import '../type/api_builder.dart';
 import '../type/app_runner.dart';
 import '../type/plugin_list.dart';
 import '../values/channel.dart';
@@ -72,6 +73,7 @@ base class SystemBase extends ContextWrapper
   Future<void> runFreeFEOSApp({
     required AppRunner runner,
     required PluginList plugins,
+    required ApiBuilder initApi,
     required Widget app,
     required dynamic error,
   }) async {
@@ -99,6 +101,19 @@ base class SystemBase extends ContextWrapper
     await engineBridgerScope.onCreateEngine(this);
     // 初始化应用
     await init(plugins.call());
+    await initApi.call(
+      (
+        String channel,
+        String method, [
+        dynamic arguments,
+      ]) async {
+        return await exec(
+          channel,
+          method,
+          arguments,
+        );
+      },
+    );
     // 启动应用
     return await runner.call(
       Builder(
@@ -170,20 +185,6 @@ base class SystemBase extends ContextWrapper
           ),
         ),
       ),
-    );
-  }
-
-  @override
-  Future<dynamic> execPluginMethod(
-    String channel,
-    String method,
-    dynamic error, [
-    dynamic arguments,
-  ]) async {
-    return await exec(
-      channel,
-      method,
-      arguments,
     );
   }
 

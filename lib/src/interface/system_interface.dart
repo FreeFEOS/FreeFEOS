@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:freefeos/src/type/api_builder.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import '../entry/default_entry.dart';
@@ -31,6 +32,7 @@ abstract class FreeFEOSInterface extends PlatformInterface {
   Future<void> runFreeFEOSApp({
     required AppRunner runner,
     required PluginList plugins,
+    required ApiBuilder initApi,
     required Widget app,
     required dynamic error,
   }) async {
@@ -38,19 +40,6 @@ abstract class FreeFEOSInterface extends PlatformInterface {
       throw Exception(error);
     } else {
       throw UnimplementedError('未实现runFreeFEOSApp方法');
-    }
-  }
-
-  Future<dynamic> execPluginMethod(
-    String channel,
-    String method,
-    dynamic error, [
-    dynamic arguments,
-  ]) async {
-    if (error != null) {
-      throw Exception(error);
-    } else {
-      throw UnimplementedError('未实现execPluginMethod方法');
     }
   }
 }
