@@ -66,6 +66,16 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
     return count;
   }
 
+  String pluginNames() {
+    final buffer = StringBuffer();
+    for (var element in pluginDetailsList) {
+      if (element.type == PluginType.flutter) {
+        buffer.write('${element.title}, ');
+      }
+    }
+    return buffer.toString();
+  }
+
   /// 打开PubDev
   @override
   Future<bool> launchPubDev() async {

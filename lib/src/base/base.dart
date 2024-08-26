@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:freefeos/src/widget/action.dart';
 import 'package:toastification/toastification.dart';
 
 import '../embedder/embedder_mixin.dart';
@@ -161,10 +162,17 @@ base class SystemBase extends ContextWrapper
               },
               routes: {
                 routeApp: (context) {
-                  return AppBanner(
-                    app: app,
-                    host: context,
-                    attach: super.attachBuildContext,
+                  return ActionButtons(
+                    open: () async => await buildDialog(
+                      super.getBuildContext(),
+                      isManager: false,
+                    ),
+                    exit: () {},
+                    child: AppBanner(
+                      app: app,
+                      host: context,
+                      attach: super.attachBuildContext,
+                    ),
                   );
                 },
                 routeManager: (context) {
