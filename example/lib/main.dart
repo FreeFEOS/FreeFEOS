@@ -126,7 +126,7 @@ class Global {
   };
 
   /// 应用名称
-  static const String appName = 'FreeFEOS 示例应用';
+  static const String appName = '示例应用';
 
   static const String developerName = 'wyq0918dev';
 

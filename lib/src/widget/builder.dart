@@ -100,8 +100,52 @@ class _AppBuilderState extends State<AppBuilder> {
                       color: Colors.white.withOpacity(0.3),
                     ),
                     InkWell(
-                      onTap: () => SystemNavigator.pop(
-                        animated: true,
+                      onTap: () => showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        useRootNavigator: true,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text(
+                              IntlLocalizations.of(
+                                context,
+                              ).closeDialogTitle,
+                            ),
+                            content: Text(
+                              IntlLocalizations.of(
+                                context,
+                              ).closeDialogMessage,
+                            ),
+                            actions: [
+                              Tooltip(
+                                message: IntlLocalizations.of(
+                                  context,
+                                ).closeDialogCancelButton,
+                                child: TextButton(
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  child: Text(
+                                    IntlLocalizations.of(
+                                      context,
+                                    ).closeDialogCancelButton,
+                                  ),
+                                ),
+                              ),
+                              Tooltip(
+                                message: IntlLocalizations.of(
+                                  context,
+                                ).closeDialogExitButton,
+                                child: TextButton(
+                                  onPressed: () => SystemNavigator.pop(),
+                                  child: Text(
+                                    IntlLocalizations.of(
+                                      context,
+                                    ).closeDialogExitButton,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
                       ),
                       onLongPress: () async => await widget.open(
                         widget.host(),

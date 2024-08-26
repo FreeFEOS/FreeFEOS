@@ -137,7 +137,7 @@ class _SystemManagerState extends State<SystemManager> {
           Tooltip(
             message: IntlLocalizations.of(
               context,
-            ).debugMenuTitle,
+            ).bottomSheetTooltip,
             child: Consumer<ManagerViewModel>(
               builder: (context, viewModel, child) => IconButton(
                 onPressed: viewModel.openBottomSheet,

@@ -70,31 +70,71 @@ class IntlLocalizations {
     );
   }
 
-  /// `调试菜单`
-  String get debugMenuTitle {
+  /// `菜单`
+  String get bottomSheetTooltip {
     return Intl.message(
-      '调试菜单',
-      name: 'debugMenuTitle',
+      '菜单',
+      name: 'bottomSheetTooltip',
       desc: '',
       args: [],
     );
   }
 
   /// `打开管理器`
-  String get debugMenuOpenManager {
+  String get bottomSheetOpenManager {
     return Intl.message(
       '打开管理器',
-      name: 'debugMenuOpenManager',
+      name: 'bottomSheetOpenManager',
       desc: '',
       args: [],
     );
   }
 
   /// `关闭对话框`
-  String get debugMenuCloseDebugMenu {
+  String get bottomSheetCloseTooltip {
     return Intl.message(
       '关闭对话框',
-      name: 'debugMenuCloseDebugMenu',
+      name: 'bottomSheetCloseTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `退出应用`
+  String get closeDialogTitle {
+    return Intl.message(
+      '退出应用',
+      name: 'closeDialogTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `是否退出应用?`
+  String get closeDialogMessage {
+    return Intl.message(
+      '是否退出应用?',
+      name: 'closeDialogMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `取消`
+  String get closeDialogCancelButton {
+    return Intl.message(
+      '取消',
+      name: 'closeDialogCancelButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `退出`
+  String get closeDialogExitButton {
+    return Intl.message(
+      '退出',
+      name: 'closeDialogExitButton',
       desc: '',
       args: [],
     );

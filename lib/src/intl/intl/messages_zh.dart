@@ -23,10 +23,14 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "bannerTitle": MessageLookupByLibrary.simpleMessage("FreeFEOS"),
-        "debugMenuCloseDebugMenu":
+        "bottomSheetCloseTooltip":
             MessageLookupByLibrary.simpleMessage("关闭对话框"),
-        "debugMenuOpenManager": MessageLookupByLibrary.simpleMessage("打开管理器"),
-        "debugMenuTitle": MessageLookupByLibrary.simpleMessage("调试菜单"),
+        "bottomSheetOpenManager": MessageLookupByLibrary.simpleMessage("打开管理器"),
+        "bottomSheetTooltip": MessageLookupByLibrary.simpleMessage("菜单"),
+        "closeDialogCancelButton": MessageLookupByLibrary.simpleMessage("取消"),
+        "closeDialogExitButton": MessageLookupByLibrary.simpleMessage("退出"),
+        "closeDialogMessage": MessageLookupByLibrary.simpleMessage("是否退出应用?"),
+        "closeDialogTitle": MessageLookupByLibrary.simpleMessage("退出应用"),
         "managerDestinationHome": MessageLookupByLibrary.simpleMessage("主页"),
         "managerDestinationLog": MessageLookupByLibrary.simpleMessage("日志"),
         "managerDestinationPlugin": MessageLookupByLibrary.simpleMessage("插件"),

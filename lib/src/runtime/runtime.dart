@@ -121,108 +121,79 @@ final class SystemRuntime extends SystemBase {
     BuildContext context, {
     bool isManager = false,
   }) async {
-    return await showModalBottomSheet<dynamic>(
+    return await showModalBottomSheet(
       context: context,
       useRootNavigator: true,
+      useSafeArea: true,
       builder: (context) {
         return Column(
           children: [
-            SimpleDialogOption(
-              padding: const EdgeInsets.all(0),
-              child: Tooltip(
-                message: IntlLocalizations.of(
-                  context,
-                ).debugMenuOpenManager,
-                child: ListTile(
-                  title: Text(
-                    IntlLocalizations.of(
-                      context,
-                    ).debugMenuOpenManager,
+            Expanded(
+              child: Column(
+                children: [
+                  SimpleDialogOption(
+                    padding: const EdgeInsets.all(0),
+                    child: Tooltip(
+                      message: IntlLocalizations.of(
+                        context,
+                      ).bottomSheetOpenManager,
+                      child: ListTile(
+                        title: Text(
+                          IntlLocalizations.of(
+                            context,
+                          ).bottomSheetOpenManager,
+                        ),
+                        leading: const Icon(Icons.open_in_new),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 24.0),
+                        enabled: true,
+                        onTap: () async => await super.launchManager(),
+                      ),
+                    ),
                   ),
-                  leading: const Icon(Icons.open_in_new),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  enabled: true,
-                  onTap: () async => await super.launchManager(),
-                ),
+                ],
               ),
             ),
-            SimpleDialogOption(
-              padding: const EdgeInsets.all(0),
-              child: Tooltip(
-                message: IntlLocalizations.of(
-                  context,
-                ).debugMenuCloseDebugMenu,
-                child: ListTile(
-                  title: Text(
-                    IntlLocalizations.of(
+            const Divider(height: 1),
+            Row(
+              children: [
+                Expanded(
+                  child: InkWell(
+                    onTap: () => Navigator.of(
                       context,
-                    ).debugMenuCloseDebugMenu,
+                      rootNavigator: true,
+                    ).pop(),
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        bottom: MediaQuery.paddingOf(context).bottom,
+                      ),
+                      child: Tooltip(
+                        message: '取消',
+                        child: ListTile(
+                          title: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              '取消',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                  leading: const Icon(Icons.close),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  enabled: true,
-                  onTap: () => Navigator.of(
-                    context,
-                    rootNavigator: true,
-                  ).pop(),
                 ),
-              ),
+              ],
             ),
           ],
         );
       },
     );
-    // return await showDialog<SimpleDialog>(
-    //   context: context,
-    //   useRootNavigator: true,
-    //   builder: (context) => SimpleDialog(
-    //     title: Text(IntlLocalizations.of(context).debugMenuTitle),
-    //     children: <SimpleDialogOption>[
-    //       if (!isManager)
-    //         SimpleDialogOption(
-    //           padding: const EdgeInsets.all(0),
-    //           child: Tooltip(
-    //             message: IntlLocalizations.of(
-    //               context,
-    //             ).debugMenuOpenManager,
-    //             child: ListTile(
-    //               title: Text(
-    //                 IntlLocalizations.of(
-    //                   context,
-    //                 ).debugMenuOpenManager,
-    //               ),
-    //               leading: const Icon(Icons.open_in_new),
-    //               contentPadding: const EdgeInsets.symmetric(horizontal: 24.0),
-    //               enabled: true,
-    //               onTap: () async => await super.launchManager(),
-    //             ),
-    //           ),
-    //         ),
-    //       SimpleDialogOption(
-    //         padding: const EdgeInsets.all(0),
-    //         child: Tooltip(
-    //           message: IntlLocalizations.of(
-    //             context,
-    //           ).debugMenuCloseDebugMenu,
-    //           child: ListTile(
-    //             title: Text(
-    //               IntlLocalizations.of(
-    //                 context,
-    //               ).debugMenuCloseDebugMenu,
-    //             ),
-    //             leading: const Icon(Icons.close),
-    //             contentPadding: const EdgeInsets.symmetric(horizontal: 24.0),
-    //             enabled: true,
-    //             onTap: () => Navigator.of(
-    //               context,
-    //               rootNavigator: true,
-    //             ).pop(),
-    //           ),
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    // );
   }
 
   /// 执行插件方法
