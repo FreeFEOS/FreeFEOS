@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await context.execPluginMethod(
+          await execPluginMethod(
             'example_channel',
             Global.add,
           );

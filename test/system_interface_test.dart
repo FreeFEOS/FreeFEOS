@@ -17,7 +17,7 @@ class MockFreeFEOSInterface
   FreeFEOSInterface get interface => this;
 
   @override
-  Future<void> runApp({
+  Future<void> runFreeFEOSApp({
     required AppRunner runner,
     required PluginList plugins,
     required Widget app,
@@ -25,6 +25,14 @@ class MockFreeFEOSInterface
   }) async {
     isInitialized = true;
   }
+
+  @override
+  Future execPluginMethod(
+    String channel,
+    String method,
+    dynamic error, [
+    dynamic arguments,
+  ]) async {}
 
   @override
   String get pluginAuthor => developerName;
@@ -60,7 +68,7 @@ void main() {
   test('runFreeFEOSApp 接口调用正常.', () async {
     MockFreeFEOSInterface fakeInterface = MockFreeFEOSInterface();
     FreeFEOSInterface.instance = fakeInterface;
-    await FreeFEOSInterface.instance.runApp(
+    await FreeFEOSInterface.instance.runFreeFEOSApp(
       runner: (app) async => runApp(app),
       plugins: () => [fakeInterface],
       app: const Placeholder(),

@@ -28,7 +28,7 @@ abstract class FreeFEOSInterface extends PlatformInterface {
   FreeFEOSInterface get interface => instance;
 
   /// 运行应用
-  Future<void> runApp({
+  Future<void> runFreeFEOSApp({
     required AppRunner runner,
     required PluginList plugins,
     required Widget app,
@@ -37,7 +37,20 @@ abstract class FreeFEOSInterface extends PlatformInterface {
     if (error != null) {
       throw Exception(error);
     } else {
-      throw UnimplementedError('未实现runFreeFEOSApp()方法');
+      throw UnimplementedError('未实现runFreeFEOSApp方法');
+    }
+  }
+
+  Future<dynamic> execPluginMethod(
+    String channel,
+    String method,
+    dynamic error, [
+    dynamic arguments,
+  ]) async {
+    if (error != null) {
+      throw Exception(error);
+    } else {
+      throw UnimplementedError('未实现execPluginMethod方法');
     }
   }
 }

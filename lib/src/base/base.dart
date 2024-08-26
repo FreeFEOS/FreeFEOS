@@ -69,7 +69,7 @@ base class SystemBase extends ContextWrapper
 
   /// 运行应用
   @override
-  Future<void> runApp({
+  Future<void> runFreeFEOSApp({
     required AppRunner runner,
     required PluginList plugins,
     required Widget app,
@@ -141,24 +141,11 @@ base class SystemBase extends ContextWrapper
                 routeApp: (context) {
                   return AppBuilder(
                     context: context,
-                    executor: exec,
                     attach: super.attachBuildContext,
                     host: super.getBuildContext,
                     open: buildDialog,
                     app: app,
                   );
-                  // return ExecutorInherited(
-                  //   executor: exec,
-                  //   child: ActionButtons(
-                  //     host: super.getBuildContext,
-                  //     open: buildDialog,
-                  //     child: AppBanner(
-                  //       app: app,
-                  //       host: context,
-                  //       attach: super.attachBuildContext,
-                  //     ),
-                  //   ),
-                  // );
                 },
                 routeManager: (context) {
                   return Material(
@@ -183,6 +170,20 @@ base class SystemBase extends ContextWrapper
           ),
         ),
       ),
+    );
+  }
+
+  @override
+  Future<dynamic> execPluginMethod(
+    String channel,
+    String method,
+    dynamic error, [
+    dynamic arguments,
+  ]) async {
+    return await exec(
+      channel,
+      method,
+      arguments,
     );
   }
 

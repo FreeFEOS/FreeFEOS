@@ -7,7 +7,6 @@ import '../platform/method_channel.dart';
 import '../plugin/plugin_runtime.dart';
 import '../type/app_runner.dart';
 import '../type/plugin_list.dart';
-import '../widget/inherited.dart';
 
 /// 插件
 typedef FreeFEOSPlugin = RuntimePlugin;
@@ -52,6 +51,12 @@ abstract base class FreeFEOSBase {
 /// }
 /// ```
 final class FreeFEOSRunner {
+  /// 构造
+  const FreeFEOSRunner._({
+    required this.runner,
+    required this.plugins,
+  });
+
   /// Runner
   final AppRunner runner;
 
@@ -60,10 +65,6 @@ final class FreeFEOSRunner {
 
   /// 单例模式
   static FreeFEOSRunner? _runner;
-
-  FreeFEOSInterface get _entry {
-    return FreeFEOSInterface.instance;
-  }
 
   /// 工厂
   factory FreeFEOSRunner({
@@ -77,16 +78,10 @@ final class FreeFEOSRunner {
     return _runner!;
   }
 
-  /// 构造
-  const FreeFEOSRunner._({
-    required this.runner,
-    required this.plugins,
-  });
-
   Future<void> call({
     required Widget app,
   }) async {
-    return await _entry.runApp(
+    return await FreeFEOSInterface.instance.runFreeFEOSApp(
       runner: runner,
       plugins: plugins,
       app: app,
@@ -95,26 +90,36 @@ final class FreeFEOSRunner {
   }
 }
 
-/// 调用插件方法
-extension FreeFEOSExecutor on BuildContext {
-  /// 调用插件方法
-  ///
-  /// ```dart
-  /// context.execPluginMethod('example_plugin', 'hello');
-  /// ```
-  Future<dynamic> execPluginMethod(
-    String channel,
-    String method, [
-    dynamic arguments,
-  ]) async {
-    ExecutorInherited? inherited =
-        dependOnInheritedWidgetOfExactType<ExecutorInherited>();
-    if (inherited != null) {
-      return await inherited.executor(channel, method, arguments);
-    } else {
-      throw FlutterError('请检查是否使用runEcosedApp方法启动应用!');
-    }
-  }
+// /// 调用插件方法
+// extension FreeFEOSExecutor on BuildContext {
+//   /// 调用插件方法
+//   ///
+//   /// ```dart
+//   /// context.execPluginMethod('example_plugin', 'hello');
+//   /// ```
+//   Future<dynamic> execPluginMethod(
+//     String channel,
+//     String method, [
+//     dynamic arguments,
+//   ]) async {
+//     return await FreeFEOSInterface.instance.execPluginMethod(
+//       channel,
+//       method,
+//       arguments,
+//     );
+//   }
+// }
+
+Future<dynamic> execPluginMethod(
+  String channel,
+  String method, [
+  dynamic arguments,
+]) async {
+  return await FreeFEOSInterface.instance.execPluginMethod(
+    channel,
+    method,
+    arguments,
+  );
 }
 
 /// 此文件为导出的, 可被外部访问的公共API接口, 但 [FreeFEOSBase] 类除外.
