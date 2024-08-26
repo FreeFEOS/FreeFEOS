@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
-import 'package:freefeos/src/type/api_builder.dart';
 
 import '../base/base_entry.dart';
 import '../interface/system_interface.dart';
+import '../type/api_builder.dart';
 import '../type/app_runner.dart';
 import '../type/plugin_list.dart';
 

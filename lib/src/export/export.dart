@@ -1,13 +1,13 @@
 import 'package:flutter/widgets.dart';
-import 'package:freefeos/src/type/api_builder.dart';
-import 'package:freefeos/src/type/method_execer.dart';
 
 import '../entry/system_entry.dart';
 import '../interface/platform_interface.dart';
 import '../interface/system_interface.dart';
 import '../platform/method_channel.dart';
 import '../plugin/plugin_runtime.dart';
+import '../type/api_builder.dart';
 import '../type/app_runner.dart';
+import '../type/method_execer.dart';
 import '../type/plugin_list.dart';
 
 /// 插件
