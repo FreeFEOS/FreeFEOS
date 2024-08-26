@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import '../entry/default_entry.dart';
-import '../type/app_builder.dart';
 import '../type/app_runner.dart';
 import '../type/plugin_list.dart';
 
@@ -32,7 +31,6 @@ abstract class FreeFEOSInterface extends PlatformInterface {
   Future<void> runApp({
     required AppRunner runner,
     required PluginList plugins,
-    required ApiBuilder api,
     required Widget app,
     required dynamic error,
   }) async {

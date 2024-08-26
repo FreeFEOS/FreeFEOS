@@ -7,10 +7,6 @@ Future<void> main() async {
   final run = FreeFEOSRunner(
     runner: (app) async => runApp(app),
     plugins: () => [ExamplePlugin()],
-    initApi: (open, exec) async {
-      Global.open = open;
-      Global.exec = exec;
-    },
   );
   await run(app: const MyApp());
 }
@@ -72,7 +68,8 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             FilledButton(
-              onPressed: () => Navigator.of(context, rootNavigator: false).pushNamed('/details'),
+              onPressed: () => Navigator.of(context, rootNavigator: false)
+                  .pushNamed('/details'),
               child: const Text('DetailsPage'),
             ),
           ],
@@ -80,7 +77,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await Global.exec(
+          await context.execPluginMethod(
             'example_channel',
             Global.add,
           );
@@ -116,18 +113,6 @@ class _DetailsPageState extends State<DetailsPage> {
 /// Global全局类
 class Global {
   const Global();
-
-  static FreeFEOSOpen open = () async {
-    return await Future.value();
-  };
-
-  static FreeFEOSExec exec = (
-    String channel,
-    String method, [
-    dynamic arguments,
-  ]) async {
-    return await null;
-  };
 
   /// 应用名称
   static const String appName = 'FreeFEOS 示例应用';

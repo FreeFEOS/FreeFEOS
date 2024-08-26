@@ -2,14 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:freefeos/src/widget/action.dart';
 import 'package:toastification/toastification.dart';
 
 import '../embedder/embedder_mixin.dart';
 import '../engine/bridge_mixin.dart';
 import '../intl/l10n.dart';
 import '../plugin/plugin_runtime.dart';
-import '../type/app_builder.dart';
 import '../type/app_runner.dart';
 import '../type/plugin_list.dart';
 import '../values/channel.dart';
@@ -24,7 +22,7 @@ import '../interface/system_interface.dart';
 import '../runtime/runtime_mixin.dart';
 import '../values/drawable.dart';
 import '../server/server.dart';
-import '../widget/banner.dart';
+import '../widget/builder.dart';
 import '../widget/provider.dart';
 import 'base_entry.dart';
 import 'base_mixin.dart';
@@ -74,7 +72,6 @@ base class SystemBase extends ContextWrapper
   Future<void> runApp({
     required AppRunner runner,
     required PluginList plugins,
-    required ApiBuilder api,
     required Widget app,
     required dynamic error,
   }) async {
@@ -102,26 +99,6 @@ base class SystemBase extends ContextWrapper
     await engineBridgerScope.onCreateEngine(this);
     // 初始化应用
     await init(plugins.call());
-    // 初始化API
-    await api.call(
-      () async {
-        return await buildDialog(
-          super.getBuildContext(),
-          isManager: false,
-        );
-      },
-      (
-        String channel,
-        String method, [
-        dynamic arguments,
-      ]) async {
-        return await exec(
-          channel,
-          method,
-          arguments,
-        );
-      },
-    );
     // 启动应用
     return await runner.call(
       Builder(
@@ -162,18 +139,26 @@ base class SystemBase extends ContextWrapper
               },
               routes: {
                 routeApp: (context) {
-                  return ActionButtons(
-                    open: () async => await buildDialog(
-                      super.getBuildContext(),
-                      isManager: false,
-                    ),
-                    exit: () {},
-                    child: AppBanner(
-                      app: app,
-                      host: context,
-                      attach: super.attachBuildContext,
-                    ),
+                  return AppBuilder(
+                    context: context,
+                    executor: exec,
+                    attach: super.attachBuildContext,
+                    host: super.getBuildContext,
+                    open: buildDialog,
+                    app: app,
                   );
+                  // return ExecutorInherited(
+                  //   executor: exec,
+                  //   child: ActionButtons(
+                  //     host: super.getBuildContext,
+                  //     open: buildDialog,
+                  //     child: AppBanner(
+                  //       app: app,
+                  //       host: context,
+                  //       attach: super.attachBuildContext,
+                  //     ),
+                  //   ),
+                  // );
                 },
                 routeManager: (context) {
                   return Material(

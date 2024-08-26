@@ -5,24 +5,12 @@ import '../interface/platform_interface.dart';
 import '../interface/system_interface.dart';
 import '../platform/method_channel.dart';
 import '../plugin/plugin_runtime.dart';
-import '../type/app_builder.dart';
 import '../type/app_runner.dart';
-import '../type/menu_launcher.dart';
-import '../type/method_execer.dart';
 import '../type/plugin_list.dart';
+import '../widget/inherited.dart';
 
 /// 插件
 typedef FreeFEOSPlugin = RuntimePlugin;
-
-/// 打开调试对话框API的类型定义
-///
-/// 实在不明白这个类型定义的用处, 可以读一下示例程序的源码.
-typedef FreeFEOSOpen = MenuLauncher;
-
-/// 调用插件方法API的类型定义
-///
-/// 实在不明白这个类型定义的用处, 可以读一下示例程序的源码.
-typedef FreeFEOSExec = MethodExecer;
 
 /// 注册器基类
 ///
@@ -70,9 +58,6 @@ final class FreeFEOSRunner {
   /// 插件
   final PluginList plugins;
 
-  /// initApi
-  final ApiBuilder initApi;
-
   /// 单例模式
   static FreeFEOSRunner? _runner;
 
@@ -84,15 +69,10 @@ final class FreeFEOSRunner {
   factory FreeFEOSRunner({
     required Future<void> Function(Widget app) runner,
     required List<FreeFEOSPlugin> Function() plugins,
-    required Future<void> Function(
-      FreeFEOSOpen open,
-      FreeFEOSExec exec,
-    ) initApi,
   }) {
     _runner ??= FreeFEOSRunner._(
       runner: runner,
       plugins: plugins,
-      initApi: initApi,
     );
     return _runner!;
   }
@@ -101,7 +81,6 @@ final class FreeFEOSRunner {
   const FreeFEOSRunner._({
     required this.runner,
     required this.plugins,
-    required this.initApi,
   });
 
   Future<void> call({
@@ -110,10 +89,31 @@ final class FreeFEOSRunner {
     return await _entry.runApp(
       runner: runner,
       plugins: plugins,
-      api: initApi,
       app: app,
       error: null,
     );
+  }
+}
+
+/// 调用插件方法
+extension FreeFEOSExecutor on BuildContext {
+  /// 调用插件方法
+  ///
+  /// ```dart
+  /// context.execPluginMethod('example_plugin', 'hello');
+  /// ```
+  Future<dynamic> execPluginMethod(
+    String channel,
+    String method, [
+    dynamic arguments,
+  ]) async {
+    ExecutorInherited? inherited =
+        dependOnInheritedWidgetOfExactType<ExecutorInherited>();
+    if (inherited != null) {
+      return await inherited.executor(channel, method, arguments);
+    } else {
+      throw FlutterError('请检查是否使用runEcosedApp方法启动应用!');
+    }
   }
 }
 
