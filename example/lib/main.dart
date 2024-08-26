@@ -31,19 +31,23 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const MyHomePage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomePage(),
+        '/details': (context) => const DetailsPage(),
+      },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,21 +72,8 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             FilledButton(
-              onPressed: () => Navigator.of(context, rootNavigator: false).push(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return Scaffold(
-                      appBar: AppBar(
-                        title: const Text('title'),
-                      ),
-                      body: const Center(
-                        child: Text('body'),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              child: const Text('2'),
+              onPressed: () => Navigator.of(context, rootNavigator: false).pushNamed('/details'),
+              child: const Text('DetailsPage'),
             ),
           ],
         ),
@@ -96,6 +87,27 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+class DetailsPage extends StatefulWidget {
+  const DetailsPage({super.key});
+
+  @override
+  State<DetailsPage> createState() => _DetailsPageState();
+}
+
+class _DetailsPageState extends State<DetailsPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Details'),
+      ),
+      body: const Center(
+        child: Text('DetailsPage'),
       ),
     );
   }

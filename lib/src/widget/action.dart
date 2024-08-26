@@ -26,7 +26,7 @@ class ActionButtons extends StatelessWidget {
         ),
         Positioned(
           top: MediaQuery.paddingOf(context).top,
-          right: 5,
+          right: 8,
           child: Container(
             alignment: Alignment.centerRight,
             height: kToolbarHeight,
@@ -34,7 +34,7 @@ class ActionButtons extends StatelessWidget {
               height: 30,
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(20.0),
+                borderRadius: BorderRadius.circular(20),
               ),
               child: Material(
                 color: Colors.transparent,
@@ -43,13 +43,13 @@ class ActionButtons extends StatelessWidget {
                     InkWell(
                       onTap: open,
                       borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(20.0),
-                        bottomLeft: Radius.circular(20.0),
+                        topLeft: Radius.circular(20),
+                        bottomLeft: Radius.circular(20),
                       ),
                       child: const Padding(
                         padding: EdgeInsets.symmetric(
-                          horizontal: 8.0,
-                          vertical: 3.0,
+                          horizontal: 12,
+                          vertical: 3,
                         ),
                         child: Icon(
                           Icons.more_horiz,
@@ -58,22 +58,22 @@ class ActionButtons extends StatelessWidget {
                       ),
                     ),
                     VerticalDivider(
-                      indent: 4,
-                      endIndent: 4,
-                      width: 1.0,
+                      indent: 6,
+                      endIndent: 6,
+                      width: 1,
                       color: Colors.white.withOpacity(0.3),
                     ),
                     InkWell(
                       onTap: exit,
                       onLongPress: open,
                       borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(20.0),
-                        bottomRight: Radius.circular(20.0),
+                        topRight: Radius.circular(20),
+                        bottomRight: Radius.circular(20),
                       ),
                       child: const Padding(
                         padding: EdgeInsets.symmetric(
-                          horizontal: 8.0,
-                          vertical: 3.0,
+                          horizontal: 11.75,
+                          vertical: 3,
                         ),
                         child: Icon(
                           Icons.adjust,
