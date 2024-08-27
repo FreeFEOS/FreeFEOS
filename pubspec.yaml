@@ -1,6 +1,6 @@
 name: freefeos
 description: "FreeFEOS"
-version: 0.1.1
+version: 0.2.0
 homepage: https://github.com/FreeFEOS/FreeFEOS
 repository: https://github.com/FreeFEOS/FreeFEOS
 issue_tracker: https://github.com/FreeFEOS/FreeFEOS/issues
@@ -18,20 +18,19 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_rust_bridge: ^2.3.0
-  flutter_plugin_android_lifecycle: ^2.0.21
+  flutter_plugin_android_lifecycle: ^2.0.22
   plugin_platform_interface: ^2.1.8
   provider: ^6.1.2
   vm_service: ^14.2.1
   shared_preferences: ^2.3.2
-  sensors_plus: ^6.0.0
   package_info_plus: ^8.0.1
   url_launcher: ^6.3.0
   flutter_adaptive_scaffold: ^0.2.2
   animations: ^2.0.11
   logging: ^1.2.0
   stack_trace: ^1.11.1
-  super_clipboard: ^0.8.19
-  toastification: ^2.1.0
+  super_clipboard: ^0.8.20
+  toastification: ^2.2.0
   device_info_plus: ^10.1.2
   win32: ^5.5.4
   intl: ^0.19.0
