@@ -14,15 +14,19 @@ class FreeFEOSApp extends StatelessWidget {
     required this.wrapper,
     required this.open,
     required this.manager,
+    required this.info,
+    required this.exit,
     required this.app,
   });
 
   final ContextWrapper wrapper;
   final Future<dynamic> Function(
-    BuildContext context, {
+    BuildContext context,
     bool isManager,
-  }) open;
+  ) open;
   final WidgetBuilder manager;
+  final WidgetBuilder info;
+  final Future<dynamic> Function() exit;
   final Widget app;
 
   @override
@@ -69,12 +73,18 @@ class FreeFEOSApp extends StatelessWidget {
                 attach: wrapper.attachBuildContext,
                 host: wrapper.getBuildContext,
                 open: open,
+                exit: exit,
                 app: app,
               );
             },
             routeManager: (context) {
               return Material(
                 child: manager(context),
+              );
+            },
+            routeInfo: (context) {
+              return Material(
+                child: info(context),
               );
             },
           },

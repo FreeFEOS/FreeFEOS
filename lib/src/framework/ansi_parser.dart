@@ -145,8 +145,9 @@ class AnsiParser implements ParserWrapper {
           if (clipboard != null) {
             final item = DataWriterItem();
             item.add(Formats.plainText(text));
-            await clipboard.write([item]);
-            showTips();
+            await clipboard.write([item]).then(
+              (value) => showTips(),
+            );
           }
         },
     );

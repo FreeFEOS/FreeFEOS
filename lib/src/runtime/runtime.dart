@@ -118,15 +118,23 @@ final class SystemRuntime extends SystemBase {
   /// 构建调试菜单
   @override
   Future<dynamic> buildBottomSheet(
-    BuildContext context, {
-    bool isManager = false,
-  }) async {
+    BuildContext context,
+    bool isManager,
+  ) async {
     return await showModalBottomSheet(
       context: context,
       useRootNavigator: true,
       useSafeArea: true,
       builder: (context) => SheetMenu(
+        isManageer: isManager,
         manager: () async => await super.launchManager(),
+        info: () {},
+        settings: () {},
+        exit: () async {
+          await super.exit();
+        },
+        appName: _appName,
+        appVersion: _appVersion,
       ),
     );
   }

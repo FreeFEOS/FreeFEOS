@@ -1,5 +1,4 @@
 import 'package:logging/logging.dart';
-import 'package:stack_trace/stack_trace.dart';
 
 /// Contains all the information about the [LogRecord]
 /// and can be printed with [printable] based on [LoggerRecord]
@@ -22,12 +21,6 @@ class LoggerRecord {
   /// [Error] stacktrace
   final StackTrace? stackTrace;
 
-  /// Class name where the log was triggered
-  final String? className;
-
-  /// Method name where the log was triggered
-  final String? methodName;
-
   LoggerRecord._(
     this.logRecord,
     this.loggerName,
@@ -35,16 +28,10 @@ class LoggerRecord {
     this.level,
     this.time,
     this.stackTrace,
-    this.className,
-    this.methodName,
   );
 
   /// Create a [LoggerRecord] from a [LogRecord]
   factory LoggerRecord.fromLogger(LogRecord record) {
-    // Get ClassName and MethodName
-    final classAndMethodNames = _getClassAndMethodNames(_getLogFrame()!);
-    String? className = classAndMethodNames.key;
-    String? methodName = classAndMethodNames.value;
     // Get stacktrace from record stackTrace or record object
     StackTrace? stackTrace = record.stackTrace;
     if (record.stackTrace == null && record.object is Error) {
@@ -62,8 +49,6 @@ class LoggerRecord {
       record.level,
       record.time,
       stackTrace,
-      className,
-      methodName,
     );
   }
 
@@ -75,18 +60,7 @@ class LoggerRecord {
     }
     printedMessage += "${_levelShort(level)}/";
     printedMessage += loggerName;
-    if (className != null) {
-      if (methodName != null) {
-        printedMessage += " $className#$methodName: ";
-      } else {
-        printedMessage += " $className: ";
-      }
-    } else if (methodName != null) {
-      printedMessage += " $methodName: ";
-    } else {
-      printedMessage += ": ";
-    }
-    printedMessage += message;
+    printedMessage += ': $message';
     return printedMessage;
   }
 
@@ -102,44 +76,5 @@ class LoggerRecord {
     } else {
       return "?";
     }
-  }
-
-  static Frame? _getLogFrame() {
-    try {
-      const loggingLibrary = "package:logging/src/logger.dart";
-      const freefeosLibrary = "package:freefeos/freefeos.dart";
-      final currentFrames = Trace.current().frames.toList();
-      currentFrames.removeWhere(
-        (element) => element.library == freefeosLibrary,
-      );
-      // Capture the last frame from the logging library
-      final lastLoggerIndex = currentFrames.lastIndexWhere(
-        (element) => element.library == loggingLibrary,
-      );
-      return currentFrames[lastLoggerIndex + 1];
-    } catch (e) {
-      return null;
-    }
-  }
-
-  static MapEntry<String?, String?> _getClassAndMethodNames(Frame frame) {
-    String? className;
-    String? methodName;
-    try {
-      final member = frame.member!;
-      if (member.contains(".")) {
-        className = member.split(".")[0];
-      } else {
-        className = "";
-      }
-      if (member.contains(".")) {
-        methodName = member.split(".")[1];
-      } else {
-        methodName = member;
-      }
-    } catch (e) {
-      return MapEntry(className, methodName);
-    }
-    return MapEntry(className, methodName);
   }
 }

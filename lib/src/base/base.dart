@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../embedder/embedder_mixin.dart';
 import '../engine/bridge_mixin.dart';
@@ -21,6 +22,7 @@ import '../runtime/runtime_mixin.dart';
 import '../values/drawable.dart';
 import '../server/server.dart';
 import '../widget/app.dart';
+import '../widget/exit.dart';
 import '../widget/provider.dart';
 import 'base_entry.dart';
 import 'base_mixin.dart';
@@ -117,9 +119,21 @@ base class SystemBase extends ContextWrapper
         wrapper: this,
         open: buildBottomSheet,
         manager: buildManager,
+        info: (context) => const Placeholder(),
+        exit: exit,
         app: app,
       ),
     );
+  }
+
+  @override
+  BuildContext get context {
+    return super.getBuildContext();
+  }
+
+  @override
+  set context(BuildContext context) {
+    super.attachBuildContext(context);
   }
 
   /// 方法调用
@@ -156,9 +170,9 @@ base class SystemBase extends ContextWrapper
 
   @override
   Future<dynamic> buildBottomSheet(
-    BuildContext context, {
-    bool isManager = false,
-  }) async {
+    BuildContext context,
+    bool isManager,
+  ) async {
     return await showModalBottomSheet(
       context: context,
       useRootNavigator: true,
@@ -171,8 +185,8 @@ base class SystemBase extends ContextWrapper
   @override
   Future<dynamic> launchBottomSheet() async {
     return await buildBottomSheet(
-      super.getBuildContext(),
-      isManager: true,
+      context,
+      true,
     );
   }
 
@@ -181,7 +195,7 @@ base class SystemBase extends ContextWrapper
   @override
   Future<dynamic> launchManager() async {
     return await Navigator.of(
-      super.getBuildContext(),
+      context,
       rootNavigator: true,
     ).pushNamed(routeManager);
   }
@@ -207,5 +221,17 @@ base class SystemBase extends ContextWrapper
     dynamic arguments,
   ]) async {
     return await null;
+  }
+
+  @override
+  Future<dynamic> exit() async {
+    return await showDialog(
+      context: context,
+      barrierDismissible: true,
+      useRootNavigator: true,
+      builder: (context) => ExitDialog(
+        exit: () => SystemNavigator.pop(),
+      ),
+    );
   }
 }

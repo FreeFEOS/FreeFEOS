@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../intl/l10n.dart';
 import '../utils/platform.dart';
@@ -11,6 +10,7 @@ class AppBuilder extends StatefulWidget {
     required this.attach,
     required this.host,
     required this.open,
+    required this.exit,
     required this.app,
   });
 
@@ -18,9 +18,10 @@ class AppBuilder extends StatefulWidget {
   final Function(BuildContext context) attach;
   final BuildContext Function() host;
   final Future<dynamic> Function(
-    BuildContext context, {
+    BuildContext context,
     bool isManager,
-  }) open;
+  ) open;
+  final Future<dynamic> Function() exit;
   final Widget app;
 
   @override
@@ -76,7 +77,7 @@ class _AppBuilderState extends State<AppBuilder> {
                     InkWell(
                       onTap: () async => await widget.open(
                         widget.host(),
-                        isManager: false,
+                        false,
                       ),
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(20),
@@ -100,56 +101,10 @@ class _AppBuilderState extends State<AppBuilder> {
                       color: Colors.white.withOpacity(0.3),
                     ),
                     InkWell(
-                      onTap: () => showDialog(
-                        context: context,
-                        barrierDismissible: true,
-                        useRootNavigator: true,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Text(
-                              IntlLocalizations.of(
-                                context,
-                              ).closeDialogTitle,
-                            ),
-                            content: Text(
-                              IntlLocalizations.of(
-                                context,
-                              ).closeDialogMessage,
-                            ),
-                            actions: [
-                              Tooltip(
-                                message: IntlLocalizations.of(
-                                  context,
-                                ).closeDialogCancelButton,
-                                child: TextButton(
-                                  onPressed: () => Navigator.of(context).pop(),
-                                  child: Text(
-                                    IntlLocalizations.of(
-                                      context,
-                                    ).closeDialogCancelButton,
-                                  ),
-                                ),
-                              ),
-                              Tooltip(
-                                message: IntlLocalizations.of(
-                                  context,
-                                ).closeDialogExitButton,
-                                child: TextButton(
-                                  onPressed: () => SystemNavigator.pop(),
-                                  child: Text(
-                                    IntlLocalizations.of(
-                                      context,
-                                    ).closeDialogExitButton,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
+                      onTap: () async => await widget.exit(),
                       onLongPress: () async => await widget.open(
                         widget.host(),
-                        isManager: false,
+                        false,
                       ),
                       borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(20),

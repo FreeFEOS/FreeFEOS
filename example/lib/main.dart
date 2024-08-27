@@ -51,7 +51,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         title: const Text(Global.appName),
       ),
       body: Center(
@@ -71,8 +70,10 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             FilledButton(
-              onPressed: () => Navigator.of(context, rootNavigator: false)
-                  .pushNamed('/details'),
+              onPressed: () => Navigator.of(
+                context,
+                rootNavigator: false,
+              ).pushNamed('/details'),
               child: const Text('DetailsPage'),
             ),
           ],

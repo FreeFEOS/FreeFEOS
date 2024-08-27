@@ -8,6 +8,9 @@ abstract interface class BaseWrapper {
   /// 运行时入口
   FreeFEOSInterface call();
 
+  BuildContext get context;
+  set context(BuildContext context);
+
   /// 绑定通信层插件
   RuntimePlugin get base;
 
@@ -28,9 +31,9 @@ abstract interface class BaseWrapper {
 
   /// 构建对话框
   Future<dynamic> buildBottomSheet(
-    BuildContext context, {
-    bool isManager = true,
-  });
+    BuildContext context,
+    bool isManager,
+  );
 
   /// 打开对话框
   Future<dynamic> launchBottomSheet();
@@ -50,4 +53,6 @@ abstract interface class BaseWrapper {
     String method, [
     dynamic arguments,
   ]);
+
+  Future<dynamic> exit();
 }
