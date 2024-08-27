@@ -63,7 +63,7 @@ flutter pub get
 ### Flutter 入门
 
 该项目是 Flutter
-[插件包](https://flutter.cn/developing-packages/)
+[插件包](https://docs.flutter.cn/packages-and-plugins/developing-packages/)
 的起点，这是一个包含针对 Android 和/或 iOS 平台特定实现代码的专用包。
 
 如需 Flutter 开发入门帮助，请查看
