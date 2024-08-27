@@ -13,7 +13,7 @@ import '../values/channel.dart';
 import '../values/method.dart';
 import '../values/placeholder.dart';
 import '../values/strings.dart';
-import '../viewmodel/manager_view_model.dart';
+import '../viewmodel/system_view_model.dart';
 import '../widget/exit.dart';
 import '../widget/manager.dart';
 import '../widget/settings.dart';
@@ -101,7 +101,7 @@ final class SystemRuntime extends SystemBase {
 
   @override
   ChangeNotifier buildViewModel(BuildContext context) {
-    return ManagerViewModel(
+    return SystemViewModel(
       context: context,
       pluginDetailsList: _pluginDetailsList,
       getPlugin: _getPlugin,
@@ -139,13 +139,15 @@ final class SystemRuntime extends SystemBase {
   @override
   Widget buildExitDialog(BuildContext context) {
     return ExitDialog(
-      exit: () => SystemNavigator.pop(),
+      exit: () async => await SystemNavigator.pop(),
     );
   }
 
   @override
   Widget buildSettings(BuildContext context) {
-    return const SettingsPage(isManageer: false);
+    return const SettingsPage(
+      isManageer: false,
+    );
   }
 
   @override

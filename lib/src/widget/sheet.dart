@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../intl/l10n.dart';
-import '../viewmodel/manager_view_model.dart';
+import '../viewmodel/system_view_model.dart';
 
 class SheetMenu extends StatelessWidget {
   const SheetMenu({
@@ -21,7 +21,7 @@ class SheetMenu extends StatelessWidget {
     return Column(
       children: [
         Expanded(
-          child: Consumer<ManagerViewModel>(
+          child: Consumer<SystemViewModel>(
             builder: (context, viewModel, child) => Column(
               children: [
                 Tooltip(

@@ -9,7 +9,7 @@ import '../type/view_model_builder.dart';
 import '../utils/platform.dart';
 import '../values/route.dart';
 import '../values/strings.dart';
-import '../viewmodel/manager_view_model.dart';
+import '../viewmodel/system_view_model.dart';
 
 class FreeFEOSApp extends StatefulWidget {
   const FreeFEOSApp({
@@ -60,10 +60,10 @@ class _FreeFEOSAppState extends State<FreeFEOSApp> {
         ),
       ),
       child: ToastificationWrapper(
-        child: ChangeNotifierProvider<ManagerViewModel>(
+        child: ChangeNotifierProvider<SystemViewModel>(
           create: (context) {
             assert(() {
-              if (widget.viewModel(context) is! ManagerViewModel) {
+              if (widget.viewModel(context) is! SystemViewModel) {
                 throw FlutterError(
                   IntlLocalizations.of(
                     context,
@@ -72,7 +72,7 @@ class _FreeFEOSAppState extends State<FreeFEOSApp> {
               }
               return true;
             }());
-            return widget.viewModel(context) as ManagerViewModel;
+            return widget.viewModel(context) as SystemViewModel;
           },
           child: WidgetsApp(
             initialRoute: routeApp,
@@ -186,7 +186,7 @@ class _AppBuilderState extends State<AppBuilder> {
               ),
               child: Material(
                 color: Colors.transparent,
-                child: Consumer<ManagerViewModel>(
+                child: Consumer<SystemViewModel>(
                   builder: (context, viewModel, child) => Row(
                     children: [
                       InkWell(

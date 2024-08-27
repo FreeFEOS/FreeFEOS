@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../intl/l10n.dart';
 import '../plugin/plugin_details.dart';
-import '../viewmodel/manager_view_model.dart';
+import '../viewmodel/system_view_model.dart';
 
 class PluginPage extends StatefulWidget {
   const PluginPage({super.key});
@@ -34,7 +34,7 @@ class _PluginPageState extends State<PluginPage> {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
-              child: Consumer<ManagerViewModel>(
+              child: Consumer<SystemViewModel>(
                 builder: (context, viewModel, child) => ListBody(
                   children: viewModel.getPluginDetailsList
                       .map(
@@ -127,7 +127,7 @@ class PluginCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                Consumer<ManagerViewModel>(
+                Consumer<SystemViewModel>(
                   builder: (context, viewModel, child) => Container(
                     child: viewModel.getPluginIcon(details),
                   ),
@@ -147,7 +147,7 @@ class PluginCard extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             const Divider(),
-            Consumer<ManagerViewModel>(
+            Consumer<SystemViewModel>(
               builder: (context, viewModel, child) => Row(
                 children: [
                   Expanded(

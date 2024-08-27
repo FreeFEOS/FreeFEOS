@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../intl/l10n.dart';
-import '../viewmodel/manager_view_model.dart';
+import '../viewmodel/system_view_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.only(left: 24),
-                          child: Consumer<ManagerViewModel>(
+                          child: Consumer<SystemViewModel>(
                             builder: (context, viewModel, child) => Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Expanded(
-                        child: Consumer<ManagerViewModel>(
+                        child: Consumer<SystemViewModel>(
                           builder: (context, viewModel, child) => Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -172,7 +172,7 @@ class _HomePageState extends State<HomePage> {
                         message: IntlLocalizations.of(
                           context,
                         ).managerHomeLearnTooltip,
-                        child: Consumer<ManagerViewModel>(
+                        child: Consumer<SystemViewModel>(
                           builder: (context, viewModel, child) => IconButton(
                             onPressed: viewModel.launchPubDev,
                             icon: Icon(

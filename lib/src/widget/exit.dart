@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import '../intl/l10n.dart';
 
 class ExitDialog extends StatelessWidget {
-  const ExitDialog({super.key, required this.exit});
+  const ExitDialog({
+    super.key,
+    required this.exit,
+  });
 
   final VoidCallback exit;
 

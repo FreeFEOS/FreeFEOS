@@ -4,7 +4,7 @@ import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:provider/provider.dart';
 
 import '../intl/l10n.dart';
-import '../viewmodel/manager_view_model.dart';
+import '../viewmodel/system_view_model.dart';
 import 'home.dart';
 import 'logcat.dart';
 import 'plugin.dart';
@@ -131,7 +131,7 @@ class _SystemManagerState extends State<SystemManager> {
             message: IntlLocalizations.of(
               context,
             ).bottomSheetTooltip,
-            child: Consumer<ManagerViewModel>(
+            child: Consumer<SystemViewModel>(
               builder: (context, viewModel, child) => IconButton(
                 onPressed: () async => await viewModel.bottomSheet(true),
                 icon: const Icon(Icons.more_vert),

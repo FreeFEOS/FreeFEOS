@@ -13,8 +13,8 @@ import '../type/runtiem_checker.dart';
 import '../values/url.dart';
 import 'view_model_wrapper.dart';
 
-final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
-  ManagerViewModel({
+final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
+  SystemViewModel({
     required this.context,
     required this.pluginDetailsList,
     required this.getPlugin,
