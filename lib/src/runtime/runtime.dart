@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../base/base.dart';
-import '../intl/l10n.dart';
 import '../plugin/plugin_details.dart';
 import '../plugin/plugin_runtime.dart';
 import '../plugin/plugin_type.dart';
@@ -14,6 +13,7 @@ import '../values/placeholder.dart';
 import '../values/strings.dart';
 import '../viewmodel/manager_view_model.dart';
 import '../widget/manager.dart';
+import '../widget/sheet.dart';
 
 /// 运行时
 final class SystemRuntime extends SystemBase {
@@ -125,74 +125,9 @@ final class SystemRuntime extends SystemBase {
       context: context,
       useRootNavigator: true,
       useSafeArea: true,
-      builder: (context) {
-        return Column(
-          children: [
-            Expanded(
-              child: Column(
-                children: [
-                  SimpleDialogOption(
-                    padding: const EdgeInsets.all(0),
-                    child: Tooltip(
-                      message: IntlLocalizations.of(
-                        context,
-                      ).bottomSheetOpenManager,
-                      child: ListTile(
-                        title: Text(
-                          IntlLocalizations.of(
-                            context,
-                          ).bottomSheetOpenManager,
-                        ),
-                        leading: const Icon(Icons.open_in_new),
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 24.0),
-                        enabled: true,
-                        onTap: () async => await super.launchManager(),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const Divider(height: 1),
-            Row(
-              children: [
-                Expanded(
-                  child: InkWell(
-                    onTap: () => Navigator.of(
-                      context,
-                      rootNavigator: true,
-                    ).pop(),
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        bottom: MediaQuery.paddingOf(context).bottom,
-                      ),
-                      child: Tooltip(
-                        message: '取消',
-                        child: ListTile(
-                          title: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              '取消',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                  ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        );
-      },
+      builder: (context) => SheetMenu(
+        manager: () async => await super.launchManager(),
+      ),
     );
   }
 
