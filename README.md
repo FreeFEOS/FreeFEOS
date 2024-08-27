@@ -16,30 +16,30 @@
   <a href="https://pub.dev/packages/freefeos">
     <img
       src="https://img.shields.io/pub/v/freefeos?include_prereleases&style=flat-square&logo=dart&logoColor=white&label=Pub&color=blue"
-      alt="Pub Version">
+      alt="Pub Version" />
   </a>
   <!-- GitHub仓库stars -->
   <a href="https://github.com/FreeFEOS/FreeFEOS/stargazers">
     <img
       src="https://img.shields.io/github/stars/FreeFEOS/FreeFEOS?style=flat-square&logo=github&logoColor=white&label=Stars&color=blue"
-      alt="GitHub Repo stars">
+      alt="GitHub Repo stars" />
   </a>
   <!-- GitHub仓库forks -->
   <a href="https://github.com/FreeFEOS/FreeFEOS/fork">
     <img
       src="https://img.shields.io/github/forks/FreeFEOS/FreeFEOS?style=flat-square&logo=github&logoColor=white&label=Forks&color=blue"
-      alt="GitHub forks">
+      alt="GitHub forks" />
   </a>
   <!-- GitHub协议 -->
   <a href="https://github.com/FreeFEOS/FreeFEOS/blob/master/LICENSE">
     <img
       src="https://img.shields.io/github/license/FreeFEOS/FreeFEOS?style=flat-square&logo=github&logoColor=white&label=License"
-      alt="GitHub License">
+      alt="GitHub License" />
   </a>
   <!-- FreeFEOS项目 -->
   <a href="https://github.com/FreeFEOS/FreeFEOS">
     <img src="https://img.shields.io/badge/Project-FreeFEOS-blue?style=flat-square&logo=flutter&logoColor=white"
-      alt="FreeFEOS Project">
+      alt="FreeFEOS Project" />
   </a>
 </p>
 
