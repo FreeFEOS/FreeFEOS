@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:freefeos/src/widget/settings.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../base/base.dart';
@@ -12,6 +14,7 @@ import '../values/method.dart';
 import '../values/placeholder.dart';
 import '../values/strings.dart';
 import '../viewmodel/manager_view_model.dart';
+import '../widget/exit.dart';
 import '../widget/manager.dart';
 import '../widget/sheet.dart';
 
@@ -104,6 +107,7 @@ final class SystemRuntime extends SystemBase {
       getPluginWidget: _getPluginWidget,
       isRuntime: _isRuntime,
       launchBottomSheet: super.launchBottomSheet,
+      launchExitDialog: super.launchExitDialog,
       appName: _appName,
       appVersion: _appVersion,
     );
@@ -117,26 +121,36 @@ final class SystemRuntime extends SystemBase {
 
   /// 构建调试菜单
   @override
-  Future<dynamic> buildBottomSheet(
+  Widget buildBottomSheet(
     BuildContext context,
     bool isManager,
-  ) async {
-    return await showModalBottomSheet(
-      context: context,
-      useRootNavigator: true,
-      useSafeArea: true,
-      builder: (context) => SheetMenu(
-        appName: _appName,
-        appVersion: _appVersion,
-        isManageer: isManager,
-        manager: () async => await super.launchManager(),
-        info: () {},
-        settings: () {},
-        exit: () async {
-          await super.exit();
-        },
-      ),
+  ) {
+    return SheetMenu(
+      appName: _appName,
+      appVersion: _appVersion,
+      isManageer: isManager,
+      manager: super.launchManager,
+      info: super.launchInfo,
+      settings: super.launchSettings,
+      exit: super.launchExitDialog,
     );
+  }
+
+  @override
+  Widget buildExitDialog(BuildContext context) {
+    return ExitDialog(
+      exit: () => SystemNavigator.pop(),
+    );
+  }
+
+  @override
+  Widget buildSettings(BuildContext context) {
+    return const SettingsPage(isManageer: false);
+  }
+
+  @override
+  Widget buildInfo(BuildContext context) {
+    return super.buildInfo(context);
   }
 
   /// 执行插件方法

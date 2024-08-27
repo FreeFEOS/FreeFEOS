@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../embedder/embedder_mixin.dart';
 import '../engine/bridge_mixin.dart';
@@ -22,7 +21,6 @@ import '../runtime/runtime_mixin.dart';
 import '../values/drawable.dart';
 import '../server/server.dart';
 import '../widget/app.dart';
-import '../widget/exit.dart';
 import 'base_entry.dart';
 import 'base_mixin.dart';
 import 'base_wrapper.dart';
@@ -115,14 +113,12 @@ base class SystemBase extends ContextWrapper
     // 启动应用
     return await runner.call(
       FreeFEOSApp(
-        host: () => context,
-        attach: (host) => context = host,
-        open: buildBottomSheet,
-        manager: buildManager,
-        info: (context) => const Placeholder(),
-        exit: exit,
-        app: app,
         viewModel: buildViewModel,
+        attach: (host) => context = host,
+        manager: buildManager,
+        info: buildInfo,
+        settings: buildSettings,
+        child: app,
       ),
     );
   }
@@ -170,25 +166,33 @@ base class SystemBase extends ContextWrapper
   }
 
   @override
-  Future<dynamic> buildBottomSheet(
+  Widget buildBottomSheet(
     BuildContext context,
     bool isManager,
-  ) async {
+  ) {
+    return Text(isManager.toString());
+  }
+
+  @override
+  Future<dynamic> launchBottomSheet(bool isManager) async {
     return await showModalBottomSheet(
       context: context,
       useRootNavigator: true,
       useSafeArea: true,
-      builder: (_) => Text(
-        isManager.toString(),
+      builder: (context) => buildBottomSheet(
+        context,
+        isManager,
       ),
     );
   }
 
   @override
-  Future<dynamic> launchBottomSheet() async {
-    return await buildBottomSheet(
-      context,
-      true,
+  Future<dynamic> launchExitDialog() async {
+    return await showDialog(
+      context: context,
+      barrierDismissible: true,
+      useRootNavigator: true,
+      builder: buildExitDialog,
     );
   }
 
@@ -200,6 +204,22 @@ base class SystemBase extends ContextWrapper
       context,
       rootNavigator: true,
     ).pushNamed(routeManager);
+  }
+
+  @override
+  Future<dynamic> launchInfo() async {
+    return await Navigator.of(
+      context,
+      rootNavigator: true,
+    ).pushNamed(routeInfo);
+  }
+
+  @override
+  Future<dynamic> launchSettings() async {
+    return await Navigator.of(
+      context,
+      rootNavigator: true,
+    ).pushNamed(routeSettings);
   }
 
   /// 执行引擎方法
@@ -226,14 +246,17 @@ base class SystemBase extends ContextWrapper
   }
 
   @override
-  Future<dynamic> exit() async {
-    return await showDialog(
-      context: context,
-      barrierDismissible: true,
-      useRootNavigator: true,
-      builder: (context) => ExitDialog(
-        exit: () => SystemNavigator.pop(),
-      ),
-    );
+  Widget buildInfo(BuildContext context) {
+    return const Placeholder();
+  }
+
+  @override
+  Widget buildSettings(BuildContext context) {
+    return const Placeholder();
+  }
+
+  @override
+  Widget buildExitDialog(BuildContext context) {
+    return const Placeholder();
   }
 }

@@ -240,6 +240,16 @@ class IntlLocalizations {
     );
   }
 
+  /// `关于应用`
+  String get managerHomeInfoInfo {
+    return Intl.message(
+      '关于应用',
+      name: 'managerHomeInfoInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `了解 FreeFEOS`
   String get managerHomeLearnTitle {
     return Intl.message(

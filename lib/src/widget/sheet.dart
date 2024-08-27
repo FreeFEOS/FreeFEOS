@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../intl/l10n.dart';
+import '../type/navigator_launcher.dart';
 
 class SheetMenu extends StatelessWidget {
   const SheetMenu({
@@ -17,10 +18,10 @@ class SheetMenu extends StatelessWidget {
   final String appName;
   final String appVersion;
   final bool isManageer;
-  final VoidCallback manager;
-  final VoidCallback info;
-  final VoidCallback settings;
-  final VoidCallback exit;
+  final NavigatorLauncher manager;
+  final NavigatorLauncher info;
+  final NavigatorLauncher settings;
+  final NavigatorLauncher exit;
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +47,12 @@ class SheetMenu extends StatelessWidget {
                     ],
                   ),
                   subtitle: Text(appVersion),
-                  onTap: () {
-                    Navigator.of(context, rootNavigator: true).pop();
-                    info.call();
+                  onTap: () async {
+                    Navigator.of(
+                      context,
+                      rootNavigator: true,
+                    ).pop();
+                    await info.call();
                   },
                 ),
               ),
@@ -67,9 +71,12 @@ class SheetMenu extends StatelessWidget {
                           ).bottomSheetOpenManager,
                         ),
                         leading: const Icon(Icons.keyboard_command_key),
-                        onTap: () {
-                          Navigator.of(context, rootNavigator: true).pop();
-                          manager.call();
+                        onTap: () async {
+                          Navigator.of(
+                            context,
+                            rootNavigator: true,
+                          ).pop();
+                          await manager.call();
                         },
                         enabled: !isManageer,
                       ),
@@ -79,9 +86,12 @@ class SheetMenu extends StatelessWidget {
                       child: ListTile(
                         title: const Text('设置'),
                         leading: const Icon(Icons.app_settings_alt),
-                        onTap: () {
-                          Navigator.of(context, rootNavigator: true).pop();
-                          settings.call();
+                        onTap: () async {
+                          Navigator.of(
+                            context,
+                            rootNavigator: true,
+                          ).pop();
+                          await settings.call();
                         },
                       ),
                     ),
@@ -90,9 +100,12 @@ class SheetMenu extends StatelessWidget {
                       child: ListTile(
                         title: const Text('退出'),
                         leading: const Icon(Icons.exit_to_app),
-                        onTap: () {
-                          Navigator.of(context, rootNavigator: true).pop();
-                          exit.call();
+                        onTap: () async {
+                          Navigator.of(
+                            context,
+                            rootNavigator: true,
+                          ).pop();
+                          await exit.call();
                         },
                       ),
                     ),

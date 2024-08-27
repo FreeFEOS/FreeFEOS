@@ -106,7 +106,9 @@ class _SystemManagerState extends State<SystemManager> {
               const HomePage(),
               const LogcatPage(),
               const PluginPage(),
-              const SettingsPage(),
+              const SettingsPage(
+                isManageer: true,
+              ),
             ][_currentIndex],
           ),
         ),
@@ -131,7 +133,7 @@ class _SystemManagerState extends State<SystemManager> {
             ).bottomSheetTooltip,
             child: Consumer<ManagerViewModel>(
               builder: (context, viewModel, child) => IconButton(
-                onPressed: viewModel.openBottomSheet,
+                onPressed: () async => await viewModel.bottomSheet(true),
                 icon: const Icon(Icons.more_vert),
               ),
             ),

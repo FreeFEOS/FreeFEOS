@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key});
+  const SettingsPage({super.key, required this.isManageer});
+
+  final bool isManageer;
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
@@ -18,11 +20,18 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scrollbar(
-      controller: _scrollController,
-      child: ListView(
+    return Scaffold(
+      appBar: widget.isManageer
+          ? null
+          : AppBar(
+              title: Text('设置'),
+            ),
+      body: Scrollbar(
         controller: _scrollController,
-        children: const [],
+        child: ListView(
+          controller: _scrollController,
+          children: const [],
+        ),
       ),
     );
   }

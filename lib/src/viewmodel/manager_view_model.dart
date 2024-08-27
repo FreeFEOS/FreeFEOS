@@ -1,11 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:freefeos/src/type/navigator_launcher.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../intl/l10n.dart';
 import '../plugin/plugin_details.dart';
 import '../plugin/plugin_type.dart';
-import '../type/dialog_launcher.dart';
+import '../type/bottom_sheet_launcher.dart';
 import '../type/plugin_getter.dart';
 import '../type/plugin_widget_gatter.dart';
 import '../type/runtiem_checker.dart';
@@ -20,6 +21,7 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
     required this.getPluginWidget,
     required this.isRuntime,
     required this.launchBottomSheet,
+    required this.launchExitDialog,
     required this.appName,
     required this.appVersion,
   });
@@ -40,7 +42,8 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
   final RuntimeChecker isRuntime;
 
   /// 打开对话框
-  final DialogLauncher launchBottomSheet;
+  final BottomSheetLauncher launchBottomSheet;
+  final NavigatorLauncher launchExitDialog;
 
   /// 应用名称
   final String appName;
@@ -50,8 +53,13 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
 
   /// 打开对话框
   @override
-  Future<void> openBottomSheet() async {
-    return await launchBottomSheet.call();
+  Future<dynamic> bottomSheet(bool isManager) async {
+    return await launchBottomSheet.call(isManager);
+  }
+
+  @override
+  Future exitDialog() async {
+    return await launchExitDialog.call();
   }
 
   /// 统计普通插件数量
@@ -330,7 +338,7 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
     PluginDetails details,
   ) async {
     return await Navigator.of(
-      context,
+      host,
       rootNavigator: true,
     ).push(
       MaterialPageRoute(

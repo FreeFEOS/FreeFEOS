@@ -4,7 +4,8 @@ import '../plugin/plugin_details.dart';
 
 abstract interface class ViewModelWrapper {
   /// 打开对话框
-  Future<void> openBottomSheet();
+  Future<dynamic> bottomSheet(bool isManager);
+  Future<dynamic> exitDialog();
 
   /// 统计普通插件数量
   int pluginCount();

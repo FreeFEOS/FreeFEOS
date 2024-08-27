@@ -114,6 +114,20 @@ class _HomePageState extends State<HomePage> {
                                 ).managerHomeInfoPluginCount,
                                 subtitle: viewModel.pluginCount().toString(),
                               ),
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  TextButton(
+                                    onPressed: () {},
+                                    child: Text(
+                                      IntlLocalizations.of(
+                                        context,
+                                      ).managerHomeInfoInfo,
+                                    ),
+                                  ),
+                                ],
+                              )
                             ],
                           ),
                         ),

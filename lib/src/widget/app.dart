@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:toastification/toastification.dart';
 
 import '../intl/l10n.dart';
+import '../type/context_attacher.dart';
+import '../type/view_model_builder.dart';
 import '../utils/platform.dart';
 import '../values/route.dart';
 import '../values/strings.dart';
@@ -12,27 +14,20 @@ import '../viewmodel/manager_view_model.dart';
 class FreeFEOSApp extends StatefulWidget {
   const FreeFEOSApp({
     super.key,
-    required this.host,
+    required this.viewModel,
     required this.attach,
-    required this.open,
     required this.manager,
     required this.info,
-    required this.exit,
-    required this.app,
-    required this.viewModel,
+    required this.settings,
+    required this.child,
   });
 
-  final BuildContext Function() host;
-  final Function(BuildContext context) attach;
-  final Future<dynamic> Function(
-    BuildContext context,
-    bool isManager,
-  ) open;
+  final ViewModelBuilder viewModel;
+  final ContextAttacher attach;
   final WidgetBuilder manager;
   final WidgetBuilder info;
-  final Future<dynamic> Function() exit;
-  final Widget app;
-  final ChangeNotifier Function(BuildContext context) viewModel;
+  final WidgetBuilder settings;
+  final Widget child;
 
   @override
   State<FreeFEOSApp> createState() => _FreeFEOSAppState();
@@ -93,12 +88,8 @@ class _FreeFEOSAppState extends State<FreeFEOSApp> {
             routes: {
               routeApp: (context) {
                 return AppBuilder(
-                  context: context,
                   attach: widget.attach,
-                  host: widget.host,
-                  open: widget.open,
-                  exit: widget.exit,
-                  app: widget.app,
+                  app: widget.child,
                 );
               },
               routeManager: (context) {
@@ -115,6 +106,13 @@ class _FreeFEOSAppState extends State<FreeFEOSApp> {
                   ),
                 );
               },
+              routeSettings: (context) {
+                return Material(
+                  child: widget.settings(
+                    context,
+                  ),
+                );
+              }
             },
             title: packageName,
             color: Colors.transparent,
@@ -137,22 +135,11 @@ class _FreeFEOSAppState extends State<FreeFEOSApp> {
 class AppBuilder extends StatefulWidget {
   const AppBuilder({
     super.key,
-    required this.context,
     required this.attach,
-    required this.host,
-    required this.open,
-    required this.exit,
     required this.app,
   });
 
-  final BuildContext context;
-  final Function(BuildContext context) attach;
-  final BuildContext Function() host;
-  final Future<dynamic> Function(
-    BuildContext context,
-    bool isManager,
-  ) open;
-  final Future<dynamic> Function() exit;
+  final ContextAttacher attach;
   final Widget app;
 
   @override
@@ -163,7 +150,7 @@ class _AppBuilderState extends State<AppBuilder> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    widget.attach.call(widget.context);
+    widget.attach.call(context);
   }
 
   @override
@@ -199,56 +186,58 @@ class _AppBuilderState extends State<AppBuilder> {
               ),
               child: Material(
                 color: Colors.transparent,
-                child: Row(
-                  children: [
-                    InkWell(
-                      onTap: () async => await widget.open(
-                        widget.host(),
-                        false,
-                      ),
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        bottomLeft: Radius.circular(20),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 3,
+                child: Consumer<ManagerViewModel>(
+                  builder: (context, viewModel, child) => Row(
+                    children: [
+                      InkWell(
+                        onTap: () async {
+                          await viewModel.bottomSheet(false);
+                        },
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          bottomLeft: Radius.circular(20),
                         ),
-                        child: Icon(
-                          Icons.more_horiz,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    VerticalDivider(
-                      indent: 6,
-                      endIndent: 6,
-                      width: 1,
-                      color: Colors.white.withOpacity(0.3),
-                    ),
-                    InkWell(
-                      onTap: () async => await widget.exit(),
-                      onLongPress: () async => await widget.open(
-                        widget.host(),
-                        false,
-                      ),
-                      borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 11.75,
-                          vertical: 3,
-                        ),
-                        child: Icon(
-                          Icons.adjust,
-                          color: Colors.white,
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 3,
+                          ),
+                          child: Icon(
+                            Icons.more_horiz,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                      VerticalDivider(
+                        indent: 6,
+                        endIndent: 6,
+                        width: 1,
+                        color: Colors.white.withOpacity(0.3),
+                      ),
+                      InkWell(
+                        onTap: () async {
+                          await viewModel.exitDialog();
+                        },
+                        onLongPress: () async {
+                          await viewModel.bottomSheet(false);
+                        },
+                        borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 11.75,
+                            vertical: 3,
+                          ),
+                          child: Icon(
+                            Icons.adjust,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
