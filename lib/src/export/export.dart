@@ -56,23 +56,22 @@ abstract base class FreeFEOSBase {
 /// }
 /// ```
 final class FreeFEOSRunner {
-  /// 构造
   const FreeFEOSRunner._({
     required this.runner,
     required this.plugins,
     required this.initApi,
   });
 
-  /// Runner
+  /// 运行器
   final AppRunner runner;
 
-  /// 插件
+  /// 插件列表
   final PluginList plugins;
 
-  /// api
+  /// 初始化API
   final ApiBuilder initApi;
 
-  /// 工厂
+  /// 工厂构建函数
   factory FreeFEOSRunner({
     required Future<void> Function(Widget app) runner,
     required List<FreeFEOSPlugin> Function() plugins,
@@ -85,6 +84,7 @@ final class FreeFEOSRunner {
     );
   }
 
+  /// 启动应用
   Future<void> call({
     required Widget app,
   }) async {

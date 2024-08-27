@@ -23,7 +23,6 @@ import '../values/drawable.dart';
 import '../server/server.dart';
 import '../widget/app.dart';
 import '../widget/exit.dart';
-import '../widget/provider.dart';
 import 'base_entry.dart';
 import 'base_mixin.dart';
 import 'base_wrapper.dart';
@@ -61,10 +60,7 @@ base class SystemBase extends ContextWrapper
   /// 插件界面
   @override
   Widget pluginWidget(BuildContext context) {
-    return ManagerProvider(
-      viewModel: buildViewModel(context),
-      layout: buildLayout(context),
-    );
+    return buildLayout(context);
   }
 
   /// 运行应用
@@ -100,28 +96,33 @@ base class SystemBase extends ContextWrapper
     await engineBridgerScope.onCreateEngine(this);
     // 初始化应用
     await init(plugins.call());
+    // 初始化API
     await initApi.call(
       (
         String channel,
         String method, [
         dynamic arguments,
       ]) async {
-        return await exec(
-          channel,
-          method,
-          arguments,
-        );
+        return await () async {
+          return await exec(
+            channel,
+            method,
+            arguments,
+          );
+        }();
       },
     );
     // 启动应用
     return await runner.call(
       FreeFEOSApp(
-        wrapper: this,
+        host: () => context,
+        attach: (host) => context = host,
         open: buildBottomSheet,
         manager: buildManager,
         info: (context) => const Placeholder(),
         exit: exit,
         app: app,
+        viewModel: buildViewModel,
       ),
     );
   }
@@ -176,6 +177,7 @@ base class SystemBase extends ContextWrapper
     return await showModalBottomSheet(
       context: context,
       useRootNavigator: true,
+      useSafeArea: true,
       builder: (_) => Text(
         isManager.toString(),
       ),

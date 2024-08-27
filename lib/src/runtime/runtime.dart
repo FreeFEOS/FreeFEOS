@@ -126,6 +126,8 @@ final class SystemRuntime extends SystemBase {
       useRootNavigator: true,
       useSafeArea: true,
       builder: (context) => SheetMenu(
+        appName: _appName,
+        appVersion: _appVersion,
         isManageer: isManager,
         manager: () async => await super.launchManager(),
         info: () {},
@@ -133,8 +135,6 @@ final class SystemRuntime extends SystemBase {
         exit: () async {
           await super.exit();
         },
-        appName: _appName,
-        appVersion: _appVersion,
       ),
     );
   }

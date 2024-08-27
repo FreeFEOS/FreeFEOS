@@ -5,23 +5,22 @@ import '../intl/l10n.dart';
 class SheetMenu extends StatelessWidget {
   const SheetMenu({
     super.key,
+    required this.appName,
+    required this.appVersion,
     required this.isManageer,
     required this.manager,
     required this.info,
     required this.settings,
     required this.exit,
-    required this.appName,
-    required this.appVersion,
   });
 
+  final String appName;
+  final String appVersion;
   final bool isManageer;
   final VoidCallback manager;
   final VoidCallback info;
   final VoidCallback settings;
   final VoidCallback exit;
-
-  final String appName;
-  final String appVersion;
 
   @override
   Widget build(BuildContext context) {
@@ -54,44 +53,50 @@ class SheetMenu extends StatelessWidget {
                 ),
               ),
               const Divider(height: 1),
-              Tooltip(
-                message: IntlLocalizations.of(
-                  context,
-                ).bottomSheetOpenManager,
-                child: ListTile(
-                  title: Text(
-                    IntlLocalizations.of(
-                      context,
-                    ).bottomSheetOpenManager,
-                  ),
-                  leading: const Icon(Icons.open_in_new),
-                  onTap: () {
-                    Navigator.of(context, rootNavigator: true).pop();
-                    manager.call();
-                  },
-                  enabled: !isManageer,
-                ),
-              ),
-              Tooltip(
-                message: '打开设置',
-                child: ListTile(
-                  title: const Text('设置'),
-                  leading: const Icon(Icons.app_settings_alt),
-                  onTap: () {
-                    Navigator.of(context, rootNavigator: true).pop();
-                    settings.call();
-                  },
-                ),
-              ),
-              Tooltip(
-                message: '退出应用',
-                child: ListTile(
-                  title: const Text('退出'),
-                  leading: const Icon(Icons.exit_to_app),
-                  onTap: () {
-                    Navigator.of(context, rootNavigator: true).pop();
-                    exit.call();
-                  },
+              Expanded(
+                child: ListView(
+                  children: [
+                    Tooltip(
+                      message: IntlLocalizations.of(
+                        context,
+                      ).bottomSheetOpenManager,
+                      child: ListTile(
+                        title: Text(
+                          IntlLocalizations.of(
+                            context,
+                          ).bottomSheetOpenManager,
+                        ),
+                        leading: const Icon(Icons.keyboard_command_key),
+                        onTap: () {
+                          Navigator.of(context, rootNavigator: true).pop();
+                          manager.call();
+                        },
+                        enabled: !isManageer,
+                      ),
+                    ),
+                    Tooltip(
+                      message: '打开设置',
+                      child: ListTile(
+                        title: const Text('设置'),
+                        leading: const Icon(Icons.app_settings_alt),
+                        onTap: () {
+                          Navigator.of(context, rootNavigator: true).pop();
+                          settings.call();
+                        },
+                      ),
+                    ),
+                    Tooltip(
+                      message: '退出应用',
+                      child: ListTile(
+                        title: const Text('退出'),
+                        leading: const Icon(Icons.exit_to_app),
+                        onTap: () {
+                          Navigator.of(context, rootNavigator: true).pop();
+                          exit.call();
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

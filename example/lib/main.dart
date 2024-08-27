@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(Global.appName),
+        title: const Text('Home'),
       ),
       body: Center(
         child: Column(
@@ -107,8 +107,20 @@ class _DetailsPageState extends State<DetailsPage> {
       appBar: AppBar(
         title: const Text('Details'),
       ),
-      body: const Center(
-        child: Text('DetailsPage'),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('DetailsPage'),
+            FilledButton(
+              onPressed: () => Navigator.of(
+                context,
+                rootNavigator: false,
+              ).pop(),
+              child: const Text('Back'),
+            ),
+          ],
+        ),
       ),
     );
   }
