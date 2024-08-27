@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:freefeos/src/widget/info.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../base/base.dart';
@@ -14,7 +13,9 @@ import '../values/method.dart';
 import '../values/placeholder.dart';
 import '../values/strings.dart';
 import '../viewmodel/system_view_model.dart';
+import '../widget/app.dart';
 import '../widget/exit.dart';
+import '../widget/info.dart';
 import '../widget/manager.dart';
 import '../widget/settings.dart';
 import '../widget/sheet.dart';
@@ -85,18 +86,34 @@ final class SystemRuntime extends SystemBase {
     await _initPlugins(plugins: plugins);
   }
 
-  /// 获取管理器
+  /// 获取App
   @override
-  Widget buildManager(BuildContext context) {
-    for (var element in _pluginDetailsList) {
-      if (_isRuntime(element)) {
-        return _getPluginWidget(
-          context,
-          element,
-        );
-      }
-    }
-    return super.buildManager(context);
+  Widget findApplication() {
+    return Builder(
+      builder: (context) {
+        for (var element in _pluginDetailsList) {
+          if (_isRuntime(element)) {
+            return _getPluginWidget(
+              context,
+              element,
+            );
+          }
+        }
+        return super.buildManager(context);
+      },
+    );
+  }
+
+  @override
+  Widget buildApplication() {
+    return FreeFEOSApp(
+      viewModel: buildViewModel,
+      attach: super.attachContext,
+      manager: buildManager,
+      info: buildInfo,
+      settings: buildSettings,
+      child: super.child,
+    );
   }
 
   @override
@@ -117,12 +134,6 @@ final class SystemRuntime extends SystemBase {
     );
   }
 
-  /// 管理器布局
-  @override
-  Widget buildLayout(BuildContext context) {
-    return const SystemManager();
-  }
-
   /// 构建调试菜单
   @override
   Widget buildBottomSheet(
@@ -141,6 +152,12 @@ final class SystemRuntime extends SystemBase {
     return ExitDialog(
       exit: () async => await SystemNavigator.pop(),
     );
+  }
+
+  /// 构建管理器布局
+  @override
+  Widget buildManager(BuildContext context) {
+    return const SystemManager();
   }
 
   @override

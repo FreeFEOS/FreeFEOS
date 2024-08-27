@@ -20,17 +20,26 @@ abstract interface class BaseWrapper {
   /// 获取带有导航主机的上下文
   BuildContext get context;
 
-  /// 设置导航主机上下文
-  set context(BuildContext context);
+  /// 附加带有导航主机的上下文
+  void attachContext(BuildContext host);
+
+  /// 用户App
+  Widget get child;
+
+  /// 导入用户App
+  Future<void> includeApp(Widget app);
+
+  /// 获取App
+  Widget findApplication();
+
+  /// 构建App
+  Widget buildApplication();
 
   /// 获取管理器
   Widget buildManager(BuildContext context);
 
   /// 构建View Model
   ChangeNotifier buildViewModel(BuildContext context);
-
-  /// 管理器布局
-  Widget buildLayout(BuildContext context);
 
   /// 构建底部弹出菜单
   Widget buildBottomSheet(

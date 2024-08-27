@@ -20,13 +20,16 @@ import '../interface/system_interface.dart';
 import '../runtime/runtime_mixin.dart';
 import '../values/drawable.dart';
 import '../server/server.dart';
-import '../widget/app.dart';
+import 'app_mixin.dart';
 import 'base_entry.dart';
 import 'base_mixin.dart';
 import 'base_wrapper.dart';
+import 'context_mixin.dart';
 
 base class SystemBase extends ContextWrapper
     with
+        ContextMixin,
+        AppMixin,
         RuntimeMixin,
         BaseEntry,
         BaseMixin,
@@ -58,7 +61,7 @@ base class SystemBase extends ContextWrapper
   /// 插件界面
   @override
   Widget pluginWidget(BuildContext context) {
-    return buildLayout(context);
+    return buildApplication();
   }
 
   /// 运行应用
@@ -110,27 +113,10 @@ base class SystemBase extends ContextWrapper
         }();
       },
     );
+    // 导入用户应用
+    await includeApp(app);
     // 启动应用
-    return await runner.call(
-      FreeFEOSApp(
-        viewModel: buildViewModel,
-        attach: (host) => context = host,
-        manager: buildManager,
-        info: buildInfo,
-        settings: buildSettings,
-        child: app,
-      ),
-    );
-  }
-
-  @override
-  BuildContext get context {
-    return super.getBuildContext();
-  }
-
-  @override
-  set context(BuildContext context) {
-    super.attachBuildContext(context);
+    return await runner.call(findApplication());
   }
 
   /// 方法调用
@@ -147,10 +133,19 @@ base class SystemBase extends ContextWrapper
     return await null;
   }
 
-  /// 获取管理器
   @override
-  Widget buildManager(BuildContext context) {
-    return pluginWidget(context);
+  Widget findApplication() {
+    return Builder(
+      builder: pluginWidget,
+    );
+  }
+
+  @override
+  Widget buildApplication() {
+    return ConstrainedBox(
+      constraints: const BoxConstraints.expand(),
+      child: child,
+    );
   }
 
   /// 构建ViewModel
@@ -159,18 +154,38 @@ base class SystemBase extends ContextWrapper
     return this;
   }
 
-  /// 管理器布局
-  @override
-  Widget buildLayout(BuildContext context) {
-    return const Placeholder();
-  }
-
   @override
   Widget buildBottomSheet(
     BuildContext context,
     bool isManager,
   ) {
-    return Text(isManager.toString());
+    return ListTile(
+      leading: const Icon(Icons.error_outline),
+      title: Text(isManager.toString()),
+    );
+  }
+
+  @override
+  Widget buildExitDialog(BuildContext context) {
+    return const AlertDialog(
+      content: Placeholder(),
+    );
+  }
+
+  /// 获取管理器
+  @override
+  Widget buildManager(BuildContext context) {
+    return const Placeholder();
+  }
+
+  @override
+  Widget buildInfo(BuildContext context) {
+    return const Placeholder();
+  }
+
+  @override
+  Widget buildSettings(BuildContext context) {
+    return const Placeholder();
   }
 
   @override
@@ -243,20 +258,5 @@ base class SystemBase extends ContextWrapper
     dynamic arguments,
   ]) async {
     return await null;
-  }
-
-  @override
-  Widget buildInfo(BuildContext context) {
-    return const Placeholder();
-  }
-
-  @override
-  Widget buildSettings(BuildContext context) {
-    return const Placeholder();
-  }
-
-  @override
-  Widget buildExitDialog(BuildContext context) {
-    return const Placeholder();
   }
 }
