@@ -240,10 +240,10 @@ class IntlLocalizations {
     );
   }
 
-  /// `关于应用`
+  /// `应用信息`
   String get managerHomeInfoInfo {
     return Intl.message(
-      '关于应用',
+      '应用信息',
       name: 'managerHomeInfoInfo',
       desc: '',
       args: [],

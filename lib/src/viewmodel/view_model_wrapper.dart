@@ -6,6 +6,9 @@ abstract interface class ViewModelWrapper {
   /// 打开对话框
   Future<dynamic> bottomSheet(bool isManager);
   Future<dynamic> exitDialog();
+  Future<dynamic> openInfo();
+  Future<dynamic> openManager();
+  Future<dynamic> openSettings();
 
   /// 统计普通插件数量
   int pluginCount();

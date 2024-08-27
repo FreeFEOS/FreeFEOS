@@ -22,6 +22,9 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
     required this.isRuntime,
     required this.launchBottomSheet,
     required this.launchExitDialog,
+    required this.launchManager,
+    required this.launchInfo,
+    required this.launchSettings,
     required this.appName,
     required this.appVersion,
   });
@@ -44,6 +47,9 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
   /// 打开对话框
   final BottomSheetLauncher launchBottomSheet;
   final NavigatorLauncher launchExitDialog;
+  final NavigatorLauncher launchManager;
+  final NavigatorLauncher launchInfo;
+  final NavigatorLauncher launchSettings;
 
   /// 应用名称
   final String appName;
@@ -58,8 +64,23 @@ final class ManagerViewModel with ChangeNotifier implements ViewModelWrapper {
   }
 
   @override
-  Future exitDialog() async {
+  Future<dynamic> exitDialog() async {
     return await launchExitDialog.call();
+  }
+
+  @override
+  Future<dynamic> openInfo() async {
+    return await launchInfo.call();
+  }
+
+  @override
+  Future<dynamic> openManager() async {
+    return await launchManager.call();
+  }
+
+  @override
+  Future<dynamic> openSettings() async {
+    return await launchSettings.call();
   }
 
   /// 统计普通插件数量

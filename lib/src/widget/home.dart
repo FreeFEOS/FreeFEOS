@@ -119,7 +119,9 @@ class _HomePageState extends State<HomePage> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   TextButton(
-                                    onPressed: () {},
+                                    onPressed: () async {
+                                      await viewModel.openInfo();
+                                    },
                                     child: Text(
                                       IntlLocalizations.of(
                                         context,

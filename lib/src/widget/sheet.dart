@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../intl/l10n.dart';
-import '../type/navigator_launcher.dart';
+import '../viewmodel/manager_view_model.dart';
 
 class SheetMenu extends StatelessWidget {
   const SheetMenu({
@@ -9,110 +10,104 @@ class SheetMenu extends StatelessWidget {
     required this.appName,
     required this.appVersion,
     required this.isManageer,
-    required this.manager,
-    required this.info,
-    required this.settings,
-    required this.exit,
   });
 
   final String appName;
   final String appVersion;
   final bool isManageer;
-  final NavigatorLauncher manager;
-  final NavigatorLauncher info;
-  final NavigatorLauncher settings;
-  final NavigatorLauncher exit;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Expanded(
-          child: Column(
-            children: [
-              Tooltip(
-                message: '应用信息',
-                child: ListTile(
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(28),
-                      topRight: Radius.circular(28),
+          child: Consumer<ManagerViewModel>(
+            builder: (context, viewModel, child) => Column(
+              children: [
+                Tooltip(
+                  message: '应用信息',
+                  child: ListTile(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(28),
+                        topRight: Radius.circular(28),
+                      ),
                     ),
+                    leading: const FlutterLogo(),
+                    title: Row(
+                      children: [
+                        Text(appName),
+                        const Icon(Icons.keyboard_arrow_right),
+                      ],
+                    ),
+                    subtitle: Text(appVersion),
+                    onTap: () async {
+                      Navigator.of(
+                        context,
+                        rootNavigator: true,
+                      ).pop();
+                      await viewModel.openInfo();
+                    },
                   ),
-                  leading: const FlutterLogo(),
-                  title: Row(
+                ),
+                const Divider(height: 1),
+                Expanded(
+                  child: ListView(
                     children: [
-                      Text(appName),
-                      const Icon(Icons.keyboard_arrow_right),
+                      Tooltip(
+                        message: IntlLocalizations.of(
+                          context,
+                        ).bottomSheetOpenManager,
+                        child: ListTile(
+                          title: Text(
+                            IntlLocalizations.of(
+                              context,
+                            ).bottomSheetOpenManager,
+                          ),
+                          leading: const Icon(Icons.keyboard_command_key),
+                          onTap: () async {
+                            Navigator.of(
+                              context,
+                              rootNavigator: true,
+                            ).pop();
+                            await viewModel.openManager();
+                          },
+                          enabled: !isManageer,
+                        ),
+                      ),
+                      Tooltip(
+                        message: '打开设置',
+                        child: ListTile(
+                          title: const Text('设置'),
+                          leading: const Icon(Icons.app_settings_alt),
+                          onTap: () async {
+                            Navigator.of(
+                              context,
+                              rootNavigator: true,
+                            ).pop();
+                            await viewModel.openSettings();
+                          },
+                        ),
+                      ),
+                      Tooltip(
+                        message: '退出应用',
+                        child: ListTile(
+                          title: const Text('退出'),
+                          leading: const Icon(Icons.exit_to_app),
+                          onTap: () async {
+                            Navigator.of(
+                              context,
+                              rootNavigator: true,
+                            ).pop();
+                            await viewModel.exitDialog();
+                          },
+                        ),
+                      ),
                     ],
                   ),
-                  subtitle: Text(appVersion),
-                  onTap: () async {
-                    Navigator.of(
-                      context,
-                      rootNavigator: true,
-                    ).pop();
-                    await info.call();
-                  },
                 ),
-              ),
-              const Divider(height: 1),
-              Expanded(
-                child: ListView(
-                  children: [
-                    Tooltip(
-                      message: IntlLocalizations.of(
-                        context,
-                      ).bottomSheetOpenManager,
-                      child: ListTile(
-                        title: Text(
-                          IntlLocalizations.of(
-                            context,
-                          ).bottomSheetOpenManager,
-                        ),
-                        leading: const Icon(Icons.keyboard_command_key),
-                        onTap: () async {
-                          Navigator.of(
-                            context,
-                            rootNavigator: true,
-                          ).pop();
-                          await manager.call();
-                        },
-                        enabled: !isManageer,
-                      ),
-                    ),
-                    Tooltip(
-                      message: '打开设置',
-                      child: ListTile(
-                        title: const Text('设置'),
-                        leading: const Icon(Icons.app_settings_alt),
-                        onTap: () async {
-                          Navigator.of(
-                            context,
-                            rootNavigator: true,
-                          ).pop();
-                          await settings.call();
-                        },
-                      ),
-                    ),
-                    Tooltip(
-                      message: '退出应用',
-                      child: ListTile(
-                        title: const Text('退出'),
-                        leading: const Icon(Icons.exit_to_app),
-                        onTap: () async {
-                          Navigator.of(
-                            context,
-                            rootNavigator: true,
-                          ).pop();
-                          await exit.call();
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         const Divider(height: 1),

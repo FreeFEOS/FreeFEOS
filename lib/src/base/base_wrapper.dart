@@ -38,10 +38,13 @@ abstract interface class BaseWrapper {
     bool isManager,
   );
 
-/// 构建退出
+  /// 构建退出对话框
   Widget buildExitDialog(BuildContext context);
 
+  /// 构建应用信息界面
   Widget buildInfo(BuildContext context);
+
+  /// 构建设置界面
   Widget buildSettings(BuildContext context);
 
   /// 打开对话框
@@ -50,8 +53,13 @@ abstract interface class BaseWrapper {
   /// 打开管理器
   Future<dynamic> launchManager();
 
+  /// 打开应用信息
   Future<dynamic> launchInfo();
+
+  /// 打开设置
   Future<dynamic> launchSettings();
+
+  /// 打开退出应用对话框
   Future<dynamic> launchExitDialog();
 
   /// 执行引擎插件方法

@@ -39,7 +39,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "managerHomeInfoAppName": MessageLookupByLibrary.simpleMessage("应用名称"),
         "managerHomeInfoAppVersion":
             MessageLookupByLibrary.simpleMessage("应用版本"),
-        "managerHomeInfoInfo": MessageLookupByLibrary.simpleMessage("关于应用"),
+        "managerHomeInfoInfo": MessageLookupByLibrary.simpleMessage("应用信息"),
         "managerHomeInfoPlatform": MessageLookupByLibrary.simpleMessage("当前平台"),
         "managerHomeInfoPluginCount":
             MessageLookupByLibrary.simpleMessage("插件数量"),

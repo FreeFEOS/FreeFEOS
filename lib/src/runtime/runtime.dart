@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:freefeos/src/widget/settings.dart';
+import 'package:freefeos/src/widget/info.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../base/base.dart';
@@ -16,6 +16,7 @@ import '../values/strings.dart';
 import '../viewmodel/manager_view_model.dart';
 import '../widget/exit.dart';
 import '../widget/manager.dart';
+import '../widget/settings.dart';
 import '../widget/sheet.dart';
 
 /// 运行时
@@ -108,6 +109,9 @@ final class SystemRuntime extends SystemBase {
       isRuntime: _isRuntime,
       launchBottomSheet: super.launchBottomSheet,
       launchExitDialog: super.launchExitDialog,
+      launchManager: super.launchManager,
+      launchInfo: super.launchInfo,
+      launchSettings: super.launchSettings,
       appName: _appName,
       appVersion: _appVersion,
     );
@@ -129,10 +133,6 @@ final class SystemRuntime extends SystemBase {
       appName: _appName,
       appVersion: _appVersion,
       isManageer: isManager,
-      manager: super.launchManager,
-      info: super.launchInfo,
-      settings: super.launchSettings,
-      exit: super.launchExitDialog,
     );
   }
 
@@ -150,7 +150,7 @@ final class SystemRuntime extends SystemBase {
 
   @override
   Widget buildInfo(BuildContext context) {
-    return super.buildInfo(context);
+    return const InfoPage();
   }
 
   /// 执行插件方法
