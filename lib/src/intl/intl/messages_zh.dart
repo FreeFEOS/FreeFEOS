@@ -23,6 +23,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "bannerTitle": MessageLookupByLibrary.simpleMessage("FreeFEOS"),
+        "bottomSheetCloseText": MessageLookupByLibrary.simpleMessage("取消"),
         "bottomSheetCloseTooltip":
             MessageLookupByLibrary.simpleMessage("关闭对话框"),
         "bottomSheetOpenManager": MessageLookupByLibrary.simpleMessage("打开管理器"),

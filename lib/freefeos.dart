@@ -1,4 +1,4 @@
-/// API导出
+/// 平台插件注册和API导出
 library freefeos;
 
 import 'src/export/export.dart';

@@ -51,12 +51,16 @@ class SheetMenu extends StatelessWidget {
                     bottom: MediaQuery.paddingOf(context).bottom,
                   ),
                   child: Tooltip(
-                    message: '取消',
+                    message: IntlLocalizations.of(
+                      context,
+                    ).bottomSheetCloseTooltip,
                     child: ListTile(
                       title: Align(
                         alignment: Alignment.center,
                         child: Text(
-                          '取消',
+                          IntlLocalizations.of(
+                            context,
+                          ).bottomSheetCloseText,
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium

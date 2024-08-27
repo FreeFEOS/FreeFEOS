@@ -90,6 +90,16 @@ class IntlLocalizations {
     );
   }
 
+  /// `取消`
+  String get bottomSheetCloseText {
+    return Intl.message(
+      '取消',
+      name: 'bottomSheetCloseText',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `关闭对话框`
   String get bottomSheetCloseTooltip {
     return Intl.message(

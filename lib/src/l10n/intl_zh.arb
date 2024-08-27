@@ -4,6 +4,7 @@
     "viewModelTypeError": "View Model 类型错误!",
     "bottomSheetTooltip": "菜单",
     "bottomSheetOpenManager": "打开管理器",
+    "bottomSheetCloseText": "取消",
     "bottomSheetCloseTooltip": "关闭对话框",
     "closeDialogTitle": "退出应用",
     "closeDialogMessage": "是否退出应用?",
