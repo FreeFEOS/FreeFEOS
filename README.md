@@ -23,7 +23,7 @@ Logo先欠着
 
 1.搭建开发环境:
   
-* [Flutter](https://docs.flutter.dev/get-started/install)
+* [Flutter](https://docs.flutter.cn/get-started/install)
 * [Rust](https://www.rust-lang.org/tools/install)
 * [LLVM](https://pub.dev/packages/ffigen#installing-llvm)
 
@@ -63,16 +63,17 @@ flutter pub get
 ### Flutter 入门
 
 该项目是 Flutter
-[插件包](https://flutter.dev/developing-packages/)
+[插件包](https://flutter.cn/developing-packages/)
 的起点，这是一个包含针对 Android 和/或 iOS 平台特定实现代码的专用包。
 
 如需 Flutter 开发入门帮助，请查看
-[在线文档](https://flutter.dev/docs)，其中提供教程、
+[在线文档](https://docs.flutter.cn/)，其中提供教程、
 示例、移动开发指南以及完整的 API 参考。
 
 ## 致谢
 
-* [FreeRTOS](https://github.com/FreeRTOS) : FreeFEOS项目命名的灵感来源.
+* [FreeRTOS](https://www.freertos.org/zh-cn-cmn-s/) : FreeFEOS项目命名的灵感来源.
+* [一个木函](https://ol.woobx.cn/) : Base64 编码/解码.
 
 ## 许可
 该项目采用 BSD-3-Clause 许可证 - 有关详细信息，请参阅 [LICENSE](https://github.com/FreeFEOS/FreeFEOS/blob/master/LICENSE) 文件.

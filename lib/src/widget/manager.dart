@@ -18,17 +18,8 @@ class SystemManager extends StatefulWidget {
 }
 
 class _SystemManagerState extends State<SystemManager> {
-  /// 滚动控制器
-  final ScrollController _scrollController = ScrollController();
-
   /// 当前页面
   int _currentIndex = 0;
-
-  @override
-  void dispose() {
-    super.dispose();
-    _scrollController.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
