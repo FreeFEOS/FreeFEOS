@@ -193,7 +193,7 @@ class _AppBuilderState extends State<AppBuilder> {
                     children: [
                       InkWell(
                         onTap: () async {
-                          await viewModel.bottomSheet(false);
+                          await viewModel.openBottomSheet(false);
                         },
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(20),
@@ -221,10 +221,10 @@ class _AppBuilderState extends State<AppBuilder> {
                       ),
                       InkWell(
                         onTap: () async {
-                          await viewModel.exitDialog();
+                          await viewModel.openExitDialog();
                         },
                         onLongPress: () async {
-                          await viewModel.bottomSheet(false);
+                          await viewModel.openBottomSheet(false);
                         },
                         borderRadius: const BorderRadius.only(
                           topRight: Radius.circular(20),

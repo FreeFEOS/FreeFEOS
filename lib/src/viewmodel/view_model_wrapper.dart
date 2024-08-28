@@ -3,12 +3,26 @@ import 'package:flutter/material.dart';
 import '../plugin/plugin_details.dart';
 
 abstract interface class ViewModelWrapper {
-  /// 打开对话框
-  Future<dynamic> bottomSheet(bool isManager);
-  Future<dynamic> exitDialog();
-  Future<dynamic> openInfo();
+  /// 打开底部弹出菜单
+  Future<dynamic> openBottomSheet(bool isManager);
+
+  /// 打开退出应用对话框
+  Future<dynamic> openExitDialog();
+
+  /// 打开管理器
   Future<dynamic> openManager();
+
+  /// 打开应用信息
+  Future<dynamic> openInfo();
+
+  /// 打开设置
   Future<dynamic> openSettings();
+
+  /// 获取应用名称
+  String get getAppName;
+
+  /// 获取应用版本
+  String get getAppVersion;
 
   /// 统计普通插件数量
   int pluginCount();
@@ -45,7 +59,4 @@ abstract interface class ViewModelWrapper {
     BuildContext context,
     PluginDetails details,
   );
-
-  String get getAppName;
-  String get getAppVersion;
 }

@@ -129,7 +129,7 @@ class SheetMenu extends StatelessWidget {
                               context,
                               rootNavigator: true,
                             ).pop();
-                            await viewModel.exitDialog();
+                            await viewModel.openExitDialog();
                           },
                         ),
                       ),

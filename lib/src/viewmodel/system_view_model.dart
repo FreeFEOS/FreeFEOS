@@ -16,10 +16,6 @@ import 'view_model_wrapper.dart';
 final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
   SystemViewModel({
     required this.context,
-    required this.pluginDetailsList,
-    required this.getPlugin,
-    required this.getPluginWidget,
-    required this.isRuntime,
     required this.launchBottomSheet,
     required this.launchExitDialog,
     required this.launchManager,
@@ -27,10 +23,35 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
     required this.launchSettings,
     required this.appName,
     required this.appVersion,
+    required this.pluginDetailsList,
+    required this.getPlugin,
+    required this.getPluginWidget,
+    required this.isRuntime,
   });
 
   /// 上下文
   final BuildContext context;
+
+  /// 打开底部弹出菜单
+  final BottomSheetLauncher launchBottomSheet;
+
+  /// 打开退出应用对话框
+  final NavigatorLauncher launchExitDialog;
+
+  /// 打开管理器
+  final NavigatorLauncher launchManager;
+
+  /// 打开应用信息
+  final NavigatorLauncher launchInfo;
+
+  /// 打开设置
+  final NavigatorLauncher launchSettings;
+
+  /// 应用名称
+  final String appName;
+
+  /// 应用版本
+  final String appVersion;
 
   /// 插件列表
   final List<PluginDetails> pluginDetailsList;
@@ -44,43 +65,46 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
   /// 判断是否运行时
   final RuntimeChecker isRuntime;
 
-  /// 打开对话框
-  final BottomSheetLauncher launchBottomSheet;
-  final NavigatorLauncher launchExitDialog;
-  final NavigatorLauncher launchManager;
-  final NavigatorLauncher launchInfo;
-  final NavigatorLauncher launchSettings;
-
-  /// 应用名称
-  final String appName;
-
-  /// 应用版本
-  final String appVersion;
-
-  /// 打开对话框
+  /// 打开底部弹出菜单
   @override
-  Future<dynamic> bottomSheet(bool isManager) async {
+  Future<dynamic> openBottomSheet(bool isManager) async {
     return await launchBottomSheet.call(isManager);
   }
 
+  /// 打开退出应用对话框
   @override
-  Future<dynamic> exitDialog() async {
+  Future<dynamic> openExitDialog() async {
     return await launchExitDialog.call();
   }
 
-  @override
-  Future<dynamic> openInfo() async {
-    return await launchInfo.call();
-  }
-
+  /// 打开管理器
   @override
   Future<dynamic> openManager() async {
     return await launchManager.call();
   }
 
+  /// 打开应用信息
+  @override
+  Future<dynamic> openInfo() async {
+    return await launchInfo.call();
+  }
+
+  /// 打开设置
   @override
   Future<dynamic> openSettings() async {
     return await launchSettings.call();
+  }
+
+  /// 获取应用名称
+  @override
+  String get getAppName {
+    return appName;
+  }
+
+  /// 获取应用版本
+  @override
+  String get getAppVersion {
+    return appVersion;
   }
 
   /// 统计普通插件数量
@@ -299,10 +323,10 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
         ? isRuntime(details)
             ? IntlLocalizations.of(
                 context,
-              ).pluginTooltipOpen
+              ).pluginTooltipAbout
             : IntlLocalizations.of(
                 context,
-              ).pluginTooltipAbout
+              ).pluginTooltipOpen
         : IntlLocalizations.of(
             context,
           ).pluginTooltipNoUI;
@@ -334,16 +358,6 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
             }
           }
         : null;
-  }
-
-  @override
-  String get getAppName {
-    return appName;
-  }
-
-  @override
-  String get getAppVersion {
-    return appVersion;
   }
 
   /// 插件是否可以打开

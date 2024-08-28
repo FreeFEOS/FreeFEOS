@@ -120,10 +120,6 @@ final class SystemRuntime extends SystemBase {
   ChangeNotifier buildViewModel(BuildContext context) {
     return SystemViewModel(
       context: context,
-      pluginDetailsList: _pluginDetailsList,
-      getPlugin: _getPlugin,
-      getPluginWidget: _getPluginWidget,
-      isRuntime: _isRuntime,
       launchBottomSheet: super.launchBottomSheet,
       launchExitDialog: super.launchExitDialog,
       launchManager: super.launchManager,
@@ -131,6 +127,10 @@ final class SystemRuntime extends SystemBase {
       launchSettings: super.launchSettings,
       appName: _appName,
       appVersion: _appVersion,
+      pluginDetailsList: _pluginDetailsList,
+      getPlugin: _getPlugin,
+      getPluginWidget: _getPluginWidget,
+      isRuntime: _isRuntime,
     );
   }
 
@@ -166,7 +166,7 @@ final class SystemRuntime extends SystemBase {
   @override
   Widget buildSettings(BuildContext context) {
     return const SettingsPage(
-      isManageer: false,
+      isManager: false,
     );
   }
 
@@ -334,7 +334,7 @@ final class SystemRuntime extends SystemBase {
         if (element.pluginChannel == channel) {
           try {
             return await element.onMethodCall(method, arguments);
-          } catch (exception) {
+          } catch (_) {
             rethrow;
           }
         }

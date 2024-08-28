@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../intl/l10n.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key, required this.isManageer});
+  const SettingsPage({super.key, required this.isManager});
 
-  final bool isManageer;
+  final bool isManager;
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
@@ -23,7 +23,7 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: widget.isManageer
+      appBar: widget.isManager
           ? null
           : AppBar(
               title: Text(
