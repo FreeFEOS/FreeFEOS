@@ -33,7 +33,7 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
   final BuildContext context;
 
   /// 打开底部弹出菜单
-  final BottomSheetLauncher launchBottomSheet;
+  final MgrCheckNavLauncher launchBottomSheet;
 
   /// 打开退出应用对话框
   final NavigatorLauncher launchExitDialog;

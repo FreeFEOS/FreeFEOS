@@ -1,1 +1,1 @@
-typedef BottomSheetLauncher = Future<dynamic> Function(bool isManager);
+typedef MgrCheckNavLauncher = Future<dynamic> Function(bool isManager);

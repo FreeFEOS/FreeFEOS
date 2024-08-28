@@ -7,10 +7,10 @@ import '../viewmodel/system_view_model.dart';
 class SheetMenu extends StatelessWidget {
   const SheetMenu({
     super.key,
-    required this.isManageer,
+    required this.isManager,
   });
 
-  final bool isManageer;
+  final bool isManager;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class SheetMenu extends StatelessWidget {
                             ).bottomSheetManager,
                           ),
                           leading: const Icon(Icons.keyboard_command_key),
-                          enabled: !isManageer,
+                          enabled: !isManager,
                           onTap: () async {
                             Navigator.of(
                               context,

@@ -141,7 +141,7 @@ final class SystemRuntime extends SystemBase {
     bool isManager,
   ) {
     return SheetMenu(
-      isManageer: isManager,
+      isManager: isManager,
     );
   }
 
