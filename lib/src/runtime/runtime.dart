@@ -159,15 +159,15 @@ final class SystemRuntime extends SystemBase {
   }
 
   @override
+  Widget buildInfo(BuildContext context) {
+    return const InfoPage();
+  }
+
+  @override
   Widget buildSettings(BuildContext context) {
     return const SettingsPage(
       isManageer: false,
     );
-  }
-
-  @override
-  Widget buildInfo(BuildContext context) {
-    return const InfoPage();
   }
 
   /// 执行插件方法

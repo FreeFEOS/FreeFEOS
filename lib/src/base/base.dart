@@ -64,7 +64,17 @@ base class SystemBase extends ContextWrapper
     return buildApplication();
   }
 
+  /// 方法调用
+  @override
+  Future<dynamic> onMethodCall(
+    String method, [
+    dynamic arguments,
+  ]) async {
+    return await null;
+  }
+
   /// 运行应用
+  @protected
   @override
   Future<void> runFreeFEOSApp({
     required AppRunner runner,
@@ -117,15 +127,6 @@ base class SystemBase extends ContextWrapper
     await includeApp(app);
     // 启动应用
     return await runner.call(findApplication());
-  }
-
-  /// 方法调用
-  @override
-  Future<dynamic> onMethodCall(
-    String method, [
-    dynamic arguments,
-  ]) async {
-    return await null;
   }
 
   @override
@@ -188,6 +189,7 @@ base class SystemBase extends ContextWrapper
     return const Placeholder();
   }
 
+  @protected
   @override
   Future<dynamic> launchBottomSheet(bool isManager) async {
     return await showModalBottomSheet(
@@ -201,6 +203,7 @@ base class SystemBase extends ContextWrapper
     );
   }
 
+  @protected
   @override
   Future<dynamic> launchExitDialog() async {
     return await showDialog(
@@ -221,6 +224,7 @@ base class SystemBase extends ContextWrapper
     ).pushNamed(routeManager);
   }
 
+  @protected
   @override
   Future<dynamic> launchInfo() async {
     return await Navigator.of(
@@ -229,6 +233,7 @@ base class SystemBase extends ContextWrapper
     ).pushNamed(routeInfo);
   }
 
+  @protected
   @override
   Future<dynamic> launchSettings() async {
     return await Navigator.of(
