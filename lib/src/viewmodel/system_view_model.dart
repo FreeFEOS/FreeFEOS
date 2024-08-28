@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../intl/l10n.dart';
 import '../plugin/plugin_details.dart';
 import '../plugin/plugin_type.dart';
+import '../type/about_dialog_launcher.dart';
 import '../type/bottom_sheet_launcher.dart';
 import '../type/navigator_launcher.dart';
 import '../type/plugin_getter.dart';
@@ -17,10 +18,10 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
   SystemViewModel({
     required this.context,
     required this.launchBottomSheet,
+    required this.launchAboutDiialog,
     required this.launchExitDialog,
     required this.launchApplication,
     required this.launchManager,
-    required this.launchInfo,
     required this.launchSettings,
     required this.appName,
     required this.appVersion,
@@ -36,6 +37,9 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
   /// 打开底部弹出菜单
   final BottomSheetLauncher launchBottomSheet;
 
+  /// 打开应用信息
+  final AboutDialogLaunch launchAboutDiialog;
+
   /// 打开退出应用对话框
   final NavigatorLauncher launchExitDialog;
 
@@ -44,9 +48,6 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
 
   /// 打开管理器
   final NavigatorLauncher launchManager;
-
-  /// 打开应用信息
-  final NavigatorLauncher launchInfo;
 
   /// 打开设置
   final NavigatorLauncher launchSettings;
@@ -75,6 +76,12 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
     return await launchBottomSheet.call(isManager);
   }
 
+  /// 打开应用信息
+  @override
+  Future<dynamic> openAboutDialog(bool isPackage) async {
+    return await launchAboutDiialog.call(isPackage);
+  }
+
   /// 打开退出应用对话框
   @override
   Future<dynamic> openExitDialog() async {
@@ -91,12 +98,6 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
   @override
   Future<dynamic> openManager() async {
     return await launchManager.call();
-  }
-
-  /// 打开应用信息
-  @override
-  Future<dynamic> openInfo() async {
-    return await launchInfo.call();
   }
 
   /// 打开设置
@@ -350,21 +351,13 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
   ) {
     // 无法打开的返回空
     return _isAllowPush(details)
-        ? () {
+        ? () async {
             if (!isRuntime(details)) {
               // 非运行时打开插件页面
-              _launchPlugin(context, details);
+              await _launchPlugin(context, details);
             } else {
               // 运行时打开关于对话框
-              showAboutDialog(
-                context: context,
-                applicationName: appName,
-                applicationVersion: appVersion,
-                applicationLegalese: IntlLocalizations.of(
-                  context,
-                ).openPluginText,
-                useRootNavigator: true,
-              );
+              await launchAboutDiialog.call(true);
             }
           }
         : null;

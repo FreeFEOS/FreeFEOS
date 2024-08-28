@@ -100,21 +100,11 @@ class IntlLocalizations {
     );
   }
 
-  /// `应用信息`
-  String get bottomSheetInfo {
+  /// `打开关于对话框`
+  String get bottomSheetAboutTooltip {
     return Intl.message(
-      '应用信息',
-      name: 'bottomSheetInfo',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `打开应用信息`
-  String get bottomSheetInfoTooltip {
-    return Intl.message(
-      '打开应用信息',
-      name: 'bottomSheetInfoTooltip',
+      '打开关于对话框',
+      name: 'bottomSheetAboutTooltip',
       desc: '',
       args: [],
     );
@@ -175,6 +165,16 @@ class IntlLocalizations {
     return Intl.message(
       '退出应用',
       name: 'bottomSheetExitToolTip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Powered by FreeFEOS`
+  String get aboutDialogTag {
+    return Intl.message(
+      'Powered by FreeFEOS',
+      name: 'aboutDialogTag',
       desc: '',
       args: [],
     );
@@ -310,11 +310,11 @@ class IntlLocalizations {
     );
   }
 
-  /// `应用信息`
-  String get managerHomeInfoInfo {
+  /// `关于`
+  String get managerHomeInfoAbout {
     return Intl.message(
-      '应用信息',
-      name: 'managerHomeInfoInfo',
+      '关于',
+      name: 'managerHomeInfoAbout',
       desc: '',
       args: [],
     );
@@ -525,16 +525,6 @@ class IntlLocalizations {
     return Intl.message(
       '此插件没有界面',
       name: 'pluginTooltipNoUI',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Powered by FreeFEOS`
-  String get openPluginText {
-    return Intl.message(
-      'Powered by FreeFEOS',
-      name: 'openPluginText',
       desc: '',
       args: [],
     );

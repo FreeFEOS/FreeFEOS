@@ -120,12 +120,12 @@ class _HomePageState extends State<HomePage> {
                                 children: [
                                   TextButton(
                                     onPressed: () async {
-                                      await viewModel.openInfo();
+                                      await viewModel.openAboutDialog(false);
                                     },
                                     child: Text(
                                       IntlLocalizations.of(
                                         context,
-                                      ).managerHomeInfoInfo,
+                                      ).managerHomeInfoAbout,
                                     ),
                                   ),
                                 ],

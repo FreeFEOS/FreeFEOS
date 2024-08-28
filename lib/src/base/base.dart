@@ -167,6 +167,14 @@ base class SystemBase extends ContextWrapper
   }
 
   @override
+  Widget buildAboutDialog(
+    BuildContext context,
+    bool isPackage,
+  ) {
+    return const AboutDialog();
+  }
+
+  @override
   Widget buildExitDialog(BuildContext context) {
     return const AlertDialog(
       content: Placeholder(),
@@ -176,11 +184,6 @@ base class SystemBase extends ContextWrapper
   /// 获取管理器
   @override
   Widget buildManager(BuildContext context) {
-    return const Placeholder();
-  }
-
-  @override
-  Widget buildInfo(BuildContext context) {
     return const Placeholder();
   }
 
@@ -205,10 +208,22 @@ base class SystemBase extends ContextWrapper
 
   @protected
   @override
+  Future<dynamic> launchAboutDiialog(bool isPackage) async {
+    return await showDialog(
+      context: context,
+      useRootNavigator: true,
+      builder: (context) => buildAboutDialog(
+        context,
+        isPackage,
+      ),
+    );
+  }
+
+  @protected
+  @override
   Future<dynamic> launchExitDialog() async {
     return await showDialog(
       context: context,
-      barrierDismissible: true,
       useRootNavigator: true,
       builder: buildExitDialog,
     );
@@ -232,15 +247,6 @@ base class SystemBase extends ContextWrapper
       context,
       rootNavigator: true,
     ).pushNamed(routeManager);
-  }
-
-  @protected
-  @override
-  Future<dynamic> launchInfo() async {
-    return await Navigator.of(
-      context,
-      rootNavigator: true,
-    ).pushNamed(routeInfo);
   }
 
   @protected

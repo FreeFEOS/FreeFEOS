@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:freefeos/src/widget/about.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../base/base.dart';
@@ -15,7 +16,6 @@ import '../values/strings.dart';
 import '../viewmodel/system_view_model.dart';
 import '../widget/app.dart';
 import '../widget/exit.dart';
-import '../widget/info.dart';
 import '../widget/manager.dart';
 import '../widget/settings.dart';
 import '../widget/sheet.dart';
@@ -110,7 +110,6 @@ final class SystemRuntime extends SystemBase {
       viewModel: buildViewModel,
       attach: super.attachContext,
       manager: buildManager,
-      info: buildInfo,
       settings: buildSettings,
       child: super.child,
     );
@@ -121,10 +120,10 @@ final class SystemRuntime extends SystemBase {
     return SystemViewModel(
       context: context,
       launchBottomSheet: super.launchBottomSheet,
+      launchAboutDiialog: super.launchAboutDiialog,
       launchExitDialog: super.launchExitDialog,
       launchApplication: super.launchApplication,
       launchManager: super.launchManager,
-      launchInfo: super.launchInfo,
       launchSettings: super.launchSettings,
       appName: _appName,
       appVersion: _appVersion,
@@ -147,6 +146,16 @@ final class SystemRuntime extends SystemBase {
   }
 
   @override
+  Widget buildAboutDialog(
+    BuildContext context,
+    bool isPackage,
+  ) {
+    return SystemAbout(
+      isPackage: isPackage,
+    );
+  }
+
+  @override
   Widget buildExitDialog(BuildContext context) {
     return ExitDialog(
       exit: () async => await SystemNavigator.pop(),
@@ -157,11 +166,6 @@ final class SystemRuntime extends SystemBase {
   @override
   Widget buildManager(BuildContext context) {
     return const SystemManager();
-  }
-
-  @override
-  Widget buildInfo(BuildContext context) {
-    return const InfoPage();
   }
 
   @override

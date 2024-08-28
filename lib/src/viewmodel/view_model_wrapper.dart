@@ -6,6 +6,9 @@ abstract interface class ViewModelWrapper {
   /// 打开底部弹出菜单
   Future<dynamic> openBottomSheet(bool isManager);
 
+  /// 打开应用信息
+  Future<dynamic> openAboutDialog(bool isPackage);
+
   /// 打开退出应用对话框
   Future<dynamic> openExitDialog();
 
@@ -14,9 +17,6 @@ abstract interface class ViewModelWrapper {
 
   /// 打开管理器
   Future<dynamic> openManager();
-
-  /// 打开应用信息
-  Future<dynamic> openInfo();
 
   /// 打开设置
   Future<dynamic> openSettings();

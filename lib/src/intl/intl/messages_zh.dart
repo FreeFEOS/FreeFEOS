@@ -22,15 +22,16 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "aboutDialogTag":
+            MessageLookupByLibrary.simpleMessage("Powered by FreeFEOS"),
         "bannerTitle": MessageLookupByLibrary.simpleMessage("FreeFEOS"),
+        "bottomSheetAboutTooltip":
+            MessageLookupByLibrary.simpleMessage("打开关于对话框"),
         "bottomSheetClose": MessageLookupByLibrary.simpleMessage("取消"),
         "bottomSheetCloseTooltip":
             MessageLookupByLibrary.simpleMessage("关闭对话框"),
         "bottomSheetExit": MessageLookupByLibrary.simpleMessage("退出"),
         "bottomSheetExitToolTip": MessageLookupByLibrary.simpleMessage("退出应用"),
-        "bottomSheetInfo": MessageLookupByLibrary.simpleMessage("应用信息"),
-        "bottomSheetInfoTooltip":
-            MessageLookupByLibrary.simpleMessage("打开应用信息"),
         "bottomSheetManager": MessageLookupByLibrary.simpleMessage("管理器"),
         "bottomSheetManagerTooltip":
             MessageLookupByLibrary.simpleMessage("打开管理器"),
@@ -47,10 +48,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "managerDestinationLog": MessageLookupByLibrary.simpleMessage("日志"),
         "managerDestinationPlugin": MessageLookupByLibrary.simpleMessage("插件"),
         "managerDestinationSetting": MessageLookupByLibrary.simpleMessage("设置"),
+        "managerHomeInfoAbout": MessageLookupByLibrary.simpleMessage("关于"),
         "managerHomeInfoAppName": MessageLookupByLibrary.simpleMessage("应用名称"),
         "managerHomeInfoAppVersion":
             MessageLookupByLibrary.simpleMessage("应用版本"),
-        "managerHomeInfoInfo": MessageLookupByLibrary.simpleMessage("应用信息"),
         "managerHomeInfoPlatform": MessageLookupByLibrary.simpleMessage("当前平台"),
         "managerHomeInfoPluginCount":
             MessageLookupByLibrary.simpleMessage("插件数量"),
@@ -63,8 +64,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "managerPluginAuthor": MessageLookupByLibrary.simpleMessage("作者"),
         "managerPluginChannel": MessageLookupByLibrary.simpleMessage("通道"),
         "managerTitle": MessageLookupByLibrary.simpleMessage("系统管理器"),
-        "openPluginText":
-            MessageLookupByLibrary.simpleMessage("Powered by FreeFEOS"),
         "pluginActionAbout": MessageLookupByLibrary.simpleMessage("关于"),
         "pluginActionNoUI": MessageLookupByLibrary.simpleMessage("无界面"),
         "pluginActionOpen": MessageLookupByLibrary.simpleMessage("打开"),

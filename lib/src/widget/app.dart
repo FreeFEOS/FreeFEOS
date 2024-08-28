@@ -17,7 +17,6 @@ class FreeFEOSApp extends StatefulWidget {
     required this.viewModel,
     required this.attach,
     required this.manager,
-    required this.info,
     required this.settings,
     required this.child,
   });
@@ -25,7 +24,6 @@ class FreeFEOSApp extends StatefulWidget {
   final ViewModelBuilder viewModel;
   final ContextAttacher attach;
   final WidgetBuilder manager;
-  final WidgetBuilder info;
   final WidgetBuilder settings;
   final Widget child;
 
@@ -95,13 +93,6 @@ class _FreeFEOSAppState extends State<FreeFEOSApp> {
               routeManager: (context) {
                 return Material(
                   child: widget.manager(
-                    context,
-                  ),
-                );
-              },
-              routeInfo: (context) {
-                return Material(
-                  child: widget.info(
                     context,
                   ),
                 );

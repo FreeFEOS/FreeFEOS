@@ -23,7 +23,7 @@ class SheetMenu extends StatelessWidget {
                 Tooltip(
                   message: IntlLocalizations.of(
                     context,
-                  ).bottomSheetInfoTooltip,
+                  ).bottomSheetAboutTooltip,
                   child: ListTile(
                     leading: const FlutterLogo(),
                     title: Row(
@@ -44,7 +44,7 @@ class SheetMenu extends StatelessWidget {
                         context,
                         rootNavigator: true,
                       ).pop();
-                      await viewModel.openInfo();
+                      await viewModel.openAboutDialog(false);
                     },
                   ),
                 ),
@@ -70,26 +70,6 @@ class SheetMenu extends StatelessWidget {
                               rootNavigator: true,
                             ).pop();
                             await viewModel.openManager();
-                          },
-                        ),
-                      ),
-                      Tooltip(
-                        message: IntlLocalizations.of(
-                          context,
-                        ).bottomSheetInfoTooltip,
-                        child: ListTile(
-                          title: Text(
-                            IntlLocalizations.of(
-                              context,
-                            ).bottomSheetInfo,
-                          ),
-                          leading: const Icon(Icons.info_outline),
-                          onTap: () async {
-                            Navigator.of(
-                              context,
-                              rootNavigator: true,
-                            ).pop();
-                            await viewModel.openInfo();
                           },
                         ),
                       ),
