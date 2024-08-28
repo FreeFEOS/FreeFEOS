@@ -214,6 +214,16 @@ base class SystemBase extends ContextWrapper
     );
   }
 
+  @override
+  void launchApplication() {
+    return Navigator.of(
+      context,
+      rootNavigator: true,
+    ).popUntil(
+      ModalRoute.withName(routeApp),
+    );
+  }
+
   /// 打开管理器
   @protected
   @override

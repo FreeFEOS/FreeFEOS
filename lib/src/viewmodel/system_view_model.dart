@@ -18,6 +18,7 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
     required this.context,
     required this.launchBottomSheet,
     required this.launchExitDialog,
+    required this.launchApplication,
     required this.launchManager,
     required this.launchInfo,
     required this.launchSettings,
@@ -33,10 +34,13 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
   final BuildContext context;
 
   /// 打开底部弹出菜单
-  final MgrCheckNavLauncher launchBottomSheet;
+  final BottomSheetLauncher launchBottomSheet;
 
   /// 打开退出应用对话框
   final NavigatorLauncher launchExitDialog;
+
+  /// 进入应用
+  final VoidCallback launchApplication;
 
   /// 打开管理器
   final NavigatorLauncher launchManager;
@@ -75,6 +79,12 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
   @override
   Future<dynamic> openExitDialog() async {
     return await launchExitDialog.call();
+  }
+
+  /// 进入应用
+  @override
+  void openApplication() {
+    return launchApplication.call();
   }
 
   /// 打开管理器

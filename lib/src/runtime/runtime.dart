@@ -122,6 +122,7 @@ final class SystemRuntime extends SystemBase {
       context: context,
       launchBottomSheet: super.launchBottomSheet,
       launchExitDialog: super.launchExitDialog,
+      launchApplication: super.launchApplication,
       launchManager: super.launchManager,
       launchInfo: super.launchInfo,
       launchSettings: super.launchSettings,

@@ -9,6 +9,9 @@ abstract interface class ViewModelWrapper {
   /// 打开退出应用对话框
   Future<dynamic> openExitDialog();
 
+  /// 进入应用
+  void openApplication();
+
   /// 打开管理器
   Future<dynamic> openManager();
 

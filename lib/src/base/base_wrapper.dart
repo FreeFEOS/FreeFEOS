@@ -62,6 +62,8 @@ abstract interface class BaseWrapper {
   /// 打开退出应用对话框
   Future<dynamic> launchExitDialog();
 
+  void launchApplication();
+
   /// 打开管理器
   Future<dynamic> launchManager();
 

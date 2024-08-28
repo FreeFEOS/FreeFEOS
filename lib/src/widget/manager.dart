@@ -100,7 +100,7 @@ class _SystemManagerState extends State<SystemManager> {
           bottom: false,
           minimum: EdgeInsets.zero,
           maintainBottomViewPadding: true,
-          child: Container(
+          child: Align(
             alignment: Alignment.topCenter,
             child: [
               const HomePage(),
