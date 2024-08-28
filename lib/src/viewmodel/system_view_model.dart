@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:freefeos/src/type/navigator_launcher.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../intl/l10n.dart';
 import '../plugin/plugin_details.dart';
 import '../plugin/plugin_type.dart';
 import '../type/bottom_sheet_launcher.dart';
+import '../type/navigator_launcher.dart';
 import '../type/plugin_getter.dart';
 import '../type/plugin_widget_gatter.dart';
 import '../type/runtiem_checker.dart';

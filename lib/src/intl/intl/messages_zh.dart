@@ -23,15 +23,26 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "bannerTitle": MessageLookupByLibrary.simpleMessage("FreeFEOS"),
-        "bottomSheetCloseText": MessageLookupByLibrary.simpleMessage("取消"),
+        "bottomSheetClose": MessageLookupByLibrary.simpleMessage("取消"),
         "bottomSheetCloseTooltip":
             MessageLookupByLibrary.simpleMessage("关闭对话框"),
-        "bottomSheetOpenManager": MessageLookupByLibrary.simpleMessage("打开管理器"),
+        "bottomSheetExit": MessageLookupByLibrary.simpleMessage("退出"),
+        "bottomSheetExitToolTip": MessageLookupByLibrary.simpleMessage("退出应用"),
+        "bottomSheetInfo": MessageLookupByLibrary.simpleMessage("应用信息"),
+        "bottomSheetInfoTooltip":
+            MessageLookupByLibrary.simpleMessage("打开应用信息"),
+        "bottomSheetManager": MessageLookupByLibrary.simpleMessage("管理器"),
+        "bottomSheetManagerTooltip":
+            MessageLookupByLibrary.simpleMessage("打开管理器"),
+        "bottomSheetSettings": MessageLookupByLibrary.simpleMessage("设置"),
+        "bottomSheetSettingsTooltip":
+            MessageLookupByLibrary.simpleMessage("打开设置"),
         "bottomSheetTooltip": MessageLookupByLibrary.simpleMessage("菜单"),
         "closeDialogCancelButton": MessageLookupByLibrary.simpleMessage("取消"),
         "closeDialogExitButton": MessageLookupByLibrary.simpleMessage("退出"),
         "closeDialogMessage": MessageLookupByLibrary.simpleMessage("是否退出应用?"),
         "closeDialogTitle": MessageLookupByLibrary.simpleMessage("退出应用"),
+        "infoTitle": MessageLookupByLibrary.simpleMessage("应用信息"),
         "managerDestinationHome": MessageLookupByLibrary.simpleMessage("主页"),
         "managerDestinationLog": MessageLookupByLibrary.simpleMessage("日志"),
         "managerDestinationPlugin": MessageLookupByLibrary.simpleMessage("插件"),
@@ -68,6 +79,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pluginTypePlatform": MessageLookupByLibrary.simpleMessage("平台插件"),
         "pluginTypeRuntime": MessageLookupByLibrary.simpleMessage("系统运行时"),
         "pluginTypeUnknown": MessageLookupByLibrary.simpleMessage("未知类型插件"),
+        "settingsTitle": MessageLookupByLibrary.simpleMessage("设置"),
         "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),
         "viewModelTypeError":
             MessageLookupByLibrary.simpleMessage("View Model 类型错误!")

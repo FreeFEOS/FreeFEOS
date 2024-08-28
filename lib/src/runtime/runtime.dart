@@ -141,8 +141,6 @@ final class SystemRuntime extends SystemBase {
     bool isManager,
   ) {
     return SheetMenu(
-      appName: _appName,
-      appVersion: _appVersion,
       isManageer: isManager,
     );
   }

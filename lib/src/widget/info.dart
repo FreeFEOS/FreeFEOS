@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../intl/l10n.dart';
 import '../viewmodel/system_view_model.dart';
 
 class InfoPage extends StatelessWidget {
@@ -10,7 +11,11 @@ class InfoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('应用信息'),
+        title: Text(
+          IntlLocalizations.of(
+            context,
+          ).infoTitle,
+        ),
         actions: [
           Consumer<SystemViewModel>(
             builder: (context, viewModel, child) => IconButton(

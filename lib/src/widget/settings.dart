@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../intl/l10n.dart';
+
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key, required this.isManageer});
 
@@ -24,7 +26,11 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: widget.isManageer
           ? null
           : AppBar(
-              title: Text('设置'),
+              title: Text(
+                IntlLocalizations.of(
+                  context,
+                ).settingsTitle,
+              ),
             ),
       body: Scrollbar(
         controller: _scrollController,

@@ -7,13 +7,9 @@ import '../viewmodel/system_view_model.dart';
 class SheetMenu extends StatelessWidget {
   const SheetMenu({
     super.key,
-    required this.appName,
-    required this.appVersion,
     required this.isManageer,
   });
 
-  final String appName;
-  final String appVersion;
   final bool isManageer;
 
   @override
@@ -25,22 +21,24 @@ class SheetMenu extends StatelessWidget {
             builder: (context, viewModel, child) => Column(
               children: [
                 Tooltip(
-                  message: '应用信息',
+                  message: IntlLocalizations.of(
+                    context,
+                  ).bottomSheetInfoTooltip,
                   child: ListTile(
+                    leading: const FlutterLogo(),
+                    title: Row(
+                      children: [
+                        Text(viewModel.getAppName),
+                        const Icon(Icons.keyboard_arrow_right),
+                      ],
+                    ),
+                    subtitle: Text(viewModel.getAppVersion),
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(28),
                         topRight: Radius.circular(28),
                       ),
                     ),
-                    leading: const FlutterLogo(),
-                    title: Row(
-                      children: [
-                        Text(appName),
-                        const Icon(Icons.keyboard_arrow_right),
-                      ],
-                    ),
-                    subtitle: Text(appVersion),
                     onTap: () async {
                       Navigator.of(
                         context,
@@ -57,14 +55,15 @@ class SheetMenu extends StatelessWidget {
                       Tooltip(
                         message: IntlLocalizations.of(
                           context,
-                        ).bottomSheetOpenManager,
+                        ).bottomSheetManagerTooltip,
                         child: ListTile(
                           title: Text(
                             IntlLocalizations.of(
                               context,
-                            ).bottomSheetOpenManager,
+                            ).bottomSheetManager,
                           ),
                           leading: const Icon(Icons.keyboard_command_key),
+                          enabled: !isManageer,
                           onTap: () async {
                             Navigator.of(
                               context,
@@ -72,13 +71,38 @@ class SheetMenu extends StatelessWidget {
                             ).pop();
                             await viewModel.openManager();
                           },
-                          enabled: !isManageer,
                         ),
                       ),
                       Tooltip(
-                        message: '打开设置',
+                        message: IntlLocalizations.of(
+                          context,
+                        ).bottomSheetInfoTooltip,
                         child: ListTile(
-                          title: const Text('设置'),
+                          title: Text(
+                            IntlLocalizations.of(
+                              context,
+                            ).bottomSheetInfo,
+                          ),
+                          leading: const Icon(Icons.info_outline),
+                          onTap: () async {
+                            Navigator.of(
+                              context,
+                              rootNavigator: true,
+                            ).pop();
+                            await viewModel.openInfo();
+                          },
+                        ),
+                      ),
+                      Tooltip(
+                        message: IntlLocalizations.of(
+                          context,
+                        ).bottomSheetSettingsTooltip,
+                        child: ListTile(
+                          title: Text(
+                            IntlLocalizations.of(
+                              context,
+                            ).bottomSheetSettings,
+                          ),
                           leading: const Icon(Icons.app_settings_alt),
                           onTap: () async {
                             Navigator.of(
@@ -90,9 +114,15 @@ class SheetMenu extends StatelessWidget {
                         ),
                       ),
                       Tooltip(
-                        message: '退出应用',
+                        message: IntlLocalizations.of(
+                          context,
+                        ).bottomSheetExitToolTip,
                         child: ListTile(
-                          title: const Text('退出'),
+                          title: Text(
+                            IntlLocalizations.of(
+                              context,
+                            ).bottomSheetExit,
+                          ),
                           leading: const Icon(Icons.exit_to_app),
                           onTap: () async {
                             Navigator.of(
@@ -121,7 +151,7 @@ class SheetMenu extends StatelessWidget {
               child: Text(
                 IntlLocalizations.of(
                   context,
-                ).bottomSheetCloseText,
+                ).bottomSheetClose,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: Theme.of(context).colorScheme.primary,
                     ),

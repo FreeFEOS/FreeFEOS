@@ -80,21 +80,71 @@ class IntlLocalizations {
     );
   }
 
+  /// `管理器`
+  String get bottomSheetManager {
+    return Intl.message(
+      '管理器',
+      name: 'bottomSheetManager',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `打开管理器`
-  String get bottomSheetOpenManager {
+  String get bottomSheetManagerTooltip {
     return Intl.message(
       '打开管理器',
-      name: 'bottomSheetOpenManager',
+      name: 'bottomSheetManagerTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `应用信息`
+  String get bottomSheetInfo {
+    return Intl.message(
+      '应用信息',
+      name: 'bottomSheetInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `打开应用信息`
+  String get bottomSheetInfoTooltip {
+    return Intl.message(
+      '打开应用信息',
+      name: 'bottomSheetInfoTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `设置`
+  String get bottomSheetSettings {
+    return Intl.message(
+      '设置',
+      name: 'bottomSheetSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `打开设置`
+  String get bottomSheetSettingsTooltip {
+    return Intl.message(
+      '打开设置',
+      name: 'bottomSheetSettingsTooltip',
       desc: '',
       args: [],
     );
   }
 
   /// `取消`
-  String get bottomSheetCloseText {
+  String get bottomSheetClose {
     return Intl.message(
       '取消',
-      name: 'bottomSheetCloseText',
+      name: 'bottomSheetClose',
       desc: '',
       args: [],
     );
@@ -105,6 +155,26 @@ class IntlLocalizations {
     return Intl.message(
       '关闭对话框',
       name: 'bottomSheetCloseTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `退出`
+  String get bottomSheetExit {
+    return Intl.message(
+      '退出',
+      name: 'bottomSheetExit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `退出应用`
+  String get bottomSheetExitToolTip {
+    return Intl.message(
+      '退出应用',
+      name: 'bottomSheetExitToolTip',
       desc: '',
       args: [],
     );
@@ -465,6 +535,26 @@ class IntlLocalizations {
     return Intl.message(
       'Powered by FreeFEOS',
       name: 'openPluginText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `应用信息`
+  String get infoTitle {
+    return Intl.message(
+      '应用信息',
+      name: 'infoTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `设置`
+  String get settingsTitle {
+    return Intl.message(
+      '设置',
+      name: 'settingsTitle',
       desc: '',
       args: [],
     );

@@ -181,7 +181,9 @@ class _AppBuilderState extends State<AppBuilder> {
             child: Container(
               height: 30,
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.3),
+                color: Theme.of(context).brightness == Brightness.light
+                    ? Colors.black.withOpacity(0.3)
+                    : Colors.white.withOpacity(0.3),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Material(
@@ -197,14 +199,17 @@ class _AppBuilderState extends State<AppBuilder> {
                           topLeft: Radius.circular(20),
                           bottomLeft: Radius.circular(20),
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
                             horizontal: 12,
                             vertical: 3,
                           ),
                           child: Icon(
                             Icons.more_horiz,
-                            color: Colors.white,
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Colors.white
+                                    : Colors.black,
                           ),
                         ),
                       ),
@@ -225,14 +230,17 @@ class _AppBuilderState extends State<AppBuilder> {
                           topRight: Radius.circular(20),
                           bottomRight: Radius.circular(20),
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 11.75,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
                             vertical: 3,
                           ),
                           child: Icon(
                             Icons.adjust,
-                            color: Colors.white,
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Colors.white
+                                    : Colors.black,
                           ),
                         ),
                       ),
