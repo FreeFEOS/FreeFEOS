@@ -50,6 +50,46 @@ class IntlLocalizations {
     return Localizations.of<IntlLocalizations>(context, IntlLocalizations);
   }
 
+  /// `未知`
+  String get unknown {
+    return Intl.message(
+      '未知',
+      name: 'unknown',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `等待`
+  String get waiting {
+    return Intl.message(
+      '等待',
+      name: 'waiting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `错误`
+  String get error {
+    return Intl.message(
+      '错误',
+      name: 'error',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `空`
+  String get sNull {
+    return Intl.message(
+      '空',
+      name: 'sNull',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `FreeFEOS`
   String get bannerTitle {
     return Intl.message(
@@ -170,11 +210,31 @@ class IntlLocalizations {
     );
   }
 
+  /// `FreeFEOS`
+  String get aboutPackageName {
+    return Intl.message(
+      'FreeFEOS',
+      name: 'aboutPackageName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `FreeFEOS Flutter Package`
+  String get aboutPackageDescription {
+    return Intl.message(
+      'FreeFEOS Flutter Package',
+      name: 'aboutPackageDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Powered by FreeFEOS`
-  String get aboutDialogTag {
+  String get aboutDialogLegalese {
     return Intl.message(
       'Powered by FreeFEOS',
-      name: 'aboutDialogTag',
+      name: 'aboutDialogLegalese',
       desc: '',
       args: [],
     );
@@ -381,150 +441,140 @@ class IntlLocalizations {
   }
 
   /// `系统运行时`
-  String get pluginTypeRuntime {
+  String get managerPluginTypeRuntime {
     return Intl.message(
       '系统运行时',
-      name: 'pluginTypeRuntime',
+      name: 'managerPluginTypeRuntime',
       desc: '',
       args: [],
     );
   }
 
   /// `绑定通信层`
-  String get pluginTypeBase {
+  String get managerPluginTypeBase {
     return Intl.message(
       '绑定通信层',
-      name: 'pluginTypeBase',
+      name: 'managerPluginTypeBase',
       desc: '',
       args: [],
     );
   }
 
   /// `平台嵌入层`
-  String get pluginTypeEmbedder {
+  String get managerPluginTypeEmbedder {
     return Intl.message(
       '平台嵌入层',
-      name: 'pluginTypeEmbedder',
+      name: 'managerPluginTypeEmbedder',
       desc: '',
       args: [],
     );
   }
 
   /// `引擎插件`
-  String get pluginTypeEngine {
+  String get managerPluginTypeEngine {
     return Intl.message(
       '引擎插件',
-      name: 'pluginTypeEngine',
+      name: 'managerPluginTypeEngine',
       desc: '',
       args: [],
     );
   }
 
   /// `平台插件`
-  String get pluginTypePlatform {
+  String get managerPluginTypePlatform {
     return Intl.message(
       '平台插件',
-      name: 'pluginTypePlatform',
+      name: 'managerPluginTypePlatform',
       desc: '',
       args: [],
     );
   }
 
   /// `内核模块`
-  String get pluginTypeKernel {
+  String get managerPluginTypeKernel {
     return Intl.message(
       '内核模块',
-      name: 'pluginTypeKernel',
+      name: 'managerPluginTypeKernel',
       desc: '',
       args: [],
     );
   }
 
   /// `普通插件`
-  String get pluginTypeFlutter {
+  String get managerPluginTypeFlutter {
     return Intl.message(
       '普通插件',
-      name: 'pluginTypeFlutter',
+      name: 'managerPluginTypeFlutter',
       desc: '',
       args: [],
     );
   }
 
   /// `未知类型插件`
-  String get pluginTypeUnknown {
+  String get managerPluginTypeUnknown {
     return Intl.message(
       '未知类型插件',
-      name: 'pluginTypeUnknown',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Unknown`
-  String get unknown {
-    return Intl.message(
-      'Unknown',
-      name: 'unknown',
+      name: 'managerPluginTypeUnknown',
       desc: '',
       args: [],
     );
   }
 
   /// `打开`
-  String get pluginActionOpen {
+  String get managerPluginActionOpen {
     return Intl.message(
       '打开',
-      name: 'pluginActionOpen',
+      name: 'managerPluginActionOpen',
       desc: '',
       args: [],
     );
   }
 
   /// `关于`
-  String get pluginActionAbout {
+  String get managerPluginActionAbout {
     return Intl.message(
       '关于',
-      name: 'pluginActionAbout',
+      name: 'managerPluginActionAbout',
       desc: '',
       args: [],
     );
   }
 
   /// `无界面`
-  String get pluginActionNoUI {
+  String get managerPluginActionNoUI {
     return Intl.message(
       '无界面',
-      name: 'pluginActionNoUI',
+      name: 'managerPluginActionNoUI',
       desc: '',
       args: [],
     );
   }
 
   /// `打开插件的界面`
-  String get pluginTooltipOpen {
+  String get managerPluginTooltipOpen {
     return Intl.message(
       '打开插件的界面',
-      name: 'pluginTooltipOpen',
+      name: 'managerPluginTooltipOpen',
       desc: '',
       args: [],
     );
   }
 
   /// `关于本框架`
-  String get pluginTooltipAbout {
+  String get managerPluginTooltipAbout {
     return Intl.message(
       '关于本框架',
-      name: 'pluginTooltipAbout',
+      name: 'managerPluginTooltipAbout',
       desc: '',
       args: [],
     );
   }
 
   /// `此插件没有界面`
-  String get pluginTooltipNoUI {
+  String get managerPluginTooltipNoUI {
     return Intl.message(
       '此插件没有界面',
-      name: 'pluginTooltipNoUI',
+      name: 'managerPluginTooltipNoUI',
       desc: '',
       args: [],
     );

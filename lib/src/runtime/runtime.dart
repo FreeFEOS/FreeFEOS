@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 import '../base/base.dart';
 import '../plugin/plugin_details.dart';
@@ -22,18 +21,13 @@ import '../widget/sheet.dart';
 
 /// 运行时
 final class SystemRuntime extends SystemBase {
-  /// 应用名称
-  late String _appName;
-
-  /// 应用版本
-  late String _appVersion;
-
   /// 插件列表
   final List<RuntimePlugin> _pluginList = [];
 
   /// 插件详细信息列表
   final List<PluginDetails> _pluginDetailsList = [];
 
+  /// 内部插件列表
   List<RuntimePlugin> get innerList => [
         super.base,
         this,
@@ -62,10 +56,12 @@ final class SystemRuntime extends SystemBase {
       case runtimeGetEnginePlugins:
         return await super.execEngine(
           engineGetEnginePlugins,
+          arguments,
         );
       case runtimeGetPlatformPlugins:
         return await super.execEngine(
           engineGetPlatformPlugins,
+          arguments,
         );
       default:
         return await null;
@@ -75,8 +71,6 @@ final class SystemRuntime extends SystemBase {
   /// 初始化应用
   @override
   Future<void> init(List<RuntimePlugin> plugins) async {
-    // 初始化包信息
-    await _initPackage();
     // 初始化运行时
     await _initRuntime();
     // 初始化引擎插件
@@ -116,8 +110,6 @@ final class SystemRuntime extends SystemBase {
       launchExitDialog: super.launchExitDialog,
       launchManager: super.launchManager,
       launchSettings: super.launchSettings,
-      appName: _appName,
-      appVersion: _appVersion,
       pluginDetailsList: _pluginDetailsList,
       getPlugin: _getPlugin,
       getPluginWidget: _getPluginWidget,
@@ -148,6 +140,7 @@ final class SystemRuntime extends SystemBase {
     );
   }
 
+  /// 构建关于对话框
   @override
   Widget buildAboutDialog(
     BuildContext context,
@@ -158,6 +151,7 @@ final class SystemRuntime extends SystemBase {
     );
   }
 
+  /// 构建退出对话框
   @override
   Widget buildExitDialog(BuildContext context) {
     return SystemExit(
@@ -171,6 +165,7 @@ final class SystemRuntime extends SystemBase {
     return const SystemManager();
   }
 
+  /// 构建设置
   @override
   Widget buildSettings(BuildContext context) {
     return const SystemSettings(
@@ -193,51 +188,43 @@ final class SystemRuntime extends SystemBase {
     );
   }
 
-  /// 初始化包信息
-  Future<void> _initPackage() async {
-    // 获取包信息
-    PackageInfo info = await PackageInfo.fromPlatform();
-    // 获取应用名称
-    _appName = info.appName.isNotEmpty ? info.appName : "unknown";
-    // 获取应用版本
-    String name = info.version.isNotEmpty ? info.version : "unknown";
-    String code = info.buildNumber.isNotEmpty ? info.buildNumber : "unknown";
-    _appVersion = "$name\t($code)";
-  }
-
   /// 初始化运行时
   Future<void> _initRuntime() async {
-    // 初始化运行时
-    for (var element in innerList) {
-      // 类型
-      PluginType type = PluginType.unknown;
-      // 判断
-      switch (element.pluginChannel) {
-        case baseChannel:
-          type = PluginType.base;
-          break;
-        case runtimeChannel:
-          type = PluginType.runtime;
-          break;
-        case embedderChannel:
-          type = PluginType.embedder;
-          break;
-        default:
-          type = PluginType.unknown;
-          break;
+    try {
+      // 初始化运行时
+      for (var element in innerList) {
+        // 类型
+        PluginType type = PluginType.unknown;
+        // 判断
+        switch (element.pluginChannel) {
+          case baseChannel:
+            type = PluginType.base;
+            break;
+          case runtimeChannel:
+            type = PluginType.runtime;
+            break;
+          case embedderChannel:
+            type = PluginType.embedder;
+            break;
+          default:
+            type = PluginType.unknown;
+            break;
+        }
+        // 添加到内置插件列表
+        _pluginList.add(element);
+        // 添加到插件详细信息列表
+        _pluginDetailsList.add(
+          PluginDetails(
+            channel: element.pluginChannel,
+            title: element.pluginName,
+            description: element.pluginDescription,
+            author: element.pluginAuthor,
+            type: type,
+          ),
+        );
       }
-      // 添加到内置插件列表
-      _pluginList.add(element);
-      // 添加到插件详细信息列表
-      _pluginDetailsList.add(
-        PluginDetails(
-          channel: element.pluginChannel,
-          title: element.pluginName,
-          description: element.pluginDescription,
-          author: element.pluginAuthor,
-          type: type,
-        ),
-      );
+    } catch (_) {
+      rethrow;
     }
   }
 
@@ -245,8 +232,11 @@ final class SystemRuntime extends SystemBase {
   Future<void> _initEnginePlugin() async {
     // 初始化平台插件
     try {
-      dynamic plugins =
-          await _exec(pluginChannel, runtimeGetEnginePlugins, true);
+      dynamic plugins = await _exec(
+        pluginChannel,
+        runtimeGetEnginePlugins,
+        true,
+      );
       List list = plugins as List? ?? [unknownPluginWithMap];
       // 判断列表是否为空
       if (list.isNotEmpty) {
@@ -276,18 +266,23 @@ final class SystemRuntime extends SystemBase {
   Future<void> _initPlatformPlugin() async {
     // 初始化平台插件
     try {
-      // 遍历原生插件
-      for (var element
-          in (await _exec(pluginChannel, runtimeGetPlatformPlugins, true)
-                  as List? ??
-              [unknownPluginWithJSON])) {
-        // 添加到插件详细信息列表
-        _pluginDetailsList.add(
-          PluginDetails.formJSON(
-            json: jsonDecode(element),
-            type: PluginType.platform,
-          ),
-        );
+      dynamic plugins = await _exec(
+        pluginChannel,
+        runtimeGetPlatformPlugins,
+        true,
+      );
+      List list = plugins as List? ?? [unknownPluginWithJSON];
+      if (list.isNotEmpty) {
+        // 遍历原生插件
+        for (var element in list) {
+          // 添加到插件详细信息列表
+          _pluginDetailsList.add(
+            PluginDetails.formJSON(
+              json: jsonDecode(element),
+              type: PluginType.platform,
+            ),
+          );
+        }
       }
     } catch (exception) {
       // 平台错误添加未知插件占位
@@ -304,19 +299,23 @@ final class SystemRuntime extends SystemBase {
   Future<void> _initPlugins({
     required List<RuntimePlugin> plugins,
   }) async {
-    if (plugins.isNotEmpty) {
-      for (var element in plugins) {
-        _pluginList.add(element);
-        _pluginDetailsList.add(
-          PluginDetails(
-            channel: element.pluginChannel,
-            title: element.pluginName,
-            description: element.pluginDescription,
-            author: element.pluginAuthor,
-            type: PluginType.flutter,
-          ),
-        );
+    try {
+      if (plugins.isNotEmpty) {
+        for (var element in plugins) {
+          _pluginList.add(element);
+          _pluginDetailsList.add(
+            PluginDetails(
+              channel: element.pluginChannel,
+              title: element.pluginName,
+              description: element.pluginDescription,
+              author: element.pluginAuthor,
+              type: PluginType.flutter,
+            ),
+          );
+        }
       }
+    } catch (_) {
+      rethrow;
     }
   }
 
@@ -362,7 +361,9 @@ final class SystemRuntime extends SystemBase {
     BuildContext context,
     PluginDetails details,
   ) {
-    return _getPlugin(details)?.pluginWidget(context) ?? const Placeholder();
+    RuntimePlugin? plugin = _getPlugin(details);
+    Widget? pluginWidget = plugin?.pluginWidget(context);
+    return pluginWidget ?? const Placeholder();
   }
 
   /// 获取插件

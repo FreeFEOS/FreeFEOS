@@ -49,17 +49,84 @@ class _HomePageState extends State<HomePage> {
                             builder: (context, viewModel, child) => Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  viewModel.getAppName,
-                                  textAlign: TextAlign.left,
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
+                                FutureBuilder(
+                                  future: viewModel.getAppName(),
+                                  builder: (context, snapshot) {
+                                    String text = IntlLocalizations.of(
+                                      context,
+                                    ).unknown;
+                                    switch (snapshot.connectionState) {
+                                      case ConnectionState.waiting:
+                                        text = IntlLocalizations.of(
+                                          context,
+                                        ).waiting;
+                                        break;
+                                      case ConnectionState.done:
+                                        if (snapshot.hasError) {
+                                          text = IntlLocalizations.of(
+                                            context,
+                                          ).error;
+                                          break;
+                                        }
+                                        if (snapshot.hasData) {
+                                          text = snapshot.data ??
+                                              IntlLocalizations.of(
+                                                context,
+                                              ).sNull;
+                                          break;
+                                        }
+                                        break;
+                                      default:
+                                        break;
+                                    }
+                                    return Text(
+                                      text,
+                                      textAlign: TextAlign.left,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium,
+                                    );
+                                  },
                                 ),
                                 const SizedBox(height: 4),
-                                Text(
-                                  viewModel.getAppVersion,
-                                  textAlign: TextAlign.left,
-                                  style: Theme.of(context).textTheme.bodyMedium,
+                                FutureBuilder(
+                                  future: viewModel.getAppVersion(),
+                                  builder: (context, snapshot) {
+                                    String text = IntlLocalizations.of(
+                                      context,
+                                    ).unknown;
+                                    switch (snapshot.connectionState) {
+                                      case ConnectionState.waiting:
+                                        text = IntlLocalizations.of(
+                                          context,
+                                        ).waiting;
+                                        break;
+                                      case ConnectionState.done:
+                                        if (snapshot.hasError) {
+                                          text = IntlLocalizations.of(
+                                            context,
+                                          ).error;
+                                          break;
+                                        }
+                                        if (snapshot.hasData) {
+                                          text = snapshot.data ??
+                                              IntlLocalizations.of(
+                                                context,
+                                              ).sNull;
+                                          break;
+                                        }
+                                        break;
+                                      default:
+                                        break;
+                                    }
+                                    return Text(
+                                      text,
+                                      textAlign: TextAlign.left,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                    );
+                                  },
                                 ),
                               ],
                             ),
@@ -87,18 +154,82 @@ class _HomePageState extends State<HomePage> {
                           builder: (context, viewModel, child) => Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              InfoItem(
-                                title: IntlLocalizations.of(
-                                  context,
-                                ).managerHomeInfoAppName,
-                                subtitle: viewModel.getAppName,
+                              FutureBuilder(
+                                future: viewModel.getAppName(),
+                                builder: (context, snapshot) {
+                                  String text = IntlLocalizations.of(
+                                    context,
+                                  ).unknown;
+                                  switch (snapshot.connectionState) {
+                                    case ConnectionState.waiting:
+                                      text = IntlLocalizations.of(
+                                        context,
+                                      ).waiting;
+                                      break;
+                                    case ConnectionState.done:
+                                      if (snapshot.hasError) {
+                                        text = IntlLocalizations.of(
+                                          context,
+                                        ).error;
+                                        break;
+                                      }
+                                      if (snapshot.hasData) {
+                                        text = snapshot.data ??
+                                            IntlLocalizations.of(
+                                              context,
+                                            ).sNull;
+                                        break;
+                                      }
+                                      break;
+                                    default:
+                                      break;
+                                  }
+                                  return InfoItem(
+                                    title: IntlLocalizations.of(
+                                      context,
+                                    ).managerHomeInfoAppName,
+                                    subtitle: text,
+                                  );
+                                },
                               ),
                               const SizedBox(height: 16),
-                              InfoItem(
-                                title: IntlLocalizations.of(
-                                  context,
-                                ).managerHomeInfoAppVersion,
-                                subtitle: viewModel.getAppVersion,
+                              FutureBuilder(
+                                future: viewModel.getAppVersion(),
+                                builder: (context, snapshot) {
+                                  String text = IntlLocalizations.of(
+                                    context,
+                                  ).unknown;
+                                  switch (snapshot.connectionState) {
+                                    case ConnectionState.waiting:
+                                      text = IntlLocalizations.of(
+                                        context,
+                                      ).waiting;
+                                      break;
+                                    case ConnectionState.done:
+                                      if (snapshot.hasError) {
+                                        text = IntlLocalizations.of(
+                                          context,
+                                        ).error;
+                                        break;
+                                      }
+                                      if (snapshot.hasData) {
+                                        text = snapshot.data ??
+                                            IntlLocalizations.of(
+                                              context,
+                                            ).sNull;
+                                        break;
+                                      }
+                                      break;
+                                    default:
+                                      break;
+                                  }
+                                  return InfoItem(
+                                    title: IntlLocalizations.of(
+                                      context,
+                                    ).managerHomeInfoAppVersion,
+                                    subtitle: text,
+                                  );
+                                },
                               ),
                               const SizedBox(height: 16),
                               InfoItem(

@@ -22,10 +22,10 @@ abstract interface class ViewModelWrapper {
   Future<dynamic> openSettings();
 
   /// 获取应用名称
-  String get getAppName;
+  Future<String> getAppName();
 
   /// 获取应用版本
-  String get getAppVersion;
+  Future<String> getAppVersion();
 
   /// 统计普通插件数量
   int pluginCount();

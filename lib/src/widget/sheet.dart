@@ -28,11 +28,75 @@ class SystemSheet extends StatelessWidget {
                     leading: const FlutterLogo(),
                     title: Row(
                       children: [
-                        Text(viewModel.getAppName),
+                        FutureBuilder(
+                          future: viewModel.getAppName(),
+                          builder: (context, snapshot) {
+                            String text = IntlLocalizations.of(
+                              context,
+                            ).unknown;
+                            switch (snapshot.connectionState) {
+                              case ConnectionState.waiting:
+                                text = IntlLocalizations.of(
+                                  context,
+                                ).waiting;
+                                break;
+                              case ConnectionState.done:
+                                if (snapshot.hasError) {
+                                  text = IntlLocalizations.of(
+                                    context,
+                                  ).error;
+                                  break;
+                                }
+                                if (snapshot.hasData) {
+                                  text = snapshot.data ??
+                                      IntlLocalizations.of(
+                                        context,
+                                      ).sNull;
+                                  break;
+                                }
+                                break;
+                              default:
+                                break;
+                            }
+                            return Text(text);
+                          },
+                        ),
                         const Icon(Icons.keyboard_arrow_right),
                       ],
                     ),
-                    subtitle: Text(viewModel.getAppVersion),
+                    subtitle: FutureBuilder(
+                      future: viewModel.getAppVersion(),
+                      builder: (context, snapshot) {
+                        String text = IntlLocalizations.of(
+                          context,
+                        ).unknown;
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.waiting:
+                            text = IntlLocalizations.of(
+                              context,
+                            ).waiting;
+                            break;
+                          case ConnectionState.done:
+                            if (snapshot.hasError) {
+                              text = IntlLocalizations.of(
+                                context,
+                              ).error;
+                              break;
+                            }
+                            if (snapshot.hasData) {
+                              text = snapshot.data ??
+                                  IntlLocalizations.of(
+                                    context,
+                                  ).sNull;
+                              break;
+                            }
+                            break;
+                          default:
+                            break;
+                        }
+                        return Text(text);
+                      },
+                    ),
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(28),

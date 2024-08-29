@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../intl/l10n.dart';
@@ -23,8 +24,6 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
     required this.launchExitDialog,
     required this.launchManager,
     required this.launchSettings,
-    required this.appName,
-    required this.appVersion,
     required this.pluginDetailsList,
     required this.getPlugin,
     required this.getPluginWidget,
@@ -51,12 +50,6 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
 
   /// 打开设置
   final NavigatorLauncher launchSettings;
-
-  /// 应用名称
-  final String appName;
-
-  /// 应用版本
-  final String appVersion;
 
   /// 插件列表
   final List<PluginDetails> pluginDetailsList;
@@ -108,14 +101,22 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
 
   /// 获取应用名称
   @override
-  String get getAppName {
-    return appName;
+  Future<String> getAppName() async {
+    // 获取包信息
+    PackageInfo info = await PackageInfo.fromPlatform();
+    // 获取应用名称
+    return info.appName.isNotEmpty ? info.appName : "unknown";
   }
 
   /// 获取应用版本
   @override
-  String get getAppVersion {
-    return appVersion;
+  Future<String> getAppVersion() async {
+    // 获取包信息
+    PackageInfo info = await PackageInfo.fromPlatform();
+    // 获取应用版本
+    String name = info.version.isNotEmpty ? info.version : "unknown";
+    String code = info.buildNumber.isNotEmpty ? info.buildNumber : "unknown";
+    return "$name\t($code)";
   }
 
   /// 统计普通插件数量
@@ -261,42 +262,42 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
       case PluginType.runtime:
         return IntlLocalizations.of(
           context,
-        ).pluginTypeRuntime;
+        ).managerPluginTypeRuntime;
       // 绑定通信层
       case PluginType.base:
         return IntlLocalizations.of(
           context,
-        ).pluginTypeBase;
+        ).managerPluginTypeBase;
       // 平台嵌入层
       case PluginType.embedder:
         return IntlLocalizations.of(
           context,
-        ).pluginTypeEmbedder;
+        ).managerPluginTypeEmbedder;
       // 平台插件
       case PluginType.engine:
         return IntlLocalizations.of(
           context,
-        ).pluginTypeEngine;
+        ).managerPluginTypeEngine;
       // 平台插件
       case PluginType.platform:
         return IntlLocalizations.of(
           context,
-        ).pluginTypePlatform;
+        ).managerPluginTypePlatform;
       // 内核模块
       case PluginType.kernel:
         return IntlLocalizations.of(
           context,
-        ).pluginTypeKernel;
+        ).managerPluginTypeKernel;
       // 普通插件
       case PluginType.flutter:
         return IntlLocalizations.of(
           context,
-        ).pluginTypeFlutter;
+        ).managerPluginTypeFlutter;
       // 未知类型插件
       case PluginType.unknown:
         return IntlLocalizations.of(
           context,
-        ).pluginTypeUnknown;
+        ).managerPluginTypeUnknown;
       // 未知
       default:
         return IntlLocalizations.of(
@@ -315,13 +316,13 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
         ? isRuntime(details)
             ? IntlLocalizations.of(
                 context,
-              ).pluginActionAbout
+              ).managerPluginActionAbout
             : IntlLocalizations.of(
                 context,
-              ).pluginActionOpen
+              ).managerPluginActionOpen
         : IntlLocalizations.of(
             context,
-          ).pluginActionNoUI;
+          ).managerPluginActionNoUI;
   }
 
   /// 获取插件的提示
@@ -334,13 +335,13 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
         ? isRuntime(details)
             ? IntlLocalizations.of(
                 context,
-              ).pluginTooltipAbout
+              ).managerPluginTooltipAbout
             : IntlLocalizations.of(
                 context,
-              ).pluginTooltipOpen
+              ).managerPluginTooltipOpen
         : IntlLocalizations.of(
             context,
-          ).pluginTooltipNoUI;
+          ).managerPluginTooltipNoUI;
   }
 
   /// 打开卡片

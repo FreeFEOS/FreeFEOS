@@ -22,8 +22,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "aboutDialogTag":
+        "aboutDialogLegalese":
             MessageLookupByLibrary.simpleMessage("Powered by FreeFEOS"),
+        "aboutPackageDescription":
+            MessageLookupByLibrary.simpleMessage("FreeFEOS Flutter Package"),
+        "aboutPackageName": MessageLookupByLibrary.simpleMessage("FreeFEOS"),
         "bannerTitle": MessageLookupByLibrary.simpleMessage("FreeFEOS"),
         "bottomSheetAboutTooltip":
             MessageLookupByLibrary.simpleMessage("打开关于对话框"),
@@ -43,6 +46,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "closeDialogExitButton": MessageLookupByLibrary.simpleMessage("退出"),
         "closeDialogMessage": MessageLookupByLibrary.simpleMessage("是否退出应用?"),
         "closeDialogTitle": MessageLookupByLibrary.simpleMessage("退出应用"),
+        "error": MessageLookupByLibrary.simpleMessage("错误"),
         "infoTitle": MessageLookupByLibrary.simpleMessage("应用信息"),
         "managerDestinationHome": MessageLookupByLibrary.simpleMessage("主页"),
         "managerDestinationLog": MessageLookupByLibrary.simpleMessage("日志"),
@@ -61,26 +65,36 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("了解 FreeFEOS"),
         "managerHomeLearnTooltip": MessageLookupByLibrary.simpleMessage("了解更多"),
         "managerLogCopyTips": MessageLookupByLibrary.simpleMessage("已复制到剪贴板!"),
+        "managerPluginActionAbout": MessageLookupByLibrary.simpleMessage("关于"),
+        "managerPluginActionNoUI": MessageLookupByLibrary.simpleMessage("无界面"),
+        "managerPluginActionOpen": MessageLookupByLibrary.simpleMessage("打开"),
         "managerPluginAuthor": MessageLookupByLibrary.simpleMessage("作者"),
         "managerPluginChannel": MessageLookupByLibrary.simpleMessage("通道"),
+        "managerPluginTooltipAbout":
+            MessageLookupByLibrary.simpleMessage("关于本框架"),
+        "managerPluginTooltipNoUI":
+            MessageLookupByLibrary.simpleMessage("此插件没有界面"),
+        "managerPluginTooltipOpen":
+            MessageLookupByLibrary.simpleMessage("打开插件的界面"),
+        "managerPluginTypeBase": MessageLookupByLibrary.simpleMessage("绑定通信层"),
+        "managerPluginTypeEmbedder":
+            MessageLookupByLibrary.simpleMessage("平台嵌入层"),
+        "managerPluginTypeEngine": MessageLookupByLibrary.simpleMessage("引擎插件"),
+        "managerPluginTypeFlutter":
+            MessageLookupByLibrary.simpleMessage("普通插件"),
+        "managerPluginTypeKernel": MessageLookupByLibrary.simpleMessage("内核模块"),
+        "managerPluginTypePlatform":
+            MessageLookupByLibrary.simpleMessage("平台插件"),
+        "managerPluginTypeRuntime":
+            MessageLookupByLibrary.simpleMessage("系统运行时"),
+        "managerPluginTypeUnknown":
+            MessageLookupByLibrary.simpleMessage("未知类型插件"),
         "managerTitle": MessageLookupByLibrary.simpleMessage("系统管理器"),
-        "pluginActionAbout": MessageLookupByLibrary.simpleMessage("关于"),
-        "pluginActionNoUI": MessageLookupByLibrary.simpleMessage("无界面"),
-        "pluginActionOpen": MessageLookupByLibrary.simpleMessage("打开"),
-        "pluginTooltipAbout": MessageLookupByLibrary.simpleMessage("关于本框架"),
-        "pluginTooltipNoUI": MessageLookupByLibrary.simpleMessage("此插件没有界面"),
-        "pluginTooltipOpen": MessageLookupByLibrary.simpleMessage("打开插件的界面"),
-        "pluginTypeBase": MessageLookupByLibrary.simpleMessage("绑定通信层"),
-        "pluginTypeEmbedder": MessageLookupByLibrary.simpleMessage("平台嵌入层"),
-        "pluginTypeEngine": MessageLookupByLibrary.simpleMessage("引擎插件"),
-        "pluginTypeFlutter": MessageLookupByLibrary.simpleMessage("普通插件"),
-        "pluginTypeKernel": MessageLookupByLibrary.simpleMessage("内核模块"),
-        "pluginTypePlatform": MessageLookupByLibrary.simpleMessage("平台插件"),
-        "pluginTypeRuntime": MessageLookupByLibrary.simpleMessage("系统运行时"),
-        "pluginTypeUnknown": MessageLookupByLibrary.simpleMessage("未知类型插件"),
+        "sNull": MessageLookupByLibrary.simpleMessage("空"),
         "settingsTitle": MessageLookupByLibrary.simpleMessage("设置"),
-        "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),
+        "unknown": MessageLookupByLibrary.simpleMessage("未知"),
         "viewModelTypeError":
-            MessageLookupByLibrary.simpleMessage("View Model 类型错误!")
+            MessageLookupByLibrary.simpleMessage("View Model 类型错误!"),
+        "waiting": MessageLookupByLibrary.simpleMessage("等待")
       };
 }
