@@ -13,7 +13,7 @@ import '../values/placeholder.dart';
 import '../values/strings.dart';
 import '../viewmodel/system_view_model.dart';
 import '../widget/about.dart';
-import '../widget/app.dart';
+import '../widget/ui.dart';
 import '../widget/exit.dart';
 import '../widget/manager.dart';
 import '../widget/settings.dart';
@@ -120,7 +120,7 @@ final class SystemRuntime extends SystemBase {
   /// 构建应用
   @override
   Widget buildApplication() {
-    return FreeFEOSApp(
+    return SystemUI(
       viewModel: buildViewModel,
       attach: super.attachContext,
       manager: buildManager,

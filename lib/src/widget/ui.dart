@@ -11,8 +11,8 @@ import '../values/route.dart';
 import '../values/strings.dart';
 import '../viewmodel/system_view_model.dart';
 
-class FreeFEOSApp extends StatefulWidget {
-  const FreeFEOSApp({
+class SystemUI extends StatefulWidget {
+  const SystemUI({
     super.key,
     required this.viewModel,
     required this.attach,
@@ -28,10 +28,10 @@ class FreeFEOSApp extends StatefulWidget {
   final Widget child;
 
   @override
-  State<FreeFEOSApp> createState() => _FreeFEOSAppState();
+  State<SystemUI> createState() => _SystemUIState();
 }
 
-class _FreeFEOSAppState extends State<FreeFEOSApp> {
+class _SystemUIState extends State<SystemUI> {
   @override
   Widget build(BuildContext context) {
     return Theme(
