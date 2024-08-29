@@ -75,6 +75,7 @@ class _LogcatPageState extends State<LogcatPage> {
       controller: _scrollController,
       child: ListView.builder(
         controller: _scrollController,
+        padding: EdgeInsets.zero,
         itemCount: _filteredBuffer.length,
         itemBuilder: (context, index) {
           final logEntry = _filteredBuffer[index];

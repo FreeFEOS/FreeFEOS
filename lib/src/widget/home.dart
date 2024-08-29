@@ -28,6 +28,7 @@ class _HomePageState extends State<HomePage> {
         constraints: const BoxConstraints(maxWidth: 840),
         child: ListView(
           controller: _scrollController,
+          padding: EdgeInsets.zero,
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 12, 12, 6),

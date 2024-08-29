@@ -36,6 +36,7 @@ class _SystemSettingsState extends State<SystemSettings> {
         controller: _scrollController,
         child: ListView(
           controller: _scrollController,
+          padding: EdgeInsets.zero,
           children: const [],
         ),
       ),

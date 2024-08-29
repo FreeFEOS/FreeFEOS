@@ -31,6 +31,7 @@ class _PluginPageState extends State<PluginPage> {
         ),
         child: ListView(
           controller: _scrollController,
+          padding: EdgeInsets.zero,
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
