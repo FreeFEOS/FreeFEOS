@@ -36,7 +36,7 @@ abstract interface class BaseWrapper {
   ChangeNotifier buildViewModel(BuildContext context);
 
   /// 构建App
-  Widget buildApplication();
+  Widget buildSystemUI(Widget child);
 
   /// 构建底部弹出菜单
   Widget buildBottomSheet(

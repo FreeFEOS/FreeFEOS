@@ -61,7 +61,7 @@ base class SystemBase extends ContextWrapper
   /// 插件界面
   @override
   Widget pluginWidget(BuildContext context) {
-    return buildApplication();
+    return buildSystemUI(child);
   }
 
   /// 方法调用
@@ -94,13 +94,12 @@ base class SystemBase extends ContextWrapper
     WidgetsFlutterBinding.ensureInitialized();
     // 初始化内核桥接
     await initKernelBridge();
-    // TODO: 内核相关操作
-    //kernelBridgeScope.
-
+    // 初始化内核
+    await kernelBridgeScope.onCreateKernel();
     // 初始化服务桥接
     await initServerBridge();
-    // TODO: 服务相关操作
-
+    // 初始化服务
+    await serverBridgeScope.onCreateServer();
     // 初始化引擎桥接
     await initEngineBridge();
     // 初始化引擎
@@ -123,10 +122,12 @@ base class SystemBase extends ContextWrapper
         }();
       },
     );
-    // 导入用户应用
-    await includeApp(app);
     // 启动应用
-    return await runner(findApplication());
+    return await includeApp(app).then(
+      (_) async => await runner(
+        findApplication(),
+      ),
+    );
   }
 
   /// 初始化应用
@@ -151,7 +152,7 @@ base class SystemBase extends ContextWrapper
 
   /// 构建应用
   @override
-  Widget buildApplication() {
+  Widget buildSystemUI(Widget child) {
     return ConstrainedBox(
       constraints: const BoxConstraints.expand(),
       child: child,
@@ -164,9 +165,13 @@ base class SystemBase extends ContextWrapper
     BuildContext context,
     bool isManager,
   ) {
-    return ListTile(
-      leading: const Icon(Icons.error_outline),
-      title: Text(isManager.toString()),
+    return Expanded(
+      child: Center(
+        child: ListTile(
+          leading: const Icon(Icons.error_outline),
+          title: Text(isManager.toString()),
+        ),
+      ),
     );
   }
 

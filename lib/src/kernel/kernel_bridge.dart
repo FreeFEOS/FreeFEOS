@@ -1,6 +1,10 @@
 import 'kernel_module.dart';
 
-final class KernelBridge extends KernelModule {}
+final class KernelBridge extends KernelModule {
+  Future<void> onCreateKernel() async {
+    // TODO: 内核相关操作
+  }
+}
 
 base mixin KernelBridgeMixin {
   late KernelBridge _kernelBridge;

@@ -119,13 +119,13 @@ final class SystemRuntime extends SystemBase {
 
   /// 构建应用
   @override
-  Widget buildApplication() {
+  Widget buildSystemUI(Widget child) {
     return SystemUI(
       viewModel: buildViewModel,
       attach: super.attachContext,
       manager: buildManager,
       settings: buildSettings,
-      child: super.child,
+      child: child,
     );
   }
 
