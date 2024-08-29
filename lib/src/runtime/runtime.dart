@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../base/base.dart';
+import '../framework/log.dart';
 import '../plugin/plugin_details.dart';
 import '../plugin/plugin_runtime.dart';
 import '../plugin/plugin_type.dart';
@@ -11,6 +12,7 @@ import '../values/channel.dart';
 import '../values/method.dart';
 import '../values/placeholder.dart';
 import '../values/strings.dart';
+import '../values/tag.dart';
 import '../viewmodel/system_view_model.dart';
 import '../widget/about.dart';
 import '../widget/ui.dart';
@@ -319,6 +321,33 @@ final class SystemRuntime extends SystemBase {
     }
   }
 
+  /// 判断插件是否为运行时
+  bool _isRuntime(PluginDetails details) {
+    return details.channel == pluginChannel;
+  }
+
+  /// 获取插件
+  RuntimePlugin? _getPlugin(PluginDetails details) {
+    if (_pluginList.isNotEmpty) {
+      for (var element in _pluginList) {
+        if (element.pluginChannel == details.channel) {
+          return element;
+        }
+      }
+    }
+    return null;
+  }
+
+  /// 获取插件界面
+  Widget _getPluginWidget(
+    BuildContext context,
+    PluginDetails details,
+  ) {
+    RuntimePlugin? plugin = _getPlugin(details);
+    Widget? pluginWidget = plugin?.pluginWidget(context);
+    return pluginWidget ?? const Placeholder();
+  }
+
   /// 执行插件方法
   Future<dynamic> _exec(
     String channel,
@@ -334,47 +363,53 @@ final class SystemRuntime extends SystemBase {
         for (var internalPlugin in innerList) {
           // 判断是否为内部插件, 且是否不允许访问内部插件
           if (internalPlugin.pluginChannel == channel && !internal) {
+            Log.e(
+              tag: runtimeTag,
+              message: '未经允许的访问!\n'
+                  '通道名称:$channel.\n'
+                  '方法名称:$method.\n'
+                  '附加参数:$arguments.\n',
+            );
             // 返回空结束函数
             return await null;
           }
         }
         if (element.pluginChannel == channel) {
+          dynamic result;
           try {
-            return await element.onMethodCall(method, arguments);
-          } catch (_) {
+            result = await element.onMethodCall(
+              method,
+              arguments,
+            );
+          } catch (exception) {
+            Log.e(
+              tag: runtimeTag,
+              message: '运行时插件代码调用失败!\n'
+                  '通道名称:$channel.\n'
+                  '方法名称:$method.\n'
+                  '附加参数:$arguments.\n'
+                  '返回结果:$result.',
+              error: exception,
+            );
             rethrow;
           }
+          Log.d(
+            tag: runtimeTag,
+            message: '运行时插件代码调用成功!\n'
+                '通道名称:$channel.\n'
+                '方法名称:$method.\n'
+                '附加参数:$arguments.\n'
+                '返回结果:$result.',
+          );
+          return await result;
         }
       }
     } else {
+      Log.e(
+        tag: runtimeTag,
+        message: '运行时插件列表为空!',
+      );
       return await null;
     }
-  }
-
-  /// 判断插件是否为运行时
-  bool _isRuntime(PluginDetails details) {
-    return details.channel == pluginChannel;
-  }
-
-  /// 获取插件界面
-  Widget _getPluginWidget(
-    BuildContext context,
-    PluginDetails details,
-  ) {
-    RuntimePlugin? plugin = _getPlugin(details);
-    Widget? pluginWidget = plugin?.pluginWidget(context);
-    return pluginWidget ?? const Placeholder();
-  }
-
-  /// 获取插件
-  RuntimePlugin? _getPlugin(PluginDetails details) {
-    if (_pluginList.isNotEmpty) {
-      for (var element in _pluginList) {
-        if (element.pluginChannel == details.channel) {
-          return element;
-        }
-      }
-    }
-    return null;
   }
 }
