@@ -22,7 +22,7 @@ final class DefaultEntry extends FreeFEOSInterface {
   }) async {
     return await () async {
       try {
-        await initApi.call(
+        await initApi(
           (
             String channel,
             String method, [

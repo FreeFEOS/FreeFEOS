@@ -32,11 +32,11 @@ abstract interface class BaseWrapper {
   /// 获取App
   Widget findApplication();
 
-  /// 构建App
-  Widget buildApplication();
-
   /// 构建View Model
   ChangeNotifier buildViewModel(BuildContext context);
+
+  /// 构建App
+  Widget buildApplication();
 
   /// 构建底部弹出菜单
   Widget buildBottomSheet(
@@ -44,6 +44,7 @@ abstract interface class BaseWrapper {
     bool isManager,
   );
 
+  ///  构建关于对话框
   Widget buildAboutDialog(
     BuildContext context,
     bool isPackage,
@@ -58,6 +59,9 @@ abstract interface class BaseWrapper {
   /// 构建设置界面
   Widget buildSettings(BuildContext context);
 
+  /// 打开应用
+  void launchApplication();
+
   /// 打开对话框
   Future<dynamic> launchBottomSheet(bool isManager);
 
@@ -66,8 +70,6 @@ abstract interface class BaseWrapper {
 
   /// 打开退出应用对话框
   Future<dynamic> launchExitDialog();
-
-  void launchApplication();
 
   /// 打开管理器
   Future<dynamic> launchManager();

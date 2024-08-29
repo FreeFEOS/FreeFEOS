@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import '../intl/l10n.dart';
 import '../viewmodel/system_view_model.dart';
 
-class SheetMenu extends StatelessWidget {
-  const SheetMenu({
+class SystemSheet extends StatelessWidget {
+  const SystemSheet({
     super.key,
     required this.isManager,
   });

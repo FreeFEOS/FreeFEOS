@@ -106,9 +106,9 @@ base class SystemBase extends ContextWrapper
     // 初始化引擎
     await engineBridgerScope.onCreateEngine(this);
     // 初始化应用
-    await init(plugins.call());
+    await init(plugins());
     // 初始化API
-    await initApi.call(
+    await initApi(
       (
         String channel,
         String method, [
@@ -126,26 +126,20 @@ base class SystemBase extends ContextWrapper
     // 导入用户应用
     await includeApp(app);
     // 启动应用
-    return await runner.call(findApplication());
+    return await runner(findApplication());
   }
 
+  /// 初始化应用
   @override
   Future<void> init(List<RuntimePlugin> plugins) async {
     return await null;
   }
 
+  /// 获取应用
   @override
   Widget findApplication() {
     return Builder(
       builder: pluginWidget,
-    );
-  }
-
-  @override
-  Widget buildApplication() {
-    return ConstrainedBox(
-      constraints: const BoxConstraints.expand(),
-      child: child,
     );
   }
 
@@ -155,6 +149,16 @@ base class SystemBase extends ContextWrapper
     return this;
   }
 
+  /// 构建应用
+  @override
+  Widget buildApplication() {
+    return ConstrainedBox(
+      constraints: const BoxConstraints.expand(),
+      child: child,
+    );
+  }
+
+  /// 构建底部弹出菜单
   @override
   Widget buildBottomSheet(
     BuildContext context,
@@ -166,6 +170,7 @@ base class SystemBase extends ContextWrapper
     );
   }
 
+  /// 构建关于对话框
   @override
   Widget buildAboutDialog(
     BuildContext context,
@@ -174,6 +179,7 @@ base class SystemBase extends ContextWrapper
     return const AboutDialog();
   }
 
+  /// 构建退出对话框
   @override
   Widget buildExitDialog(BuildContext context) {
     return const AlertDialog(
@@ -187,11 +193,25 @@ base class SystemBase extends ContextWrapper
     return const Placeholder();
   }
 
+  /// 构建设置
   @override
   Widget buildSettings(BuildContext context) {
     return const Placeholder();
   }
 
+  /// 打开应用
+  @protected
+  @override
+  void launchApplication() {
+    return Navigator.of(
+      context,
+      rootNavigator: true,
+    ).popUntil(
+      ModalRoute.withName(routeApp),
+    );
+  }
+
+  /// 打开底部弹出对话框
   @protected
   @override
   Future<dynamic> launchBottomSheet(bool isManager) async {
@@ -206,6 +226,7 @@ base class SystemBase extends ContextWrapper
     );
   }
 
+  /// 打开关于对话框
   @protected
   @override
   Future<dynamic> launchAboutDiialog(bool isPackage) async {
@@ -219,6 +240,7 @@ base class SystemBase extends ContextWrapper
     );
   }
 
+  /// 打开退出对话框
   @protected
   @override
   Future<dynamic> launchExitDialog() async {
@@ -226,16 +248,6 @@ base class SystemBase extends ContextWrapper
       context: context,
       useRootNavigator: true,
       builder: buildExitDialog,
-    );
-  }
-
-  @override
-  void launchApplication() {
-    return Navigator.of(
-      context,
-      rootNavigator: true,
-    ).popUntil(
-      ModalRoute.withName(routeApp),
     );
   }
 
@@ -249,6 +261,7 @@ base class SystemBase extends ContextWrapper
     ).pushNamed(routeManager);
   }
 
+  /// 打开设置
   @protected
   @override
   Future<dynamic> launchSettings() async {

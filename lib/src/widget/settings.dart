@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 
 import '../intl/l10n.dart';
 
-class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key, required this.isManager});
+class SystemSettings extends StatefulWidget {
+  const SystemSettings({super.key, required this.isManager});
 
   final bool isManager;
 
   @override
-  State<SettingsPage> createState() => _SettingsPageState();
+  State<SystemSettings> createState() => _SystemSettingsState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _SystemSettingsState extends State<SystemSettings> {
   final ScrollController _scrollController = ScrollController();
 
   @override

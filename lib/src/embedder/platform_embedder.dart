@@ -96,18 +96,18 @@ final class PlatformEmbedder extends Service
     required Future<dynamic> Function(FreeFEOSPlatform linker) mobile,
     required Future<dynamic> Function(dynamic exception) error,
   }) async {
-    if (kIsWebBrowser) return invoke.call();
+    if (kIsWebBrowser) return invoke();
     if (kUseNative) {
       try {
-        return await mobile.call(_linker);
+        return await mobile(_linker);
       } catch (exception) {
-        return await error.call(exception);
+        return await error(exception);
       }
     } else {
       try {
-        return await invoke.call();
+        return await invoke();
       } catch (exception) {
-        return await error.call(exception);
+        return await error(exception);
       }
     }
   }

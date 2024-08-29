@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:freefeos/src/widget/about.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../base/base.dart';
@@ -14,6 +13,7 @@ import '../values/method.dart';
 import '../values/placeholder.dart';
 import '../values/strings.dart';
 import '../viewmodel/system_view_model.dart';
+import '../widget/about.dart';
 import '../widget/app.dart';
 import '../widget/exit.dart';
 import '../widget/manager.dart';
@@ -72,6 +72,7 @@ final class SystemRuntime extends SystemBase {
     }
   }
 
+  /// 初始化应用
   @override
   Future<void> init(List<RuntimePlugin> plugins) async {
     // 初始化包信息
@@ -104,25 +105,15 @@ final class SystemRuntime extends SystemBase {
     );
   }
 
-  @override
-  Widget buildApplication() {
-    return FreeFEOSApp(
-      viewModel: buildViewModel,
-      attach: super.attachContext,
-      manager: buildManager,
-      settings: buildSettings,
-      child: super.child,
-    );
-  }
-
+  /// 构建View Model
   @override
   ChangeNotifier buildViewModel(BuildContext context) {
     return SystemViewModel(
       context: context,
+      launchApplication: super.launchApplication,
       launchBottomSheet: super.launchBottomSheet,
       launchAboutDiialog: super.launchAboutDiialog,
       launchExitDialog: super.launchExitDialog,
-      launchApplication: super.launchApplication,
       launchManager: super.launchManager,
       launchSettings: super.launchSettings,
       appName: _appName,
@@ -134,13 +125,25 @@ final class SystemRuntime extends SystemBase {
     );
   }
 
+  /// 构建应用
+  @override
+  Widget buildApplication() {
+    return FreeFEOSApp(
+      viewModel: buildViewModel,
+      attach: super.attachContext,
+      manager: buildManager,
+      settings: buildSettings,
+      child: super.child,
+    );
+  }
+
   /// 构建调试菜单
   @override
   Widget buildBottomSheet(
     BuildContext context,
     bool isManager,
   ) {
-    return SheetMenu(
+    return SystemSheet(
       isManager: isManager,
     );
   }
@@ -157,7 +160,7 @@ final class SystemRuntime extends SystemBase {
 
   @override
   Widget buildExitDialog(BuildContext context) {
-    return ExitDialog(
+    return SystemExit(
       exit: () async => await SystemNavigator.pop(),
     );
   }
@@ -170,7 +173,7 @@ final class SystemRuntime extends SystemBase {
 
   @override
   Widget buildSettings(BuildContext context) {
-    return const SettingsPage(
+    return const SystemSettings(
       isManager: false,
     );
   }

@@ -141,7 +141,7 @@ class _AppBuilderState extends State<AppBuilder> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    widget.attach.call(context);
+    widget.attach(context);
   }
 
   @override

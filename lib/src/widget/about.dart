@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:freefeos/src/intl/l10n.dart';
 import 'package:provider/provider.dart';
 
+import '../intl/l10n.dart';
+import '../utils/ui.dart';
 import '../viewmodel/system_view_model.dart';
 
 class SystemAbout extends StatelessWidget {
@@ -16,11 +17,14 @@ class SystemAbout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<SystemViewModel>(
       builder: (context, viewModel, child) => AboutDialog(
-        applicationName: viewModel.getAppName,
+        applicationName: isPackage ? 'FreeFEOS' : viewModel.getAppName,
         applicationVersion: viewModel.getAppVersion,
-        applicationLegalese: IntlLocalizations.of(
-          context,
-        ).aboutDialogTag,
+        applicationLegalese: isPackage
+            ? 'FreeFEOS Flutter Package'
+            : IntlLocalizations.of(
+                context,
+              ).aboutDialogTag,
+        children: child?.toList(),
       ),
     );
   }

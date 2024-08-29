@@ -10,7 +10,7 @@ final class EmbedderConnection implements ServiceConnection {
   @override
   void onServiceConnected(String name, IBinder service) {
     EmbedderBinder binder = service as EmbedderBinder;
-    calback.call(binder.getService as PlatformEmbedder);
+    calback(binder.getService as PlatformEmbedder);
   }
 
   @override

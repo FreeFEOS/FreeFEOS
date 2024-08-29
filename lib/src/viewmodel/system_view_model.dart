@@ -17,10 +17,10 @@ import 'view_model_wrapper.dart';
 final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
   SystemViewModel({
     required this.context,
+    required this.launchApplication,
     required this.launchBottomSheet,
     required this.launchAboutDiialog,
     required this.launchExitDialog,
-    required this.launchApplication,
     required this.launchManager,
     required this.launchSettings,
     required this.appName,
@@ -34,6 +34,9 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
   /// 上下文
   final BuildContext context;
 
+  /// 进入应用
+  final VoidCallback launchApplication;
+
   /// 打开底部弹出菜单
   final BottomSheetLauncher launchBottomSheet;
 
@@ -42,9 +45,6 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
 
   /// 打开退出应用对话框
   final NavigatorLauncher launchExitDialog;
-
-  /// 进入应用
-  final VoidCallback launchApplication;
 
   /// 打开管理器
   final NavigatorLauncher launchManager;
@@ -73,37 +73,37 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
   /// 打开底部弹出菜单
   @override
   Future<dynamic> openBottomSheet(bool isManager) async {
-    return await launchBottomSheet.call(isManager);
+    return await launchBottomSheet(isManager);
   }
 
   /// 打开应用信息
   @override
   Future<dynamic> openAboutDialog(bool isPackage) async {
-    return await launchAboutDiialog.call(isPackage);
+    return await launchAboutDiialog(isPackage);
   }
 
   /// 打开退出应用对话框
   @override
   Future<dynamic> openExitDialog() async {
-    return await launchExitDialog.call();
+    return await launchExitDialog();
   }
 
   /// 进入应用
   @override
   void openApplication() {
-    return launchApplication.call();
+    return launchApplication();
   }
 
   /// 打开管理器
   @override
   Future<dynamic> openManager() async {
-    return await launchManager.call();
+    return await launchManager();
   }
 
   /// 打开设置
   @override
   Future<dynamic> openSettings() async {
-    return await launchSettings.call();
+    return await launchSettings();
   }
 
   /// 获取应用名称
@@ -357,7 +357,7 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
               await _launchPlugin(context, details);
             } else {
               // 运行时打开关于对话框
-              await launchAboutDiialog.call(true);
+              await launchAboutDiialog(true);
             }
           }
         : null;

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../intl/l10n.dart';
 
-class ExitDialog extends StatelessWidget {
-  const ExitDialog({
+class SystemExit extends StatelessWidget {
+  const SystemExit({
     super.key,
     required this.exit,
   });
@@ -50,7 +50,7 @@ class ExitDialog extends StatelessWidget {
                 context,
                 rootNavigator: true,
               ).pop();
-              exit.call();
+              exit();
             },
             child: Text(
               IntlLocalizations.of(

@@ -106,7 +106,7 @@ class _SystemManagerState extends State<SystemManager> {
               const HomePage(),
               const LogcatPage(),
               const PluginPage(),
-              const SettingsPage(
+              const SystemSettings(
                 isManager: true,
               ),
             ][_currentIndex],
