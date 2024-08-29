@@ -103,7 +103,7 @@
 Version](https://img.shields.io/pub/v/freefeos?include_prereleases&style=flat-square&logo=dart&logoColor=white&label=Pub&color=blue)](https://pub.dev/packages/freefeos)
 ```yaml
 dependencies:
-freefeos: ^这里写最新版本
+  freefeos: ^这里写最新版本
 ```
 * 在终端中更新依赖:
 ```shell
