@@ -1,3 +1,6 @@
+## 0.2.1
+* Fix some bugs.
+* Improve the function.
 ## 0.2.0
 * Fixed the bug that extra space appears when the manager slides to the bottom.
 * Improve the function.
