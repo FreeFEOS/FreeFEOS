@@ -156,11 +156,11 @@ class Global {
 final class ExamplePlugin implements FreeFEOSPlugin {
   ExamplePlugin();
 
-  /// “ExampleAuthor”为作者信息,替换为你自己的名字即可,通过[pluginAuthor]方法定义.
+  /// "ExampleAuthor"为作者信息,替换为你自己的名字即可,通过[pluginAuthor]方法定义.
   @override
   String get pluginAuthor => 'ExampleAuthor';
 
-  /// “example_channel”为插件的通道,可以理解为插件的唯一标识,我们通常使用全小写英文字母加下划线的命名方式,通过[pluginChannel]方法定义.
+  /// "example_channel"为插件的通道,可以理解为插件的唯一标识,我们通常使用全小写英文字母加下划线的命名方式,通过[pluginChannel]方法定义.
   @override
   String get pluginChannel => Global.channel;
 
@@ -168,10 +168,11 @@ final class ExamplePlugin implements FreeFEOSPlugin {
   @override
   String get pluginDescription => 'Example description';
 
-  /// “Example Plugin”为插件的名称,通过[pluginName]方法定义.
+  /// "Example Plugin"为插件的名称,通过[pluginName]方法定义.
   @override
   String get pluginName => 'ExamplePlugin';
 
+  /// 插件的用户界面
   @override
   Widget pluginWidget(BuildContext context) {
     return const Center(
@@ -181,7 +182,10 @@ final class ExamplePlugin implements FreeFEOSPlugin {
 
   /// [onMethodCall]方法为插件的方法调用.
   @override
-  Future<dynamic> onMethodCall(String method, [dynamic arguments]) async {
+  Future<dynamic> onMethodCall(
+    String method, [
+    dynamic arguments,
+  ]) async {
     switch (method) {
       case Global.add:
         Global.counter.value++;
