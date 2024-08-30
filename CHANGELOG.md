@@ -1,3 +1,8 @@
+## 0.2.0
+* Fixed the bug that extra space appears when the manager slides to the bottom.
+* Improve the function.
+* Update Dependencies.
+* There are many other minor updates, please check out [GitHub](https://github.com/FreeFEOS/FreeFEOS/commits/master/).
 ## 0.1.1
 * Fix some bugs.
 * Improve the function.
