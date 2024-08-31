@@ -21,7 +21,7 @@ dependencies:
   flutter_plugin_android_lifecycle: ^2.0.22
   plugin_platform_interface: ^2.1.8
   provider: ^6.1.2
-  vm_service: ^14.2.1
+  vm_service: ^14.2.5
   shared_preferences: ^2.3.2
   package_info_plus: ^8.0.1
   url_launcher: ^6.3.0
