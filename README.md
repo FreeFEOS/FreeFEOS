@@ -21,25 +21,25 @@
       alt="Pub Version">
   </a>
   <!-- GitHub仓库stars -->
-  <a href="https://github.com/FreeFEOS/FreeFEOS/stargazers">
+  <a href="https://github.com/freefeos/freefeos/stargazers">
     <img
       src="https://img.shields.io/github/stars/FreeFEOS/FreeFEOS?style=flat-square&logo=github&logoColor=white&label=Stars&color=blue"
       alt="GitHub Repo stars">
   </a>
   <!-- GitHub仓库forks -->
-  <a href="https://github.com/FreeFEOS/FreeFEOS/fork">
+  <a href="https://github.com/freefeos/freefeos/fork">
     <img
       src="https://img.shields.io/github/forks/FreeFEOS/FreeFEOS?style=flat-square&logo=github&logoColor=white&label=Forks&color=blue"
       alt="GitHub forks">
   </a>
   <!-- GitHub协议 -->
-  <a href="https://github.com/FreeFEOS/FreeFEOS/blob/master/LICENSE">
+  <a href="https://github.com/freefeos/freefeos/blob/master/LICENSE">
     <img
       src="https://img.shields.io/github/license/FreeFEOS/FreeFEOS?style=flat-square&logo=github&logoColor=white&label=License"
       alt="GitHub License">
   </a>
   <!-- FreeFEOS项目 -->
-  <a href="https://github.com/FreeFEOS/FreeFEOS">
+  <a href="https://github.com/freefeos/freefeos">
     <img src="https://img.shields.io/badge/Project-FreeFEOS-blue?style=flat-square&logo=flutter&logoColor=white"
       alt="FreeFEOS Project">
   </a>
@@ -51,18 +51,18 @@
 <table align="center">
   <tr>
     <td>
-      <a href="https://raw.githubusercontent.com/FreeFEOS/FreeFEOS/master/screenshot.png">
-        <img src="https://raw.githubusercontent.com/FreeFEOS/FreeFEOS/master/screenshot.png" width="200">
+      <a href="https://raw.githubusercontent.com/freefeos/freefeos/master/screenshot.png">
+        <img src="https://raw.githubusercontent.com/freefeos/freefeos/master/screenshot.png" width="200">
       </a>
     </td>
     <td>
-      <a href="https://raw.githubusercontent.com/FreeFEOS/FreeFEOS/master/screenshot.png">
-        <img src="https://raw.githubusercontent.com/FreeFEOS/FreeFEOS/master/screenshot.png" width="200">
+      <a href="https://raw.githubusercontent.com/freefeos/freefeos/master/screenshot.png">
+        <img src="https://raw.githubusercontent.com/freefeos/freefeos/master/screenshot.png" width="200">
       </a>
     </td>
     <td>
-      <a href="https://raw.githubusercontent.com/FreeFEOS/FreeFEOS/master/screenshot.png">
-        <img src="https://raw.githubusercontent.com/FreeFEOS/FreeFEOS/master/screenshot.png" width="200">
+      <a href="https://raw.githubusercontent.com/freefeos/freefeos/master/screenshot.png">
+        <img src="https://raw.githubusercontent.com/freefeos/freefeos/master/screenshot.png" width="200">
       </a>
     </td>
   </tr>
@@ -108,15 +108,15 @@ flutter pub get
 
 * 最后记得在README.md中添加标签(非必需).
 * [![Powered by
-FreeFEOS](https://img.shields.io/badge/Powered_by-FreeFEOS-blue?style=flat-square&logo=flutter&logoColor=white)](https://github.com/FreeFEOS/FreeFEOS)
+FreeFEOS](https://img.shields.io/badge/Powered_by-FreeFEOS-blue?style=flat-square&logo=flutter&logoColor=white)](https://github.com/freefeos/freefeos)
 ```markdown
 [![Powered by
-FreeFEOS](https://img.shields.io/badge/Powered_by-FreeFEOS-blue?style=flat-square&logo=flutter&logoColor=white)](https://github.com/FreeFEOS/FreeFEOS)
+FreeFEOS](https://img.shields.io/badge/Powered_by-FreeFEOS-blue?style=flat-square&logo=flutter&logoColor=white)](https://github.com/freefeos/freefeos)
 ```
 
 ## 📔更新日志
 
-有关详细信息，请参阅 [CHANGELOG](https://github.com/FreeFEOS/FreeFEOS/blob/master/CHANGELOG.md) 文件.
+有关详细信息，请参阅 [CHANGELOG](https://github.com/freefeos/freefeos/blob/master/CHANGELOG.md) 文件.
 
 ## 👍参与开发
 
@@ -138,4 +138,4 @@ FreeFEOS](https://img.shields.io/badge/Powered_by-FreeFEOS-blue?style=flat-squar
 * [一个木函](https://ol.woobx.cn/) : Base64 编码/解码.
 
 ## 许可
-该项目采用 BSD-3-Clause 许可证 - 有关详细信息，请参阅 [LICENSE](https://github.com/FreeFEOS/FreeFEOS/blob/master/LICENSE) 文件.
+该项目采用 BSD-3-Clause 许可证 - 有关详细信息，请参阅 [LICENSE](https://github.com/freefeos/freefeos/blob/master/LICENSE) 文件.

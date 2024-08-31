@@ -1,10 +1,10 @@
 name: freefeos
 description: "FreeFEOS"
 version: 0.2.1
-homepage: https://github.com/FreeFEOS/FreeFEOS
-repository: https://github.com/FreeFEOS/FreeFEOS
-issue_tracker: https://github.com/FreeFEOS/FreeFEOS/issues
-documentation: https://github.com/FreeFEOS/FreeFEOS/blob/master/README.md
+homepage: https://github.com/freefeos/freefeos
+repository: https://github.com/freefeos/freefeos
+issue_tracker: https://github.com/freefeos/freefeos/issues
+documentation: https://github.com/freefeos/freefeos/blob/master/README.md
 
 environment:
   sdk: ^3.5.0

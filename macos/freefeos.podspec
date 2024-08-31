@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
 A new Flutter FFI plugin project.
                        DESC
-  s.homepage         = 'https://github.com/FreeFEOS/FreeFEOS'
+  s.homepage         = 'https://github.com/freefeos/freefeos'
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'wyq0918dev' => 'wyq0918dev@gmail.com' }
   s.source           = { :path => '.' }

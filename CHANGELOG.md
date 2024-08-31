@@ -5,7 +5,7 @@
 * Fixed the bug that extra space appears when the manager slides to the bottom.
 * Improve the function.
 * Update Dependencies.
-* There are many other minor updates, please check out [GitHub](https://github.com/FreeFEOS/FreeFEOS/commits/master/).
+* There are many other minor updates, please check out [GitHub](https://github.com/freefeos/freefeos/commits/master/).
 ## 0.1.1
 * Fix some bugs.
 * Improve the function.
@@ -21,7 +21,7 @@
 * Improve interface unit testing.
 * Complete sample application.
 * Update Dependencies.
-* There are many other minor updates, please check out [GitHub](https://github.com/FreeFEOS/FreeFEOS/commits/master/).
+* There are many other minor updates, please check out [GitHub](https://github.com/freefeos/freefeos/commits/master/).
 
 ## 0.0.0
 * The code migration of the original [flutter_ecosed](https://pub.dev/packages/flutter_ecosed) project has been preliminarily completed.
