@@ -1,8 +1,10 @@
 import 'package:flutter/widgets.dart';
 
+import '../entry/default_entry.dart';
 import '../entry/system_entry.dart';
 import '../interface/platform_interface.dart';
 import '../interface/system_interface.dart';
+import '../platform/default_platform.dart';
 import '../platform/method_channel.dart';
 import '../plugin/plugin_runtime.dart';
 import '../type/api_builder.dart';
@@ -138,9 +140,14 @@ typedef FreeFEOSExec = MethodExecer;
 abstract base class FreeFEOSBase {
   const FreeFEOSBase();
 
-  void call() {
-    FreeFEOSInterface.instance = SystemEntry();
-    FreeFEOSPlatform.instance = MethodChannelFreeFEOS();
+  void call({required bool web}) {
+    if (!web) {
+      FreeFEOSInterface.instance = SystemEntry();
+      FreeFEOSPlatform.instance = MethodChannelFreeFEOS();
+    } else {
+      FreeFEOSInterface.instance = DefaultEntry();
+      FreeFEOSPlatform.instance = DefaultPlatform();
+    }
   }
 }
 
