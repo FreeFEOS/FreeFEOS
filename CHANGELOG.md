@@ -1,14 +1,16 @@
 ## 0.2.1
 * Fix some bugs.
-* Improve the function.
+
 ## 0.2.0
 * Fixed the bug that extra space appears when the manager slides to the bottom.
 * Improve the function.
 * Update Dependencies.
 * There are many other minor updates, please check out [GitHub](https://github.com/freefeos/freefeos/commits/master/).
+
 ## 0.1.1
 * Fix some bugs.
 * Improve the function.
+
 ## 0.1.0
 * Optimize program entry code.
 * Navigator navigation is changed to use WidgetsApp, and the manager interface navigation problem is fixed.

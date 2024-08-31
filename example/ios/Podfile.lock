@@ -52,7 +52,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   device_info_plus: 97af1d7e84681a90d0693e63169a5d50e0839a0d
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  freefeos: 789631bd3c2746d6963d2242dccbd5f9d3177020
+  freefeos: 2742db629fd1d4e2433f684205246ca619acf93b
   integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
   irondash_engine_context: 3458bf979b90d616ffb8ae03a150bafe2e860cc9
   package_info_plus: 58f0028419748fad15bf008b270aaa8e54380b1c
