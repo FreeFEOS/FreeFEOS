@@ -26,43 +26,39 @@ class SystemSheet extends StatelessWidget {
                   ).bottomSheetAboutTooltip,
                   child: ListTile(
                     leading: const FlutterLogo(),
-                    title: Row(
-                      children: [
-                        FutureBuilder(
-                          future: viewModel.getAppName(),
-                          builder: (context, snapshot) {
-                            String text = IntlLocalizations.of(
+                    trailing: const Icon(Icons.keyboard_arrow_right),
+                    title: FutureBuilder(
+                      future: viewModel.getAppName(),
+                      builder: (context, snapshot) {
+                        String text = IntlLocalizations.of(
+                          context,
+                        ).unknown;
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.waiting:
+                            text = IntlLocalizations.of(
                               context,
-                            ).unknown;
-                            switch (snapshot.connectionState) {
-                              case ConnectionState.waiting:
-                                text = IntlLocalizations.of(
-                                  context,
-                                ).waiting;
-                                break;
-                              case ConnectionState.done:
-                                if (snapshot.hasError) {
-                                  text = IntlLocalizations.of(
-                                    context,
-                                  ).error;
-                                  break;
-                                }
-                                if (snapshot.hasData) {
-                                  text = snapshot.data ??
-                                      IntlLocalizations.of(
-                                        context,
-                                      ).sNull;
-                                  break;
-                                }
-                                break;
-                              default:
-                                break;
+                            ).waiting;
+                            break;
+                          case ConnectionState.done:
+                            if (snapshot.hasError) {
+                              text = IntlLocalizations.of(
+                                context,
+                              ).error;
+                              break;
                             }
-                            return Text(text);
-                          },
-                        ),
-                        const Icon(Icons.keyboard_arrow_right),
-                      ],
+                            if (snapshot.hasData) {
+                              text = snapshot.data ??
+                                  IntlLocalizations.of(
+                                    context,
+                                  ).sNull;
+                              break;
+                            }
+                            break;
+                          default:
+                            break;
+                        }
+                        return Text(text);
+                      },
                     ),
                     subtitle: FutureBuilder(
                       future: viewModel.getAppVersion(),
