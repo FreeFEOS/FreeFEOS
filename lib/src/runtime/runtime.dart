@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 
 import '../base/base.dart';
 import '../framework/log.dart';
+import '../interface/system_interface.dart';
 import '../plugin/plugin_details.dart';
 import '../plugin/plugin_runtime.dart';
 import '../plugin/plugin_type.dart';
@@ -20,6 +21,13 @@ import '../widget/exit.dart';
 import '../widget/manager.dart';
 import '../widget/settings.dart';
 import '../widget/sheet.dart';
+
+/// 运行时混入
+base mixin RuntimeMixin implements BaseWrapper {
+  /// 获取运行时实例
+  @override
+  FreeFEOSInterface call() => SystemRuntime();
+}
 
 /// 运行时
 final class SystemRuntime extends SystemBase {
@@ -85,7 +93,7 @@ final class SystemRuntime extends SystemBase {
 
   /// 获取App
   @override
-  Widget findApplication() {
+  Widget buildApplication() {
     return Builder(
       builder: (context) {
         for (var element in _pluginDetailsList) {

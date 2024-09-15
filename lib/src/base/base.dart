@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../embedder/embedder_mixin.dart';
 import '../engine/bridge_mixin.dart';
 import '../plugin/plugin_runtime.dart';
+import '../runtime/runtime.dart';
 import '../type/api_builder.dart';
 import '../type/app_runner.dart';
 import '../type/plugin_list.dart';
@@ -17,14 +18,139 @@ import '../framework/log.dart';
 import '../kernel/kernel_bridge.dart';
 import '../kernel/kernel_module.dart';
 import '../interface/system_interface.dart';
-import '../runtime/runtime_mixin.dart';
 import '../values/drawable.dart';
 import '../server/server.dart';
-import 'app_mixin.dart';
-import 'base_entry.dart';
-import 'base_mixin.dart';
-import 'base_wrapper.dart';
-import 'context_mixin.dart';
+
+/// 绑定层包装器
+abstract interface class BaseWrapper {
+  /// 运行时入口
+  FreeFEOSInterface call();
+
+  /// 初始化
+  Future<void> init(List<RuntimePlugin> plugins);
+
+  /// 绑定通信层插件
+  RuntimePlugin get base;
+
+  /// 平台嵌入层插件
+  RuntimePlugin get embedder;
+
+  /// 用户App
+  Widget get child;
+
+  /// 导入用户App
+  Future<void> includeApp(Widget app);
+
+  /// 获取带有导航主机的上下文
+  BuildContext get context;
+
+  /// 附加带有导航主机的上下文
+  void attachContext(BuildContext host);
+
+  /// 获取App
+  Widget buildApplication();
+
+  /// 构建View Model
+  ChangeNotifier buildViewModel(BuildContext context);
+
+  /// 构建App
+  Widget buildSystemUI(Widget child);
+
+  /// 构建底部弹出菜单
+  Widget buildBottomSheet(
+    BuildContext context,
+    bool isManager,
+  );
+
+  ///  构建关于对话框
+  Widget buildAboutDialog(
+    BuildContext context,
+    bool isPackage,
+  );
+
+  /// 构建退出对话框
+  Widget buildExitDialog(BuildContext context);
+
+  /// 获取管理器
+  Widget buildManager(BuildContext context);
+
+  /// 构建设置界面
+  Widget buildSettings(BuildContext context);
+
+  /// 打开应用
+  void launchApplication();
+
+  /// 打开对话框
+  Future<dynamic> launchBottomSheet(bool isManager);
+
+  /// 打开应用信息
+  Future<dynamic> launchAboutDiialog(bool isPackage);
+
+  /// 打开退出应用对话框
+  Future<dynamic> launchExitDialog();
+
+  /// 打开管理器
+  Future<dynamic> launchManager();
+
+  /// 打开设置
+  Future<dynamic> launchSettings();
+
+  /// 执行引擎插件方法
+  Future<dynamic> execEngine(
+    String method, [
+    dynamic arguments,
+  ]);
+
+  /// 执行插件方法
+  Future<dynamic> exec(
+    String channel,
+    String method, [
+    dynamic arguments,
+  ]);
+}
+
+/// 应用混入
+base mixin AppMixin implements BaseWrapper {
+  /// 应用
+  static late Widget _app;
+
+  /// 获取应用
+  @override
+  Widget get child => _app;
+
+  /// 导入应用
+  @override
+  Future<void> includeApp(Widget app) async => _app = app;
+}
+
+/// 入口混入
+base mixin BaseEntry implements FreeFEOSInterface {
+  /// 执行接口
+  @override
+  FreeFEOSInterface get interface => SystemBase()();
+}
+
+/// 绑定层混入
+base mixin BaseMixin implements BaseWrapper {
+  /// 获取绑定层实例
+  @override
+  RuntimePlugin get base => SystemBase();
+}
+
+/// 上下文混入
+base mixin ContextMixin on ContextWrapper implements BaseWrapper {
+  /// 获取带有导航主机的上下文
+  @override
+  BuildContext get context {
+    return super.getBuildContext();
+  }
+
+  /// 附加导航主机上下文
+  @override
+  void attachContext(BuildContext host) {
+    super.attachBuildContext(host);
+  }
+}
 
 base class SystemBase extends ContextWrapper
     with
@@ -125,7 +251,7 @@ base class SystemBase extends ContextWrapper
     // 启动应用
     return await includeApp(app).then(
       (_) async => await runner(
-        findApplication(),
+        buildApplication(),
       ),
     );
   }
@@ -138,7 +264,7 @@ base class SystemBase extends ContextWrapper
 
   /// 获取应用
   @override
-  Widget findApplication() {
+  Widget buildApplication() {
     return Builder(
       builder: pluginWidget,
     );

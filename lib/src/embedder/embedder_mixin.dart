@@ -1,4 +1,4 @@
-import '../base/base_wrapper.dart';
+import '../base/base.dart';
 import '../plugin/plugin_runtime.dart';
 import 'platform_embedder.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../base/base_entry.dart';
+import '../base/base.dart';
 import '../interface/system_interface.dart';
 import '../type/api_builder.dart';
 import '../type/app_runner.dart';
