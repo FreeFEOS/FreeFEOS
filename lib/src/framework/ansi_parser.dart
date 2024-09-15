@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:super_clipboard/super_clipboard.dart';
+import 'package:flutter/services.dart';
 
 abstract interface class ParserWrapper {
   List<TextSpan> get getSpans;
@@ -141,14 +141,13 @@ class AnsiParser implements ParserWrapper {
       ),
       recognizer: LongPressGestureRecognizer()
         ..onLongPress = () async {
-          final clipboard = SystemClipboard.instance;
-          if (clipboard != null) {
-            final item = DataWriterItem();
-            item.add(Formats.plainText(text));
-            await clipboard.write([item]).then(
-              (value) => showTips(),
-            );
-          }
+          return await Clipboard.setData(
+            ClipboardData(
+              text: text,
+            ),
+          ).then(
+            (_) => showTips(),
+          );
         },
     );
   }
