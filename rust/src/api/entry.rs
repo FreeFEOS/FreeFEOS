@@ -6,7 +6,7 @@ pub fn greet(name: String) -> String {
 }
 
 #[frb(init)]
-pub fn init_app() {
+pub fn init_kernel() {
     // Default utilities - feel free to customize
     setup_default_user_utils();
 }
