@@ -3,12 +3,12 @@
 
 // ignore_for_file: unused_import, unused_element, unnecessary_import, duplicate_ignore, invalid_use_of_internal_member, annotate_overrides, non_constant_identifier_names, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables, unused_field
 
-import 'api/entry.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'frb_generated.dart';
 import 'frb_generated.io.dart'
     if (dart.library.js_interop) 'frb_generated.web.dart';
+import 'kernel/entry.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
 /// Main entrypoint of the Rust API
@@ -57,7 +57,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
 
   @override
   Future<void> executeRustInitializers() async {
-    await api.crateApiEntryInitKernel();
+    await api.crateKernelEntryInitKernel();
   }
 
   @override
@@ -68,7 +68,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
   String get codegenVersion => '2.4.0';
 
   @override
-  int get rustContentHash => -403829952;
+  int get rustContentHash => 660396200;
 
   static const kDefaultExternalLibraryLoaderConfig =
       ExternalLibraryLoaderConfig(
@@ -79,9 +79,9 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
 }
 
 abstract class RustLibApi extends BaseApi {
-  String crateApiEntryGreet({required String name});
+  String crateKernelEntryGreet({required String name});
 
-  Future<void> crateApiEntryInitKernel();
+  Future<void> crateKernelEntryInitKernel();
 }
 
 class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
@@ -93,7 +93,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   });
 
   @override
-  String crateApiEntryGreet({required String name}) {
+  String crateKernelEntryGreet({required String name}) {
     return handler.executeSync(SyncTask(
       callFfi: () {
         final serializer = SseSerializer(generalizedFrbRustBinding);
@@ -104,19 +104,19 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         decodeSuccessData: sse_decode_String,
         decodeErrorData: null,
       ),
-      constMeta: kCrateApiEntryGreetConstMeta,
+      constMeta: kCrateKernelEntryGreetConstMeta,
       argValues: [name],
       apiImpl: this,
     ));
   }
 
-  TaskConstMeta get kCrateApiEntryGreetConstMeta => const TaskConstMeta(
+  TaskConstMeta get kCrateKernelEntryGreetConstMeta => const TaskConstMeta(
         debugName: "greet",
         argNames: ["name"],
       );
 
   @override
-  Future<void> crateApiEntryInitKernel() {
+  Future<void> crateKernelEntryInitKernel() {
     return handler.executeNormal(NormalTask(
       callFfi: (port_) {
         final serializer = SseSerializer(generalizedFrbRustBinding);
@@ -127,13 +127,13 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         decodeSuccessData: sse_decode_unit,
         decodeErrorData: null,
       ),
-      constMeta: kCrateApiEntryInitKernelConstMeta,
+      constMeta: kCrateKernelEntryInitKernelConstMeta,
       argValues: [],
       apiImpl: this,
     ));
   }
 
-  TaskConstMeta get kCrateApiEntryInitKernelConstMeta => const TaskConstMeta(
+  TaskConstMeta get kCrateKernelEntryInitKernelConstMeta => const TaskConstMeta(
         debugName: "init_kernel",
         argNames: [],
       );
