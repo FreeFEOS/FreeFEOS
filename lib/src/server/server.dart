@@ -1,4 +1,4 @@
-import '../kernel/kernel_module.dart';
+import '../kernel/kernel.dart';
 import '../service/service_mixin.dart';
 
 final class Shizuku extends KernelModule with VMServiceWrapper {}
