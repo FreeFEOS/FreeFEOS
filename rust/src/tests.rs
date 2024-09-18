@@ -5,6 +5,7 @@ fn it_works() {
     println!("Hello, world!");
 }
 
+#[test]
 fn start_kernel() {
     init_freefeos_kernel();
 }
