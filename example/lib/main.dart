@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
             FilledButton(
               onPressed: () => Navigator.of(
                 context,
-                rootNavigator: false,
+                rootNavigator: false, // 不要使用根导航
               ).pushNamed('/details'),
               child: const Text('DetailsPage'),
             ),
@@ -117,7 +117,7 @@ class _DetailsPageState extends State<DetailsPage> {
             FilledButton(
               onPressed: () => Navigator.of(
                 context,
-                rootNavigator: false,
+                rootNavigator: false, // 不要使用根导航
               ).pop(),
               child: const Text('Back'),
             ),
