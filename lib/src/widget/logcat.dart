@@ -78,7 +78,7 @@ class _LogcatPageState extends State<LogcatPage> {
         padding: EdgeInsets.zero,
         itemCount: _filteredBuffer.length,
         itemBuilder: (context, index) {
-          final logEntry = _filteredBuffer[index];
+          final RenderedEvent logEntry = _filteredBuffer[index];
           _logs.write("${logEntry.lowerCaseText}\n");
           return Text.rich(
             logEntry.span,

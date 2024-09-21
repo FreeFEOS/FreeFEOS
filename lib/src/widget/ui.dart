@@ -86,103 +86,8 @@ class _SystemUIState extends State<SystemUI> {
             routes: {
               routeApp: (context) {
                 widget.attach(context);
-                return Stack(
-                  children: [
-                    ConstrainedBox(
-                      constraints: const BoxConstraints.expand(),
-                      child: kNoBanner
-                          ? widget.child
-                          : Banner(
-                              message: IntlLocalizations.of(
-                                context,
-                              ).bannerTitle,
-                              textDirection: TextDirection.ltr,
-                              location: BannerLocation.topStart,
-                              layoutDirection: TextDirection.ltr,
-                              color: Colors.pink,
-                              child: widget.child,
-                            ),
-                    ),
-                    Positioned(
-                      top: MediaQuery.paddingOf(context).top,
-                      height: kToolbarHeight,
-                      right: 8,
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Container(
-                          height: 30,
-                          decoration: BoxDecoration(
-                            color:
-                                Theme.of(context).brightness == Brightness.light
-                                    ? Colors.black.withOpacity(0.3)
-                                    : Colors.white.withOpacity(0.3),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Material(
-                            color: Colors.transparent,
-                            child: Consumer<SystemViewModel>(
-                              builder: (context, viewModel, child) => Row(
-                                children: [
-                                  InkWell(
-                                    onTap: () async =>
-                                        await viewModel.openBottomSheet(false),
-                                    onLongPress: () async =>
-                                        await viewModel.openAboutDialog(false),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      bottomLeft: Radius.circular(20),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 12,
-                                        vertical: 3,
-                                      ),
-                                      child: Icon(
-                                        Icons.more_horiz,
-                                        color: Theme.of(context).brightness ==
-                                                Brightness.light
-                                            ? Colors.white
-                                            : Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                  VerticalDivider(
-                                    indent: 6,
-                                    endIndent: 6,
-                                    width: 1,
-                                    color: Colors.white.withOpacity(0.3),
-                                  ),
-                                  InkWell(
-                                    onTap: () async =>
-                                        await viewModel.openExitDialog(),
-                                    onLongPress: () async =>
-                                        await viewModel.openBottomSheet(false),
-                                    borderRadius: const BorderRadius.only(
-                                      topRight: Radius.circular(20),
-                                      bottomRight: Radius.circular(20),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 12,
-                                        vertical: 3,
-                                      ),
-                                      child: Icon(
-                                        Icons.adjust,
-                                        color: Theme.of(context).brightness ==
-                                                Brightness.light
-                                            ? Colors.white
-                                            : Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                return AppOverlay(
+                  child: widget.child,
                 );
               },
               routeManager: (context) {
@@ -214,6 +119,115 @@ class _SystemUIState extends State<SystemUI> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class AppOverlay extends StatelessWidget {
+  const AppOverlay({
+    super.key,
+    required this.child,
+  });
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        ConstrainedBox(
+          constraints: const BoxConstraints.expand(),
+          child: kNoBanner
+              ? child
+              : Banner(
+                  message: IntlLocalizations.of(
+                    context,
+                  ).bannerTitle,
+                  textDirection: TextDirection.ltr,
+                  location: BannerLocation.topStart,
+                  layoutDirection: TextDirection.ltr,
+                  color: Colors.pink,
+                  child: child,
+                ),
+        ),
+        Positioned(
+          top: MediaQuery.paddingOf(context).top,
+          height: kToolbarHeight,
+          right: 8,
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+              height: 30,
+              decoration: BoxDecoration(
+                color: Theme.of(context).brightness == Brightness.light
+                    ? Colors.black.withOpacity(0.3)
+                    : Colors.white.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Material(
+                color: Colors.transparent,
+                child: Consumer<SystemViewModel>(
+                  builder: (context, viewModel, child) => Row(
+                    children: [
+                      InkWell(
+                        onTap: () async =>
+                            await viewModel.openBottomSheet(false),
+                        onLongPress: () async =>
+                            await viewModel.openAboutDialog(false),
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          bottomLeft: Radius.circular(20),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 3,
+                          ),
+                          child: Icon(
+                            Icons.more_horiz,
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Colors.white
+                                    : Colors.black,
+                          ),
+                        ),
+                      ),
+                      VerticalDivider(
+                        indent: 6,
+                        endIndent: 6,
+                        width: 1,
+                        color: Colors.white.withOpacity(0.3),
+                      ),
+                      InkWell(
+                        onTap: () async => await viewModel.openExitDialog(),
+                        onLongPress: () async =>
+                            await viewModel.openBottomSheet(false),
+                        borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 3,
+                          ),
+                          child: Icon(
+                            Icons.adjust,
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Colors.white
+                                    : Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

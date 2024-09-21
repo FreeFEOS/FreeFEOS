@@ -29,26 +29,32 @@ class _PluginPageState extends State<PluginPage> {
         constraints: const BoxConstraints(
           maxWidth: 840,
         ),
-        child: ListView(
-          controller: _scrollController,
-          padding: EdgeInsets.zero,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
-              child: Consumer<SystemViewModel>(
-                builder: (context, viewModel, child) => ListBody(
-                  children: viewModel.getPluginDetailsList
-                      .map(
-                        (element) => Padding(
-                          padding: const EdgeInsets.only(bottom: 12),
-                          child: PluginCard(details: element),
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
-            ),
-          ],
+        child: Consumer<SystemViewModel>(
+          builder: (context, viewModel, child) {
+            return ListView.builder(
+              controller: _scrollController,
+              itemCount: viewModel.getPluginDetailsList.length,
+              padding: EdgeInsets.zero,
+              itemBuilder: (context, index) {
+                final PluginDetails first =
+                    viewModel.getPluginDetailsList.first;
+                final PluginDetails last = viewModel.getPluginDetailsList.last;
+                final PluginDetails details =
+                    viewModel.getPluginDetailsList[index];
+                return Padding(
+                  padding: EdgeInsets.only(
+                    top: first == details ? 12 : 6,
+                    bottom: last == details ? 12 : 6,
+                    left: 12,
+                    right: 12,
+                  ),
+                  child: PluginCard(
+                    details: details,
+                  ),
+                );
+              },
+            );
+          },
         ),
       ),
     );
@@ -68,88 +74,86 @@ class PluginCard extends StatelessWidget {
     return Card(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(24, 16, 24, 8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        details.title,
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          fontSize: Theme.of(
-                            context,
-                          ).textTheme.titleMedium?.fontSize,
-                          fontFamily: Theme.of(
-                            context,
-                          ).textTheme.titleMedium?.fontFamily,
-                          height: Theme.of(
-                            context,
-                          ).textTheme.bodySmall?.height,
-                          fontWeight: FontWeight.bold,
-                          overflow: TextOverflow.ellipsis,
+        child: Consumer<SystemViewModel>(
+          builder: (context, viewModel, child) => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          details.title,
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            fontSize: Theme.of(
+                              context,
+                            ).textTheme.titleMedium?.fontSize,
+                            fontFamily: Theme.of(
+                              context,
+                            ).textTheme.titleMedium?.fontFamily,
+                            height: Theme.of(
+                              context,
+                            ).textTheme.bodySmall?.height,
+                            fontWeight: FontWeight.bold,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                      ),
-                      Text(
-                        '${IntlLocalizations.of(context).managerPluginChannel}: ${details.channel}',
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          fontSize: Theme.of(
-                            context,
-                          ).textTheme.bodySmall?.fontSize,
-                          fontFamily: Theme.of(
-                            context,
-                          ).textTheme.bodySmall?.fontFamily,
-                          height: Theme.of(
-                            context,
-                          ).textTheme.bodySmall?.height,
+                        Text(
+                          '${IntlLocalizations.of(context).managerPluginChannel}: ${details.channel}',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            fontSize: Theme.of(
+                              context,
+                            ).textTheme.bodySmall?.fontSize,
+                            fontFamily: Theme.of(
+                              context,
+                            ).textTheme.bodySmall?.fontFamily,
+                            height: Theme.of(
+                              context,
+                            ).textTheme.bodySmall?.height,
+                          ),
                         ),
-                      ),
-                      Text(
-                        '${IntlLocalizations.of(context).managerPluginChannel}: ${details.author}',
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          fontSize: Theme.of(
-                            context,
-                          ).textTheme.bodySmall?.fontSize,
-                          fontFamily: Theme.of(
-                            context,
-                          ).textTheme.bodySmall?.fontFamily,
-                          height: Theme.of(
-                            context,
-                          ).textTheme.bodySmall?.height,
+                        Text(
+                          '${IntlLocalizations.of(context).managerPluginChannel}: ${details.author}',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            fontSize: Theme.of(
+                              context,
+                            ).textTheme.bodySmall?.fontSize,
+                            fontFamily: Theme.of(
+                              context,
+                            ).textTheme.bodySmall?.fontFamily,
+                            height: Theme.of(
+                              context,
+                            ).textTheme.bodySmall?.height,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Consumer<SystemViewModel>(
-                  builder: (context, viewModel, child) => Container(
+                  Container(
                     child: viewModel.getPluginIcon(details),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Text(
-              details.description,
-              textAlign: TextAlign.start,
-              style: Theme.of(
-                context,
-              ).textTheme.bodySmall?.apply(
-                    overflow: TextOverflow.ellipsis,
-                  ),
-              maxLines: 4,
-            ),
-            const SizedBox(height: 16),
-            const Divider(),
-            Consumer<SystemViewModel>(
-              builder: (context, viewModel, child) => Row(
+                ],
+              ),
+              const SizedBox(height: 12),
+              Text(
+                details.description,
+                textAlign: TextAlign.start,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall?.apply(
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                maxLines: 4,
+              ),
+              const SizedBox(height: 16),
+              const Divider(),
+              Row(
                 children: [
                   Expanded(
                     child: Text(
@@ -183,8 +187,8 @@ class PluginCard extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
