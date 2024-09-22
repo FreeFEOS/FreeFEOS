@@ -4,14 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:freefeos/freefeos.dart';
 
 Future<void> main() async {
-  final run = FreeFEOSRunner(
+  await FreeFEOSRunner(
     runner: (app) async => runApp(app),
     plugins: () => [ExamplePlugin()],
-    initApi: (exec) async {
-      Global.exec = exec;
-    },
-  );
-  await run(app: const MyApp());
+    initApi: (exec) async => Global.exec = exec,
+    enabled: true,
+  )(app: const MyApp());
 }
 
 class MyApp extends StatelessWidget {

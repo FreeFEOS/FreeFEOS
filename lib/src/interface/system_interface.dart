@@ -34,6 +34,7 @@ abstract class FreeFEOSInterface extends PlatformInterface {
     required PluginList plugins,
     required ApiBuilder initApi,
     required Widget app,
+    required bool enabled,
     required dynamic error,
   }) async {
     if (error != null) {

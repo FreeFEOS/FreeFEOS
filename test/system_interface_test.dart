@@ -23,6 +23,7 @@ class MockFreeFEOSInterface
     required PluginList plugins,
     required ApiBuilder initApi,
     required Widget app,
+    required bool enabled,
     required dynamic error,
   }) async {
     isInitialized = true;
@@ -67,6 +68,7 @@ void main() {
       plugins: () => [fakeInterface],
       initApi: (exec) async {},
       app: const Placeholder(),
+      enabled: true,
       error: null,
     );
     expect(fakeInterface.isInitialized, true);

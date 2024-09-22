@@ -16,6 +16,7 @@ final class SystemEntry extends FreeFEOSInterface with BaseEntry {
     required PluginList plugins,
     required ApiBuilder initApi,
     required Widget app,
+    required bool enabled,
     required dynamic error,
   }) async {
     return await () async {
@@ -25,6 +26,7 @@ final class SystemEntry extends FreeFEOSInterface with BaseEntry {
           plugins: plugins,
           initApi: initApi,
           app: app,
+          enabled: enabled,
           error: error,
         );
       } catch (exception) {
@@ -33,6 +35,7 @@ final class SystemEntry extends FreeFEOSInterface with BaseEntry {
           plugins: plugins,
           initApi: initApi,
           app: app,
+          enabled: enabled,
           error: exception,
         );
       }

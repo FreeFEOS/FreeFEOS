@@ -207,53 +207,58 @@ base class SystemBase extends ContextWrapper
     required PluginList plugins,
     required ApiBuilder initApi,
     required Widget app,
+    required bool enabled,
     required dynamic error,
   }) async {
-    // 初始化日志
-    Log.init();
-    // 打印横幅
-    Log.d(
-      tag: baseTag,
-      message: utf8.decode(base64Decode(banner)),
-    );
-    // 初始化控件绑定
-    WidgetsFlutterBinding.ensureInitialized();
-    // 初始化内核桥接
-    await initKernelBridge();
-    // 初始化内核
-    await kernelBridgeScope.onCreateKernel();
-    // 初始化服务桥接
-    await initServerBridge();
-    // 初始化服务
-    await serverBridgeScope.onCreateServer();
-    // 初始化引擎桥接
-    await initEngineBridge();
-    // 初始化引擎
-    await engineBridgerScope.onCreateEngine(this);
-    // 初始化应用
-    await init(plugins());
-    // 初始化API
-    await initApi(
-      (
-        String channel,
-        String method, [
-        dynamic arguments,
-      ]) async {
-        return await () async {
-          return await exec(
-            channel,
-            method,
-            arguments,
-          );
-        }();
-      },
-    );
-    // 启动应用
-    return await includeApp(app).then(
-      (_) async => await runner(
-        buildApplication(),
-      ),
-    );
+    if (enabled) {
+      // 初始化日志
+      Log.init();
+      // 打印横幅
+      Log.d(
+        tag: baseTag,
+        message: utf8.decode(base64Decode(banner)),
+      );
+      // 初始化控件绑定
+      WidgetsFlutterBinding.ensureInitialized();
+      // 初始化内核桥接
+      await initKernelBridge();
+      // 初始化内核
+      await kernelBridgeScope.onCreateKernel();
+      // 初始化服务桥接
+      await initServerBridge();
+      // 初始化服务
+      await serverBridgeScope.onCreateServer();
+      // 初始化引擎桥接
+      await initEngineBridge();
+      // 初始化引擎
+      await engineBridgerScope.onCreateEngine(this);
+      // 初始化应用
+      await init(plugins());
+      // 初始化API
+      await initApi(
+        (
+          String channel,
+          String method, [
+          dynamic arguments,
+        ]) async {
+          return await () async {
+            return await exec(
+              channel,
+              method,
+              arguments,
+            );
+          }();
+        },
+      );
+      // 启动应用
+      return await includeApp(app).then(
+        (_) async => await runner(
+          buildApplication(),
+        ),
+      );
+    } else {
+      return await runner(app);
+    }
   }
 
   /// 初始化应用

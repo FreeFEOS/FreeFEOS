@@ -162,6 +162,7 @@ abstract base class FreeFEOSBase {
 ///   initApi: (exec) async {
 ///     Global.exec = exec;
 ///   },
+///   enabled: true,
 /// );
 /// await run(app: const MyApp());
 /// ```
@@ -170,6 +171,7 @@ final class FreeFEOSRunner {
     required this.runner,
     required this.plugins,
     required this.initApi,
+    required this.enabled,
   });
 
   /// 运行器
@@ -181,16 +183,20 @@ final class FreeFEOSRunner {
   /// 初始化API
   final ApiBuilder initApi;
 
+  final bool enabled;
+
   /// 工厂构建函数
   factory FreeFEOSRunner({
     required Future<void> Function(Widget app) runner,
     required List<FreeFEOSPlugin> Function() plugins,
     required Future<void> Function(FreeFEOSExec exec) initApi,
+    bool enabled = true,
   }) {
     return FreeFEOSRunner._(
       runner: runner,
       plugins: plugins,
       initApi: initApi,
+      enabled: enabled,
     );
   }
 
@@ -203,6 +209,7 @@ final class FreeFEOSRunner {
       plugins: plugins,
       initApi: initApi,
       app: app,
+      enabled: enabled,
       error: null,
     );
   }
