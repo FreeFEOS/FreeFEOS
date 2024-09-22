@@ -146,7 +146,7 @@ class AppOverlay extends StatelessWidget {
                   textDirection: TextDirection.ltr,
                   location: BannerLocation.topStart,
                   layoutDirection: TextDirection.ltr,
-                  color: Colors.pink,
+                  color: Theme.of(context).colorScheme.primary,
                   child: child,
                 ),
         ),

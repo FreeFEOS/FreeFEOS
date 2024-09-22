@@ -34,10 +34,12 @@ class _SystemSettingsState extends State<SystemSettings> {
             ),
       body: Scrollbar(
         controller: _scrollController,
-        child: ListView(
+        child: SingleChildScrollView(
           controller: _scrollController,
           padding: widget.isManager ? EdgeInsets.zero : null,
-          children: const [],
+          child: const Column(
+            children: [],
+          ),
         ),
       ),
     );

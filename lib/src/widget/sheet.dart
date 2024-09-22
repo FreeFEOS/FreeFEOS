@@ -60,7 +60,7 @@ class SystemSheet extends StatelessWidget {
                         return Text(text);
                       },
                     ),
-                    subtitle: Text('这是开发者的名字'),
+                    subtitle: const Text('这是开发者的名字'),
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(28),
@@ -143,122 +143,87 @@ class SystemSheet extends StatelessWidget {
                 Expanded(
                   child: ListView(
                     children: [
-                      Row(
-                        children: [
-                          SheetButton(
-                            onTap: () async {
-                              Navigator.of(
-                                context,
-                                rootNavigator: true,
-                              ).pop();
-                              await viewModel.openSettings();
-                            },
-                            icon: Icons.settings_outlined,
-                            label: IntlLocalizations.of(
-                              context,
-                            ).bottomSheetSettings,
-                            tooltip: IntlLocalizations.of(
-                              context,
-                            ).bottomSheetSettingsTooltip,
-                            enabled: true,
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            left: 8,
+                            top: 16,
+                            bottom: 6,
+                            right: 20,
                           ),
-                          SheetButton(
-                            onTap: () async {
-                              Navigator.of(
-                                context,
-                                rootNavigator: true,
-                              ).pop();
-                              await viewModel.openManager();
-                            },
-                            icon: Icons.keyboard_command_key,
-                            label: IntlLocalizations.of(
-                              context,
-                            ).bottomSheetManager,
-                            tooltip: IntlLocalizations.of(
-                              context,
-                            ).bottomSheetManagerTooltip,
-                            enabled: !isManager,
+                          child: Row(
+                            children: [
+                              SheetButton(
+                                onTap: () async {
+                                  Navigator.of(
+                                    context,
+                                    rootNavigator: true,
+                                  ).pop();
+                                  await viewModel.openManager();
+                                },
+                                icon: Icons.keyboard_command_key,
+                                label: IntlLocalizations.of(
+                                  context,
+                                ).bottomSheetManager,
+                                tooltip: IntlLocalizations.of(
+                                  context,
+                                ).bottomSheetManagerTooltip,
+                                enabled: !isManager,
+                              ),
+                            ],
                           ),
-                          SheetButton(
-                            onTap: () async {
-                              Navigator.of(
-                                context,
-                                rootNavigator: true,
-                              ).pop();
-                              await viewModel.openExitDialog();
-                            },
-                            icon: Icons.close,
-                            label: IntlLocalizations.of(
-                              context,
-                            ).bottomSheetExit,
-                            tooltip: IntlLocalizations.of(
-                              context,
-                            ).bottomSheetExitToolTip,
-                            enabled: true,
-                          ),
-                        ],
+                        ),
                       ),
-                      // Tooltip(
-                      //   message: IntlLocalizations.of(
-                      //     context,
-                      //   ).bottomSheetManagerTooltip,
-                      //   child: ListTile(
-                      //     title: Text(
-                      //       IntlLocalizations.of(
-                      //         context,
-                      //       ).bottomSheetManager,
-                      //     ),
-                      //     leading: const Icon(Icons.keyboard_command_key),
-                      //     enabled: !isManager,
-                      //     onTap: () async {
-                      //       Navigator.of(
-                      //         context,
-                      //         rootNavigator: true,
-                      //       ).pop();
-                      //       await viewModel.openManager();
-                      //     },
-                      //   ),
-                      // ),
-                      // Tooltip(
-                      //   message: IntlLocalizations.of(
-                      //     context,
-                      //   ).bottomSheetSettingsTooltip,
-                      //   child: ListTile(
-                      //     title: Text(
-                      //       IntlLocalizations.of(
-                      //         context,
-                      //       ).bottomSheetSettings,
-                      //     ),
-                      //     leading: const Icon(Icons.app_settings_alt),
-                      //     onTap: () async {
-                      //       Navigator.of(
-                      //         context,
-                      //         rootNavigator: true,
-                      //       ).pop();
-                      //       await viewModel.openSettings();
-                      //     },
-                      //   ),
-                      // ),
-                      // Tooltip(
-                      //   message: IntlLocalizations.of(
-                      //     context,
-                      //   ).bottomSheetExitToolTip,
-                      //   child: ListTile(
-                      //     title: Text(
-                      //       IntlLocalizations.of(
-                      //         context,
-                      //       ).bottomSheetExit,
-                      //     ),
-                      //     leading: const Icon(Icons.exit_to_app),
-                      //     onTap: () async {
-                      //       Navigator.of(
-                      //         context,
-                      //         rootNavigator: true,
-                      //       ).pop();
-                      //       await viewModel.openExitDialog();
-                      //     },
-                      //   ),
-                      // ),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            left: 8,
+                            top: 6,
+                            bottom: 16,
+                            right: 20,
+                          ),
+                          child: Row(
+                            children: [
+                              SheetButton(
+                                onTap: () async {
+                                  Navigator.of(
+                                    context,
+                                    rootNavigator: true,
+                                  ).pop();
+                                  await viewModel.openSettings();
+                                },
+                                icon: Icons.settings,
+                                label: IntlLocalizations.of(
+                                  context,
+                                ).bottomSheetSettings,
+                                tooltip: IntlLocalizations.of(
+                                  context,
+                                ).bottomSheetSettingsTooltip,
+                                enabled: true,
+                              ),
+                              SheetButton(
+                                onTap: () async {
+                                  Navigator.of(
+                                    context,
+                                    rootNavigator: true,
+                                  ).pop();
+                                  await viewModel.openExitDialog();
+                                },
+                                icon: Icons.close,
+                                label: IntlLocalizations.of(
+                                  context,
+                                ).bottomSheetExit,
+                                tooltip: IntlLocalizations.of(
+                                  context,
+                                ).bottomSheetExitToolTip,
+                                enabled: true,
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),
