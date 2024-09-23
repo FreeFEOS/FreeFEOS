@@ -15,6 +15,6 @@ final class FreeFEOSRegister extends FreeFEOSBase {
   ///
   /// 插件注册由Flutter框架接管, 请勿手动注册.
   static void registerWith(Registrar _) {
-    const FreeFEOSRegister()(web: true);
+    const FreeFEOSRegister()();
   }
 }

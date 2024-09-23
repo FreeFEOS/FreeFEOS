@@ -49,7 +49,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         title: const Text('Home'),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
@@ -103,7 +105,9 @@ class _DetailsPageState extends State<DetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         title: const Text('Details'),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
@@ -133,6 +137,10 @@ class Global {
     String method, [
     dynamic arguments,
   ]) async {
+    final example = ExamplePlugin();
+    if (channel == example.pluginChannel) {
+      example.invoke(method, arguments);
+    }
     return await null;
   };
 
@@ -189,5 +197,15 @@ final class ExamplePlugin implements FreeFEOSPlugin {
       default:
         return await null;
     }
+  }
+
+  Future<dynamic> invoke(
+    String method, [
+    dynamic arguments,
+  ]) async {
+    return await onMethodCall(
+      method,
+      arguments,
+    );
   }
 }

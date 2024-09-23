@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:freefeos/src/utils/platform.dart';
 
 import '../embedder/embedder_mixin.dart';
 import '../engine/bridge_mixin.dart';
@@ -209,56 +210,64 @@ base class SystemBase extends ContextWrapper
     required Widget app,
     required bool enabled,
     required dynamic error,
-  }) async {
-    if (enabled) {
-      // 初始化日志
-      Log.init();
-      // 打印横幅
-      Log.d(
-        tag: baseTag,
-        message: utf8.decode(base64Decode(banner)),
-      );
-      // 初始化控件绑定
-      WidgetsFlutterBinding.ensureInitialized();
-      // 初始化内核桥接
-      await initKernelBridge();
-      // 初始化内核
-      await kernelBridgeScope.onCreateKernel();
-      // 初始化服务桥接
-      await initServerBridge();
-      // 初始化服务
-      await serverBridgeScope.onCreateServer();
-      // 初始化引擎桥接
-      await initEngineBridge();
-      // 初始化引擎
-      await engineBridgerScope.onCreateEngine(this);
-      // 初始化应用
-      await init(plugins());
-      // 初始化API
-      await initApi(
-        (
-          String channel,
-          String method, [
-          dynamic arguments,
-        ]) async {
-          return await () async {
-            return await exec(
-              channel,
-              method,
-              arguments,
-            );
-          }();
-        },
-      );
-      // 启动应用
-      return await includeApp(app).then(
-        (_) async => await runner(
-          buildApplication(),
-        ),
-      );
-    } else {
-      return await runner(app);
-    }
+  }) {
+    // 判断是否启用框架, 如果在浏览器中运行不启用.
+    return enabled && !kIsWebBrowser
+        // 导入App
+        ? includeApp(app).then(
+            (_) async {
+              try {
+                // 初始化日志
+                Log.init();
+                // 打印横幅
+                Log.d(
+                  tag: baseTag,
+                  message: utf8.decode(base64Decode(banner)),
+                );
+                // 初始化控件绑定
+                WidgetsFlutterBinding.ensureInitialized();
+                // 初始化内核桥接
+                await initKernelBridge();
+                // 初始化内核
+                await kernelBridgeScope.onCreateKernel();
+                // 初始化服务桥接
+                await initServerBridge();
+                // 初始化服务
+                await serverBridgeScope.onCreateServer();
+                // 初始化引擎桥接
+                await initEngineBridge();
+                // 初始化引擎
+                await engineBridgerScope.onCreateEngine(this);
+                // 初始化应用
+                await init(plugins());
+                // 初始化API
+                await initApi(
+                  (
+                    String channel,
+                    String method, [
+                    dynamic arguments,
+                  ]) async {
+                    return await () async {
+                      return await exec(
+                        channel,
+                        method,
+                        arguments,
+                      );
+                    }();
+                  },
+                );
+                // 调用运行器启动应用
+                return await runner(buildApplication());
+              } catch (_) {
+                // 断言没有传入异常
+                assert(error == null);
+                // 重新抛出异常
+                rethrow;
+              }
+            },
+          )
+        // 未启用框架时直接调用运行器启动应用
+        : runner(app);
   }
 
   /// 初始化应用

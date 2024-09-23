@@ -29,60 +29,63 @@ class SystemSheet extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Tooltip(
-                      message: IntlLocalizations.of(
-                        context,
-                      ).bottomSheetAboutTooltip,
-                      child: ListTile(
-                        leading: const FlutterLogo(),
-                        trailing: const Icon(Icons.keyboard_arrow_right),
-                        title: FutureBuilder(
-                          future: viewModel.getAppName(),
-                          builder: (context, snapshot) {
-                            String text = IntlLocalizations.of(
+                    ListTile(
+                      leading: const FlutterLogo(),
+                      trailing: Tooltip(
+                        message: IntlLocalizations.of(
+                          context,
+                        ).bottomSheetAboutTooltip,
+                        child: IconButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () async {
+                            Navigator.of(
                               context,
-                            ).unknown;
-                            switch (snapshot.connectionState) {
-                              case ConnectionState.waiting:
+                              rootNavigator: true,
+                            ).pop();
+                            await viewModel.openAboutDialog(false);
+                          },
+                          icon: const Icon(Icons.keyboard_arrow_right),
+                        ),
+                      ),
+                      title: FutureBuilder(
+                        future: viewModel.getAppName(),
+                        builder: (context, snapshot) {
+                          String text = IntlLocalizations.of(
+                            context,
+                          ).unknown;
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.waiting:
+                              text = IntlLocalizations.of(
+                                context,
+                              ).waiting;
+                              break;
+                            case ConnectionState.done:
+                              if (snapshot.hasError) {
                                 text = IntlLocalizations.of(
                                   context,
-                                ).waiting;
+                                ).error;
                                 break;
-                              case ConnectionState.done:
-                                if (snapshot.hasError) {
-                                  text = IntlLocalizations.of(
-                                    context,
-                                  ).error;
-                                  break;
-                                }
-                                if (snapshot.hasData) {
-                                  text = snapshot.data ??
-                                      IntlLocalizations.of(
-                                        context,
-                                      ).sNull;
-                                  break;
-                                }
+                              }
+                              if (snapshot.hasData) {
+                                text = snapshot.data ??
+                                    IntlLocalizations.of(
+                                      context,
+                                    ).sNull;
                                 break;
-                              default:
-                                break;
-                            }
-                            return Text(text);
-                          },
-                        ),
-                        subtitle: const Text('这是开发者的名字'),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(28),
-                            topRight: Radius.circular(28),
-                          ),
-                        ),
-                        onTap: () async {
-                          Navigator.of(
-                            context,
-                            rootNavigator: true,
-                          ).pop();
-                          await viewModel.openAboutDialog(false);
+                              }
+                              break;
+                            default:
+                              break;
+                          }
+                          return Text(text);
                         },
+                      ),
+                      subtitle: const Text('这是开发者的名字'),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(28),
+                          topRight: Radius.circular(28),
+                        ),
                       ),
                     ),
                     Tooltip(
@@ -150,7 +153,9 @@ class SystemSheet extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const Divider(height: 1),
+                    const Divider(
+                      height: 1,
+                    ),
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -258,7 +263,9 @@ class SystemSheet extends StatelessWidget {
             ),
           ),
         ),
-        const Divider(height: 1),
+        const Divider(
+          height: 1,
+        ),
         Tooltip(
           message: IntlLocalizations.of(
             context,
