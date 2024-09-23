@@ -143,10 +143,7 @@ class AppOverlay extends StatelessWidget {
                   message: IntlLocalizations.of(
                     context,
                   ).bannerTitle,
-                  textDirection: TextDirection.ltr,
                   location: BannerLocation.topStart,
-                  layoutDirection: TextDirection.ltr,
-                  color: Theme.of(context).colorScheme.primary,
                   child: child,
                 ),
         ),
