@@ -156,107 +156,266 @@ class SystemSheet extends StatelessWidget {
                     const Divider(
                       height: 1,
                     ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 8,
-                                  top: 16,
-                                  bottom: 6,
-                                  right: 20,
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SheetButton(
-                                      onTap: () async {
-                                        Navigator.of(
-                                          context,
-                                          rootNavigator: true,
-                                        ).pop();
-                                        await viewModel.openManager();
-                                      },
-                                      icon: Icons.keyboard_command_key,
-                                      label: IntlLocalizations.of(
-                                        context,
-                                      ).bottomSheetManager,
-                                      tooltip: IntlLocalizations.of(
-                                        context,
-                                      ).bottomSheetManagerTooltip,
-                                      enabled: !isManager,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 8,
-                                  top: 6,
-                                  bottom: 16,
-                                  right: 20,
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SheetButton(
-                                      onTap: () async {
-                                        Navigator.of(
-                                          context,
-                                          rootNavigator: true,
-                                        ).pop();
-                                        await viewModel.openSettings();
-                                      },
-                                      icon: Icons.settings,
-                                      label: IntlLocalizations.of(
-                                        context,
-                                      ).bottomSheetSettings,
-                                      tooltip: IntlLocalizations.of(
-                                        context,
-                                      ).bottomSheetSettingsTooltip,
-                                      enabled: true,
-                                    ),
-                                    SheetButton(
-                                      onTap: () async {
-                                        Navigator.of(
-                                          context,
-                                          rootNavigator: true,
-                                        ).pop();
-                                        await viewModel.openExitDialog();
-                                      },
-                                      icon: Icons.close,
-                                      label: IntlLocalizations.of(
-                                        context,
-                                      ).bottomSheetExit,
-                                      tooltip: IntlLocalizations.of(
-                                        context,
-                                      ).bottomSheetExitToolTip,
-                                      enabled: true,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 8,
+                        top: 16,
+                        bottom: 6,
+                        right: 20,
+                      ),
+                      child: Wrap(
+                        children: [
+                          SheetButton(
+                            onTap: () async {
+                              Navigator.of(
+                                context,
+                                rootNavigator: true,
+                              ).pop();
+                              await viewModel.openManager();
+                            },
+                            icon: Icons.manage_accounts_outlined,
+                            label: IntlLocalizations.of(
+                              context,
+                            ).bottomSheetManager,
+                            tooltip: IntlLocalizations.of(
+                              context,
+                            ).bottomSheetManagerTooltip,
+                            enabled: !isManager,
+                          ),
+                          SheetButton(
+                            onTap: () async {
+                              Navigator.of(
+                                context,
+                                rootNavigator: true,
+                              ).pop();
+                              await viewModel.openSettings();
+                            },
+                            icon: Icons.settings_outlined,
+                            label: IntlLocalizations.of(
+                              context,
+                            ).bottomSheetSettings,
+                            tooltip: IntlLocalizations.of(
+                              context,
+                            ).bottomSheetSettingsTooltip,
+                            enabled: true,
+                          ),
+                          SheetButton(
+                            onTap: () async {
+                              Navigator.of(
+                                context,
+                                rootNavigator: true,
+                              ).pop();
+                            },
+                            icon: Icons.info_outline,
+                            label: '应用信息',
+                            tooltip: '应用信息',
+                            enabled: true,
+                          ),
+                          SheetButton(
+                            onTap: () async {
+                              Navigator.of(
+                                context,
+                                rootNavigator: true,
+                              ).pop();
+                            },
+                            icon: Icons.link,
+                            label: '官网',
+                            tooltip: '官网',
+                            enabled: true,
+                          ),
+                          SheetButton(
+                            onTap: () async {
+                              Navigator.of(
+                                context,
+                                rootNavigator: true,
+                              ).pop();
+                            },
+                            icon: Icons.feedback_outlined,
+                            label: '反馈',
+                            tooltip: '反馈',
+                            enabled: true,
+                          ),
+                          SheetButton(
+                            onTap: () async {
+                              Navigator.of(
+                                context,
+                                rootNavigator: true,
+                              ).pop();
+                              await viewModel.openExitDialog();
+                            },
+                            icon: Icons.exit_to_app,
+                            label: IntlLocalizations.of(
+                              context,
+                            ).bottomSheetExit,
+                            tooltip: IntlLocalizations.of(
+                              context,
+                            ).bottomSheetExitToolTip,
+                            enabled: true,
+                          ),
+                          SheetButton(
+                            onTap: () async {
+                              Navigator.of(
+                                context,
+                                rootNavigator: true,
+                              ).pop();
+                            },
+                            icon: Icons.close,
+                            label: '取消',
+                            tooltip: '取消',
+                            enabled: true,
+                          ),
+                        ],
+                      ),
                     ),
+                    // Row(
+                    //   mainAxisSize: MainAxisSize.max,
+                    //   mainAxisAlignment: MainAxisAlignment.start,
+                    //   crossAxisAlignment: CrossAxisAlignment.start,
+                    //   children: [
+                    //     Column(
+                    //       mainAxisSize: MainAxisSize.max,
+                    //       mainAxisAlignment: MainAxisAlignment.start,
+                    //       crossAxisAlignment: CrossAxisAlignment.start,
+                    //       children: [
+                    //         SingleChildScrollView(
+                    //           scrollDirection: Axis.horizontal,
+                    //           child: Padding(
+                    //             padding: const EdgeInsets.only(
+                    //               left: 8,
+                    //               top: 16,
+                    //               bottom: 6,
+                    //               right: 20,
+                    //             ),
+                    //             child: Row(
+                    //               mainAxisSize: MainAxisSize.max,
+                    //               mainAxisAlignment: MainAxisAlignment.start,
+                    //               crossAxisAlignment: CrossAxisAlignment.start,
+                    //               children: [
+                    //                 SheetButton(
+                    //                   onTap: () async {
+                    //                     Navigator.of(
+                    //                       context,
+                    //                       rootNavigator: true,
+                    //                     ).pop();
+                    //                     await viewModel.openManager();
+                    //                   },
+                    //                   icon: Icons.manage_accounts_outlined,
+                    //                   label: IntlLocalizations.of(
+                    //                     context,
+                    //                   ).bottomSheetManager,
+                    //                   tooltip: IntlLocalizations.of(
+                    //                     context,
+                    //                   ).bottomSheetManagerTooltip,
+                    //                   enabled: !isManager,
+                    //                 ),
+                    //                 SheetButton(
+                    //                   onTap: () async {
+                    //                     Navigator.of(
+                    //                       context,
+                    //                       rootNavigator: true,
+                    //                     ).pop();
+                    //                     await viewModel.openSettings();
+                    //                   },
+                    //                   icon: Icons.settings_outlined,
+                    //                   label: IntlLocalizations.of(
+                    //                     context,
+                    //                   ).bottomSheetSettings,
+                    //                   tooltip: IntlLocalizations.of(
+                    //                     context,
+                    //                   ).bottomSheetSettingsTooltip,
+                    //                   enabled: true,
+                    //                 ),
+                    //                 SheetButton(
+                    //                   onTap: () async {
+                    //                     Navigator.of(
+                    //                       context,
+                    //                       rootNavigator: true,
+                    //                     ).pop();
+                    //                   },
+                    //                   icon: Icons.info_outline,
+                    //                   label: '应用信息',
+                    //                   tooltip: '应用信息',
+                    //                   enabled: true,
+                    //                 ),
+                    //               ],
+                    //             ),
+                    //           ),
+                    //         ),
+                    //         SingleChildScrollView(
+                    //           scrollDirection: Axis.horizontal,
+                    //           child: Padding(
+                    //             padding: const EdgeInsets.only(
+                    //               left: 8,
+                    //               top: 6,
+                    //               bottom: 16,
+                    //               right: 20,
+                    //             ),
+                    //             child: Row(
+                    //               mainAxisSize: MainAxisSize.max,
+                    //               mainAxisAlignment: MainAxisAlignment.start,
+                    //               crossAxisAlignment: CrossAxisAlignment.start,
+                    //               children: [
+                    //                 SheetButton(
+                    //                   onTap: () async {
+                    //                     Navigator.of(
+                    //                       context,
+                    //                       rootNavigator: true,
+                    //                     ).pop();
+                    //                   },
+                    //                   icon: Icons.link,
+                    //                   label: '官网',
+                    //                   tooltip: '官网',
+                    //                   enabled: true,
+                    //                 ),
+                    //                 SheetButton(
+                    //                   onTap: () async {
+                    //                     Navigator.of(
+                    //                       context,
+                    //                       rootNavigator: true,
+                    //                     ).pop();
+                    //                   },
+                    //                   icon: Icons.feedback_outlined,
+                    //                   label: '反馈',
+                    //                   tooltip: '反馈',
+                    //                   enabled: true,
+                    //                 ),
+                    //                 SheetButton(
+                    //                   onTap: () async {
+                    //                     Navigator.of(
+                    //                       context,
+                    //                       rootNavigator: true,
+                    //                     ).pop();
+                    //                     await viewModel.openExitDialog();
+                    //                   },
+                    //                   icon: Icons.exit_to_app,
+                    //                   label: IntlLocalizations.of(
+                    //                     context,
+                    //                   ).bottomSheetExit,
+                    //                   tooltip: IntlLocalizations.of(
+                    //                     context,
+                    //                   ).bottomSheetExitToolTip,
+                    //                   enabled: true,
+                    //                 ),
+                    //                 SheetButton(
+                    //                   onTap: () async {
+                    //                     Navigator.of(
+                    //                       context,
+                    //                       rootNavigator: true,
+                    //                     ).pop();
+                    //                   },
+                    //                   icon: Icons.close,
+                    //                   label: '取消',
+                    //                   tooltip: '取消',
+                    //                   enabled: true,
+                    //                 ),
+                    //               ],
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ],
+                    // ),
                   ],
                 ),
               ),
