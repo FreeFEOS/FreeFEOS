@@ -6,7 +6,7 @@ import 'package:logging/logging.dart';
 import '../event/event_buffer.dart';
 import '../event/rendered_event.dart';
 import '../framework/ansi_parser.dart';
-import '../framework/log_level.dart';
+import '../framework/log.dart';
 import '../framework/toast.dart';
 import '../intl/l10n.dart';
 

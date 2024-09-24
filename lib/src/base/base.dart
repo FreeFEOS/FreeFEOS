@@ -5,6 +5,7 @@ import 'package:freefeos/src/utils/platform.dart';
 
 import '../embedder/embedder_mixin.dart';
 import '../engine/bridge_mixin.dart';
+import '../framework/context.dart';
 import '../kernel/kernel.dart';
 import '../plugin/plugin_runtime.dart';
 import '../runtime/runtime.dart';
@@ -15,7 +16,7 @@ import '../values/channel.dart';
 import '../values/route.dart';
 import '../values/strings.dart';
 import '../values/tag.dart';
-import '../framework/context_wrapper.dart';
+
 import '../framework/log.dart';
 
 import '../interface/system_interface.dart';

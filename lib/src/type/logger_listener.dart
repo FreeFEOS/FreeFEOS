@@ -1,3 +1,3 @@
-import '../framework/log_record.dart';
+import '../framework/log.dart';
 
 typedef LoggerListener = void Function(LoggerRecord record);

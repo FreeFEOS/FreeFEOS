@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'context_wrapper.dart';
+import 'context.dart';
 
 final class EAlertDialogBuilder {
   EAlertDialogBuilder({required this.build});

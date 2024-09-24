@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 
-import 'activity.dart';
 import 'service.dart';
 
 class Want {
@@ -10,14 +9,6 @@ class Want {
 
   Service getService() {
     if (classes is Service) {
-      return classes;
-    } else {
-      throw FlutterError('这他妈不是服务啊老弟');
-    }
-  }
-
-  Activity getActivity() {
-    if (classes is Activity) {
       return classes;
     } else {
       throw FlutterError('这他妈不是服务啊老弟');
