@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:window_manager/window_manager.dart';
 
 import '../base/base.dart';
 import '../framework/log.dart';
@@ -165,7 +166,10 @@ final class SystemRuntime extends SystemBase {
   @override
   Widget buildExitDialog(BuildContext context) {
     return SystemExit(
-      exit: () async => await SystemNavigator.pop(),
+      exit: () async {
+        //await SystemNavigator.pop();
+        await windowManager.destroy();
+      },
     );
   }
 
