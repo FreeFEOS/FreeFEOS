@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:toastification/toastification.dart';
+import 'package:window_manager/window_manager.dart';
 
 import '../intl/l10n.dart';
 import '../type/context_attacher.dart';
 import '../type/view_model_builder.dart';
-import '../utils/platform.dart';
+import '../utils/utils.dart';
 import '../values/route.dart';
 import '../values/strings.dart';
 import '../viewmodel/system_view_model.dart';
@@ -150,76 +151,104 @@ class AppOverlay extends StatelessWidget {
         Positioned(
           top: MediaQuery.paddingOf(context).top,
           height: kToolbarHeight,
-          right: 8,
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: Container(
-              height: 30,
-              decoration: BoxDecoration(
-                color: Theme.of(context).brightness == Brightness.light
-                    ? Colors.black.withOpacity(0.3)
-                    : Colors.white.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Material(
-                color: Colors.transparent,
-                child: Consumer<SystemViewModel>(
-                  builder: (context, viewModel, child) => Row(
-                    children: [
-                      InkWell(
-                        onTap: () async =>
-                            await viewModel.openBottomSheet(false),
-                        onLongPress: () async =>
-                            await viewModel.openAboutDialog(false),
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          bottomLeft: Radius.circular(20),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 3,
-                          ),
-                          child: Icon(
-                            Icons.more_horiz,
-                            color:
-                                Theme.of(context).brightness == Brightness.light
-                                    ? Colors.white
-                                    : Colors.black,
+          left: 0,
+          right: 0,
+          child: PreferredSize(
+            preferredSize: const Size.fromHeight(kToolbarHeight),
+            child: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onPanStart: (_) {
+                if (kIsDesktop) {
+                  windowManager.startDragging();
+                }
+              },
+              onDoubleTap: () async {
+                if (kIsDesktop) {
+                  if (!await windowManager.isMaximized()) {
+                    await windowManager.maximize();
+                  } else {
+                    await windowManager.unmaximize();
+                  }
+                }
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Container(
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).brightness == Brightness.light
+                            ? Colors.black.withOpacity(0.3)
+                            : Colors.white.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: Consumer<SystemViewModel>(
+                          builder: (context, viewModel, child) => Row(
+                            children: [
+                              InkWell(
+                                onTap: () async =>
+                                    await viewModel.openBottomSheet(false),
+                                onLongPress: () async =>
+                                    await viewModel.openAboutDialog(false),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(20),
+                                  bottomLeft: Radius.circular(20),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 3,
+                                  ),
+                                  child: Icon(
+                                    Icons.more_horiz,
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.light
+                                        ? Colors.white
+                                        : Colors.black,
+                                  ),
+                                ),
+                              ),
+                              VerticalDivider(
+                                indent: 6,
+                                endIndent: 6,
+                                width: 1,
+                                color: Colors.white.withOpacity(0.3),
+                              ),
+                              InkWell(
+                                onTap: () async =>
+                                    await viewModel.openExitDialog(),
+                                onLongPress: () async =>
+                                    await viewModel.openBottomSheet(false),
+                                borderRadius: const BorderRadius.only(
+                                  topRight: Radius.circular(20),
+                                  bottomRight: Radius.circular(20),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 3,
+                                  ),
+                                  child: Icon(
+                                    Icons.adjust,
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.light
+                                        ? Colors.white
+                                        : Colors.black,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                      VerticalDivider(
-                        indent: 6,
-                        endIndent: 6,
-                        width: 1,
-                        color: Colors.white.withOpacity(0.3),
-                      ),
-                      InkWell(
-                        onTap: () async => await viewModel.openExitDialog(),
-                        onLongPress: () async =>
-                            await viewModel.openBottomSheet(false),
-                        borderRadius: const BorderRadius.only(
-                          topRight: Radius.circular(20),
-                          bottomRight: Radius.circular(20),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 3,
-                          ),
-                          child: Icon(
-                            Icons.adjust,
-                            color:
-                                Theme.of(context).brightness == Brightness.light
-                                    ? Colors.white
-                                    : Colors.black,
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
           ),

@@ -8,7 +8,7 @@ import '../framework/want.dart';
 import '../interface/platform_interface.dart';
 import '../platform/freefeos.dart';
 import '../plugin/plugin_runtime.dart';
-import '../utils/platform.dart';
+import '../utils/utils.dart';
 import '../values/channel.dart';
 import '../values/strings.dart';
 import 'embedder_binder.dart';

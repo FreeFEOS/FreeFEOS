@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:freefeos/src/utils/platform.dart';
+import 'package:freefeos/src/utils/utils.dart';
 import 'package:window_manager/window_manager.dart';
 
 import '../embedder/embedder_mixin.dart';
@@ -258,21 +258,23 @@ base class SystemBase extends ContextWrapper
                     }();
                   },
                 );
-                // Must add this line.
-                await windowManager.ensureInitialized();
-
-                WindowOptions windowOptions = const WindowOptions(
-                  size: Size(800, 600),
-                  minimumSize: Size(600, 400),
-                  center: true,
-                  backgroundColor: Colors.transparent,
-                  skipTaskbar: false,
-                  titleBarStyle: TitleBarStyle.hidden,
-                );
-                windowManager.waitUntilReadyToShow(windowOptions, () async {
-                  await windowManager.show();
-                  await windowManager.focus();
-                });
+                // 初始化窗口相关
+                if (kIsDesktop) {
+                  await windowManager.ensureInitialized();
+                  await windowManager.waitUntilReadyToShow(
+                    const WindowOptions(
+                      //size: Size(800, 600),
+                      minimumSize: Size(600, 400),
+                      center: true,
+                      //backgroundColor: Colors.transparent,
+                      titleBarStyle: TitleBarStyle.hidden,
+                    ),
+                    () async {
+                      await windowManager.show();
+                      await windowManager.focus();
+                    },
+                  );
+                }
                 // 调用运行器启动应用
                 return await runner(buildApplication());
               } catch (_) {

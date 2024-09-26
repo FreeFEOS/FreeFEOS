@@ -1,5 +1,19 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+
+bool get kNoBanner => !kDebugMode;
+bool get kIsWebBrowser => kIsWeb || kIsWasm;
+bool get kUseNative =>
+    defaultTargetPlatform == TargetPlatform.android ||
+    defaultTargetPlatform == TargetPlatform.iOS;
+
+bool get kIsDesktop =>
+    defaultTargetPlatform == TargetPlatform.windows ||
+    defaultTargetPlatform == TargetPlatform.linux ||
+    defaultTargetPlatform == TargetPlatform.macOS;
+
 /// 心灵毒鸡汤
 class Poem {
   /// 随机抽取一句
@@ -18,4 +32,8 @@ class Poem {
     '对于所有生命来说，不会死亡的绝望，是最可怕的审判。',
     '我不曾活着，又何必害怕死亡。',
   ];
+}
+
+extension UIUtils on Widget {
+  List<Widget> toList() => [this];
 }
