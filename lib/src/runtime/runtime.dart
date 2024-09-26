@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:window_manager/window_manager.dart';
 
 import '../base/base.dart';
@@ -15,7 +14,7 @@ import '../values/method.dart';
 import '../values/placeholder.dart';
 import '../values/strings.dart';
 import '../values/tag.dart';
-import '../viewmodel/system_view_model.dart';
+import '../viewmodel/system_mmvm.dart';
 import '../widget/about.dart';
 import '../widget/ui.dart';
 import '../widget/exit.dart';

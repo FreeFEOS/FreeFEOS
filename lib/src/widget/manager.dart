@@ -4,7 +4,7 @@ import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:provider/provider.dart';
 
 import '../intl/l10n.dart';
-import '../viewmodel/system_view_model.dart';
+import '../viewmodel/system_mmvm.dart';
 import 'home.dart';
 import 'logcat.dart';
 import 'plugin.dart';

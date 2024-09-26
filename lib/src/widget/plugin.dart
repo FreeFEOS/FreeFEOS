@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../intl/l10n.dart';
 import '../plugin/plugin_details.dart';
-import '../viewmodel/system_view_model.dart';
+import '../viewmodel/system_mmvm.dart';
 
 class PluginPage extends StatefulWidget {
   const PluginPage({super.key});

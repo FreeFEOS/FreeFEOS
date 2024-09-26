@@ -10,7 +10,7 @@ import '../type/view_model_builder.dart';
 import '../utils/utils.dart';
 import '../values/route.dart';
 import '../values/strings.dart';
-import '../viewmodel/system_view_model.dart';
+import '../viewmodel/system_mmvm.dart';
 
 class SystemUI extends StatefulWidget {
   const SystemUI({
@@ -124,7 +124,7 @@ class _SystemUIState extends State<SystemUI> {
   }
 }
 
-class AppOverlay extends StatelessWidget {
+class AppOverlay extends StatefulWidget {
   const AppOverlay({
     super.key,
     required this.child,
@@ -133,19 +133,54 @@ class AppOverlay extends StatelessWidget {
   final Widget child;
 
   @override
+  State<AppOverlay> createState() => _AppOverlayState();
+}
+
+class _AppOverlayState extends State<AppOverlay> with WindowListener {
+  IconData maxIcon = Icons.fullscreen;
+
+  @override
+  void initState() {
+    super.initState();
+    windowManager.addListener(this);
+  }
+
+  @override
+  void dispose() {
+    windowManager.removeListener(this);
+    super.dispose();
+  }
+
+  @override
+  void onWindowMaximize() {
+    super.onWindowMaximize();
+    setState(() {
+      maxIcon = Icons.fullscreen_exit;
+    });
+  }
+
+  @override
+  void onWindowUnmaximize() {
+    super.onWindowUnmaximize();
+    setState(() {
+      maxIcon = Icons.fullscreen;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         ConstrainedBox(
           constraints: const BoxConstraints.expand(),
           child: kNoBanner
-              ? child
+              ? widget.child
               : Banner(
                   message: IntlLocalizations.of(
                     context,
                   ).bannerTitle,
                   location: BannerLocation.topStart,
-                  child: child,
+                  child: widget.child,
                 ),
         ),
         Positioned(
@@ -153,42 +188,31 @@ class AppOverlay extends StatelessWidget {
           height: kToolbarHeight,
           left: 0,
           right: 0,
-          child: PreferredSize(
-            preferredSize: const Size.fromHeight(kToolbarHeight),
-            child: GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onPanStart: (_) {
-                if (kIsDesktop) {
-                  windowManager.startDragging();
-                }
-              },
-              onDoubleTap: () async {
-                if (kIsDesktop) {
-                  if (!await windowManager.isMaximized()) {
-                    await windowManager.maximize();
-                  } else {
-                    await windowManager.unmaximize();
-                  }
-                }
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Container(
-                      height: 30,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).brightness == Brightness.light
-                            ? Colors.black.withOpacity(0.3)
-                            : Colors.white.withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Material(
-                        color: Colors.transparent,
-                        child: Consumer<SystemViewModel>(
-                          builder: (context, viewModel, child) => Row(
+          child: Consumer<SystemViewModel>(
+            builder: (context, viewModel, child) => PreferredSize(
+              preferredSize: const Size.fromHeight(kToolbarHeight),
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onPanStart: viewModel.startDragging,
+                onDoubleTap: viewModel.maximizeWindow,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Container(
+                        height: 30,
+                        decoration: BoxDecoration(
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? Colors.black.withOpacity(0.3)
+                                  : Colors.white.withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Material(
+                          color: Colors.transparent,
+                          child: Row(
                             children: [
                               InkWell(
                                 onTap: () async =>
@@ -219,6 +243,62 @@ class AppOverlay extends StatelessWidget {
                                 width: 1,
                                 color: Colors.white.withOpacity(0.3),
                               ),
+                              Visibility(
+                                visible: kIsDesktop,
+                                child: InkWell(
+                                  onTap: viewModel.minimizeWindow,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                      vertical: 3,
+                                    ),
+                                    child: Icon(
+                                      Icons.minimize,
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.light
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Visibility(
+                                visible: kIsDesktop,
+                                child: VerticalDivider(
+                                  indent: 6,
+                                  endIndent: 6,
+                                  width: 1,
+                                  color: Colors.white.withOpacity(0.3),
+                                ),
+                              ),
+                              Visibility(
+                                visible: kIsDesktop,
+                                child: InkWell(
+                                  onTap: viewModel.maximizeWindow,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                      vertical: 3,
+                                    ),
+                                    child: Icon(
+                                      maxIcon,
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.light
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Visibility(
+                                visible: kIsDesktop,
+                                child: VerticalDivider(
+                                  indent: 6,
+                                  endIndent: 6,
+                                  width: 1,
+                                  color: Colors.white.withOpacity(0.3),
+                                ),
+                              ),
                               InkWell(
                                 onTap: () async =>
                                     await viewModel.openExitDialog(),
@@ -247,8 +327,8 @@ class AppOverlay extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

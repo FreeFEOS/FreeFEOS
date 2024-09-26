@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:window_manager/window_manager.dart';
 
 import '../intl/l10n.dart';
 import '../plugin/plugin_details.dart';
@@ -12,8 +13,77 @@ import '../type/navigator_launcher.dart';
 import '../type/plugin_getter.dart';
 import '../type/plugin_widget_gatter.dart';
 import '../type/runtiem_checker.dart';
+import '../utils/utils.dart';
 import '../values/url.dart';
-import 'view_model_wrapper.dart';
+
+abstract interface class ViewModelWrapper {
+  /// 打开底部弹出菜单
+  Future<dynamic> openBottomSheet(bool isManager);
+
+  /// 打开应用信息
+  Future<dynamic> openAboutDialog(bool isPackage);
+
+  /// 打开退出应用对话框
+  Future<dynamic> openExitDialog();
+
+  /// 进入应用
+  void openApplication();
+
+  /// 打开管理器
+  Future<dynamic> openManager();
+
+  /// 打开设置
+  Future<dynamic> openSettings();
+
+  /// 获取应用名称
+  Future<String> getAppName();
+
+  /// 获取应用版本
+  Future<String> getAppVersion();
+
+  /// 统计普通插件数量
+  int pluginCount();
+
+  /// 打开PubDev
+  Future<bool> launchPubDev();
+
+  /// 获取插件列表
+  List<PluginDetails> get getPluginDetailsList;
+
+  /// 获取插件图标
+  Widget getPluginIcon(PluginDetails details);
+
+  /// 获取插件类型
+  String getPluginType(
+    BuildContext context,
+    PluginDetails details,
+  );
+
+  /// 获取插件的动作名
+  String getPluginAction(
+    BuildContext context,
+    PluginDetails details,
+  );
+
+  /// 获取插件的提示
+  String getPluginTooltip(
+    BuildContext context,
+    PluginDetails details,
+  );
+
+  /// 打开卡片
+  VoidCallback? openPlugin(
+    BuildContext context,
+    PluginDetails details,
+  );
+
+  GestureTapCallback? maximizeWindow();
+  GestureDragStartCallback? startDragging(
+    DragStartDetails _,
+  );
+  VoidCallback? closeWindow();
+  VoidCallback? minimizeWindow();
+}
 
 final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
   SystemViewModel({
@@ -394,5 +464,33 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
         },
       ),
     );
+  }
+
+  @override
+  GestureTapCallback? maximizeWindow() {
+    return () async {
+      if (kIsDesktop) {
+        if (!await windowManager.isMaximized()) {
+          await windowManager.maximize();
+        } else {
+          await windowManager.unmaximize();
+        }
+      }
+    };
+  }
+
+  @override
+  GestureDragStartCallback? startDragging(DragStartDetails _) {
+    return (_) async => await windowManager.startDragging();
+  }
+
+  @override
+  VoidCallback? closeWindow() {
+    return () async => await windowManager.destroy();
+  }
+
+  @override
+  VoidCallback? minimizeWindow() {
+    return () async => await windowManager.minimize();
   }
 }
