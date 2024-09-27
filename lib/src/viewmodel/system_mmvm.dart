@@ -16,6 +16,7 @@ import '../type/plugin_widget_gatter.dart';
 import '../type/runtiem_checker.dart';
 import '../utils/utils.dart';
 import '../values/url.dart';
+import '../widget/plugin.dart';
 
 abstract interface class ViewModelWrapper {
   /// 打开底部弹出菜单
@@ -452,11 +453,9 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
     ).push(
       MaterialPageRoute(
         builder: (context) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(details.title),
-            ),
-            body: getPluginWidget(
+          return PluginUI(
+            title: details.title,
+            child: getPluginWidget(
               context,
               details,
             ),
@@ -477,17 +476,23 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
 
   @override
   Future<void> startDragging() async {
-    return await windowManager.startDragging();
+    if (PlatformUtil.kIsDesktop) {
+      return await windowManager.startDragging();
+    }
   }
 
   @override
   Future<void> closeWindow() async {
-    return await windowManager.close();
+    if (PlatformUtil.kIsDesktop) {
+      return await windowManager.close();
+    }
   }
 
   @override
   Future<void> minimizeWindow() async {
-    return await windowManager.minimize();
+    if (PlatformUtil.kIsDesktop) {
+      return await windowManager.minimize();
+    }
   }
 
   @override
