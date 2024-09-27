@@ -214,7 +214,7 @@ base class SystemBase extends ContextWrapper
     required dynamic error,
   }) {
     // 判断是否启用框架, 如果在浏览器中运行不启用.
-    return enabled && !kIsWebBrowser
+    return enabled && !PlatformUtil.kIsWebBrowser
         // 导入App
         ? includeApp(app).then(
             (_) async {
@@ -259,7 +259,7 @@ base class SystemBase extends ContextWrapper
                   },
                 );
                 // 初始化窗口相关
-                if (kIsDesktop) {
+                if (PlatformUtil.kIsDesktop) {
                   await windowManager.ensureInitialized();
                   await windowManager.waitUntilReadyToShow(
                     const WindowOptions(

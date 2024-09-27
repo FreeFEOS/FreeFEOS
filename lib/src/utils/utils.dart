@@ -3,16 +3,18 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-bool get kNoBanner => !kDebugMode;
-bool get kIsWebBrowser => kIsWeb || kIsWasm;
-bool get kUseNative =>
-    defaultTargetPlatform == TargetPlatform.android ||
-    defaultTargetPlatform == TargetPlatform.iOS;
+final class PlatformUtil {
+  static bool get kNoBanner => !kDebugMode;
+  static bool get kIsWebBrowser => kIsWeb || kIsWasm;
+  static bool get kUseNative =>
+      defaultTargetPlatform == TargetPlatform.android ||
+      defaultTargetPlatform == TargetPlatform.iOS;
 
-bool get kIsDesktop =>
-    defaultTargetPlatform == TargetPlatform.windows ||
-    defaultTargetPlatform == TargetPlatform.linux ||
-    defaultTargetPlatform == TargetPlatform.macOS;
+  static bool get kIsDesktop =>
+      defaultTargetPlatform == TargetPlatform.windows ||
+      defaultTargetPlatform == TargetPlatform.linux ||
+      defaultTargetPlatform == TargetPlatform.macOS;
+}
 
 /// 心灵毒鸡汤
 class Poem {

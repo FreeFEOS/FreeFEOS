@@ -137,6 +137,7 @@ class AppOverlay extends StatefulWidget {
 }
 
 class _AppOverlayState extends State<AppOverlay> with WindowListener {
+  /// 最大化按钮的图标
   IconData maxIcon = Icons.fullscreen;
 
   @override
@@ -154,17 +155,13 @@ class _AppOverlayState extends State<AppOverlay> with WindowListener {
   @override
   void onWindowMaximize() {
     super.onWindowMaximize();
-    setState(() {
-      maxIcon = Icons.fullscreen_exit;
-    });
+    setState(() => maxIcon = Icons.fullscreen_exit);
   }
 
   @override
   void onWindowUnmaximize() {
     super.onWindowUnmaximize();
-    setState(() {
-      maxIcon = Icons.fullscreen;
-    });
+    setState(() => maxIcon = Icons.fullscreen);
   }
 
   @override
@@ -173,7 +170,7 @@ class _AppOverlayState extends State<AppOverlay> with WindowListener {
       children: [
         ConstrainedBox(
           constraints: const BoxConstraints.expand(),
-          child: kNoBanner
+          child: PlatformUtil.kNoBanner
               ? widget.child
               : Banner(
                   message: IntlLocalizations.of(
@@ -188,19 +185,119 @@ class _AppOverlayState extends State<AppOverlay> with WindowListener {
           height: kToolbarHeight,
           left: 0,
           right: 0,
-          child: Consumer<SystemViewModel>(
-            builder: (context, viewModel, child) => PreferredSize(
-              preferredSize: const Size.fromHeight(kToolbarHeight),
-              child: GestureDetector(
+          child: PreferredSize(
+            preferredSize: const Size.fromHeight(kToolbarHeight),
+            child: Consumer<SystemViewModel>(
+              builder: (context, viewModel, child) => GestureDetector(
                 behavior: HitTestBehavior.translucent,
-                onPanStart: viewModel.startDragging,
-                onDoubleTap: viewModel.maximizeWindow,
+                onPanStart: (_) async => await viewModel.startDragging(),
+                onDoubleTap: () async => await viewModel.maximizeWindow(),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+                    Visibility(
+                      visible: PlatformUtil.kIsDesktop,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          left: 8,
+                          right: 4,
+                        ),
+                        child: Container(
+                          height: 30,
+                          decoration: BoxDecoration(
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Colors.black.withOpacity(0.3)
+                                    : Colors.white.withOpacity(0.3),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: Row(
+                              children: [
+                                InkWell(
+                                  onTap: () async =>
+                                      await viewModel.minimizeWindow(),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    bottomLeft: Radius.circular(20),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                      vertical: 3,
+                                    ),
+                                    child: Icon(
+                                      Icons.minimize,
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.light
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                VerticalDivider(
+                                  indent: 6,
+                                  endIndent: 6,
+                                  width: 1,
+                                  color: Colors.white.withOpacity(0.3),
+                                ),
+                                InkWell(
+                                  onTap: () async =>
+                                      await viewModel.maximizeWindow(),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                      vertical: 3,
+                                    ),
+                                    child: Icon(
+                                      maxIcon,
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.light
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                VerticalDivider(
+                                  indent: 6,
+                                  endIndent: 6,
+                                  width: 1,
+                                  color: Colors.white.withOpacity(0.3),
+                                ),
+                                InkWell(
+                                  onTap: () async =>
+                                      await viewModel.closeWindow(),
+                                  borderRadius: const BorderRadius.only(
+                                    topRight: Radius.circular(20),
+                                    bottomRight: Radius.circular(20),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                      vertical: 3,
+                                    ),
+                                    child: Icon(
+                                      Icons.close,
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.light
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      padding: const EdgeInsets.only(
+                        left: 4,
+                        right: 8,
+                      ),
                       child: Container(
                         height: 30,
                         decoration: BoxDecoration(
@@ -242,62 +339,6 @@ class _AppOverlayState extends State<AppOverlay> with WindowListener {
                                 endIndent: 6,
                                 width: 1,
                                 color: Colors.white.withOpacity(0.3),
-                              ),
-                              Visibility(
-                                visible: kIsDesktop,
-                                child: InkWell(
-                                  onTap: viewModel.minimizeWindow,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 3,
-                                    ),
-                                    child: Icon(
-                                      Icons.minimize,
-                                      color: Theme.of(context).brightness ==
-                                              Brightness.light
-                                          ? Colors.white
-                                          : Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Visibility(
-                                visible: kIsDesktop,
-                                child: VerticalDivider(
-                                  indent: 6,
-                                  endIndent: 6,
-                                  width: 1,
-                                  color: Colors.white.withOpacity(0.3),
-                                ),
-                              ),
-                              Visibility(
-                                visible: kIsDesktop,
-                                child: InkWell(
-                                  onTap: viewModel.maximizeWindow,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 3,
-                                    ),
-                                    child: Icon(
-                                      maxIcon,
-                                      color: Theme.of(context).brightness ==
-                                              Brightness.light
-                                          ? Colors.white
-                                          : Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Visibility(
-                                visible: kIsDesktop,
-                                child: VerticalDivider(
-                                  indent: 6,
-                                  endIndent: 6,
-                                  width: 1,
-                                  color: Colors.white.withOpacity(0.3),
-                                ),
                               ),
                               InkWell(
                                 onTap: () async =>

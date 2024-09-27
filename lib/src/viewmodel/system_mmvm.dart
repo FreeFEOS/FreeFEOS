@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:window_manager/window_manager.dart';
@@ -77,12 +78,11 @@ abstract interface class ViewModelWrapper {
     PluginDetails details,
   );
 
-  GestureTapCallback? maximizeWindow();
-  GestureDragStartCallback? startDragging(
-    DragStartDetails _,
-  );
-  VoidCallback? closeWindow();
-  VoidCallback? minimizeWindow();
+  Future<void> maximizeWindow();
+  Future<void> startDragging();
+  Future<void> closeWindow();
+  Future<void> minimizeWindow();
+  Future<void> exitApp();
 }
 
 final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
@@ -467,30 +467,33 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
   }
 
   @override
-  GestureTapCallback? maximizeWindow() {
-    return () async {
-      if (kIsDesktop) {
-        if (!await windowManager.isMaximized()) {
-          await windowManager.maximize();
-        } else {
-          await windowManager.unmaximize();
-        }
-      }
-    };
+  Future<void> maximizeWindow() async {
+    if (PlatformUtil.kIsDesktop) {
+      return !await windowManager.isMaximized()
+          ? await windowManager.maximize()
+          : await windowManager.unmaximize();
+    }
   }
 
   @override
-  GestureDragStartCallback? startDragging(DragStartDetails _) {
-    return (_) async => await windowManager.startDragging();
+  Future<void> startDragging() async {
+    return await windowManager.startDragging();
   }
 
   @override
-  VoidCallback? closeWindow() {
-    return () async => await windowManager.destroy();
+  Future<void> closeWindow() async {
+    return await windowManager.close();
   }
 
   @override
-  VoidCallback? minimizeWindow() {
-    return () async => await windowManager.minimize();
+  Future<void> minimizeWindow() async {
+    return await windowManager.minimize();
+  }
+
+  @override
+  Future<void> exitApp() async {
+    return PlatformUtil.kIsDesktop
+        ? await windowManager.destroy()
+        : await SystemNavigator.pop();
   }
 }

@@ -120,25 +120,34 @@ class _SystemManagerState extends State<SystemManager> {
         () => _currentIndex = index,
       ),
       useDrawer: false,
-      appBar: AppBar(
-        title: Text(
-          IntlLocalizations.of(
-            context,
-          ).managerTitle,
-        ),
-        actions: [
-          Tooltip(
-            message: IntlLocalizations.of(
-              context,
-            ).bottomSheetTooltip,
-            child: Consumer<SystemViewModel>(
-              builder: (context, viewModel, child) => IconButton(
-                onPressed: () async => await viewModel.openBottomSheet(true),
-                icon: const Icon(Icons.more_vert),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: Consumer<SystemViewModel>(
+          builder: (context, viewModel, child) => GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onPanStart: (_) async => await viewModel.startDragging(),
+            onDoubleTap: () async => await viewModel.maximizeWindow(),
+            child: AppBar(
+              title: Text(
+                IntlLocalizations.of(
+                  context,
+                ).managerTitle,
               ),
+              actions: [
+                Tooltip(
+                  message: IntlLocalizations.of(
+                    context,
+                  ).bottomSheetTooltip,
+                  child: IconButton(
+                    onPressed: () async =>
+                        await viewModel.openBottomSheet(true),
+                    icon: const Icon(Icons.more_vert),
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
       appBarBreakpoint: Breakpoints.standard,
     );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../intl/l10n.dart';
+import '../viewmodel/system_mmvm.dart';
 
 class SystemSettings extends StatefulWidget {
   const SystemSettings({super.key, required this.isManager});
@@ -25,11 +27,22 @@ class _SystemSettingsState extends State<SystemSettings> {
     return Scaffold(
       appBar: widget.isManager
           ? null
-          : AppBar(
-              title: Text(
-                IntlLocalizations.of(
-                  context,
-                ).settingsTitle,
+          : PreferredSize(
+              preferredSize: const Size.fromHeight(kToolbarHeight),
+              child: Consumer<SystemViewModel>(
+                builder: (context, viewModel, child) => GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onPanStart: (_) async => await viewModel.startDragging(),
+                  onDoubleTap: () async => await viewModel.maximizeWindow(),
+                  child: child,
+                ),
+                child: AppBar(
+                  title: Text(
+                    IntlLocalizations.of(
+                      context,
+                    ).settingsTitle,
+                  ),
+                ),
               ),
             ),
       body: Scrollbar(
