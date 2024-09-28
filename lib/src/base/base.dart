@@ -24,6 +24,8 @@ import '../interface/system_interface.dart';
 import '../values/drawable.dart';
 import '../server/server.dart';
 
+// TODO: 完善注释
+// TODO: 还有应用信息页面
 /// 绑定层包装器
 abstract interface class BaseWrapper {
   /// 运行时入口
