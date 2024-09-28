@@ -16,7 +16,6 @@ import '../type/plugin_widget_gatter.dart';
 import '../type/runtiem_checker.dart';
 import '../utils/utils.dart';
 import '../values/url.dart';
-import '../widget/plugin.dart';
 
 abstract interface class ViewModelWrapper {
   /// 打开底部弹出菜单
@@ -450,23 +449,6 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
     return (details.type == PluginType.runtime ||
             details.type == PluginType.flutter) &&
         getPlugin(details) != null;
-  }
-
-  /// 打开插件
-  Future<dynamic> _launchPlugin(
-    BuildContext host,
-    PluginDetails details,
-  ) async {
-    return await Navigator.of(
-      host,
-      rootNavigator: true,
-    ).push(
-      MaterialPageRoute(
-        builder: (context) {
-          return const PluginUI();
-        },
-      ),
-    );
   }
 
   @override
