@@ -51,7 +51,6 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         title: const Text('Home'),
-        centerTitle: true,
       ),
       body: Center(
         child: Column(
@@ -107,7 +106,6 @@ class _DetailsPageState extends State<DetailsPage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         title: const Text('Details'),
-        centerTitle: true,
       ),
       body: Center(
         child: Column(

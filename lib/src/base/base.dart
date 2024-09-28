@@ -383,7 +383,6 @@ base class SystemBase extends ContextWrapper
       context: context,
       useRootNavigator: true,
       useSafeArea: true,
-      isScrollControlled: false,
       builder: (context) => buildBottomSheet(
         context,
         isManager,
