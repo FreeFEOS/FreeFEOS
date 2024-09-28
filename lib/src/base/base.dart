@@ -80,6 +80,8 @@ abstract interface class BaseWrapper {
   /// 构建设置界面
   Widget buildSettings(BuildContext context);
 
+  Widget buildPlugin(BuildContext context);
+
   /// 打开应用
   void launchApplication();
 
@@ -97,6 +99,8 @@ abstract interface class BaseWrapper {
 
   /// 打开设置
   Future<dynamic> launchSettings();
+
+  Future<dynamic> launchPlugin();
 
   /// 执行引擎插件方法
   Future<dynamic> execEngine(
@@ -363,6 +367,11 @@ base class SystemBase extends ContextWrapper
     return const Placeholder();
   }
 
+  @override
+  Widget buildPlugin(BuildContext context) {
+    return const Placeholder();
+  }
+
   /// 打开应用
   @protected
   @override
@@ -433,6 +442,14 @@ base class SystemBase extends ContextWrapper
       context,
       rootNavigator: true,
     ).pushNamed(routeSettings);
+  }
+
+  @override
+  Future<dynamic> launchPlugin() async {
+    return await Navigator.of(
+      context,
+      rootNavigator: true,
+    ).pushNamed(routePlugin);
   }
 
   /// 执行引擎方法

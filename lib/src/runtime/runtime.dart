@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:freefeos/src/widget/plugin.dart';
 
 import '../base/base.dart';
 import '../framework/log.dart';
@@ -119,9 +120,10 @@ final class SystemRuntime extends SystemBase {
       launchExitDialog: super.launchExitDialog,
       launchManager: super.launchManager,
       launchSettings: super.launchSettings,
+      launchPlugin: super.launchPlugin,
       pluginDetailsList: _pluginDetailsList,
       getPlugin: _getPlugin,
-      getPluginWidget: _getPluginWidget,
+      pluginWidgetGetter: _getPluginWidget,
       isRuntime: _isRuntime,
     );
   }
@@ -134,6 +136,7 @@ final class SystemRuntime extends SystemBase {
       attach: super.attachContext,
       manager: buildManager,
       settings: buildSettings,
+      plugin: buildPlugin,
       child: child,
     );
   }
@@ -178,6 +181,11 @@ final class SystemRuntime extends SystemBase {
     return const SystemSettings(
       isManager: false,
     );
+  }
+
+  @override
+  Widget buildPlugin(BuildContext context) {
+    return const PluginUI();
   }
 
   /// 执行插件方法

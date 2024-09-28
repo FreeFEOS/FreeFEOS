@@ -84,8 +84,12 @@ abstract interface class ViewModelWrapper {
   Future<void> closeWindow();
   Future<void> minimizeWindow();
   Future<void> exitApp();
+
+  PluginDetails get getCurrentDetails;
+  PluginWidgetGetter get getPluginWidget;
 }
 
+// TODO:改改名
 final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
   SystemViewModel({
     required this.context,
@@ -95,9 +99,10 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
     required this.launchExitDialog,
     required this.launchManager,
     required this.launchSettings,
+    required this.launchPlugin,
     required this.pluginDetailsList,
     required this.getPlugin,
-    required this.getPluginWidget,
+    required this.pluginWidgetGetter,
     required this.isRuntime,
   });
 
@@ -122,6 +127,8 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
   /// 打开设置
   final NavigatorLauncher launchSettings;
 
+  final NavigatorLauncher launchPlugin;
+
   /// 插件列表
   final List<PluginDetails> pluginDetailsList;
 
@@ -129,10 +136,12 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
   final PluginGetter getPlugin;
 
   /// 获取插件界面
-  final PluginWidgetGetter getPluginWidget;
+  final PluginWidgetGetter pluginWidgetGetter;
 
   /// 判断是否运行时
   final RuntimeChecker isRuntime;
+
+  PluginDetails? _currentDetails;
 
   /// 打开底部弹出菜单
   @override
@@ -426,7 +435,8 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
         ? () async {
             if (!isRuntime(details)) {
               // 非运行时打开插件页面
-              await _launchPlugin(context, details);
+              _currentDetails = details;
+              await launchPlugin();
             } else {
               // 运行时打开关于对话框
               await launchAboutDiialog(true);
@@ -453,13 +463,7 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
     ).push(
       MaterialPageRoute(
         builder: (context) {
-          return PluginUI(
-            title: details.title,
-            child: getPluginWidget(
-              context,
-              details,
-            ),
-          );
+          return const PluginUI();
         },
       ),
     );
@@ -501,4 +505,18 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
         ? await windowManager.destroy()
         : await SystemNavigator.pop();
   }
+
+  @override
+  PluginDetails get getCurrentDetails {
+    assert(() {
+      if (_currentDetails == null) {
+        throw Exception('currentDetails is null.');
+      }
+      return true;
+    }());
+    return _currentDetails!;
+  }
+
+  @override
+  PluginWidgetGetter get getPluginWidget => pluginWidgetGetter;
 }

@@ -19,6 +19,7 @@ class SystemUI extends StatefulWidget {
     required this.attach,
     required this.manager,
     required this.settings,
+    required this.plugin,
     required this.child,
   });
 
@@ -26,6 +27,7 @@ class SystemUI extends StatefulWidget {
   final ContextAttacher attach;
   final WidgetBuilder manager;
   final WidgetBuilder settings;
+  final WidgetBuilder plugin;
   final Widget child;
 
   @override
@@ -303,6 +305,13 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
             ),
           );
         },
+        routePlugin: (context) {
+          return Material(
+            child: widget.plugin(
+              context,
+            ),
+          );
+        }
       },
       builder: (context, child) => Theme(
         data: ThemeData(
