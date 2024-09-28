@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:freefeos/src/utils/utils.dart';
 import 'package:window_manager/window_manager.dart';
 
 import '../embedder/embedder_mixin.dart';
@@ -13,13 +12,12 @@ import '../runtime/runtime.dart';
 import '../type/api_builder.dart';
 import '../type/app_runner.dart';
 import '../type/plugin_list.dart';
+import '../utils/utils.dart';
 import '../values/channel.dart';
 import '../values/route.dart';
 import '../values/strings.dart';
 import '../values/tag.dart';
-
 import '../framework/log.dart';
-
 import '../interface/system_interface.dart';
 import '../values/drawable.dart';
 import '../server/server.dart';
