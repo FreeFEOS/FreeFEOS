@@ -388,7 +388,7 @@ class _HomePageState extends State<HomePage> {
                                   title: IntlLocalizations.of(
                                     context,
                                   ).managerHomeInfoPluginCount,
-                                  subtitle: viewModel.pluginCount().toString(),
+                                  subtitle: viewModel.pluginCount(),
                                 ),
                                 Row(
                                   mainAxisSize: MainAxisSize.max,

@@ -11,7 +11,7 @@ class InfoPage extends StatelessWidget {
     return Consumer<SystemViewModel>(
       builder: (context, viewModel, child) => Scaffold(
         appBar: AppBar(
-          title: Text('Info'),
+          title: const Text('Info'),
         ),
         body: Column(
           children: [
@@ -19,14 +19,15 @@ class InfoPage extends StatelessWidget {
               onPressed: () {
                 viewModel.openApplication();
               },
-              child: Text('app'),
+              child: const Text('app'),
             ),
             FilledButton(
               onPressed: () {
                 viewModel.openManager();
               },
-              child: Text('mgr'),
-            )
+              child: const Text('mgr'),
+            ),
+            Text(viewModel.pluginNames()),
           ],
         ),
       ),

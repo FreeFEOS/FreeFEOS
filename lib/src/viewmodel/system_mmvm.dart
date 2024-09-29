@@ -40,7 +40,9 @@ abstract interface class ViewModelWrapper {
   Future<String> getAppVersion();
 
   /// 统计普通插件数量
-  int pluginCount();
+  String pluginCount();
+
+  String pluginNames();
 
   /// 打开PubDev
   Future<bool> launchPubDev();
@@ -218,22 +220,23 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
 
   /// 统计普通插件数量
   @override
-  int pluginCount() {
+  String pluginCount() {
     var count = 0;
     for (var element in pluginDetailsList) {
       if (element.type == PluginType.flutter) {
         count++;
       }
     }
-    return count;
+    return count.toString();
   }
 
   /// 获取所有普通插件名称的集合
+  @override
   String pluginNames() {
     final buffer = StringBuffer();
     for (var element in pluginDetailsList) {
       if (element.type == PluginType.flutter) {
-        buffer.write('${element.title}, ');
+        buffer.write('${element.title}\n');
       }
     }
     return buffer.toString();

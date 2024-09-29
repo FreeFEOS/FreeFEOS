@@ -21,7 +21,7 @@ import '../values/drawable.dart';
 import '../server/server.dart';
 
 // TODO: 完善注释
-// TODO: 还有应用信息页面
+// TODO: WebView页面
 /// 绑定层包装器
 abstract interface class BaseWrapper {
   /// 运行时入口
@@ -387,7 +387,7 @@ base class SystemBase extends ContextWrapper
       context,
       rootNavigator: true,
     ).popUntil(
-      ModalRoute.withName(routeApp),
+      ModalRoute.withName(routeRoot),
     );
   }
 
@@ -438,7 +438,12 @@ base class SystemBase extends ContextWrapper
     return await Navigator.of(
       context,
       rootNavigator: true,
-    ).pushNamed(routeManager);
+    ).pushNamedAndRemoveUntil(
+      routeManager,
+      ModalRoute.withName(
+        routeRoot,
+      ), // 移除所有页面历史记录
+    );
   }
 
   /// 打开设置
@@ -464,7 +469,12 @@ base class SystemBase extends ContextWrapper
     return await Navigator.of(
       context,
       rootNavigator: true,
-    ).pushNamed(routeInfo);
+    ).pushNamedAndRemoveUntil(
+      routeInfo,
+      ModalRoute.withName(
+        routeRoot,
+      ), // 移除所有页面历史记录
+    );
   }
 
   /// 执行引擎方法
