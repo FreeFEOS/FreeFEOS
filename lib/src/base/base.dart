@@ -9,9 +9,7 @@ import '../framework/context.dart';
 import '../kernel/kernel.dart';
 import '../plugin/plugin_runtime.dart';
 import '../runtime/runtime.dart';
-import '../type/api_builder.dart';
-import '../type/app_runner.dart';
-import '../type/plugin_list.dart';
+import '../type/types.dart';
 import '../utils/utils.dart';
 import '../values/channel.dart';
 import '../values/route.dart';
@@ -82,6 +80,8 @@ abstract interface class BaseWrapper {
 
   Widget buildPlugin(BuildContext context);
 
+  Widget buildInfo(BuildContext context);
+
   /// 打开应用
   void launchApplication();
 
@@ -101,6 +101,8 @@ abstract interface class BaseWrapper {
   Future<dynamic> launchSettings();
 
   Future<dynamic> launchPlugin();
+
+  Future<dynamic> launchInfo();
 
   /// 执行引擎插件方法
   Future<dynamic> execEngine(
@@ -372,6 +374,11 @@ base class SystemBase extends ContextWrapper
     return const Placeholder();
   }
 
+  @override
+  Widget buildInfo(BuildContext context) {
+    return const Placeholder();
+  }
+
   /// 打开应用
   @protected
   @override
@@ -450,6 +457,14 @@ base class SystemBase extends ContextWrapper
       context,
       rootNavigator: true,
     ).pushNamed(routePlugin);
+  }
+
+  @override
+  Future launchInfo() async {
+    return await Navigator.of(
+      context,
+      rootNavigator: true,
+    ).pushNamed(routeInfo);
   }
 
   /// 执行引擎方法

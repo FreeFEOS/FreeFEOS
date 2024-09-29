@@ -6,7 +6,7 @@ import 'package:logging/logging.dart';
 
 import '../event/event_buffer.dart';
 import '../event/output_event.dart';
-import '../type/logger_listener.dart';
+import '../type/types.dart';
 
 final class Log {
   static bool _instanced = false;

@@ -3,9 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:freefeos/src/entry/default_entry.dart';
 import 'package:freefeos/src/interface/system_interface.dart';
 import 'package:freefeos/src/plugin/plugin_runtime.dart';
-import 'package:freefeos/src/type/api_builder.dart';
-import 'package:freefeos/src/type/app_runner.dart';
-import 'package:freefeos/src/type/plugin_list.dart';
+import 'package:freefeos/src/type/types.dart';
 import 'package:freefeos/src/values/strings.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 

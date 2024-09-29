@@ -205,6 +205,7 @@ class SystemSheet extends StatelessWidget {
                                 context,
                                 rootNavigator: true,
                               ).pop();
+                              await viewModel.openInfo();
                             },
                             icon: Icons.info_outline,
                             label: '应用信息',

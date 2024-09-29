@@ -5,8 +5,7 @@ import 'package:toastification/toastification.dart';
 import 'package:window_manager/window_manager.dart';
 
 import '../intl/l10n.dart';
-import '../type/context_attacher.dart';
-import '../type/view_model_builder.dart';
+import '../type/types.dart';
 import '../utils/utils.dart';
 import '../values/route.dart';
 import '../values/strings.dart';
@@ -20,6 +19,7 @@ class SystemUI extends StatefulWidget {
     required this.manager,
     required this.settings,
     required this.plugin,
+    required this.info,
     required this.child,
   });
 
@@ -28,6 +28,7 @@ class SystemUI extends StatefulWidget {
   final WidgetBuilder manager;
   final WidgetBuilder settings;
   final WidgetBuilder plugin;
+  final WidgetBuilder info;
   final Widget child;
 
   @override
@@ -308,6 +309,13 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
         routePlugin: (context) {
           return Material(
             child: widget.plugin(
+              context,
+            ),
+          );
+        },
+        routeInfo: (context) {
+          return Material(
+            child: widget.info(
               context,
             ),
           );

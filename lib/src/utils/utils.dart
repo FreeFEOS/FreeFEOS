@@ -17,7 +17,7 @@ final class PlatformUtil {
 }
 
 /// 心灵毒鸡汤
-class Poem {
+class PoemUtils {
   /// 随机抽取一句
   String get getPoem => _list[Random().nextInt(_list.length)];
 
@@ -37,5 +37,5 @@ class Poem {
 }
 
 extension UIUtils on Widget {
-  List<Widget> toList() => [this];
+  List<Widget> toWidgetList() => [this];
 }

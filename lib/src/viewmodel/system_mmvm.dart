@@ -8,12 +8,7 @@ import 'package:window_manager/window_manager.dart';
 import '../intl/l10n.dart';
 import '../plugin/plugin_details.dart';
 import '../plugin/plugin_type.dart';
-import '../type/about_dialog_launcher.dart';
-import '../type/bottom_sheet_launcher.dart';
-import '../type/navigator_launcher.dart';
-import '../type/plugin_getter.dart';
-import '../type/plugin_widget_gatter.dart';
-import '../type/runtiem_checker.dart';
+import '../type/types.dart';
 import '../utils/utils.dart';
 import '../values/url.dart';
 
@@ -35,6 +30,8 @@ abstract interface class ViewModelWrapper {
 
   /// 打开设置
   Future<dynamic> openSettings();
+
+  Future<dynamic> openInfo();
 
   /// 获取应用名称
   Future<String> getAppName();
@@ -78,104 +75,125 @@ abstract interface class ViewModelWrapper {
     PluginDetails details,
   );
 
+  /// 最大化窗口
   Future<void> maximizeWindow();
+
+  /// 拖动窗口
   Future<void> startDragging();
+
+  /// 关闭窗口
   Future<void> closeWindow();
+
+  /// 最小化窗口
   Future<void> minimizeWindow();
+
+  /// 退出
   Future<void> exitApp();
 
+  /// 获取当前插件的详细信息
   PluginDetails get getCurrentDetails;
+
+  /// 获取插件界面
   PluginWidgetGetter get getPluginWidget;
 }
 
-// TODO:改改名
 final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
   SystemViewModel({
     required this.context,
-    required this.launchApplication,
-    required this.launchBottomSheet,
-    required this.launchAboutDiialog,
-    required this.launchExitDialog,
-    required this.launchManager,
-    required this.launchSettings,
-    required this.launchPlugin,
+    required this.applicationLauncher,
+    required this.bottomSheetLauncher,
+    required this.aboutDiialogLauncher,
+    required this.exitDialogLauncher,
+    required this.managerLauncher,
+    required this.settingsLauncher,
+    required this.pluginLauncher,
+    required this.infoLauncher,
     required this.pluginDetailsList,
-    required this.getPlugin,
+    required this.pluginGetter,
     required this.pluginWidgetGetter,
-    required this.isRuntime,
+    required this.runtimeChecker,
   });
 
   /// 上下文
   final BuildContext context;
 
   /// 进入应用
-  final VoidCallback launchApplication;
+  final VoidCallback applicationLauncher;
 
   /// 打开底部弹出菜单
-  final BottomSheetLauncher launchBottomSheet;
+  final BottomSheetLauncher bottomSheetLauncher;
 
   /// 打开应用信息
-  final AboutDialogLaunch launchAboutDiialog;
+  final AboutDialogLauncher aboutDiialogLauncher;
 
   /// 打开退出应用对话框
-  final NavigatorLauncher launchExitDialog;
+  final NavigatorLauncher exitDialogLauncher;
 
   /// 打开管理器
-  final NavigatorLauncher launchManager;
+  final NavigatorLauncher managerLauncher;
 
   /// 打开设置
-  final NavigatorLauncher launchSettings;
+  final NavigatorLauncher settingsLauncher;
 
-  final NavigatorLauncher launchPlugin;
+  /// 打开插件界面
+  final NavigatorLauncher pluginLauncher;
+
+  final NavigatorLauncher infoLauncher;
 
   /// 插件列表
   final List<PluginDetails> pluginDetailsList;
 
   /// 获取插件
-  final PluginGetter getPlugin;
+  final PluginGetter pluginGetter;
 
   /// 获取插件界面
   final PluginWidgetGetter pluginWidgetGetter;
 
   /// 判断是否运行时
-  final RuntimeChecker isRuntime;
+  final RuntimeChecker runtimeChecker;
 
+  /// 当前插件的详细信息 [PluginUI] 用
   PluginDetails? _currentDetails;
 
   /// 打开底部弹出菜单
   @override
-  Future<dynamic> openBottomSheet(bool isManager) async {
-    return await launchBottomSheet(isManager);
+  Future<dynamic> openBottomSheet(bool isManager) {
+    return bottomSheetLauncher(isManager);
   }
 
   /// 打开应用信息
   @override
-  Future<dynamic> openAboutDialog(bool isPackage) async {
-    return await launchAboutDiialog(isPackage);
+  Future<dynamic> openAboutDialog(bool isPackage) {
+    return aboutDiialogLauncher(isPackage);
   }
 
   /// 打开退出应用对话框
   @override
-  Future<dynamic> openExitDialog() async {
-    return await launchExitDialog();
+  Future<dynamic> openExitDialog() {
+    return exitDialogLauncher();
   }
 
   /// 进入应用
   @override
   void openApplication() {
-    return launchApplication();
+    return applicationLauncher();
   }
 
   /// 打开管理器
   @override
-  Future<dynamic> openManager() async {
-    return await launchManager();
+  Future<dynamic> openManager() {
+    return managerLauncher();
   }
 
   /// 打开设置
   @override
-  Future<dynamic> openSettings() async {
-    return await launchSettings();
+  Future<dynamic> openSettings() {
+    return settingsLauncher();
+  }
+
+  @override
+  Future openInfo() {
+    return infoLauncher();
   }
 
   /// 获取应用名称
@@ -210,6 +228,7 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
     return count;
   }
 
+  /// 获取所有普通插件名称的集合
   String pluginNames() {
     final buffer = StringBuffer();
     for (var element in pluginDetailsList) {
@@ -392,7 +411,7 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
     PluginDetails details,
   ) {
     return _isAllowPush(details)
-        ? isRuntime(details)
+        ? runtimeChecker(details)
             ? IntlLocalizations.of(
                 context,
               ).managerPluginActionAbout
@@ -411,7 +430,7 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
     PluginDetails details,
   ) {
     return _isAllowPush(details)
-        ? isRuntime(details)
+        ? runtimeChecker(details)
             ? IntlLocalizations.of(
                 context,
               ).managerPluginTooltipAbout
@@ -432,13 +451,13 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
     // 无法打开的返回空
     return _isAllowPush(details)
         ? () async {
-            if (!isRuntime(details)) {
+            if (!runtimeChecker(details)) {
               // 非运行时打开插件页面
               _currentDetails = details;
-              await launchPlugin();
+              await pluginLauncher();
             } else {
               // 运行时打开关于对话框
-              await launchAboutDiialog(true);
+              await aboutDiialogLauncher(true);
             }
           }
         : null;
@@ -448,7 +467,7 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
   bool _isAllowPush(PluginDetails details) {
     return (details.type == PluginType.runtime ||
             details.type == PluginType.flutter) &&
-        getPlugin(details) != null;
+        pluginGetter(details) != null;
   }
 
   @override

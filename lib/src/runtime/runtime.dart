@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:freefeos/src/widget/info.dart';
 import 'package:freefeos/src/widget/plugin.dart';
 
 import '../base/base.dart';
@@ -114,17 +115,18 @@ final class SystemRuntime extends SystemBase {
   ChangeNotifier buildViewModel(BuildContext context) {
     return SystemViewModel(
       context: context,
-      launchApplication: super.launchApplication,
-      launchBottomSheet: super.launchBottomSheet,
-      launchAboutDiialog: super.launchAboutDiialog,
-      launchExitDialog: super.launchExitDialog,
-      launchManager: super.launchManager,
-      launchSettings: super.launchSettings,
-      launchPlugin: super.launchPlugin,
+      applicationLauncher: super.launchApplication,
+      bottomSheetLauncher: super.launchBottomSheet,
+      aboutDiialogLauncher: super.launchAboutDiialog,
+      exitDialogLauncher: super.launchExitDialog,
+      managerLauncher: super.launchManager,
+      settingsLauncher: super.launchSettings,
+      pluginLauncher: super.launchPlugin,
+      infoLauncher: super.launchInfo,
       pluginDetailsList: _pluginDetailsList,
-      getPlugin: _getPlugin,
+      pluginGetter: _getPlugin,
       pluginWidgetGetter: _getPluginWidget,
-      isRuntime: _isRuntime,
+      runtimeChecker: _isRuntime,
     );
   }
 
@@ -137,6 +139,7 @@ final class SystemRuntime extends SystemBase {
       manager: buildManager,
       settings: buildSettings,
       plugin: buildPlugin,
+      info: buildInfo,
       child: child,
     );
   }
@@ -186,6 +189,11 @@ final class SystemRuntime extends SystemBase {
   @override
   Widget buildPlugin(BuildContext context) {
     return const PluginUI();
+  }
+
+  @override
+  Widget buildInfo(BuildContext context) {
+    return const InfoPage();
   }
 
   /// 执行插件方法
