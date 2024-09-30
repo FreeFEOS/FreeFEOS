@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'package:provider/provider.dart';
 import 'package:toastification/toastification.dart';
 import 'package:window_manager/window_manager.dart';
 
+import '../framework/context.dart';
 import '../intl/l10n.dart';
 import '../type/types.dart';
 import '../utils/utils.dart';
@@ -25,10 +27,10 @@ class SystemUI extends StatefulWidget {
 
   final ViewModelBuilder viewModel;
   final ContextAttacher attach;
-  final WidgetBuilder manager;
-  final WidgetBuilder settings;
-  final WidgetBuilder plugin;
-  final WidgetBuilder info;
+  final Layout manager;
+  final Layout settings;
+  final Layout plugin;
+  final Layout info;
   final Widget child;
 
   @override
@@ -294,30 +296,22 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
       routes: {
         routeManager: (context) {
           return Material(
-            child: widget.manager(
-              context,
-            ),
+            child: widget.manager,
           );
         },
         routeSettings: (context) {
           return Material(
-            child: widget.settings(
-              context,
-            ),
+            child: widget.settings,
           );
         },
         routePlugin: (context) {
           return Material(
-            child: widget.plugin(
-              context,
-            ),
+            child: widget.plugin,
           );
         },
         routeInfo: (context) {
           return Material(
-            child: widget.info(
-              context,
-            ),
+            child: widget.info,
           );
         }
       },

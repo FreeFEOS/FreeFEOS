@@ -3,14 +3,68 @@ import 'package:flutter/widgets.dart';
 import 'want.dart';
 import 'service.dart';
 
+final class Layout extends Widget {
+  const Layout({
+    super.key,
+    required this.layout,
+  });
+
+  final Widget layout;
+
+  @override
+  Element createElement() {
+    return LayoutElement(
+      this,
+      layout,
+    );
+  }
+}
+
+class LayoutElement extends ComponentElement {
+  LayoutElement(super.widget, this.layout);
+
+  final Widget layout;
+
+  @override
+  Widget build() => layout;
+
+  @override
+  void update(Layout newWidget) {
+    super.update(newWidget);
+    assert(widget == newWidget);
+    rebuild(force: true);
+  }
+}
+
+final class Resources {
+  const Resources();
+
+  Layout getLayout({
+    required Widget layout,
+  }) {
+    return Layout(
+      layout: layout,
+    );
+  }
+
+  Layout layoutPlaceholder() {
+    return const Layout(
+      layout: Placeholder(),
+    );
+  }
+}
+
 abstract base class Context {
   void startService(Want want);
   void stopService(Want want);
   void bindService(Want want, ServiceConnection connect);
   void unbindService(Want want);
+  Resources get getResources;
 }
 
 final class ContextImpl extends Context {
+  static const res = Resources();
+
   @override
   void startService(Want want) {
     want.getService().onCreate();
@@ -31,6 +85,9 @@ final class ContextImpl extends Context {
   void unbindService(Want want) {
     want.getService().onUnbind(want);
   }
+
+  @override
+  Resources get getResources => res;
 }
 
 base class ContextWrapper extends Context {
@@ -90,5 +147,16 @@ base class ContextWrapper extends Context {
   @override
   void unbindService(Want want) {
     mBase?.unbindService(want);
+  }
+
+  @override
+  Resources get getResources {
+    assert(() {
+      if (mBase == null) {
+        throw FlutterError('基本上下文为空!');
+      }
+      return true;
+    }());
+    return mBase!.getResources;
   }
 }

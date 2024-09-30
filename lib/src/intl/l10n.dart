@@ -90,10 +90,10 @@ class IntlLocalizations {
     );
   }
 
-  /// `FreeFEOS`
+  /// `FREEFEOS`
   String get bannerTitle {
     return Intl.message(
-      'FreeFEOS',
+      'FREEFEOS',
       name: 'bannerTitle',
       desc: '',
       args: [],

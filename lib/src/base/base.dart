@@ -49,38 +49,38 @@ abstract interface class BaseWrapper {
   void attachContext(BuildContext host);
 
   /// 获取App
-  Widget buildApplication();
+  Layout buildApplication();
 
   /// 构建View Model
   ChangeNotifier buildViewModel(BuildContext context);
 
   /// 构建App
-  Widget buildSystemUI(Widget child);
+  Layout buildSystemUI(Widget child);
 
   /// 构建底部弹出菜单
-  Widget buildBottomSheet(
+  Layout buildBottomSheet(
     BuildContext context,
     bool isManager,
   );
 
   ///  构建关于对话框
-  Widget buildAboutDialog(
+  Layout buildAboutDialog(
     BuildContext context,
     bool isPackage,
   );
 
   /// 构建退出对话框
-  Widget buildExitDialog(BuildContext context);
+  Layout buildExitDialog(BuildContext context);
 
   /// 获取管理器
-  Widget buildManager(BuildContext context);
+  Layout buildManager();
 
   /// 构建设置界面
-  Widget buildSettings(BuildContext context);
+  Layout buildSettings();
 
-  Widget buildPlugin(BuildContext context);
+  Layout buildPlugin();
 
-  Widget buildInfo(BuildContext context);
+  Layout buildInfo();
 
   /// 打开应用
   void launchApplication();
@@ -303,9 +303,11 @@ base class SystemBase extends ContextWrapper
 
   /// 获取应用
   @override
-  Widget buildApplication() {
-    return Builder(
-      builder: pluginWidget,
+  Layout buildApplication() {
+    return getResources.getLayout(
+      layout: Builder(
+        builder: pluginWidget,
+      ),
     );
   }
 
@@ -317,24 +319,28 @@ base class SystemBase extends ContextWrapper
 
   /// 构建应用
   @override
-  Widget buildSystemUI(Widget child) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints.expand(),
-      child: child,
+  Layout buildSystemUI(Widget child) {
+    return getResources.getLayout(
+      layout: ConstrainedBox(
+        constraints: const BoxConstraints.expand(),
+        child: child,
+      ),
     );
   }
 
   /// 构建底部弹出菜单
   @override
-  Widget buildBottomSheet(
+  Layout buildBottomSheet(
     BuildContext context,
     bool isManager,
   ) {
-    return Expanded(
-      child: Center(
-        child: ListTile(
-          leading: const Icon(Icons.error_outline),
-          title: Text(isManager.toString()),
+    return getResources.getLayout(
+      layout: Expanded(
+        child: Center(
+          child: ListTile(
+            leading: const Icon(Icons.error_outline),
+            title: Text(isManager.toString()),
+          ),
         ),
       ),
     );
@@ -342,41 +348,45 @@ base class SystemBase extends ContextWrapper
 
   /// 构建关于对话框
   @override
-  Widget buildAboutDialog(
+  Layout buildAboutDialog(
     BuildContext context,
     bool isPackage,
   ) {
-    return const AboutDialog();
+    return getResources.getLayout(
+      layout: const AboutDialog(),
+    );
   }
 
   /// 构建退出对话框
   @override
-  Widget buildExitDialog(BuildContext context) {
-    return const AlertDialog(
-      content: Placeholder(),
+  Layout buildExitDialog(BuildContext context) {
+    return getResources.getLayout(
+      layout: const AlertDialog(
+        content: Placeholder(),
+      ),
     );
   }
 
   /// 获取管理器
   @override
-  Widget buildManager(BuildContext context) {
-    return const Placeholder();
+  Layout buildManager() {
+    return getResources.layoutPlaceholder();
   }
 
   /// 构建设置
   @override
-  Widget buildSettings(BuildContext context) {
-    return const Placeholder();
+  Layout buildSettings() {
+    return getResources.layoutPlaceholder();
   }
 
   @override
-  Widget buildPlugin(BuildContext context) {
-    return const Placeholder();
+  Layout buildPlugin() {
+    return getResources.layoutPlaceholder();
   }
 
   @override
-  Widget buildInfo(BuildContext context) {
-    return const Placeholder();
+  Layout buildInfo() {
+    return getResources.layoutPlaceholder();
   }
 
   /// 打开应用

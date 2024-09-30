@@ -27,7 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "aboutPackageDescription":
             MessageLookupByLibrary.simpleMessage("FreeFEOS Flutter Package"),
         "aboutPackageName": MessageLookupByLibrary.simpleMessage("FreeFEOS"),
-        "bannerTitle": MessageLookupByLibrary.simpleMessage("FreeFEOS"),
+        "bannerTitle": MessageLookupByLibrary.simpleMessage("FREEFEOS"),
         "bottomSheetAboutTooltip":
             MessageLookupByLibrary.simpleMessage("打开关于对话框"),
         "bottomSheetClose": MessageLookupByLibrary.simpleMessage("取消"),

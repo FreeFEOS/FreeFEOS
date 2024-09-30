@@ -5,6 +5,7 @@ import 'package:freefeos/src/widget/info.dart';
 import 'package:freefeos/src/widget/plugin.dart';
 
 import '../base/base.dart';
+import '../framework/context.dart';
 import '../framework/log.dart';
 import '../interface/system_interface.dart';
 import '../plugin/plugin_details.dart';
@@ -94,19 +95,21 @@ final class SystemRuntime extends SystemBase {
 
   /// 获取App
   @override
-  Widget buildApplication() {
-    return Builder(
-      builder: (context) {
-        for (var element in _pluginDetailsList) {
-          if (_isRuntime(element)) {
-            return _getPluginWidget(
-              context,
-              element,
-            );
+  Layout buildApplication() {
+    return getResources.getLayout(
+      layout: Builder(
+        builder: (context) {
+          for (var element in _pluginDetailsList) {
+            if (_isRuntime(element)) {
+              return _getPluginWidget(
+                context,
+                element,
+              );
+            }
           }
-        }
-        return super.buildManager(context);
-      },
+          return super.buildManager();
+        },
+      ),
     );
   }
 
@@ -132,68 +135,84 @@ final class SystemRuntime extends SystemBase {
 
   /// 构建应用
   @override
-  Widget buildSystemUI(Widget child) {
-    return SystemUI(
-      viewModel: buildViewModel,
-      attach: super.attachContext,
-      manager: buildManager,
-      settings: buildSettings,
-      plugin: buildPlugin,
-      info: buildInfo,
-      child: child,
+  Layout buildSystemUI(Widget child) {
+    return getResources.getLayout(
+      layout: SystemUI(
+        viewModel: buildViewModel,
+        attach: super.attachContext,
+        manager: buildManager(),
+        settings: buildSettings(),
+        plugin: buildPlugin(),
+        info: buildInfo(),
+        child: child,
+      ),
     );
   }
 
   /// 构建调试菜单
   @override
-  Widget buildBottomSheet(
+  Layout buildBottomSheet(
     BuildContext context,
     bool isManager,
   ) {
-    return SystemSheet(
-      isManager: isManager,
+    return getResources.getLayout(
+      layout: SystemSheet(
+        isManager: isManager,
+      ),
     );
   }
 
   /// 构建关于对话框
   @override
-  Widget buildAboutDialog(
+  Layout buildAboutDialog(
     BuildContext context,
     bool isPackage,
   ) {
-    return SystemAbout(
-      isPackage: isPackage,
+    return getResources.getLayout(
+      layout: SystemAbout(
+        isPackage: isPackage,
+      ),
     );
   }
 
   /// 构建退出对话框
   @override
-  Widget buildExitDialog(BuildContext context) {
-    return const SystemExit();
+  Layout buildExitDialog(BuildContext context) {
+    return getResources.getLayout(
+      layout: const SystemExit(),
+    );
   }
 
   /// 构建管理器布局
   @override
-  Widget buildManager(BuildContext context) {
-    return const SystemManager();
+  Layout buildManager() {
+    return getResources.getLayout(
+      layout: const SystemManager(),
+    );
   }
 
   /// 构建设置
   @override
-  Widget buildSettings(BuildContext context) {
-    return const SystemSettings(
-      isManager: false,
+  Layout buildSettings() {
+    return getResources.getLayout(
+      layout: const SystemSettings(
+        isManager: false,
+      ),
     );
   }
 
   @override
-  Widget buildPlugin(BuildContext context) {
-    return const PluginUI();
+  Layout buildPlugin() {
+    return getResources.getLayout(
+      layout: const PluginUI(),
+    );
   }
 
   @override
-  Widget buildInfo(BuildContext context) {
-    return const InfoPage();
+  Layout buildInfo() {
+    return getResources.getLayout(
+      layout: const InfoPage(),
+    );
   }
 
   /// 执行插件方法
