@@ -107,7 +107,7 @@ final class SystemRuntime extends SystemBase {
               );
             }
           }
-          return super.buildManager();
+          return super.buildApplication();
         },
       ),
     );
