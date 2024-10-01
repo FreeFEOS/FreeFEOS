@@ -17,7 +17,7 @@ final class DefaultEntry extends FreeFEOSInterface {
     required SystemConfig config,
     required Widget app,
     required dynamic error,
-  }) async {
+  }) {
     return (config.enabled ?? false)
         ? () async {
             try {
@@ -38,8 +38,9 @@ final class DefaultEntry extends FreeFEOSInterface {
                   return await null;
                 },
               );
-              return await (import.runner ?? (app) async => runApp(app))(app)
-                  .then(
+              return await (import.runner ?? (app) async => runApp(app))(
+                app,
+              ).then(
                 (_) => Log.w(
                   tag: entryTag,
                   message: '不支持当前平台,\n'

@@ -136,7 +136,9 @@ base mixin AppMixin implements BaseWrapper {
 base mixin BaseEntry implements FreeFEOSInterface {
   /// 执行接口
   @override
-  FreeFEOSInterface get interface => SystemBase()();
+  FreeFEOSInterface get interface {
+    return SystemBase()();
+  }
 }
 
 /// 绑定层混入
