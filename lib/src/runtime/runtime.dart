@@ -1,8 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:freefeos/src/widget/info.dart';
-import 'package:freefeos/src/widget/plugin.dart';
 
 import '../base/base.dart';
 import '../framework/context.dart';
@@ -18,6 +16,8 @@ import '../values/strings.dart';
 import '../values/tag.dart';
 import '../viewmodel/system_mmvm.dart';
 import '../widget/about.dart';
+import '../widget/info.dart';
+import '../widget/plugin.dart';
 import '../widget/ui.dart';
 import '../widget/exit.dart';
 import '../widget/manager.dart';
@@ -40,11 +40,7 @@ final class SystemRuntime extends SystemBase {
   final List<PluginDetails> _pluginDetailsList = [];
 
   /// 内部插件列表
-  List<RuntimePlugin> get innerList => [
-        super.base,
-        this,
-        super.embedder,
-      ];
+  List<RuntimePlugin> get innerList => [super.base, this, super.embedder];
 
   /// 插件通道
   @override
@@ -96,7 +92,7 @@ final class SystemRuntime extends SystemBase {
   /// 获取App
   @override
   Layout buildApplication() {
-    return getResources.getLayout(
+    return resources.getLayout(
       layout: Builder(
         builder: (context) {
           for (var element in _pluginDetailsList) {
@@ -137,7 +133,7 @@ final class SystemRuntime extends SystemBase {
   /// 构建应用
   @override
   Layout buildSystemUI(Widget child) {
-    return getResources.getLayout(
+    return resources.getLayout(
       layout: SystemUI(
         viewModel: buildViewModel,
         manager: buildManager,
@@ -155,7 +151,7 @@ final class SystemRuntime extends SystemBase {
     BuildContext context,
     bool isManager,
   ) {
-    return getResources.getLayout(
+    return resources.getLayout(
       layout: SystemSheet(
         isManager: isManager,
       ),
@@ -168,7 +164,7 @@ final class SystemRuntime extends SystemBase {
     BuildContext context,
     bool isPackage,
   ) {
-    return getResources.getLayout(
+    return resources.getLayout(
       layout: SystemAbout(
         isPackage: isPackage,
       ),
@@ -178,7 +174,7 @@ final class SystemRuntime extends SystemBase {
   /// 构建退出对话框
   @override
   Layout buildExitDialog(BuildContext context) {
-    return getResources.getLayout(
+    return resources.getLayout(
       layout: const SystemExit(),
     );
   }
@@ -186,7 +182,7 @@ final class SystemRuntime extends SystemBase {
   /// 构建管理器布局
   @override
   Layout buildManager() {
-    return getResources.getLayout(
+    return resources.getLayout(
       layout: const SystemManager(),
     );
   }
@@ -194,7 +190,7 @@ final class SystemRuntime extends SystemBase {
   /// 构建设置
   @override
   Layout buildSettings() {
-    return getResources.getLayout(
+    return resources.getLayout(
       layout: const SystemSettings(
         isManager: false,
       ),
@@ -203,14 +199,14 @@ final class SystemRuntime extends SystemBase {
 
   @override
   Layout buildPlugin() {
-    return getResources.getLayout(
+    return resources.getLayout(
       layout: const PluginUI(),
     );
   }
 
   @override
   Layout buildInfo() {
-    return getResources.getLayout(
+    return resources.getLayout(
       layout: const InfoPage(),
     );
   }

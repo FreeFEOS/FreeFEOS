@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:freefeos/src/framework/context.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:window_manager/window_manager.dart';
@@ -104,7 +105,9 @@ abstract interface class ISystemViewModel {
   PluginWidgetGetter get getPluginWidget;
 }
 
-final class SystemViewModel with ChangeNotifier implements ISystemViewModel {
+final class SystemViewModel extends ContextWrapper
+    with ChangeNotifier
+    implements ISystemViewModel {
   SystemViewModel({
     required this.buildContext,
     required this.buildContextAttacher,
@@ -120,7 +123,7 @@ final class SystemViewModel with ChangeNotifier implements ISystemViewModel {
     required this.pluginGetter,
     required this.pluginWidgetGetter,
     required this.runtimeChecker,
-  });
+  }) : super(attach: true);
 
   /// 上下文
   final BuildContext buildContext;

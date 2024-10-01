@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import '../intl/l10n.dart';
 
 class SystemSettings extends StatefulWidget {
-  const SystemSettings({super.key, required this.isManager});
+  const SystemSettings({
+    super.key,
+    required this.isManager,
+  });
 
   final bool isManager;
 

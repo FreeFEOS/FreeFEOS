@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
 import 'package:provider/provider.dart';
 import 'package:toastification/toastification.dart';
 import 'package:window_manager/window_manager.dart';
@@ -73,7 +72,7 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
         RouteSettings settings,
         WidgetBuilder builder,
       ) {
-        return MaterialPageRoute(
+        return MaterialPageRoute<T>(
           builder: builder,
           settings: settings,
         );
@@ -83,19 +82,25 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
           viewModel.attachBuildContext(context);
           return Stack(
             children: [
-              ConstrainedBox(
-                constraints: const BoxConstraints.expand(),
-                child: PlatformUtil.kNoBanner
-                    ? Container(
-                        child: widget.child,
-                      )
-                    : Banner(
-                        message: IntlLocalizations.of(
-                          context,
-                        ).bannerTitle,
-                        location: BannerLocation.topStart,
-                        child: widget.child,
-                      ),
+              Positioned(
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints.expand(),
+                  child: PlatformUtil.kNoBanner
+                      ? Container(
+                          child: child,
+                        )
+                      : Banner(
+                          message: IntlLocalizations.of(
+                            context,
+                          ).bannerTitle,
+                          location: BannerLocation.topStart,
+                          child: child,
+                        ),
+                ),
               ),
               Positioned(
                 top: MediaQuery.paddingOf(context).top,
@@ -129,8 +134,9 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                               child: Row(
                                 children: [
                                   InkWell(
-                                    onTap: () async =>
-                                        await viewModel.minimizeWindow(),
+                                    onTap: () async {
+                                      return await viewModel.minimizeWindow();
+                                    },
                                     borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(20),
                                       bottomLeft: Radius.circular(20),
@@ -156,8 +162,9 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                                     color: Colors.white.withOpacity(0.3),
                                   ),
                                   InkWell(
-                                    onTap: () async =>
-                                        await viewModel.maximizeWindow(),
+                                    onTap: () async {
+                                      return await viewModel.maximizeWindow();
+                                    },
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
                                         horizontal: 12,
@@ -179,8 +186,9 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                                     color: Colors.white.withOpacity(0.3),
                                   ),
                                   InkWell(
-                                    onTap: () async =>
-                                        await viewModel.closeWindow(),
+                                    onTap: () async {
+                                      return await viewModel.closeWindow();
+                                    },
                                     borderRadius: const BorderRadius.only(
                                       topRight: Radius.circular(20),
                                       bottomRight: Radius.circular(20),
@@ -224,10 +232,16 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                             child: Row(
                               children: [
                                 InkWell(
-                                  onTap: () async =>
-                                      await viewModel.openBottomSheet(false),
-                                  onLongPress: () async =>
-                                      await viewModel.openAboutDialog(false),
+                                  onTap: () async {
+                                    return await viewModel.openBottomSheet(
+                                      false,
+                                    );
+                                  },
+                                  onLongPress: () async {
+                                    return await viewModel.openAboutDialog(
+                                      false,
+                                    );
+                                  },
                                   borderRadius: const BorderRadius.only(
                                     topLeft: Radius.circular(20),
                                     bottomLeft: Radius.circular(20),
@@ -253,10 +267,14 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                                   color: Colors.white.withOpacity(0.3),
                                 ),
                                 InkWell(
-                                  onTap: () async =>
-                                      await viewModel.openExitDialog(),
-                                  onLongPress: () async =>
-                                      await viewModel.openBottomSheet(false),
+                                  onTap: () async {
+                                    return await viewModel.openExitDialog();
+                                  },
+                                  onLongPress: () async {
+                                    return await viewModel.openBottomSheet(
+                                      false,
+                                    );
+                                  },
                                   borderRadius: const BorderRadius.only(
                                     topRight: Radius.circular(20),
                                     bottomRight: Radius.circular(20),
@@ -287,6 +305,7 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
             ],
           );
         },
+        child: widget.child,
       ),
       routes: {
         routeManager: (context) {
@@ -336,8 +355,9 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
         child: ToastificationWrapper(
           child: ChangeNotifierProvider<SystemViewModel>(
             create: (context) {
+              final viewModel = widget.viewModel(context);
               assert(() {
-                if (widget.viewModel(context) is! SystemViewModel) {
+                if (viewModel is! SystemViewModel) {
                   throw FlutterError(
                     IntlLocalizations.of(
                       context,
@@ -346,35 +366,44 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                 }
                 return true;
               }());
-              return widget.viewModel(context) as SystemViewModel;
+              return viewModel as SystemViewModel;
             },
-            child: Stack(
-              children: [
-                ConstrainedBox(
-                  constraints: const BoxConstraints.expand(),
-                  child: child,
-                ),
-                Positioned(
-                  top: MediaQuery.paddingOf(context).top,
-                  height: kToolbarHeight,
-                  left: 0,
-                  right: 0,
-                  child: PreferredSize(
-                    preferredSize: const Size.fromHeight(kToolbarHeight),
-                    child: Consumer<SystemViewModel>(
-                      builder: (context, viewModel, child) => GestureDetector(
-                        behavior: HitTestBehavior.translucent,
+            child: Consumer<SystemViewModel>(
+              builder: (context, viewModel, child) => Stack(
+                children: [
+                  Positioned(
+                    left: 0,
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints.expand(),
+                      child: child,
+                    ),
+                  ),
+                  Positioned(
+                    left: 0,
+                    top: MediaQuery.paddingOf(context).top,
+                    right: 0,
+                    height: kToolbarHeight,
+                    child: PreferredSize(
+                      preferredSize: const Size.fromHeight(
+                        kToolbarHeight,
+                      ),
+                      child: GestureDetector(
                         onPanStart: (_) async {
                           return await viewModel.startDragging();
                         },
                         onDoubleTap: () async {
                           return await viewModel.maximizeWindow();
                         },
+                        behavior: HitTestBehavior.translucent,
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
+              child: child,
             ),
           ),
         ),

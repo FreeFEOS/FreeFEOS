@@ -151,7 +151,7 @@ base mixin ContextMixin on ContextWrapper implements BaseWrapper {
   /// 获取带有导航主机的上下文
   @override
   BuildContext get context {
-    return super.getBuildContext();
+    return super.buildContext;
   }
 
   /// 附加导航主机上下文
@@ -245,7 +245,9 @@ base class SystemBase extends ContextWrapper
                 // 初始化引擎桥接
                 await initEngineBridge();
                 // 初始化引擎
-                await engineBridgerScope.onCreateEngine(this);
+                await engineBridgerScope.onCreateEngine(
+                  baseContext,
+                );
                 // 初始化应用
                 await init(plugins());
                 // 初始化API
@@ -269,11 +271,11 @@ base class SystemBase extends ContextWrapper
                   await windowManager.ensureInitialized();
                   await windowManager.waitUntilReadyToShow(
                     const WindowOptions(
-                      //size: Size(800, 600),
                       minimumSize: Size(600, 400),
                       center: true,
                       //backgroundColor: Colors.transparent,
                       titleBarStyle: TitleBarStyle.hidden,
+                      windowButtonVisibility: true,
                     ),
                     () async {
                       await windowManager.show();
@@ -285,7 +287,12 @@ base class SystemBase extends ContextWrapper
                 return await runner(buildApplication());
               } catch (_) {
                 // 断言没有传入异常
-                assert(error == null);
+                assert(() {
+                  if (error != null) {
+                    throw FlutterError('?');
+                  }
+                  return true;
+                }());
                 // 重新抛出异常
                 rethrow;
               }
@@ -304,7 +311,7 @@ base class SystemBase extends ContextWrapper
   /// 获取应用
   @override
   Layout buildApplication() {
-    return getResources.getLayout(
+    return resources.getLayout(
       layout: Builder(
         builder: pluginWidget,
       ),
@@ -320,7 +327,7 @@ base class SystemBase extends ContextWrapper
   /// 构建应用
   @override
   Layout buildSystemUI(Widget child) {
-    return getResources.getLayout(
+    return resources.getLayout(
       layout: ConstrainedBox(
         constraints: const BoxConstraints.expand(),
         child: child,
@@ -334,7 +341,7 @@ base class SystemBase extends ContextWrapper
     BuildContext context,
     bool isManager,
   ) {
-    return getResources.getLayout(
+    return resources.getLayout(
       layout: Expanded(
         child: Center(
           child: ListTile(
@@ -352,7 +359,7 @@ base class SystemBase extends ContextWrapper
     BuildContext context,
     bool isPackage,
   ) {
-    return getResources.getLayout(
+    return resources.getLayout(
       layout: const AboutDialog(),
     );
   }
@@ -360,33 +367,31 @@ base class SystemBase extends ContextWrapper
   /// 构建退出对话框
   @override
   Layout buildExitDialog(BuildContext context) {
-    return getResources.getLayout(
-      layout: const AlertDialog(
-        content: Placeholder(),
-      ),
+    return resources.getLayout(
+      layout: const AlertDialog(),
     );
   }
 
   /// 获取管理器
   @override
   Layout buildManager() {
-    return getResources.layoutPlaceholder();
+    return resources.layoutPlaceholder();
   }
 
   /// 构建设置
   @override
   Layout buildSettings() {
-    return getResources.layoutPlaceholder();
+    return resources.layoutPlaceholder();
   }
 
   @override
   Layout buildPlugin() {
-    return getResources.layoutPlaceholder();
+    return resources.layoutPlaceholder();
   }
 
   @override
   Layout buildInfo() {
-    return getResources.layoutPlaceholder();
+    return resources.layoutPlaceholder();
   }
 
   /// 打开应用
@@ -466,6 +471,7 @@ base class SystemBase extends ContextWrapper
     ).pushNamed(routeSettings);
   }
 
+  @protected
   @override
   Future<dynamic> launchPlugin() async {
     return await Navigator.of(
@@ -474,8 +480,9 @@ base class SystemBase extends ContextWrapper
     ).pushNamed(routePlugin);
   }
 
+  @protected
   @override
-  Future launchInfo() async {
+  Future<dynamic> launchInfo() async {
     return await Navigator.of(
       context,
       rootNavigator: true,

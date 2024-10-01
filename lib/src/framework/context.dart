@@ -9,6 +9,7 @@ final class Layout extends Widget {
     required this.layout,
   });
 
+  /// Widget
   final Widget layout;
 
   @override
@@ -21,8 +22,12 @@ final class Layout extends Widget {
 }
 
 class LayoutElement extends ComponentElement {
-  LayoutElement(super.widget, this.layout);
+  LayoutElement(
+    super.widget,
+    this.layout,
+  );
 
+  /// Widget
   final Widget layout;
 
   @override
@@ -59,7 +64,7 @@ abstract base class Context {
   void stopService(Want want);
   void bindService(Want want, ServiceConnection connect);
   void unbindService(Want want);
-  Resources get getResources;
+  Resources get resources;
 }
 
 final class ContextImpl extends Context {
@@ -87,11 +92,13 @@ final class ContextImpl extends Context {
   }
 
   @override
-  Resources get getResources => res;
+  Resources get resources => res;
 }
 
 base class ContextWrapper extends Context {
-  ContextWrapper({required bool attach}) {
+  ContextWrapper({
+    required bool attach,
+  }) {
     if (attach) mBase = ContextImpl();
   }
 
@@ -102,16 +109,22 @@ base class ContextWrapper extends Context {
   BuildContext? mBuild;
 
   /// 附加构建上下文
-  void attachBuildContext(BuildContext context) => mBuild = context;
+  void attachBuildContext(BuildContext context) {
+    mBuild = context;
+  }
 
   /// 附加基本上下文
-  void attachBaseContext(Context base) => mBase = base;
+  void attachBaseContext(Context base) {
+    mBase = base;
+  }
 
   /// 获取基本上下文
-  Context getBaseContext() {
+  Context get baseContext {
     assert(() {
       if (mBase == null) {
-        throw FlutterError('基本上下文为空!');
+        throw FlutterError(
+          '基本上下文为空!',
+        );
       }
       return true;
     }());
@@ -119,10 +132,12 @@ base class ContextWrapper extends Context {
   }
 
   /// 获取构建上下文
-  BuildContext getBuildContext() {
+  BuildContext get buildContext {
     assert(() {
       if (mBuild == null) {
-        throw FlutterError('构建上下文为空!');
+        throw FlutterError(
+          '构建上下文为空!',
+        );
       }
       return true;
     }());
@@ -150,13 +165,15 @@ base class ContextWrapper extends Context {
   }
 
   @override
-  Resources get getResources {
+  Resources get resources {
     assert(() {
       if (mBase == null) {
-        throw FlutterError('基本上下文为空!');
+        throw FlutterError(
+          '基本上下文为空!',
+        );
       }
       return true;
     }());
-    return mBase!.getResources;
+    return mBase!.resources;
   }
 }
