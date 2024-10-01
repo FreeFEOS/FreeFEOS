@@ -55,8 +55,8 @@ import rikka.shizuku.Shizuku
 /**
  * 作者: wyq0918dev
  * 仓库: https://github.com/freefeos/freefeos
- * 时间: 2024/01/28
- * 描述: flutter_ecosed
+ * 时间: 2024/10/01
+ * 描述: freefeos
  * 文档: https://github.com/freefeos/freefeos/blob/master/README.md
  */
 class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandler,
@@ -69,7 +69,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
     private var mBinding: PluginBinding? = null
 
     /** 插件列表. */
-    private var mPluginList: ArrayList<EcosedPlugin>? = null
+    private var mPluginList: ArrayList<EmbedderPlugin>? = null
 
     /** JSON插件列表 */
     private var mJSONList: ArrayList<String>? = null
@@ -91,7 +91,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
     private var mFullDebug: Boolean = false
 
     /** 此服务意图 */
-    private lateinit var mEcosedServicesIntent: Intent
+    private lateinit var mEmbedderServicesIntent: Intent
 
     /** 服务AIDL接口 */
     private var mAIDL: IFreeFEOS? = null
@@ -267,7 +267,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
         // 初始化方法通道
         this@FreeFEOSEmbedder.mMethodChannel = MethodChannel(
             binding.binaryMessenger,
-            EcosedChannel.FLUTTER_CHANNEL_NAME,
+            FreeFEOSChannel.FLUTTER_CHANNEL_NAME,
         )
         // 设置方法通道回调程序
         this@FreeFEOSEmbedder.mMethodChannel.setMethodCallHandler(
@@ -619,7 +619,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
     /**
      * 基本插件
      */
-    private abstract class EcosedPlugin : ContextWrapper(null) {
+    private abstract class EmbedderPlugin : ContextWrapper(null) {
 
         /** 插件通道 */
         private lateinit var mPluginChannel: PluginChannel
@@ -640,29 +640,29 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
         /**
          * 插件添加时执行
          */
-        open fun onEcosedAdded(binding: PluginBinding) {
+        open fun onPluginAdded(binding: PluginBinding) {
             // 初始化插件通道
-            this@EcosedPlugin.mPluginChannel = PluginChannel(
+            this@EmbedderPlugin.mPluginChannel = PluginChannel(
                 binding = binding,
-                channel = this@EcosedPlugin.channel,
+                channel = this@EmbedderPlugin.channel,
             )
             // 插件附加基本上下文
-            this@EcosedPlugin.attachBaseContext(
-                base = this@EcosedPlugin.mPluginChannel.getContext()
+            this@EmbedderPlugin.attachBaseContext(
+                base = this@EmbedderPlugin.mPluginChannel.getContext()
             )
             // 引擎
-            this@EcosedPlugin.mEngine = this@EcosedPlugin.mPluginChannel.getEngine()
+            this@EmbedderPlugin.mEngine = this@EmbedderPlugin.mPluginChannel.getEngine()
             // 获取是否调试模式
-            this@EcosedPlugin.mDebug = this@EcosedPlugin.mPluginChannel.isDebug()
+            this@EmbedderPlugin.mDebug = this@EmbedderPlugin.mPluginChannel.isDebug()
             // 设置调用
-            this@EcosedPlugin.mPluginChannel.setMethodCallHandler(
-                handler = this@EcosedPlugin
+            this@EmbedderPlugin.mPluginChannel.setMethodCallHandler(
+                handler = this@EmbedderPlugin
             )
         }
 
         /** 获取插件通道 */
         val getPluginChannel: PluginChannel
-            get() = this@EcosedPlugin.mPluginChannel
+            get() = this@EmbedderPlugin.mPluginChannel
 
         /** 需要子类重写的插件标题 */
         abstract val title: String
@@ -678,7 +678,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
 
         /** 供子类使用的判断调试模式的接口 */
         protected val isDebug: Boolean
-            get() = this@EcosedPlugin.mDebug
+            get() = this@EmbedderPlugin.mDebug
 
         /**
          * 执行方法
@@ -691,7 +691,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
             channel: String,
             method: String,
             bundle: Bundle?,
-        ): T? = this@EcosedPlugin.mEngine.execMethodCall<T>(
+        ): T? = this@EmbedderPlugin.mEngine.execMethodCall<T>(
             channel = channel,
             method = method,
             bundle = bundle,
@@ -700,7 +700,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
         /**
          * 插件调用方法
          */
-        open fun onEcosedMethodCall(
+        open fun onPluginMethodCall(
             call: EcosedMethodCall,
             result: EcosedResult,
         ) = Unit
@@ -758,7 +758,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
         private var mChannel: String = channel
 
         /** 方法调用处理接口. */
-        private var mPlugin: EcosedPlugin? = null
+        private var mPlugin: EmbedderPlugin? = null
 
         /** 方法名. */
         private var mMethod: String? = null
@@ -773,7 +773,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
          * 设置方法调用.
          * @param handler 执行方法时调用EcosedMethodCallHandler.
          */
-        fun setMethodCallHandler(handler: EcosedPlugin) {
+        fun setMethodCallHandler(handler: EmbedderPlugin) {
             this@PluginChannel.mPlugin = handler
         }
 
@@ -816,7 +816,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
             this@PluginChannel.mMethod = method
             this@PluginChannel.mBundle = bundle
             if (name == this@PluginChannel.mChannel) {
-                this@PluginChannel.mPlugin?.onEcosedMethodCall(
+                this@PluginChannel.mPlugin?.onPluginMethodCall(
                     call = this@PluginChannel.call,
                     result = this@PluginChannel.result,
                 )
@@ -878,7 +878,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
      */
 
     /** 引擎桥接 */
-    private val mEngineBridge: EcosedPlugin = object : EcosedPlugin(), FlutterPluginProxy {
+    private val mEngineBridge: EmbedderPlugin = object : EmbedderPlugin(), FlutterPluginProxy {
 
         /** 插件标题 */
         override val title: String
@@ -886,11 +886,11 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
 
         /** 插件通道 */
         override val channel: String
-            get() = EcosedChannel.BRIDGE_CHANNEL_NAME
+            get() = FreeFEOSChannel.BRIDGE_CHANNEL_NAME
 
         /** 插件作者 */
         override val author: String
-            get() = EcosedResources.DEFAULT_AUTHOR
+            get() = FreeFEOSResources.DEFAULT_AUTHOR
 
         /** 插件描述 */
         override val description: String
@@ -950,7 +950,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
     }
 
     /** 引擎 */
-    private val mEcosedEngine: EcosedPlugin = object : EcosedPlugin(), EngineWrapper {
+    private val mEcosedEngine: EmbedderPlugin = object : EmbedderPlugin(), EngineWrapper {
 
         /** 插件标题 */
         override val title: String
@@ -958,11 +958,11 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
 
         /** 插件通道 */
         override val channel: String
-            get() = EcosedChannel.ENGINE_CHANNEL_NAME
+            get() = FreeFEOSChannel.ENGINE_CHANNEL_NAME
 
         /** 插件作者 */
         override val author: String
-            get() = EcosedResources.DEFAULT_AUTHOR
+            get() = FreeFEOSResources.DEFAULT_AUTHOR
 
         /** 插件描述 */
         override val description: String
@@ -1007,31 +1007,31 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
         /**
          * 引擎初始化时执行
          */
-        override fun onEcosedAdded(binding: PluginBinding): Unit = run {
-            super.onEcosedAdded(binding)
+        override fun onPluginAdded(binding: PluginBinding): Unit = run {
+            super.onPluginAdded(binding)
             // 设置来自插件的全局调试布尔值
             this@FreeFEOSEmbedder.mFullDebug = this@run.isDebug
         }
 
-        override fun onEcosedMethodCall(call: EcosedMethodCall, result: EcosedResult) {
-            super.onEcosedMethodCall(call, result)
+        override fun onPluginMethodCall(call: EcosedMethodCall, result: EcosedResult) {
+            super.onPluginMethodCall(call, result)
             when (call.method) {
-                EcosedMethod.GET_PLUGINS_METHOD -> result.success(
+                FreeFEOSMethod.GET_PLUGINS_METHOD -> result.success(
                     result = this@FreeFEOSEmbedder.mJSONList
                 )
 
-                EcosedMethod.OPEN_DIALOG_METHOD -> result.success(
+                FreeFEOSMethod.OPEN_DIALOG_METHOD -> result.success(
                     result = execPluginMethod<Boolean>(
-                        channel = EcosedChannel.INVOKE_CHANNEL_NAME,
-                        method = EcosedMethod.OPEN_DIALOG_METHOD,
+                        channel = FreeFEOSChannel.INVOKE_CHANNEL_NAME,
+                        method = FreeFEOSMethod.OPEN_DIALOG_METHOD,
                         bundle = Bundle()
                     )
                 )
 
-                EcosedMethod.CLOSE_DIALOG_METHOD -> result.success(
+                FreeFEOSMethod.CLOSE_DIALOG_METHOD -> result.success(
                     result = execPluginMethod<Boolean>(
-                        channel = EcosedChannel.INVOKE_CHANNEL_NAME,
-                        method = EcosedMethod.CLOSE_DIALOG_METHOD,
+                        channel = FreeFEOSChannel.INVOKE_CHANNEL_NAME,
+                        method = FreeFEOSMethod.CLOSE_DIALOG_METHOD,
                         bundle = Bundle()
                     )
                 )
@@ -1057,7 +1057,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
                     plugins.forEach { plugin ->
                         plugin.apply {
                             try {
-                                this@apply.onEcosedAdded(binding = binding)
+                                this@apply.onPluginAdded(binding = binding)
                                 if (this@FreeFEOSEmbedder.mBaseDebug) Log.d(
                                     PLUGIN_TAG,
                                     "插件${this@apply.javaClass.name}已加载",
@@ -1129,7 +1129,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
                 execMethodCall<Any>(
                     channel = call.bundleProxy.getString(
                         "channel",
-                        EcosedChannel.ENGINE_CHANNEL_NAME,
+                        FreeFEOSChannel.ENGINE_CHANNEL_NAME,
                     ),
                     method = call.methodProxy,
                     bundle = call.bundleProxy,
@@ -1192,7 +1192,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
     }
 
     /** 负责与服务通信的客户端 */
-    private val mServiceInvoke: EcosedPlugin = object : EcosedPlugin(), InvokeWrapper {
+    private val mServiceInvoke: EmbedderPlugin = object : EmbedderPlugin(), InvokeWrapper {
 
         /** 插件标题 */
         override val title: String
@@ -1200,11 +1200,11 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
 
         /** 插件通道 */
         override val channel: String
-            get() = EcosedChannel.INVOKE_CHANNEL_NAME
+            get() = FreeFEOSChannel.INVOKE_CHANNEL_NAME
 
         /** 插件作者 */
         override val author: String
-            get() = EcosedResources.DEFAULT_AUTHOR
+            get() = FreeFEOSResources.DEFAULT_AUTHOR
 
         /** 插件描述 */
         override val description: String
@@ -1213,15 +1213,15 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
         /**
          * 插件添加时执行
          */
-        override fun onEcosedAdded(binding: PluginBinding) = run {
-            super.onEcosedAdded(binding)
-            this@FreeFEOSEmbedder.mEcosedServicesIntent = Intent(
+        override fun onPluginAdded(binding: PluginBinding) = run {
+            super.onPluginAdded(binding)
+            this@FreeFEOSEmbedder.mEmbedderServicesIntent = Intent(
                 this@run,
                 this@FreeFEOSEmbedder.javaClass,
             )
-            this@FreeFEOSEmbedder.mEcosedServicesIntent.action = EcosedManifest.ACTION
+            this@FreeFEOSEmbedder.mEmbedderServicesIntent.action = FreeFEOSManifest.ACTION
 
-            startService(this@FreeFEOSEmbedder.mEcosedServicesIntent)
+            startService(this@FreeFEOSEmbedder.mEmbedderServicesIntent)
             bindEcosed(this@run)
 
             Toast.makeText(this@run, "client", Toast.LENGTH_SHORT).show()
@@ -1230,14 +1230,14 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
         /**
          * 插件方法调用
          */
-        override fun onEcosedMethodCall(call: EcosedMethodCall, result: EcosedResult) {
-            super.onEcosedMethodCall(call, result)
+        override fun onPluginMethodCall(call: EcosedMethodCall, result: EcosedResult) {
+            super.onPluginMethodCall(call, result)
             when (call.method) {
-                EcosedMethod.OPEN_DIALOG_METHOD -> result.success(result = invokeMethod {
+                FreeFEOSMethod.OPEN_DIALOG_METHOD -> result.success(result = invokeMethod {
                     openDialog()
                 })
 
-                EcosedMethod.CLOSE_DIALOG_METHOD -> result.success(result = invokeMethod {
+                FreeFEOSMethod.CLOSE_DIALOG_METHOD -> result.success(result = invokeMethod {
                     closeDialog()
                 })
 
@@ -1275,7 +1275,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
     }
 
     /** 服务相当于整个服务类部分无法在大类中实现的方法在此实现并调用 */
-    private val mServiceDelegate: EcosedPlugin = object : EcosedPlugin(), DelegateWrapper {
+    private val mServiceDelegate: EmbedderPlugin = object : EmbedderPlugin(), DelegateWrapper {
 
         /** 插件标题 */
         override val title: String
@@ -1283,11 +1283,11 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
 
         /** 插件通道 */
         override val channel: String
-            get() = EcosedChannel.DELEGATE_CHANNEL_NAME
+            get() = FreeFEOSChannel.DELEGATE_CHANNEL_NAME
 
         /** 插件作者 */
         override val author: String
-            get() = EcosedResources.DEFAULT_AUTHOR
+            get() = FreeFEOSResources.DEFAULT_AUTHOR
 
         /** 插件描述 */
         override val description: String
@@ -1610,7 +1610,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
     private fun <R> pluginScope(
         context: Context,
         debug: Boolean,
-        content: (ArrayList<EcosedPlugin>, PluginBinding) -> R,
+        content: (ArrayList<EmbedderPlugin>, PluginBinding) -> R,
     ): R = content.invoke(
         arrayListOf(mEngineBridge, mEcosedEngine, mServiceInvoke, mServiceDelegate), PluginBinding(
             debug = debug,
@@ -1870,8 +1870,8 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
                 )
             ) { dialog, which ->
                 when (which) {
-                    0 -> if (AppUtils.isAppInstalled(EcosedManifest.SHIZUKU_PACKAGE)) {
-                        AppUtils.launchApp(EcosedManifest.SHIZUKU_PACKAGE)
+                    0 -> if (AppUtils.isAppInstalled(FreeFEOSManifest.SHIZUKU_PACKAGE)) {
+                        AppUtils.launchApp(FreeFEOSManifest.SHIZUKU_PACKAGE)
                     } else {
                         // 跳转安装
                     }
@@ -1880,13 +1880,13 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
                         // 判断是否支持谷歌基础服务
                         if (isSupportGMS()) {
                             // 判断如果有启动图标直接打开 - 针对microG
-                            if (IntentUtils.getLaunchAppIntent(EcosedManifest.GMS_PACKAGE).isNotNull) {
-                                AppUtils.launchApp(EcosedManifest.GMS_PACKAGE)
+                            if (IntentUtils.getLaunchAppIntent(FreeFEOSManifest.GMS_PACKAGE).isNotNull) {
+                                AppUtils.launchApp(FreeFEOSManifest.GMS_PACKAGE)
                             } else {
                                 // 如果没有启动图标使用包名和类名启动 - 针对谷歌GMS
                                 val intent = IntentUtils.getComponentIntent(
-                                    EcosedManifest.GMS_PACKAGE,
-                                    EcosedManifest.GMS_CLASS,
+                                    FreeFEOSManifest.GMS_PACKAGE,
+                                    FreeFEOSManifest.GMS_CLASS,
                                 )
                                 if (IntentUtils.isIntentAvailable(intent)) {
                                     try {
@@ -1914,7 +1914,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
                 }
             }
             setView(this@FreeFEOSEmbedder.mToolbar)
-            setPositiveButton(EcosedResources.POSITIVE_BUTTON_STRING) { dialog, which -> }
+            setPositiveButton(FreeFEOSResources.POSITIVE_BUTTON_STRING) { dialog, which -> }
             mDebugDialog = create()
         }
         // 设置操作栏
@@ -1983,7 +1983,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
      * 判断Shizuku是否已安装
      */
     private fun isShizukuInstalled(): Boolean {
-        return if (AppUtils.isAppInstalled(EcosedManifest.SHIZUKU_PACKAGE)) {
+        return if (AppUtils.isAppInstalled(FreeFEOSManifest.SHIZUKU_PACKAGE)) {
             !Shizuku.isPreV11()
         } else false
     }
@@ -1996,7 +1996,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
                 this@activityScope
             ) == ConnectionResult.SUCCESS
         ) true else AppUtils.isAppInstalled(
-            EcosedManifest.GMS_PACKAGE
+            FreeFEOSManifest.GMS_PACKAGE
         )
     }
 
@@ -2006,7 +2006,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
     private fun requestPermissions() {
         try {
             Shizuku.requestPermission(0)
-            PermissionUtils.permission(EcosedManifest.FAKE_PACKAGE_SIGNATURE).request()
+            PermissionUtils.permission(FreeFEOSManifest.FAKE_PACKAGE_SIGNATURE).request()
         } catch (e: IllegalStateException) {
 
         }
@@ -2046,7 +2046,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
         try {
             if (!mIsBind) {
                 context.bindService(
-                    this@FreeFEOSEmbedder.mEcosedServicesIntent,
+                    this@FreeFEOSEmbedder.mEmbedderServicesIntent,
                     this@connectScope,
                     Context.BIND_AUTO_CREATE,
                 ).let { bind ->
@@ -2128,13 +2128,13 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
     private fun gms(context: Context) {
         try {
             val intent = Intent(Intent.ACTION_MAIN)
-            intent.setPackage(EcosedManifest.GMS_PACKAGE)
+            intent.setPackage(FreeFEOSManifest.GMS_PACKAGE)
             try {
                 context.startActivity(intent)
             } catch (e: Exception) {
                 Log.w(PLUGIN_TAG, "MAIN activity is not DEFAULT. Trying to resolve instead.")
                 intent.setClassName(
-                    EcosedManifest.GMS_PACKAGE,
+                    FreeFEOSManifest.GMS_PACKAGE,
                     packageManager.resolveActivity(intent, 0)!!.activityInfo.name
                 )
                 context.startActivity(intent)
@@ -2219,7 +2219,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
     /**
      * 资源
      */
-    private object EcosedResources {
+    private object FreeFEOSResources {
 
         /** 开发者 */
         const val DEFAULT_AUTHOR: String = "wyq0918dev"
@@ -2232,7 +2232,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
     /**
      * 清单
      */
-    private object EcosedManifest {
+    private object FreeFEOSManifest {
         /** 服务动作 */
         const val ACTION: String = "com.freefeos.freefeos.action"
 
@@ -2251,7 +2251,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
     /**
      * 通道
      */
-    private object EcosedChannel {
+    private object FreeFEOSChannel {
         /** Flutter插件通道名称 */
         const val FLUTTER_CHANNEL_NAME: String = "freefeos"
 
@@ -2271,7 +2271,7 @@ class FreeFEOSEmbedder : Service(), FlutterPlugin, MethodChannel.MethodCallHandl
     /**
      * 方法
      */
-    private object EcosedMethod {
+    private object FreeFEOSMethod {
         /** 获取插件列表 */
         const val GET_PLUGINS_METHOD: String = "getPlugins"
 

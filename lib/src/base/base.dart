@@ -271,9 +271,10 @@ base class SystemBase extends ContextWrapper
                   await windowManager.ensureInitialized();
                   await windowManager.waitUntilReadyToShow(
                     const WindowOptions(
-                      minimumSize: Size(600, 400),
                       center: true,
-                      //backgroundColor: Colors.transparent,
+                      minimumSize: Size(600, 400),
+                      alwaysOnTop: false,
+                      skipTaskbar: false,
                       titleBarStyle: TitleBarStyle.hidden,
                       windowButtonVisibility: true,
                     ),
