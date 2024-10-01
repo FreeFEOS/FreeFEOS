@@ -113,7 +113,7 @@ final class SystemRuntime extends SystemBase {
   @override
   ChangeNotifier buildViewModel(BuildContext context) {
     return SystemViewModel(
-      buildContext: context,
+      context: context,
       buildContextAttacher: super.attachContext,
       applicationLauncher: super.launchApplication,
       bottomSheetLauncher: super.launchBottomSheet,

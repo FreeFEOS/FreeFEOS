@@ -109,7 +109,7 @@ final class SystemViewModel extends ContextWrapper
     with ChangeNotifier
     implements ISystemViewModel {
   SystemViewModel({
-    required this.buildContext,
+    required this.context,
     required this.buildContextAttacher,
     required this.applicationLauncher,
     required this.bottomSheetLauncher,
@@ -126,7 +126,7 @@ final class SystemViewModel extends ContextWrapper
   }) : super(attach: true);
 
   /// 上下文
-  final BuildContext buildContext;
+  final BuildContext context;
 
   /// 上下文附加器
   final ContextAttacher buildContextAttacher;
@@ -283,25 +283,25 @@ final class SystemViewModel extends ContextWrapper
       case PluginType.base:
         return Icon(
           Icons.compare_arrows,
-          size: Theme.of(buildContext).iconTheme.size,
+          size: Theme.of(context).iconTheme.size,
           color: Colors.pinkAccent,
         );
       case PluginType.runtime:
         return Icon(
           Icons.bubble_chart,
-          size: Theme.of(buildContext).iconTheme.size,
+          size: Theme.of(context).iconTheme.size,
           color: Colors.pinkAccent,
         );
       case PluginType.embedder:
         return Icon(
           Icons.keyboard_double_arrow_down,
-          size: Theme.of(buildContext).iconTheme.size,
+          size: Theme.of(context).iconTheme.size,
           color: Colors.pinkAccent,
         );
       case PluginType.engine:
         return Icon(
           Icons.miscellaneous_services,
-          size: Theme.of(buildContext).iconTheme.size,
+          size: Theme.of(context).iconTheme.size,
           color: Colors.blueAccent,
         );
       case PluginType.platform:
@@ -309,50 +309,50 @@ final class SystemViewModel extends ContextWrapper
           case TargetPlatform.android:
             return Icon(
               Icons.android,
-              size: Theme.of(buildContext).iconTheme.size,
+              size: Theme.of(context).iconTheme.size,
               color: Colors.green,
             );
           case TargetPlatform.fuchsia:
             return Icon(
               Icons.all_inclusive,
-              size: Theme.of(buildContext).iconTheme.size,
+              size: Theme.of(context).iconTheme.size,
               color: Colors.pinkAccent,
             );
           case TargetPlatform.iOS:
             return Icon(
               Icons.apple,
-              size: Theme.of(buildContext).iconTheme.size,
+              size: Theme.of(context).iconTheme.size,
               color: Colors.grey,
             );
           case TargetPlatform.linux:
             return Icon(
               Icons.desktop_windows,
-              size: Theme.of(buildContext).iconTheme.size,
+              size: Theme.of(context).iconTheme.size,
               color: Colors.black,
             );
           case TargetPlatform.macOS:
             return Icon(
               Icons.apple,
-              size: Theme.of(buildContext).iconTheme.size,
+              size: Theme.of(context).iconTheme.size,
               color: Colors.grey,
             );
           case TargetPlatform.windows:
             return Icon(
               Icons.window,
-              size: Theme.of(buildContext).iconTheme.size,
+              size: Theme.of(context).iconTheme.size,
               color: Colors.blue,
             );
           default:
             return Icon(
               Icons.question_mark,
-              size: Theme.of(buildContext).iconTheme.size,
+              size: Theme.of(context).iconTheme.size,
               color: Colors.red,
             );
         }
       case PluginType.kernel:
         return Icon(
           Icons.memory,
-          size: Theme.of(buildContext).iconTheme.size,
+          size: Theme.of(context).iconTheme.size,
           color: Colors.blueGrey,
         );
       case PluginType.flutter:
@@ -360,14 +360,14 @@ final class SystemViewModel extends ContextWrapper
       case PluginType.unknown:
         return Icon(
           Icons.error,
-          size: Theme.of(buildContext).iconTheme.size,
-          color: Theme.of(buildContext).colorScheme.error,
+          size: Theme.of(context).iconTheme.size,
+          color: Theme.of(context).colorScheme.error,
         );
       default:
         return Icon(
           Icons.error,
-          size: Theme.of(buildContext).iconTheme.size,
-          color: Theme.of(buildContext).colorScheme.error,
+          size: Theme.of(context).iconTheme.size,
+          color: Theme.of(context).colorScheme.error,
         );
     }
   }
