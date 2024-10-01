@@ -117,7 +117,8 @@ final class SystemRuntime extends SystemBase {
   @override
   ChangeNotifier buildViewModel(BuildContext context) {
     return SystemViewModel(
-      context: context,
+      buildContext: context,
+      buildContextAttacher: super.attachContext,
       applicationLauncher: super.launchApplication,
       bottomSheetLauncher: super.launchBottomSheet,
       aboutDiialogLauncher: super.launchAboutDiialog,
@@ -139,11 +140,10 @@ final class SystemRuntime extends SystemBase {
     return getResources.getLayout(
       layout: SystemUI(
         viewModel: buildViewModel,
-        attach: super.attachContext,
-        manager: buildManager(),
-        settings: buildSettings(),
-        plugin: buildPlugin(),
-        info: buildInfo(),
+        manager: buildManager,
+        settings: buildSettings,
+        plugin: buildPlugin,
+        info: buildInfo,
         child: child,
       ),
     );

@@ -12,7 +12,10 @@ import '../type/types.dart';
 import '../utils/utils.dart';
 import '../values/url.dart';
 
-abstract interface class ViewModelWrapper {
+abstract interface class ISystemViewModel {
+  /// 附加构建上下文
+  void attachBuildContext(BuildContext context);
+
   /// 打开底部弹出菜单
   Future<dynamic> openBottomSheet(bool isManager);
 
@@ -31,6 +34,7 @@ abstract interface class ViewModelWrapper {
   /// 打开设置
   Future<dynamic> openSettings();
 
+  /// 打开应用信息
   Future<dynamic> openInfo();
 
   /// 获取应用名称
@@ -42,6 +46,7 @@ abstract interface class ViewModelWrapper {
   /// 统计普通插件数量
   String pluginCount();
 
+  /// 获取所有普通插件的名称
   String pluginNames();
 
   /// 打开PubDev
@@ -99,9 +104,10 @@ abstract interface class ViewModelWrapper {
   PluginWidgetGetter get getPluginWidget;
 }
 
-final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
+final class SystemViewModel with ChangeNotifier implements ISystemViewModel {
   SystemViewModel({
-    required this.context,
+    required this.buildContext,
+    required this.buildContextAttacher,
     required this.applicationLauncher,
     required this.bottomSheetLauncher,
     required this.aboutDiialogLauncher,
@@ -117,7 +123,10 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
   });
 
   /// 上下文
-  final BuildContext context;
+  final BuildContext buildContext;
+
+  /// 上下文附加器
+  final ContextAttacher buildContextAttacher;
 
   /// 进入应用
   final VoidCallback applicationLauncher;
@@ -140,6 +149,7 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
   /// 打开插件界面
   final NavigatorLauncher pluginLauncher;
 
+  /// 打开应用信息界面
   final NavigatorLauncher infoLauncher;
 
   /// 插件列表
@@ -156,6 +166,12 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
 
   /// 当前插件的详细信息 [PluginUI] 用
   PluginDetails? _currentDetails;
+
+  /// 附加构建上下文
+  @override
+  void attachBuildContext(BuildContext context) {
+    return buildContextAttacher(context);
+  }
 
   /// 打开底部弹出菜单
   @override
@@ -193,6 +209,7 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
     return settingsLauncher();
   }
 
+  /// 打开应用信息
   @override
   Future openInfo() {
     return infoLauncher();
@@ -263,25 +280,25 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
       case PluginType.base:
         return Icon(
           Icons.compare_arrows,
-          size: Theme.of(context).iconTheme.size,
+          size: Theme.of(buildContext).iconTheme.size,
           color: Colors.pinkAccent,
         );
       case PluginType.runtime:
         return Icon(
           Icons.bubble_chart,
-          size: Theme.of(context).iconTheme.size,
+          size: Theme.of(buildContext).iconTheme.size,
           color: Colors.pinkAccent,
         );
       case PluginType.embedder:
         return Icon(
           Icons.keyboard_double_arrow_down,
-          size: Theme.of(context).iconTheme.size,
+          size: Theme.of(buildContext).iconTheme.size,
           color: Colors.pinkAccent,
         );
       case PluginType.engine:
         return Icon(
           Icons.miscellaneous_services,
-          size: Theme.of(context).iconTheme.size,
+          size: Theme.of(buildContext).iconTheme.size,
           color: Colors.blueAccent,
         );
       case PluginType.platform:
@@ -289,50 +306,50 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
           case TargetPlatform.android:
             return Icon(
               Icons.android,
-              size: Theme.of(context).iconTheme.size,
+              size: Theme.of(buildContext).iconTheme.size,
               color: Colors.green,
             );
           case TargetPlatform.fuchsia:
             return Icon(
               Icons.all_inclusive,
-              size: Theme.of(context).iconTheme.size,
+              size: Theme.of(buildContext).iconTheme.size,
               color: Colors.pinkAccent,
             );
           case TargetPlatform.iOS:
             return Icon(
               Icons.apple,
-              size: Theme.of(context).iconTheme.size,
+              size: Theme.of(buildContext).iconTheme.size,
               color: Colors.grey,
             );
           case TargetPlatform.linux:
             return Icon(
               Icons.desktop_windows,
-              size: Theme.of(context).iconTheme.size,
+              size: Theme.of(buildContext).iconTheme.size,
               color: Colors.black,
             );
           case TargetPlatform.macOS:
             return Icon(
               Icons.apple,
-              size: Theme.of(context).iconTheme.size,
+              size: Theme.of(buildContext).iconTheme.size,
               color: Colors.grey,
             );
           case TargetPlatform.windows:
             return Icon(
               Icons.window,
-              size: Theme.of(context).iconTheme.size,
+              size: Theme.of(buildContext).iconTheme.size,
               color: Colors.blue,
             );
           default:
             return Icon(
               Icons.question_mark,
-              size: Theme.of(context).iconTheme.size,
+              size: Theme.of(buildContext).iconTheme.size,
               color: Colors.red,
             );
         }
       case PluginType.kernel:
         return Icon(
           Icons.memory,
-          size: Theme.of(context).iconTheme.size,
+          size: Theme.of(buildContext).iconTheme.size,
           color: Colors.blueGrey,
         );
       case PluginType.flutter:
@@ -340,14 +357,14 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
       case PluginType.unknown:
         return Icon(
           Icons.error,
-          size: Theme.of(context).iconTheme.size,
-          color: Theme.of(context).colorScheme.error,
+          size: Theme.of(buildContext).iconTheme.size,
+          color: Theme.of(buildContext).colorScheme.error,
         );
       default:
         return Icon(
           Icons.error,
-          size: Theme.of(context).iconTheme.size,
-          color: Theme.of(context).colorScheme.error,
+          size: Theme.of(buildContext).iconTheme.size,
+          color: Theme.of(buildContext).colorScheme.error,
         );
     }
   }
@@ -522,5 +539,7 @@ final class SystemViewModel with ChangeNotifier implements ViewModelWrapper {
   }
 
   @override
-  PluginWidgetGetter get getPluginWidget => pluginWidgetGetter;
+  PluginWidgetGetter get getPluginWidget {
+    return pluginWidgetGetter;
+  }
 }

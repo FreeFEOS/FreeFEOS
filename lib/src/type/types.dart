@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:freefeos/src/framework/context.dart';
 
 import '../framework/log.dart';
 import '../plugin/plugin_details.dart';
@@ -33,3 +34,4 @@ typedef PluginWidgetGetter = Widget Function(
 );
 typedef RuntimeChecker = bool Function(PluginDetails details);
 typedef ViewModelBuilder = ChangeNotifier Function(BuildContext context);
+typedef SystemLayout = Layout Function();

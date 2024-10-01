@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:toastification/toastification.dart';
 import 'package:window_manager/window_manager.dart';
 
-import '../framework/context.dart';
 import '../intl/l10n.dart';
 import '../type/types.dart';
 import '../utils/utils.dart';
@@ -17,7 +16,6 @@ class SystemUI extends StatefulWidget {
   const SystemUI({
     super.key,
     required this.viewModel,
-    required this.attach,
     required this.manager,
     required this.settings,
     required this.plugin,
@@ -26,11 +24,10 @@ class SystemUI extends StatefulWidget {
   });
 
   final ViewModelBuilder viewModel;
-  final ContextAttacher attach;
-  final Layout manager;
-  final Layout settings;
-  final Layout plugin;
-  final Layout info;
+  final SystemLayout manager;
+  final SystemLayout settings;
+  final SystemLayout plugin;
+  final SystemLayout info;
   final Widget child;
 
   @override
@@ -81,9 +78,9 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
           settings: settings,
         );
       },
-      home: Builder(
-        builder: (context) {
-          widget.attach(context);
+      home: Consumer<SystemViewModel>(
+        builder: (context, viewModel, child) {
+          viewModel.attachBuildContext(context);
           return Stack(
             children: [
               ConstrainedBox(
@@ -107,112 +104,16 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                 right: 0,
                 child: PreferredSize(
                   preferredSize: const Size.fromHeight(kToolbarHeight),
-                  child: Consumer<SystemViewModel>(
-                    builder: (context, viewModel, child) => Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Visibility(
-                          visible: PlatformUtil.kIsDesktop,
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                              left: 8,
-                              right: 4,
-                            ),
-                            child: Container(
-                              height: 30,
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).brightness ==
-                                        Brightness.light
-                                    ? Colors.black.withOpacity(0.3)
-                                    : Colors.white.withOpacity(0.3),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Material(
-                                color: Colors.transparent,
-                                child: Row(
-                                  children: [
-                                    InkWell(
-                                      onTap: () async =>
-                                          await viewModel.minimizeWindow(),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(20),
-                                        bottomLeft: Radius.circular(20),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 12,
-                                          vertical: 3,
-                                        ),
-                                        child: Icon(
-                                          Icons.minimize,
-                                          color: Theme.of(context).brightness ==
-                                                  Brightness.light
-                                              ? Colors.white
-                                              : Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                    VerticalDivider(
-                                      indent: 6,
-                                      endIndent: 6,
-                                      width: 1,
-                                      color: Colors.white.withOpacity(0.3),
-                                    ),
-                                    InkWell(
-                                      onTap: () async =>
-                                          await viewModel.maximizeWindow(),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 12,
-                                          vertical: 3,
-                                        ),
-                                        child: Icon(
-                                          maxIcon,
-                                          color: Theme.of(context).brightness ==
-                                                  Brightness.light
-                                              ? Colors.white
-                                              : Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                    VerticalDivider(
-                                      indent: 6,
-                                      endIndent: 6,
-                                      width: 1,
-                                      color: Colors.white.withOpacity(0.3),
-                                    ),
-                                    InkWell(
-                                      onTap: () async =>
-                                          await viewModel.closeWindow(),
-                                      borderRadius: const BorderRadius.only(
-                                        topRight: Radius.circular(20),
-                                        bottomRight: Radius.circular(20),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 12,
-                                          vertical: 3,
-                                        ),
-                                        child: Icon(
-                                          Icons.close,
-                                          color: Theme.of(context).brightness ==
-                                                  Brightness.light
-                                              ? Colors.white
-                                              : Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Visibility(
+                        visible: PlatformUtil.kIsDesktop,
+                        child: Padding(
                           padding: const EdgeInsets.only(
-                            left: 4,
-                            right: 8,
+                            left: 8,
+                            right: 4,
                           ),
                           child: Container(
                             height: 30,
@@ -229,9 +130,7 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                                 children: [
                                   InkWell(
                                     onTap: () async =>
-                                        await viewModel.openBottomSheet(false),
-                                    onLongPress: () async =>
-                                        await viewModel.openAboutDialog(false),
+                                        await viewModel.minimizeWindow(),
                                     borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(20),
                                       bottomLeft: Radius.circular(20),
@@ -242,7 +141,7 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                                         vertical: 3,
                                       ),
                                       child: Icon(
-                                        Icons.more_horiz,
+                                        Icons.minimize,
                                         color: Theme.of(context).brightness ==
                                                 Brightness.light
                                             ? Colors.white
@@ -258,9 +157,30 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                                   ),
                                   InkWell(
                                     onTap: () async =>
-                                        await viewModel.openExitDialog(),
-                                    onLongPress: () async =>
-                                        await viewModel.openBottomSheet(false),
+                                        await viewModel.maximizeWindow(),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 12,
+                                        vertical: 3,
+                                      ),
+                                      child: Icon(
+                                        maxIcon,
+                                        color: Theme.of(context).brightness ==
+                                                Brightness.light
+                                            ? Colors.white
+                                            : Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                  VerticalDivider(
+                                    indent: 6,
+                                    endIndent: 6,
+                                    width: 1,
+                                    color: Colors.white.withOpacity(0.3),
+                                  ),
+                                  InkWell(
+                                    onTap: () async =>
+                                        await viewModel.closeWindow(),
                                     borderRadius: const BorderRadius.only(
                                       topRight: Radius.circular(20),
                                       bottomRight: Radius.circular(20),
@@ -271,7 +191,7 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                                         vertical: 3,
                                       ),
                                       child: Icon(
-                                        Icons.adjust,
+                                        Icons.close,
                                         color: Theme.of(context).brightness ==
                                                 Brightness.light
                                             ? Colors.white
@@ -284,8 +204,83 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 4,
+                          right: 8,
+                        ),
+                        child: Container(
+                          height: 30,
+                          decoration: BoxDecoration(
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Colors.black.withOpacity(0.3)
+                                    : Colors.white.withOpacity(0.3),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: Row(
+                              children: [
+                                InkWell(
+                                  onTap: () async =>
+                                      await viewModel.openBottomSheet(false),
+                                  onLongPress: () async =>
+                                      await viewModel.openAboutDialog(false),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    bottomLeft: Radius.circular(20),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                      vertical: 3,
+                                    ),
+                                    child: Icon(
+                                      Icons.more_horiz,
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.light
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                VerticalDivider(
+                                  indent: 6,
+                                  endIndent: 6,
+                                  width: 1,
+                                  color: Colors.white.withOpacity(0.3),
+                                ),
+                                InkWell(
+                                  onTap: () async =>
+                                      await viewModel.openExitDialog(),
+                                  onLongPress: () async =>
+                                      await viewModel.openBottomSheet(false),
+                                  borderRadius: const BorderRadius.only(
+                                    topRight: Radius.circular(20),
+                                    bottomRight: Radius.circular(20),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                      vertical: 3,
+                                    ),
+                                    child: Icon(
+                                      Icons.adjust,
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.light
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -296,22 +291,22 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
       routes: {
         routeManager: (context) {
           return Material(
-            child: widget.manager,
+            child: widget.manager(),
           );
         },
         routeSettings: (context) {
           return Material(
-            child: widget.settings,
+            child: widget.settings(),
           );
         },
         routePlugin: (context) {
           return Material(
-            child: widget.plugin,
+            child: widget.plugin(),
           );
         },
         routeInfo: (context) {
           return Material(
-            child: widget.info,
+            child: widget.info(),
           );
         }
       },
