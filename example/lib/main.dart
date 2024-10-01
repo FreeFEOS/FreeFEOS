@@ -4,12 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:freefeos/freefeos.dart';
 
 Future<void> main() async {
-  await FreeFEOSRunner(
-    runner: (app) async => runApp(app),
-    plugins: () => [ExamplePlugin()],
+  /// 初始化FreeFEOSRunner
+  final run = FreeFEOSRunner(
+    runner: (app) async => runApp(app), // 使用默认的runApp作为运行器启动应用
+    plugins: [ExamplePlugin()], // 插件列表
     initApi: (exec) async => Global.exec = exec,
+    developer: Global.developerName,
+    description: Global.appDescription,
+    official: Global.officialWebsite,
+    feedback: Global.feedbackWebsite,
     enabled: true,
-  )(app: const MyApp());
+  );
+
+  /// 使用FreeFEOSRunner启动应用
+  await run(app: const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -144,8 +152,10 @@ class Global {
 
   /// 应用名称
   static const String appName = '示例应用';
-
+  static const String appDescription = '演示如何使用freefeos';
   static const String developerName = 'wyq0918dev';
+  static final Uri officialWebsite = Uri.parse('');
+  static final Uri feedbackWebsite = Uri.parse('');
 
   /// 计数
   static final ValueNotifier<int> counter = ValueNotifier(0);

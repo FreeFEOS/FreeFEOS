@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:freefeos/src/entry/default_entry.dart';
+import 'package:freefeos/src/interface/config.dart';
 import 'package:freefeos/src/interface/system_interface.dart';
 import 'package:freefeos/src/plugin/plugin_runtime.dart';
-import 'package:freefeos/src/type/types.dart';
 import 'package:freefeos/src/values/strings.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
@@ -17,11 +17,9 @@ class MockFreeFEOSInterface
 
   @override
   Future<void> runFreeFEOSApp({
-    required AppRunner runner,
-    required PluginList plugins,
-    required ApiBuilder initApi,
+    required SystemImport import,
+    required SystemConfig config,
     required Widget app,
-    required bool enabled,
     required dynamic error,
   }) async {
     isInitialized = true;
@@ -62,11 +60,19 @@ void main() {
     MockFreeFEOSInterface fakeInterface = MockFreeFEOSInterface();
     FreeFEOSInterface.instance = fakeInterface;
     await FreeFEOSInterface.instance.runFreeFEOSApp(
-      runner: (app) async => runApp(app),
-      plugins: () => [fakeInterface],
-      initApi: (exec) async {},
+      import: SystemImport(
+        runner: (app) async => runApp(app),
+        plugins: [fakeInterface],
+        initApi: (exec) async {},
+      ),
+      config: SystemConfig(
+        enabled: true,
+        developer: '',
+        description: '',
+        official: Uri.parse(''),
+        feedback: Uri.parse(''),
+      ),
       app: const Placeholder(),
-      enabled: true,
       error: null,
     );
     expect(fakeInterface.isInitialized, true);

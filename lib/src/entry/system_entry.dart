@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 
 import '../base/base.dart';
+import '../interface/config.dart';
 import '../interface/system_interface.dart';
-import '../type/types.dart';
 
 final class SystemEntry extends FreeFEOSInterface with BaseEntry {
   SystemEntry();
@@ -10,30 +10,24 @@ final class SystemEntry extends FreeFEOSInterface with BaseEntry {
   /// 入口函数
   @override
   Future<void> runFreeFEOSApp({
-    required AppRunner runner,
-    required PluginList plugins,
-    required ApiBuilder initApi,
+    required SystemImport import,
+    required SystemConfig config,
     required Widget app,
-    required bool enabled,
     required dynamic error,
   }) async {
     return await () async {
       try {
         return await interface.runFreeFEOSApp(
-          runner: runner,
-          plugins: plugins,
-          initApi: initApi,
+          import: import,
+          config: config,
           app: app,
-          enabled: enabled,
           error: error,
         );
       } catch (exception) {
         return await super.runFreeFEOSApp(
-          runner: runner,
-          plugins: plugins,
-          initApi: initApi,
+          import: import,
+          config: config,
           app: app,
-          enabled: enabled,
           error: exception,
         );
       }

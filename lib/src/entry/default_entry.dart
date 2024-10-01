@@ -1,8 +1,9 @@
 import 'package:flutter/widgets.dart';
 
 import '../framework/log.dart';
+import '../interface/config.dart';
 import '../interface/system_interface.dart';
-import '../type/types.dart';
+
 import '../values/tag.dart';
 
 /// 无法正确加载平台时的实现
@@ -12,17 +13,15 @@ final class DefaultEntry extends FreeFEOSInterface {
   /// 入口函数
   @override
   Future<void> runFreeFEOSApp({
-    required AppRunner runner,
-    required PluginList plugins,
-    required ApiBuilder initApi,
+    required SystemImport import,
+    required SystemConfig config,
     required Widget app,
-    required bool enabled,
     required dynamic error,
   }) async {
-    return enabled
+    return (config.enabled ?? false)
         ? () async {
             try {
-              await initApi(
+              await (import.initApi ?? (_) async {})(
                 (
                   String channel,
                   String method, [
@@ -39,25 +38,24 @@ final class DefaultEntry extends FreeFEOSInterface {
                   return await null;
                 },
               );
-              return await runner(app).then(
+              return await (import.runner ?? (app) async => runApp(app))(app)
+                  .then(
                 (_) => Log.w(
                   tag: entryTag,
                   message: '不支持当前平台,\n'
                       '框架所有代码将不会参与执行,\n'
-                      '${plugins().length}个插件不会被加载.\n',
+                      '${(import.plugins ?? []).length}个插件不会被加载.\n',
                 ),
               );
             } catch (exception) {
               return await super.runFreeFEOSApp(
-                runner: runner,
-                plugins: plugins,
-                initApi: initApi,
+                import: import,
+                config: config,
                 app: app,
-                enabled: enabled,
                 error: exception,
               );
             }
           }()
-        : runner(app);
+        : (import.runner ?? (app) async => runApp(app))(app);
   }
 }

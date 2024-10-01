@@ -6,10 +6,10 @@ import 'package:window_manager/window_manager.dart';
 import '../embedder/embedder_mixin.dart';
 import '../engine/bridge_mixin.dart';
 import '../framework/context.dart';
+import '../interface/config.dart';
 import '../kernel/kernel.dart';
 import '../plugin/plugin_runtime.dart';
 import '../runtime/runtime.dart';
-import '../type/types.dart';
 import '../utils/utils.dart';
 import '../values/channel.dart';
 import '../values/route.dart';
@@ -212,15 +212,13 @@ base class SystemBase extends ContextWrapper
   @protected
   @override
   Future<void> runFreeFEOSApp({
-    required AppRunner runner,
-    required PluginList plugins,
-    required ApiBuilder initApi,
+    required SystemImport import,
+    required SystemConfig config,
     required Widget app,
-    required bool enabled,
     required dynamic error,
-  }) {
+  }) async {
     // 判断是否启用框架, 如果在浏览器中运行不启用.
-    return enabled && !PlatformUtil.kIsWebBrowser
+    return (config.enabled ?? false) && (!PlatformUtil.kIsWebBrowser)
         // 导入App
         ? includeApp(app).then(
             (_) async {
@@ -245,13 +243,11 @@ base class SystemBase extends ContextWrapper
                 // 初始化引擎桥接
                 await initEngineBridge();
                 // 初始化引擎
-                await engineBridgerScope.onCreateEngine(
-                  baseContext,
-                );
+                await engineBridgerScope.onCreateEngine(baseContext);
                 // 初始化应用
-                await init(plugins());
+                await init(import.plugins ?? <RuntimePlugin>[]);
                 // 初始化API
-                await initApi(
+                await (import.initApi ?? (_) async {})(
                   (
                     String channel,
                     String method, [
@@ -285,7 +281,9 @@ base class SystemBase extends ContextWrapper
                   );
                 }
                 // 调用运行器启动应用
-                return await runner(buildApplication());
+                return await (import.runner ?? (app) async => runApp)(
+                  buildApplication(),
+                );
               } catch (_) {
                 // 断言没有传入异常
                 assert(() {
@@ -300,7 +298,7 @@ base class SystemBase extends ContextWrapper
             },
           )
         // 未启用框架时直接调用运行器启动应用
-        : runner(app);
+        : (import.runner ?? (app) async => runApp)(app);
   }
 
   /// 初始化应用

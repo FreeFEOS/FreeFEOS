@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:freefeos/src/values/url.dart';
 
 import '../entry/system_entry.dart';
 import '../interface/platform_interface.dart';
@@ -158,53 +159,61 @@ abstract base class FreeFEOSBase {
 /// ```
 final class FreeFEOSRunner {
   const FreeFEOSRunner._({
-    required this.runner,
-    required this.plugins,
-    required this.initApi,
-    required this.enabled,
+    required this.import,
+    required this.config,
   });
 
-  /// 运行器
-  final AppRunner runner;
-
-  /// 插件列表
-  final PluginList plugins;
-
-  /// 初始化API
-  final ApiBuilder initApi;
-
-  /// 是否启用框架
-  final bool enabled;
+  final AppImport import;
+  final AppConfig config;
 
   /// 工厂构建函数
   factory FreeFEOSRunner({
-    required Future<void> Function(Widget app) runner,
-    required List<FreeFEOSPlugin> Function() plugins,
-    required Future<void> Function(FreeFEOSExec exec) initApi,
-    bool enabled = true,
+    Future<void> Function(Widget app)? runner,
+    List<FreeFEOSPlugin>? plugins,
+    Future<void> Function(FreeFEOSExec exec)? initApi,
+    String? developer,
+    String? description,
+    Uri? official,
+    Uri? feedback,
+    bool? enabled,
   }) {
     return FreeFEOSRunner._(
-      runner: runner,
-      plugins: plugins,
-      initApi: initApi,
-      enabled: enabled,
+      import: AppImport(
+        runner: runner ?? (app) async => runApp(app),
+        plugins: plugins ?? [],
+        initApi: initApi ?? (_) async {},
+      ),
+      config: AppConfig(
+        enabled: enabled ?? false,
+        developer: developer ?? 'freefeos by wyq0918dev',
+        description: description ?? 'Based on FreeFEOS',
+        official: official ?? Uri.parse(pubDevUrl),
+        feedback: feedback ??
+            Uri.parse('https://github.com/freefeos/freefeos/issues'),
+      ),
     );
   }
 
   /// 启动应用
+  ///
+  /// app: 传入你的App的根Widget
+  ///
+  /// FreeFEOSRunner可调用对象,
+  /// 官方文档https://dart.dev/language/callable-objects
   Future<void> call({
     required Widget app,
-  }) async {
-    return await FreeFEOSInterface.instance.runFreeFEOSApp(
-      runner: runner,
-      plugins: plugins,
-      initApi: initApi,
+  }) {
+    return FreeFEOSInterface.instance.runFreeFEOSApp(
+      import: import,
+      config: config,
       app: app,
-      enabled: enabled,
       error: null,
     );
   }
 }
+
+/// 最简实现
+Future<void> runFFApp(Widget app) => FreeFEOSRunner(enabled: true)(app: app);
 
 /// 此文件为导出的, 可被外部访问的公共API接口, 但 [FreeFEOSBase] 类除外.
 /// 有关API的完整示例代码, 请参阅 https://pub.dev/packages/freefeos/example
