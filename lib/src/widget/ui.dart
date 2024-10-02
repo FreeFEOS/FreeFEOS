@@ -116,10 +116,7 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                       Visibility(
                         visible: PlatformUtil.kIsDesktop,
                         child: Padding(
-                          padding: const EdgeInsets.only(
-                            left: 8,
-                            right: 4,
-                          ),
+                          padding: const EdgeInsets.only(right: 8),
                           child: Container(
                             height: 30,
                             decoration: BoxDecoration(
@@ -214,10 +211,7 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(
-                          left: 4,
-                          right: 8,
-                        ),
+                        padding: const EdgeInsets.only(right: 12),
                         child: Container(
                           height: 30,
                           decoration: BoxDecoration(
@@ -271,9 +265,7 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                                     return await viewModel.openExitDialog();
                                   },
                                   onLongPress: () async {
-                                    return await viewModel.openBottomSheet(
-                                      false,
-                                    );
+                                    return await viewModel.exitApp();
                                   },
                                   borderRadius: const BorderRadius.only(
                                     topRight: Radius.circular(20),

@@ -35,13 +35,24 @@ class _SystemSettingsState extends State<SystemSettings> {
                 ).settingsTitle,
               ),
             ),
-      body: Scrollbar(
-        controller: _scrollController,
-        child: SingleChildScrollView(
-          controller: _scrollController,
-          padding: widget.isManager ? EdgeInsets.zero : null,
-          child: const Column(
-            children: [],
+      body: SafeArea(
+        left: true,
+        top: false,
+        right: true,
+        bottom: false,
+        minimum: EdgeInsets.zero,
+        maintainBottomViewPadding: true,
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: Scrollbar(
+            controller: _scrollController,
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              padding: widget.isManager ? EdgeInsets.zero : null,
+              child: const Column(
+                children: [],
+              ),
+            ),
           ),
         ),
       ),
