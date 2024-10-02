@@ -176,330 +176,264 @@ class _HomePageState extends State<HomePage> {
         child: SingleChildScrollView(
           controller: _scrollController,
           padding: EdgeInsets.zero,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(12, 12, 12, 6),
-                child: Card(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  child: Padding(
-                    padding: const EdgeInsets.all(24),
-                    child: Row(
-                      children: [
-                        const FlutterLogo(),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 24),
-                            child: Consumer<SystemViewModel>(
-                              builder: (context, viewModel, child) => Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  FutureBuilder(
-                                    future: viewModel.getAppName(),
-                                    builder: (context, snapshot) {
-                                      String text = IntlLocalizations.of(
-                                        context,
-                                      ).unknown;
-                                      switch (snapshot.connectionState) {
-                                        case ConnectionState.waiting:
-                                          text = IntlLocalizations.of(
-                                            context,
-                                          ).waiting;
-                                          break;
-                                        case ConnectionState.done:
-                                          if (snapshot.hasError) {
-                                            text = IntlLocalizations.of(
-                                              context,
-                                            ).error;
-                                            break;
-                                          }
-                                          if (snapshot.hasData) {
-                                            text = snapshot.data ??
-                                                IntlLocalizations.of(
-                                                  context,
-                                                ).sNull;
-                                            break;
-                                          }
-                                          break;
-                                        default:
-                                          break;
-                                      }
-                                      return Text(
-                                        text,
-                                        textAlign: TextAlign.left,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium,
-                                      );
-                                    },
-                                  ),
-                                  const SizedBox(height: 4),
-                                  FutureBuilder(
-                                    future: viewModel.getAppVersion(),
-                                    builder: (context, snapshot) {
-                                      String text = IntlLocalizations.of(
-                                        context,
-                                      ).unknown;
-                                      switch (snapshot.connectionState) {
-                                        case ConnectionState.waiting:
-                                          text = IntlLocalizations.of(
-                                            context,
-                                          ).waiting;
-                                          break;
-                                        case ConnectionState.done:
-                                          if (snapshot.hasError) {
-                                            text = IntlLocalizations.of(
-                                              context,
-                                            ).error;
-                                            break;
-                                          }
-                                          if (snapshot.hasData) {
-                                            text = snapshot.data ??
-                                                IntlLocalizations.of(
-                                                  context,
-                                                ).sNull;
-                                            break;
-                                          }
-                                          break;
-                                        default:
-                                          break;
-                                      }
-                                      return Text(
-                                        text,
-                                        textAlign: TextAlign.left,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
+          child: Consumer<SystemViewModel>(
+            builder: (context, viewModel, child) => Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(12, 12, 12, 6),
+                  child: Card(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    child: InkWell(
+                      onTap: viewModel.openApplication,
+                      borderRadius: BorderRadius.circular(12),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12,
+                          horizontal: 6,
+                        ),
+                        child: ListTile(
+                          leading: const FlutterLogo(),
+                          title: FutureBuilder(
+                            future: viewModel.getAppName(),
+                            builder: (context, snapshot) {
+                              String text = IntlLocalizations.of(
+                                context,
+                              ).unknown;
+                              switch (snapshot.connectionState) {
+                                case ConnectionState.waiting:
+                                  text = IntlLocalizations.of(
+                                    context,
+                                  ).waiting;
+                                  break;
+                                case ConnectionState.done:
+                                  if (snapshot.hasError) {
+                                    text = IntlLocalizations.of(
+                                      context,
+                                    ).error;
+                                    break;
+                                  }
+                                  if (snapshot.hasData) {
+                                    text = snapshot.data ??
+                                        IntlLocalizations.of(
+                                          context,
+                                        ).sNull;
+                                    break;
+                                  }
+                                  break;
+                                default:
+                                  break;
+                              }
+                              return Text(text);
+                            },
+                          ),
+                          subtitle: FutureBuilder(
+                            future: viewModel.getAppVersion(),
+                            builder: (context, snapshot) {
+                              String text = IntlLocalizations.of(
+                                context,
+                              ).unknown;
+                              switch (snapshot.connectionState) {
+                                case ConnectionState.waiting:
+                                  text = IntlLocalizations.of(
+                                    context,
+                                  ).waiting;
+                                  break;
+                                case ConnectionState.done:
+                                  if (snapshot.hasError) {
+                                    text = IntlLocalizations.of(
+                                      context,
+                                    ).error;
+                                    break;
+                                  }
+                                  if (snapshot.hasData) {
+                                    text = snapshot.data ??
+                                        IntlLocalizations.of(
+                                          context,
+                                        ).sNull;
+                                    break;
+                                  }
+                                  break;
+                                default:
+                                  break;
+                              }
+                              return Text(text);
+                            },
                           ),
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 6,
-                  horizontal: 12,
-                ),
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(24),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          child: Consumer<SystemViewModel>(
-                            builder: (context, viewModel, child) => Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 6,
+                    horizontal: 12,
+                  ),
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 6),
+                      child: Column(
+                        children: [
+                          ListTile(
+                            title: Text(
+                              IntlLocalizations.of(
+                                context,
+                              ).managerHomeInfoAppName,
+                            ),
+                            subtitle: FutureBuilder(
+                              future: viewModel.getAppName(),
+                              builder: (context, snapshot) {
+                                String text = IntlLocalizations.of(
+                                  context,
+                                ).unknown;
+                                switch (snapshot.connectionState) {
+                                  case ConnectionState.waiting:
+                                    text = IntlLocalizations.of(
+                                      context,
+                                    ).waiting;
+                                    break;
+                                  case ConnectionState.done:
+                                    if (snapshot.hasError) {
+                                      text = IntlLocalizations.of(
+                                        context,
+                                      ).error;
+                                      break;
+                                    }
+                                    if (snapshot.hasData) {
+                                      text = snapshot.data ??
+                                          IntlLocalizations.of(
+                                            context,
+                                          ).sNull;
+                                      break;
+                                    }
+                                    break;
+                                  default:
+                                    break;
+                                }
+                                return Text(text);
+                              },
+                            ),
+                          ),
+                          ListTile(
+                            title: Text(
+                              IntlLocalizations.of(
+                                context,
+                              ).managerHomeInfoAppVersion,
+                            ),
+                            subtitle: FutureBuilder(
+                              future: viewModel.getAppVersion(),
+                              builder: (context, snapshot) {
+                                String text = IntlLocalizations.of(
+                                  context,
+                                ).unknown;
+                                switch (snapshot.connectionState) {
+                                  case ConnectionState.waiting:
+                                    text = IntlLocalizations.of(
+                                      context,
+                                    ).waiting;
+                                    break;
+                                  case ConnectionState.done:
+                                    if (snapshot.hasError) {
+                                      text = IntlLocalizations.of(
+                                        context,
+                                      ).error;
+                                      break;
+                                    }
+                                    if (snapshot.hasData) {
+                                      text = snapshot.data ??
+                                          IntlLocalizations.of(
+                                            context,
+                                          ).sNull;
+                                      break;
+                                    }
+                                    break;
+                                  default:
+                                    break;
+                                }
+                                return Text(text);
+                              },
+                            ),
+                          ),
+                          ListTile(
+                            title: Text(IntlLocalizations.of(
+                              context,
+                            ).managerHomeInfoPlatform),
+                            subtitle: Text(Theme.of(context).platform.name),
+                          ),
+                          ListTile(
+                            title: Text(
+                              IntlLocalizations.of(
+                                context,
+                              ).managerHomeInfoPluginCount,
+                            ),
+                            subtitle: Text(viewModel.pluginCount()),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8,
+                              horizontal: 24,
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                FutureBuilder(
-                                  future: viewModel.getAppName(),
-                                  builder: (context, snapshot) {
-                                    String text = IntlLocalizations.of(
-                                      context,
-                                    ).unknown;
-                                    switch (snapshot.connectionState) {
-                                      case ConnectionState.waiting:
-                                        text = IntlLocalizations.of(
-                                          context,
-                                        ).waiting;
-                                        break;
-                                      case ConnectionState.done:
-                                        if (snapshot.hasError) {
-                                          text = IntlLocalizations.of(
-                                            context,
-                                          ).error;
-                                          break;
-                                        }
-                                        if (snapshot.hasData) {
-                                          text = snapshot.data ??
-                                              IntlLocalizations.of(
-                                                context,
-                                              ).sNull;
-                                          break;
-                                        }
-                                        break;
-                                      default:
-                                        break;
-                                    }
-                                    return InfoItem(
-                                      title: IntlLocalizations.of(
-                                        context,
-                                      ).managerHomeInfoAppName,
-                                      subtitle: text,
-                                    );
+                                FilledButton.icon(
+                                  onPressed: () async {
+                                    await viewModel.openAboutDialog(false);
                                   },
-                                ),
-                                const SizedBox(height: 16),
-                                FutureBuilder(
-                                  future: viewModel.getAppVersion(),
-                                  builder: (context, snapshot) {
-                                    String text = IntlLocalizations.of(
+                                  icon: const Icon(Icons.info_outline),
+                                  label: Text(
+                                    IntlLocalizations.of(
                                       context,
-                                    ).unknown;
-                                    switch (snapshot.connectionState) {
-                                      case ConnectionState.waiting:
-                                        text = IntlLocalizations.of(
-                                          context,
-                                        ).waiting;
-                                        break;
-                                      case ConnectionState.done:
-                                        if (snapshot.hasError) {
-                                          text = IntlLocalizations.of(
-                                            context,
-                                          ).error;
-                                          break;
-                                        }
-                                        if (snapshot.hasData) {
-                                          text = snapshot.data ??
-                                              IntlLocalizations.of(
-                                                context,
-                                              ).sNull;
-                                          break;
-                                        }
-                                        break;
-                                      default:
-                                        break;
-                                    }
-                                    return InfoItem(
-                                      title: IntlLocalizations.of(
-                                        context,
-                                      ).managerHomeInfoAppVersion,
-                                      subtitle: text,
-                                    );
-                                  },
+                                    ).managerHomeInfoAbout,
+                                  ),
                                 ),
-                                const SizedBox(height: 16),
-                                InfoItem(
-                                  title: IntlLocalizations.of(
-                                    context,
-                                  ).managerHomeInfoPlatform,
-                                  subtitle: Theme.of(context).platform.name,
-                                ),
-                                const SizedBox(height: 16),
-                                InfoItem(
-                                  title: IntlLocalizations.of(
-                                    context,
-                                  ).managerHomeInfoPluginCount,
-                                  subtitle: viewModel.pluginCount(),
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    TextButton(
-                                      onPressed: () async {
-                                        await viewModel.openAboutDialog(false);
-                                      },
-                                      child: Text(
-                                        IntlLocalizations.of(
-                                          context,
-                                        ).managerHomeInfoAbout,
-                                      ),
-                                    ),
-                                  ],
-                                )
                               ],
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(12, 6, 12, 12),
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(24),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                IntlLocalizations.of(
-                                  context,
-                                ).managerHomeLearnTitle,
-                                textAlign: TextAlign.start,
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                              Text(
-                                IntlLocalizations.of(
-                                  context,
-                                ).managerHomeLearnDescription,
-                                textAlign: TextAlign.start,
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                            ],
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(12, 6, 12, 12),
+                  child: Tooltip(
+                    message: IntlLocalizations.of(
+                      context,
+                    ).managerHomeLearnTooltip,
+                    child: Card(
+                      child: InkWell(
+                        onTap: () async => await viewModel.launchPubDev(),
+                        borderRadius: BorderRadius.circular(12),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 12,
+                            horizontal: 6,
                           ),
-                        ),
-                        Tooltip(
-                          message: IntlLocalizations.of(
-                            context,
-                          ).managerHomeLearnTooltip,
-                          child: Consumer<SystemViewModel>(
-                            builder: (context, viewModel, child) => IconButton(
-                              onPressed: viewModel.launchPubDev,
-                              icon: Icon(
-                                Icons.open_in_browser,
-                                size: Theme.of(context).iconTheme.size,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onPrimaryContainer,
-                              ),
+                          child: ListTile(
+                            title: Text(
+                              IntlLocalizations.of(
+                                context,
+                              ).managerHomeLearnTitle,
+                            ),
+                            subtitle: Text(
+                              IntlLocalizations.of(
+                                context,
+                              ).managerHomeLearnDescription,
                             ),
                           ),
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
-    );
-  }
-}
-
-class InfoItem extends StatelessWidget {
-  const InfoItem({
-    super.key,
-    required this.title,
-    required this.subtitle,
-  });
-
-  final String title;
-  final String subtitle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Text>[
-        Text(
-          title,
-          textAlign: TextAlign.start,
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
-        Text(
-          subtitle,
-          textAlign: TextAlign.start,
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-      ],
     );
   }
 }
@@ -701,7 +635,7 @@ class PluginCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '${IntlLocalizations.of(context).managerPluginChannel}: ${details.author}',
+                          '${IntlLocalizations.of(context).managerPluginAuthor}: ${details.author}',
                           textAlign: TextAlign.start,
                           style: TextStyle(
                             fontSize: Theme.of(
@@ -755,12 +689,13 @@ class PluginCard extends StatelessWidget {
                       context,
                       details,
                     ),
-                    child: TextButton(
+                    child: FilledButton.icon(
                       onPressed: viewModel.openPlugin(
                         context,
                         details,
                       ),
-                      child: Text(
+                      icon: const Icon(Icons.open_in_new),
+                      label: Text(
                         viewModel.getPluginAction(
                           context,
                           details,
