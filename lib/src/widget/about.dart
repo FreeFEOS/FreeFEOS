@@ -91,7 +91,7 @@ class SystemAbout extends StatelessWidget {
                       : IntlLocalizations.of(
                           context,
                         ).aboutDialogLegalese,
-                  children: child?.toWidgetList(),
+                  children: WidgetUtil.widget2WidgetList(child),
                 );
               },
             );

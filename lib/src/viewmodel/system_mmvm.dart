@@ -123,6 +123,7 @@ final class SystemViewModel extends ContextWrapper
     required this.pluginGetter,
     required this.pluginWidgetGetter,
     required this.runtimeChecker,
+    required this.child,
   }) : super(attach: true);
 
   /// 上下文
@@ -166,6 +167,8 @@ final class SystemViewModel extends ContextWrapper
 
   /// 判断是否运行时
   final RuntimeChecker runtimeChecker;
+
+  final Widget child;
 
   /// 当前插件的详细信息 [PluginUI] 用
   PluginDetails? _currentDetails;
@@ -545,4 +548,6 @@ final class SystemViewModel extends ContextWrapper
   PluginWidgetGetter get getPluginWidget {
     return pluginWidgetGetter;
   }
+
+  Widget get getChild => child;
 }

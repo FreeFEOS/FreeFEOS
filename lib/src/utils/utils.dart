@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:freefeos/src/framework/context.dart';
 
 final class PlatformUtil {
   static bool get kNoBanner => !kDebugMode;
@@ -17,7 +18,7 @@ final class PlatformUtil {
 }
 
 /// 心灵毒鸡汤
-class PoemUtils {
+class PoemUtil {
   /// 随机抽取一句
   String get getPoem => _list[Random().nextInt(_list.length)];
 
@@ -36,6 +37,14 @@ class PoemUtils {
   ];
 }
 
-extension UIUtils on Widget {
-  List<Widget> toWidgetList() => [this];
+final class WidgetUtil {
+  static List<Widget> widget2WidgetList(Widget? child) {
+    return [
+      Container(
+        child: child,
+      ),
+    ];
+  }
+
+  static Widget layout2Widget(Layout layout) => layout;
 }

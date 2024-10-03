@@ -283,7 +283,7 @@ base class SystemBase extends ContextWrapper
                   );
                 }
                 // 调用运行器启动应用
-                return await (import.runner ?? (app) async => runApp)(
+                return await (import.runner ?? (app) async => runApp(app))(
                   buildApplication(),
                 );
               } catch (_) {
@@ -300,7 +300,7 @@ base class SystemBase extends ContextWrapper
             },
           )
         // 未启用框架时直接调用运行器启动应用
-        : (import.runner ?? (app) async => runApp)(app);
+        : (import.runner ?? (app) async => runApp(app))(app);
   }
 
   /// 初始化应用

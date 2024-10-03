@@ -19,7 +19,6 @@ class SystemUI extends StatefulWidget {
     required this.settings,
     required this.plugin,
     required this.info,
-    required this.child,
   });
 
   final ViewModelBuilder viewModel;
@@ -27,7 +26,6 @@ class SystemUI extends StatefulWidget {
   final SystemLayout settings;
   final SystemLayout plugin;
   final SystemLayout info;
-  final Widget child;
 
   @override
   State<SystemUI> createState() => _SystemUIState();
@@ -91,14 +89,14 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                   constraints: const BoxConstraints.expand(),
                   child: PlatformUtil.kNoBanner
                       ? Container(
-                          child: child,
+                          child: viewModel.getChild,
                         )
                       : Banner(
                           message: IntlLocalizations.of(
                             context,
                           ).bannerTitle,
                           location: BannerLocation.topStart,
-                          child: child,
+                          child: viewModel.getChild,
                         ),
                 ),
               ),
@@ -297,27 +295,34 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
             ],
           );
         },
-        child: widget.child,
       ),
       routes: {
         routeManager: (context) {
           return Material(
-            child: widget.manager(),
+            child: WidgetUtil.layout2Widget(
+              widget.manager(),
+            ),
           );
         },
         routeSettings: (context) {
           return Material(
-            child: widget.settings(),
+            child: WidgetUtil.layout2Widget(
+              widget.settings(),
+            ),
           );
         },
         routePlugin: (context) {
           return Material(
-            child: widget.plugin(),
+            child: WidgetUtil.layout2Widget(
+              widget.plugin(),
+            ),
           );
         },
         routeInfo: (context) {
           return Material(
-            child: widget.info(),
+            child: WidgetUtil.layout2Widget(
+              widget.info(),
+            ),
           );
         }
       },

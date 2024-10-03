@@ -127,6 +127,7 @@ final class SystemRuntime extends SystemBase {
       pluginGetter: _getPlugin,
       pluginWidgetGetter: _getPluginWidget,
       runtimeChecker: _isRuntime,
+      child: super.child,
     );
   }
 
@@ -140,7 +141,6 @@ final class SystemRuntime extends SystemBase {
         settings: buildSettings,
         plugin: buildPlugin,
         info: buildInfo,
-        child: child,
       ),
     );
   }
