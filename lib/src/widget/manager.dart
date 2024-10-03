@@ -455,7 +455,7 @@ class _LogcatPageState extends State<LogcatPage> {
     super.didChangeDependencies();
     _renderedBuffer.clear();
     for (var event in EventBuffer.outputEventBuffer) {
-      final ParserWrapper parser = AnsiParser(
+      final IAnsiParser parser = AnsiParser(
         context: context,
         showTips: () => Toast.makeToast(
           context: context,
@@ -566,32 +566,30 @@ class _PluginPageState extends State<PluginPage> {
               maxWidth: 840,
             ),
             child: Consumer<SystemViewModel>(
-              builder: (context, viewModel, child) {
-                return ListView.builder(
-                  controller: _scrollController,
-                  itemCount: viewModel.getPluginDetailsList.length,
-                  padding: EdgeInsets.zero,
-                  itemBuilder: (context, index) {
-                    final PluginDetails first =
-                        viewModel.getPluginDetailsList.first;
-                    final PluginDetails last =
-                        viewModel.getPluginDetailsList.last;
-                    final PluginDetails details =
-                        viewModel.getPluginDetailsList[index];
-                    return Padding(
-                      padding: EdgeInsets.only(
-                        top: first == details ? 12 : 6,
-                        bottom: last == details ? 12 : 6,
-                        left: 12,
-                        right: 12,
-                      ),
-                      child: PluginCard(
-                        details: details,
-                      ),
-                    );
-                  },
-                );
-              },
+              builder: (context, viewModel, child) => ListView.builder(
+                controller: _scrollController,
+                itemCount: viewModel.getPluginDetailsList.length,
+                padding: EdgeInsets.zero,
+                itemBuilder: (context, index) {
+                  final PluginDetails first =
+                      viewModel.getPluginDetailsList.first;
+                  final PluginDetails last =
+                      viewModel.getPluginDetailsList.last;
+                  final PluginDetails details =
+                      viewModel.getPluginDetailsList[index];
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      top: first == details ? 12 : 6,
+                      bottom: last == details ? 12 : 6,
+                      left: 12,
+                      right: 12,
+                    ),
+                    child: PluginCard(
+                      details: details,
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         ),

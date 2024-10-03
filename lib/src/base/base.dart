@@ -55,22 +55,16 @@ abstract interface class BaseWrapper {
   ChangeNotifier buildViewModel(BuildContext context);
 
   /// 构建App
-  Layout buildSystemUI(Widget child);
+  Layout buildSystemUI();
 
   /// 构建底部弹出菜单
-  Layout buildBottomSheet(
-    BuildContext context,
-    bool isManager,
-  );
+  Layout buildBottomSheet(bool isManager);
 
   ///  构建关于对话框
-  Layout buildAboutDialog(
-    BuildContext context,
-    bool isPackage,
-  );
+  Layout buildAboutDialog(bool isPackage);
 
   /// 构建退出对话框
-  Layout buildExitDialog(BuildContext context);
+  Layout buildExitDialog();
 
   /// 获取管理器
   Layout buildManager();
@@ -198,7 +192,7 @@ base class SystemBase extends ContextWrapper
   /// 插件界面
   @override
   Widget pluginWidget(BuildContext context) {
-    return buildSystemUI(child);
+    return buildSystemUI();
   }
 
   /// 方法调用
@@ -327,21 +321,13 @@ base class SystemBase extends ContextWrapper
 
   /// 构建应用
   @override
-  Layout buildSystemUI(Widget child) {
-    return resources.getLayout(
-      layout: ConstrainedBox(
-        constraints: const BoxConstraints.expand(),
-        child: child,
-      ),
-    );
+  Layout buildSystemUI() {
+    return resources.layoutPlaceholder();
   }
 
   /// 构建底部弹出菜单
   @override
-  Layout buildBottomSheet(
-    BuildContext context,
-    bool isManager,
-  ) {
+  Layout buildBottomSheet(bool isManager) {
     return resources.getLayout(
       layout: Expanded(
         child: Center(
@@ -356,10 +342,7 @@ base class SystemBase extends ContextWrapper
 
   /// 构建关于对话框
   @override
-  Layout buildAboutDialog(
-    BuildContext context,
-    bool isPackage,
-  ) {
+  Layout buildAboutDialog(bool isPackage) {
     return resources.getLayout(
       layout: const AboutDialog(),
     );
@@ -367,7 +350,7 @@ base class SystemBase extends ContextWrapper
 
   /// 构建退出对话框
   @override
-  Layout buildExitDialog(BuildContext context) {
+  Layout buildExitDialog() {
     return resources.getLayout(
       layout: const AlertDialog(),
     );
@@ -415,9 +398,10 @@ base class SystemBase extends ContextWrapper
       context: context,
       useRootNavigator: true,
       useSafeArea: true,
-      builder: (context) => buildBottomSheet(
-        context,
-        isManager,
+      builder: (_) => WidgetUtil.layout2Widget(
+        buildBottomSheet(
+          isManager,
+        ),
       ),
     );
   }
@@ -429,8 +413,7 @@ base class SystemBase extends ContextWrapper
     return await showDialog(
       context: context,
       useRootNavigator: true,
-      builder: (context) => buildAboutDialog(
-        context,
+      builder: (_) => buildAboutDialog(
         isPackage,
       ),
     );
@@ -443,7 +426,7 @@ base class SystemBase extends ContextWrapper
     return await showDialog(
       context: context,
       useRootNavigator: true,
-      builder: buildExitDialog,
+      builder: (_) => buildExitDialog(),
     );
   }
 
@@ -454,12 +437,7 @@ base class SystemBase extends ContextWrapper
     return await Navigator.of(
       context,
       rootNavigator: true,
-    ).pushNamedAndRemoveUntil(
-      routeManager,
-      ModalRoute.withName(
-        routeRoot,
-      ), // 移除所有页面历史记录
-    );
+    ).pushNamed(routeManager);
   }
 
   /// 打开设置
@@ -487,12 +465,7 @@ base class SystemBase extends ContextWrapper
     return await Navigator.of(
       context,
       rootNavigator: true,
-    ).pushNamedAndRemoveUntil(
-      routeInfo,
-      ModalRoute.withName(
-        routeRoot,
-      ), // 移除所有页面历史记录
-    );
+    ).pushNamed(routeInfo);
   }
 
   /// 执行引擎方法

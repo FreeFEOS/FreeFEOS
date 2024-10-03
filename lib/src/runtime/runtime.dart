@@ -133,7 +133,7 @@ final class SystemRuntime extends SystemBase {
 
   /// 构建应用
   @override
-  Layout buildSystemUI(Widget child) {
+  Layout buildSystemUI() {
     return resources.getLayout(
       layout: SystemUI(
         viewModel: buildViewModel,
@@ -147,10 +147,7 @@ final class SystemRuntime extends SystemBase {
 
   /// 构建调试菜单
   @override
-  Layout buildBottomSheet(
-    BuildContext context,
-    bool isManager,
-  ) {
+  Layout buildBottomSheet(bool isManager) {
     return resources.getLayout(
       layout: SystemSheet(
         isManager: isManager,
@@ -160,10 +157,7 @@ final class SystemRuntime extends SystemBase {
 
   /// 构建关于对话框
   @override
-  Layout buildAboutDialog(
-    BuildContext context,
-    bool isPackage,
-  ) {
+  Layout buildAboutDialog(bool isPackage) {
     return resources.getLayout(
       layout: SystemAbout(
         isPackage: isPackage,
@@ -173,7 +167,7 @@ final class SystemRuntime extends SystemBase {
 
   /// 构建退出对话框
   @override
-  Layout buildExitDialog(BuildContext context) {
+  Layout buildExitDialog() {
     return resources.getLayout(
       layout: const SystemExit(),
     );

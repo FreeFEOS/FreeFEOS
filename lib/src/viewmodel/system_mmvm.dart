@@ -103,6 +103,8 @@ abstract interface class ISystemViewModel {
 
   /// 获取插件界面
   PluginWidgetGetter get getPluginWidget;
+
+  Widget get getChild;
 }
 
 final class SystemViewModel extends ContextWrapper
@@ -545,9 +547,8 @@ final class SystemViewModel extends ContextWrapper
   }
 
   @override
-  PluginWidgetGetter get getPluginWidget {
-    return pluginWidgetGetter;
-  }
+  PluginWidgetGetter get getPluginWidget => pluginWidgetGetter;
 
+  @override
   Widget get getChild => child;
 }

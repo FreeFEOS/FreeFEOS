@@ -2,12 +2,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:super_clipboard/super_clipboard.dart';
 
-abstract interface class ParserWrapper {
+abstract interface class IAnsiParser {
   List<TextSpan> get getSpans;
-  void parse(String s);
+  void parse(String string);
 }
 
-class AnsiParser implements ParserWrapper {
+class AnsiParser implements IAnsiParser {
   AnsiParser({
     required this.context,
     required this.showTips,
@@ -22,8 +22,8 @@ class AnsiParser implements ParserWrapper {
 
   late List<TextSpan> _spans;
 
-  Color? _foreground;
-  Color? _background;
+  Color? _foregroundColor;
+  Color? _backgroundColor;
 
   @override
   List<TextSpan> get getSpans {
@@ -31,15 +31,15 @@ class AnsiParser implements ParserWrapper {
   }
 
   @override
-  void parse(String s) {
+  void parse(String string) {
     _spans = [];
     var state = _textCode;
     StringBuffer? buffer;
     final text = StringBuffer();
     var code = 0;
     late List<int> codes;
-    for (var i = 0, n = s.length; i < n; i++) {
-      var c = s[i];
+    for (var i = 0, n = string.length; i < n; i++) {
+      var c = string[i];
       switch (state) {
         case _textCode:
           if (c == '\u001b') {
@@ -95,20 +95,20 @@ class AnsiParser implements ParserWrapper {
     if (codes.isEmpty) codes.add(0);
     switch (codes[0]) {
       case 0:
-        _foreground = _getColor(0, true);
-        _background = _getColor(0, false);
+        _foregroundColor = _getColor(0, true);
+        _backgroundColor = _getColor(0, false);
         break;
       case 38:
-        _foreground = _getColor(codes[2], true);
+        _foregroundColor = _getColor(codes[2], true);
         break;
       case 39:
-        _foreground = _getColor(0, true);
+        _foregroundColor = _getColor(0, true);
         break;
       case 48:
-        _background = _getColor(codes[2], false);
+        _backgroundColor = _getColor(codes[2], false);
         break;
       case 49:
-        _background = _getColor(0, false);
+        _backgroundColor = _getColor(0, false);
     }
   }
 
@@ -117,18 +117,18 @@ class AnsiParser implements ParserWrapper {
       case 0:
         return foreground ? Colors.black : Colors.transparent;
       case 12:
-        return _dark ? Colors.lightBlue[300] : Colors.indigo[700];
+        return _isDark ? Colors.lightBlue[300] : Colors.indigo[700];
       case 208:
-        return _dark ? Colors.orange[300] : Colors.orange[700];
+        return _isDark ? Colors.orange[300] : Colors.orange[700];
       case 196:
-        return _dark ? Colors.red[300] : Colors.red[700];
+        return _isDark ? Colors.red[300] : Colors.red[700];
       case 199:
-        return _dark ? Colors.pink[300] : Colors.pink[700];
+        return _isDark ? Colors.pink[300] : Colors.pink[700];
     }
     return foreground ? Colors.black : Colors.transparent;
   }
 
-  bool get _dark {
+  bool get _isDark {
     return Theme.of(context).brightness == Brightness.dark;
   }
 
@@ -136,8 +136,8 @@ class AnsiParser implements ParserWrapper {
     return TextSpan(
       text: text,
       style: TextStyle(
-        color: _foreground,
-        backgroundColor: _background,
+        color: _foregroundColor,
+        backgroundColor: _backgroundColor,
       ),
       recognizer: LongPressGestureRecognizer()
         ..onLongPress = () async {
