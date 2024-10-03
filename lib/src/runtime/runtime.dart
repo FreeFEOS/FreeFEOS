@@ -9,20 +9,14 @@ import '../interface/system_interface.dart';
 import '../plugin/plugin_details.dart';
 import '../plugin/plugin_runtime.dart';
 import '../plugin/plugin_type.dart';
+import '../type/types.dart';
 import '../values/channel.dart';
 import '../values/method.dart';
 import '../values/placeholder.dart';
 import '../values/strings.dart';
 import '../values/tag.dart';
 import '../viewmodel/system_mmvm.dart';
-import '../widget/about.dart';
-import '../widget/info.dart';
-import '../widget/plugin.dart';
 import '../widget/ui.dart';
-import '../widget/exit.dart';
-import '../widget/manager.dart';
-import '../widget/settings.dart';
-import '../widget/sheet.dart';
 
 /// 运行时混入
 base mixin RuntimeMixin implements BaseWrapper {
@@ -111,18 +105,10 @@ final class SystemRuntime extends SystemBase {
 
   /// 构建View Model
   @override
-  ChangeNotifier buildViewModel(BuildContext context) {
+  ViewModel buildViewModel(BuildContext context) {
     return SystemViewModel(
       context: context,
-      buildContextAttacher: super.attachContext,
-      applicationLauncher: super.launchApplication,
-      bottomSheetLauncher: super.launchBottomSheet,
-      aboutDiialogLauncher: super.launchAboutDiialog,
-      exitDialogLauncher: super.launchExitDialog,
-      managerLauncher: super.launchManager,
-      settingsLauncher: super.launchSettings,
-      pluginLauncher: super.launchPlugin,
-      infoLauncher: super.launchInfo,
+      contextAttacher: super.attachContext,
       pluginDetailsList: _pluginDetailsList,
       pluginGetter: _getPlugin,
       pluginWidgetGetter: _getPluginWidget,
@@ -133,75 +119,9 @@ final class SystemRuntime extends SystemBase {
 
   /// 构建应用
   @override
-  Layout buildSystemUI() {
+  Layout buildSystemUI(ViewModelBuilder builder) {
     return resources.getLayout(
-      layout: SystemUI(
-        viewModel: buildViewModel,
-        manager: buildManager,
-        settings: buildSettings,
-        plugin: buildPlugin,
-        info: buildInfo,
-      ),
-    );
-  }
-
-  /// 构建调试菜单
-  @override
-  Layout buildBottomSheet(bool isManager) {
-    return resources.getLayout(
-      layout: SystemSheet(
-        isManager: isManager,
-      ),
-    );
-  }
-
-  /// 构建关于对话框
-  @override
-  Layout buildAboutDialog(bool isPackage) {
-    return resources.getLayout(
-      layout: SystemAbout(
-        isPackage: isPackage,
-      ),
-    );
-  }
-
-  /// 构建退出对话框
-  @override
-  Layout buildExitDialog() {
-    return resources.getLayout(
-      layout: const SystemExit(),
-    );
-  }
-
-  /// 构建管理器布局
-  @override
-  Layout buildManager() {
-    return resources.getLayout(
-      layout: const SystemManager(),
-    );
-  }
-
-  /// 构建设置
-  @override
-  Layout buildSettings() {
-    return resources.getLayout(
-      layout: const SystemSettings(
-        isManager: false,
-      ),
-    );
-  }
-
-  @override
-  Layout buildPlugin() {
-    return resources.getLayout(
-      layout: const PluginUI(),
-    );
-  }
-
-  @override
-  Layout buildInfo() {
-    return resources.getLayout(
-      layout: const InfoPage(),
+      layout: SystemUI(builder: builder),
     );
   }
 

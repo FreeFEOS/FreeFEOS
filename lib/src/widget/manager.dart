@@ -13,6 +13,7 @@ import '../framework/log.dart';
 import '../framework/toast.dart';
 import '../intl/l10n.dart';
 import '../plugin/plugin_details.dart';
+import '../values/route.dart';
 import '../viewmodel/system_mmvm.dart';
 import 'settings.dart';
 
@@ -127,7 +128,10 @@ class _SystemManagerState extends State<SystemManager> {
                 context,
               ).bottomSheetTooltip,
               child: IconButton(
-                onPressed: () async => await viewModel.openBottomSheet(true),
+                onPressed: () async => await viewModel.launchBottomSheet(
+                  context,
+                  true,
+                ),
                 icon: const Icon(Icons.more_vert),
               ),
             ),
@@ -181,7 +185,12 @@ class _HomePageState extends State<HomePage> {
                       child: Card(
                         color: Theme.of(context).colorScheme.primaryContainer,
                         child: InkWell(
-                          onTap: viewModel.openApplication,
+                          onTap: () => Navigator.of(
+                            context,
+                            rootNavigator: true,
+                          ).popUntil(
+                            ModalRoute.withName(routeRoot),
+                          ),
                           borderRadius: BorderRadius.circular(12),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
@@ -377,7 +386,10 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     FilledButton.icon(
                                       onPressed: () async {
-                                        await viewModel.openAboutDialog(false);
+                                        await viewModel.launchAboutDialog(
+                                          context,
+                                          false,
+                                        );
                                       },
                                       icon: const Icon(Icons.info_outline),
                                       label: Text(

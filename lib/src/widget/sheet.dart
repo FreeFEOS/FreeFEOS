@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../intl/l10n.dart';
+import '../values/route.dart';
 import '../viewmodel/system_mmvm.dart';
 
 class SystemSheet extends StatelessWidget {
@@ -42,7 +43,10 @@ class SystemSheet extends StatelessWidget {
                               context,
                               rootNavigator: true,
                             ).pop();
-                            await viewModel.openAboutDialog(false);
+                            await viewModel.launchAboutDialog(
+                              context,
+                              false,
+                            );
                           },
                           icon: const Icon(Icons.keyboard_arrow_right),
                         ),
@@ -166,12 +170,15 @@ class SystemSheet extends StatelessWidget {
                       child: Wrap(
                         children: [
                           SheetButton(
-                            onTap: () async {
+                            onTap: () {
                               Navigator.of(
                                 context,
                                 rootNavigator: true,
                               ).pop();
-                              await viewModel.openManager();
+                              Navigator.of(
+                                context,
+                                rootNavigator: true,
+                              ).pushNamed(routeManager);
                             },
                             icon: Icons.manage_accounts_outlined,
                             label: IntlLocalizations.of(
@@ -188,7 +195,10 @@ class SystemSheet extends StatelessWidget {
                                 context,
                                 rootNavigator: true,
                               ).pop();
-                              await viewModel.openSettings();
+                              Navigator.of(
+                                context,
+                                rootNavigator: true,
+                              ).pushNamed(routeSettings);
                             },
                             icon: Icons.settings_outlined,
                             label: IntlLocalizations.of(
@@ -205,7 +215,10 @@ class SystemSheet extends StatelessWidget {
                                 context,
                                 rootNavigator: true,
                               ).pop();
-                              await viewModel.openInfo();
+                              Navigator.of(
+                                context,
+                                rootNavigator: true,
+                              ).pushNamed(routeInfo);
                             },
                             icon: Icons.info_outline,
                             label: '应用信息',
@@ -242,7 +255,7 @@ class SystemSheet extends StatelessWidget {
                                 context,
                                 rootNavigator: true,
                               ).pop();
-                              await viewModel.openExitDialog();
+                              await viewModel.launchExitDialog(context);
                             },
                             icon: Icons.exit_to_app,
                             label: IntlLocalizations.of(

@@ -57,6 +57,10 @@ final class Resources {
       layout: Placeholder(),
     );
   }
+
+  String getString() {
+    return '';
+  }
 }
 
 abstract base class Context {

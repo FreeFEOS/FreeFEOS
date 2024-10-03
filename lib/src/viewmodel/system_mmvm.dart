@@ -1,42 +1,40 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:freefeos/src/framework/context.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:window_manager/window_manager.dart';
 
+import '../framework/context.dart';
 import '../intl/l10n.dart';
 import '../plugin/plugin_details.dart';
 import '../plugin/plugin_type.dart';
 import '../type/types.dart';
 import '../utils/utils.dart';
+import '../values/route.dart';
 import '../values/url.dart';
+import '../widget/about.dart';
+import '../widget/exit.dart';
+import '../widget/sheet.dart';
 
 abstract interface class ISystemViewModel {
   /// 附加构建上下文
   void attachBuildContext(BuildContext context);
 
   /// 打开底部弹出菜单
-  Future<dynamic> openBottomSheet(bool isManager);
+  Future<dynamic> launchBottomSheet(
+    BuildContext context,
+    bool isManager,
+  );
 
   /// 打开应用信息
-  Future<dynamic> openAboutDialog(bool isPackage);
+  Future<dynamic> launchAboutDialog(
+    BuildContext context,
+    bool isPackage,
+  );
 
   /// 打开退出应用对话框
-  Future<dynamic> openExitDialog();
-
-  /// 进入应用
-  void openApplication();
-
-  /// 打开管理器
-  Future<dynamic> openManager();
-
-  /// 打开设置
-  Future<dynamic> openSettings();
-
-  /// 打开应用信息
-  Future<dynamic> openInfo();
+  Future<dynamic> launchExitDialog(BuildContext context);
 
   /// 获取应用名称
   Future<String> getAppName();
@@ -108,19 +106,11 @@ abstract interface class ISystemViewModel {
 }
 
 final class SystemViewModel extends ContextWrapper
-    with ChangeNotifier
+    with ViewModel
     implements ISystemViewModel {
   SystemViewModel({
     required this.context,
-    required this.buildContextAttacher,
-    required this.applicationLauncher,
-    required this.bottomSheetLauncher,
-    required this.aboutDiialogLauncher,
-    required this.exitDialogLauncher,
-    required this.managerLauncher,
-    required this.settingsLauncher,
-    required this.pluginLauncher,
-    required this.infoLauncher,
+    required this.contextAttacher,
     required this.pluginDetailsList,
     required this.pluginGetter,
     required this.pluginWidgetGetter,
@@ -129,34 +119,11 @@ final class SystemViewModel extends ContextWrapper
   }) : super(attach: true);
 
   /// 上下文
+  /// 切记, 在WidgetsApp完成创建之前传入, 无Navigator!
   final BuildContext context;
 
   /// 上下文附加器
-  final ContextAttacher buildContextAttacher;
-
-  /// 进入应用
-  final VoidCallback applicationLauncher;
-
-  /// 打开底部弹出菜单
-  final BottomSheetLauncher bottomSheetLauncher;
-
-  /// 打开应用信息
-  final AboutDialogLauncher aboutDiialogLauncher;
-
-  /// 打开退出应用对话框
-  final NavigatorLauncher exitDialogLauncher;
-
-  /// 打开管理器
-  final NavigatorLauncher managerLauncher;
-
-  /// 打开设置
-  final NavigatorLauncher settingsLauncher;
-
-  /// 打开插件界面
-  final NavigatorLauncher pluginLauncher;
-
-  /// 打开应用信息界面
-  final NavigatorLauncher infoLauncher;
+  final ContextAttacher contextAttacher;
 
   /// 插件列表
   final List<PluginDetails> pluginDetailsList;
@@ -178,49 +145,48 @@ final class SystemViewModel extends ContextWrapper
   /// 附加构建上下文
   @override
   void attachBuildContext(BuildContext context) {
-    return buildContextAttacher(context);
+    return contextAttacher(context);
   }
 
   /// 打开底部弹出菜单
   @override
-  Future<dynamic> openBottomSheet(bool isManager) {
-    return bottomSheetLauncher(isManager);
+  Future<dynamic> launchBottomSheet(
+    BuildContext context,
+    bool isManager,
+  ) {
+    return showModalBottomSheet(
+      context: context,
+      useRootNavigator: true,
+      useSafeArea: true,
+      builder: (_) => SystemSheet(
+        isManager: isManager,
+      ),
+    );
   }
 
   /// 打开应用信息
   @override
-  Future<dynamic> openAboutDialog(bool isPackage) {
-    return aboutDiialogLauncher(isPackage);
+  Future<dynamic> launchAboutDialog(
+    BuildContext context,
+    bool isPackage,
+  ) {
+    return showDialog(
+      context: context,
+      useRootNavigator: true,
+      builder: (_) => SystemAbout(
+        isPackage: isPackage,
+      ),
+    );
   }
 
   /// 打开退出应用对话框
   @override
-  Future<dynamic> openExitDialog() {
-    return exitDialogLauncher();
-  }
-
-  /// 进入应用
-  @override
-  void openApplication() {
-    return applicationLauncher();
-  }
-
-  /// 打开管理器
-  @override
-  Future<dynamic> openManager() {
-    return managerLauncher();
-  }
-
-  /// 打开设置
-  @override
-  Future<dynamic> openSettings() {
-    return settingsLauncher();
-  }
-
-  /// 打开应用信息
-  @override
-  Future openInfo() {
-    return infoLauncher();
+  Future<dynamic> launchExitDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      useRootNavigator: true,
+      builder: (_) => const SystemExit(),
+    );
   }
 
   /// 获取应用名称
@@ -482,10 +448,13 @@ final class SystemViewModel extends ContextWrapper
             if (!runtimeChecker(details)) {
               // 非运行时打开插件页面
               _currentDetails = details;
-              await pluginLauncher();
+              await Navigator.of(
+                context,
+                rootNavigator: true,
+              ).pushNamed(routePlugin);
             } else {
               // 运行时打开关于对话框
-              await aboutDiialogLauncher(true);
+              await launchAboutDialog(context, true);
             }
           }
         : null;

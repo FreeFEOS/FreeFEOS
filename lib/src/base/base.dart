@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:freefeos/src/type/types.dart';
 import 'package:window_manager/window_manager.dart';
 
 import '../embedder/embedder_mixin.dart';
@@ -12,7 +13,6 @@ import '../plugin/plugin_runtime.dart';
 import '../runtime/runtime.dart';
 import '../utils/utils.dart';
 import '../values/channel.dart';
-import '../values/route.dart';
 import '../values/strings.dart';
 import '../values/tag.dart';
 import '../framework/log.dart';
@@ -52,51 +52,10 @@ abstract interface class BaseWrapper {
   Layout buildApplication();
 
   /// 构建View Model
-  ChangeNotifier buildViewModel(BuildContext context);
+  ViewModel buildViewModel(BuildContext context);
 
   /// 构建App
-  Layout buildSystemUI();
-
-  /// 构建底部弹出菜单
-  Layout buildBottomSheet(bool isManager);
-
-  ///  构建关于对话框
-  Layout buildAboutDialog(bool isPackage);
-
-  /// 构建退出对话框
-  Layout buildExitDialog();
-
-  /// 获取管理器
-  Layout buildManager();
-
-  /// 构建设置界面
-  Layout buildSettings();
-
-  Layout buildPlugin();
-
-  Layout buildInfo();
-
-  /// 打开应用
-  void launchApplication();
-
-  /// 打开对话框
-  Future<dynamic> launchBottomSheet(bool isManager);
-
-  /// 打开应用信息
-  Future<dynamic> launchAboutDiialog(bool isPackage);
-
-  /// 打开退出应用对话框
-  Future<dynamic> launchExitDialog();
-
-  /// 打开管理器
-  Future<dynamic> launchManager();
-
-  /// 打开设置
-  Future<dynamic> launchSettings();
-
-  Future<dynamic> launchPlugin();
-
-  Future<dynamic> launchInfo();
+  Layout buildSystemUI(ViewModelBuilder builder);
 
   /// 执行引擎插件方法
   Future<dynamic> execEngine(
@@ -168,7 +127,7 @@ base class SystemBase extends ContextWrapper
         KernelBridgeMixin,
         ServerBridgeMixin,
         EngineBridgeMixin,
-        ChangeNotifier
+        ViewModel
     implements RuntimePlugin, FreeFEOSInterface, KernelModule, BaseWrapper {
   /// 构造函数
   SystemBase() : super(attach: true);
@@ -192,7 +151,7 @@ base class SystemBase extends ContextWrapper
   /// 插件界面
   @override
   Widget pluginWidget(BuildContext context) {
-    return buildSystemUI();
+    return buildSystemUI(buildViewModel);
   }
 
   /// 方法调用
@@ -315,157 +274,14 @@ base class SystemBase extends ContextWrapper
 
   /// 构建ViewModel
   @override
-  ChangeNotifier buildViewModel(BuildContext context) {
+  ViewModel buildViewModel(BuildContext context) {
     return this;
   }
 
   /// 构建应用
   @override
-  Layout buildSystemUI() {
+  Layout buildSystemUI(ViewModelBuilder builder) {
     return resources.layoutPlaceholder();
-  }
-
-  /// 构建底部弹出菜单
-  @override
-  Layout buildBottomSheet(bool isManager) {
-    return resources.getLayout(
-      layout: Expanded(
-        child: Center(
-          child: ListTile(
-            leading: const Icon(Icons.error_outline),
-            title: Text(isManager.toString()),
-          ),
-        ),
-      ),
-    );
-  }
-
-  /// 构建关于对话框
-  @override
-  Layout buildAboutDialog(bool isPackage) {
-    return resources.getLayout(
-      layout: const AboutDialog(),
-    );
-  }
-
-  /// 构建退出对话框
-  @override
-  Layout buildExitDialog() {
-    return resources.getLayout(
-      layout: const AlertDialog(),
-    );
-  }
-
-  /// 获取管理器
-  @override
-  Layout buildManager() {
-    return resources.layoutPlaceholder();
-  }
-
-  /// 构建设置
-  @override
-  Layout buildSettings() {
-    return resources.layoutPlaceholder();
-  }
-
-  @override
-  Layout buildPlugin() {
-    return resources.layoutPlaceholder();
-  }
-
-  @override
-  Layout buildInfo() {
-    return resources.layoutPlaceholder();
-  }
-
-  /// 打开应用
-  @protected
-  @override
-  void launchApplication() {
-    return Navigator.of(
-      context,
-      rootNavigator: true,
-    ).popUntil(
-      ModalRoute.withName(routeRoot),
-    );
-  }
-
-  /// 打开底部弹出对话框
-  @protected
-  @override
-  Future<dynamic> launchBottomSheet(bool isManager) async {
-    return await showModalBottomSheet(
-      context: context,
-      useRootNavigator: true,
-      useSafeArea: true,
-      builder: (_) => WidgetUtil.layout2Widget(
-        buildBottomSheet(
-          isManager,
-        ),
-      ),
-    );
-  }
-
-  /// 打开关于对话框
-  @protected
-  @override
-  Future<dynamic> launchAboutDiialog(bool isPackage) async {
-    return await showDialog(
-      context: context,
-      useRootNavigator: true,
-      builder: (_) => buildAboutDialog(
-        isPackage,
-      ),
-    );
-  }
-
-  /// 打开退出对话框
-  @protected
-  @override
-  Future<dynamic> launchExitDialog() async {
-    return await showDialog(
-      context: context,
-      useRootNavigator: true,
-      builder: (_) => buildExitDialog(),
-    );
-  }
-
-  /// 打开管理器
-  @protected
-  @override
-  Future<dynamic> launchManager() async {
-    return await Navigator.of(
-      context,
-      rootNavigator: true,
-    ).pushNamed(routeManager);
-  }
-
-  /// 打开设置
-  @protected
-  @override
-  Future<dynamic> launchSettings() async {
-    return await Navigator.of(
-      context,
-      rootNavigator: true,
-    ).pushNamed(routeSettings);
-  }
-
-  @protected
-  @override
-  Future<dynamic> launchPlugin() async {
-    return await Navigator.of(
-      context,
-      rootNavigator: true,
-    ).pushNamed(routePlugin);
-  }
-
-  @protected
-  @override
-  Future<dynamic> launchInfo() async {
-    return await Navigator.of(
-      context,
-      rootNavigator: true,
-    ).pushNamed(routeInfo);
   }
 
   /// 执行引擎方法

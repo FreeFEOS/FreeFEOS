@@ -10,22 +10,18 @@ import '../utils/utils.dart';
 import '../values/route.dart';
 import '../values/strings.dart';
 import '../viewmodel/system_mmvm.dart';
+import 'info.dart';
+import 'manager.dart';
+import 'plugin.dart';
+import 'settings.dart';
 
 class SystemUI extends StatefulWidget {
   const SystemUI({
     super.key,
-    required this.viewModel,
-    required this.manager,
-    required this.settings,
-    required this.plugin,
-    required this.info,
+    required this.builder,
   });
 
-  final ViewModelBuilder viewModel;
-  final SystemLayout manager;
-  final SystemLayout settings;
-  final SystemLayout plugin;
-  final SystemLayout info;
+  final ViewModelBuilder builder;
 
   @override
   State<SystemUI> createState() => _SystemUIState();
@@ -225,12 +221,14 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                               children: [
                                 InkWell(
                                   onTap: () async {
-                                    return await viewModel.openBottomSheet(
+                                    return await viewModel.launchBottomSheet(
+                                      context,
                                       false,
                                     );
                                   },
                                   onLongPress: () async {
-                                    return await viewModel.openAboutDialog(
+                                    return await viewModel.launchAboutDialog(
+                                      context,
                                       false,
                                     );
                                   },
@@ -260,7 +258,9 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                                 ),
                                 InkWell(
                                   onTap: () async {
-                                    return await viewModel.openExitDialog();
+                                    return await viewModel.launchExitDialog(
+                                      context,
+                                    );
                                   },
                                   onLongPress: () async {
                                     return await viewModel.exitApp();
@@ -298,31 +298,25 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
       ),
       routes: {
         routeManager: (context) {
-          return Material(
-            child: WidgetUtil.layout2Widget(
-              widget.manager(),
-            ),
+          return const Material(
+            child: SystemManager(),
           );
         },
         routeSettings: (context) {
-          return Material(
-            child: WidgetUtil.layout2Widget(
-              widget.settings(),
+          return const Material(
+            child: SystemSettings(
+              isManager: false,
             ),
           );
         },
         routePlugin: (context) {
-          return Material(
-            child: WidgetUtil.layout2Widget(
-              widget.plugin(),
-            ),
+          return const Material(
+            child: PluginUI(),
           );
         },
         routeInfo: (context) {
-          return Material(
-            child: WidgetUtil.layout2Widget(
-              widget.info(),
-            ),
+          return const Material(
+            child: InfoPage(),
           );
         }
       },
@@ -352,7 +346,7 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
         child: ToastificationWrapper(
           child: ChangeNotifierProvider<SystemViewModel>(
             create: (context) {
-              final viewModel = widget.viewModel(context);
+              final ViewModel viewModel = widget.builder(context);
               assert(() {
                 if (viewModel is! SystemViewModel) {
                   throw FlutterError(

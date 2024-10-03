@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../values/route.dart';
 import '../viewmodel/system_mmvm.dart';
 
 class InfoPage extends StatelessWidget {
@@ -16,15 +17,19 @@ class InfoPage extends StatelessWidget {
         body: Column(
           children: [
             FilledButton(
-              onPressed: () {
-                viewModel.openApplication();
-              },
+              onPressed: () => Navigator.of(
+                context,
+                rootNavigator: true,
+              ).popUntil(
+                ModalRoute.withName(routeRoot),
+              ),
               child: const Text('app'),
             ),
             FilledButton(
-              onPressed: () {
-                viewModel.openManager();
-              },
+              onPressed: () => Navigator.of(
+                context,
+                rootNavigator: true,
+              ).pushNamed(routeManager),
               child: const Text('mgr'),
             ),
             Text(viewModel.pluginNames()),
