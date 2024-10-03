@@ -18,11 +18,8 @@ typedef MethodExecer = Future<dynamic> Function(
 ]);
 //--------------------  入口用  -------------------------------
 //--------------------- ViewModel ----------------------------
-// typedef AboutDialogLauncher = Future<dynamic> Function(bool isPackage);
-// typedef BottomSheetLauncher = Future<dynamic> Function(bool isManager);
 typedef ContextAttacher = void Function(BuildContext context);
-// typedef MenuLauncher = Future<void> Function();
-// typedef NavigatorLauncher = Future<dynamic> Function();
+typedef RuntimeChecker = bool Function(PluginDetails details);
 typedef PluginGetter = RuntimePlugin? Function(
   PluginDetails details,
 );
@@ -30,11 +27,9 @@ typedef PluginWidgetGetter = Widget Function(
   BuildContext context,
   PluginDetails details,
 );
-typedef RuntimeChecker = bool Function(PluginDetails details);
 //--------------------- ViewModel ----------------------------
 //------------------  框架  -----------------------------
 typedef LoggerListener = void Function(LoggerRecord record);
-// typedef SystemLayout = Layout Function();
 //------------------  框架  -----------------------------
 //------------UI--------
 typedef ViewModel = ChangeNotifier;
