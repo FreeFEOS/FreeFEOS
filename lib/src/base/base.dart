@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:freefeos/src/type/types.dart';
 import 'package:window_manager/window_manager.dart';
 
 import '../embedder/embedder_mixin.dart';
@@ -11,6 +10,7 @@ import '../interface/config.dart';
 import '../kernel/kernel.dart';
 import '../plugin/plugin_runtime.dart';
 import '../runtime/runtime.dart';
+import '../type/types.dart';
 import '../utils/utils.dart';
 import '../values/channel.dart';
 import '../values/strings.dart';
@@ -48,11 +48,15 @@ abstract interface class BaseWrapper {
   /// 附加带有导航主机的上下文
   void attachContext(BuildContext host);
 
+  /// 构建View Model
+  ViewModel buildViewModel(
+    BuildContext context,
+    ContextAttacher attach,
+    Widget child,
+  );
+
   /// 获取App
   Layout buildApplication();
-
-  /// 构建View Model
-  ViewModel buildViewModel(BuildContext context);
 
   /// 构建App
   Layout buildSystemUI(ViewModelBuilder builder);
@@ -151,7 +155,13 @@ base class SystemBase extends ContextWrapper
   /// 插件界面
   @override
   Widget pluginWidget(BuildContext context) {
-    return buildSystemUI(buildViewModel);
+    return buildSystemUI(
+      (context) => buildViewModel(
+        context,
+        super.attachContext,
+        super.child,
+      ),
+    );
   }
 
   /// 方法调用
@@ -164,6 +174,7 @@ base class SystemBase extends ContextWrapper
   }
 
   /// 运行应用
+  @mustCallSuper
   @protected
   @override
   Future<void> runFreeFEOSApp({
@@ -237,7 +248,7 @@ base class SystemBase extends ContextWrapper
                 }
                 // 调用运行器启动应用
                 return await (import.runner ?? (app) async => runApp(app))(
-                  buildApplication(),
+                  WidgetUtil.layout2Widget(buildApplication()),
                 );
               } catch (_) {
                 // 断言没有传入异常
@@ -262,6 +273,16 @@ base class SystemBase extends ContextWrapper
     return await null;
   }
 
+  /// 构建ViewModel
+  @override
+  ViewModel buildViewModel(
+    BuildContext context,
+    ContextAttacher attach,
+    Widget child,
+  ) {
+    return this;
+  }
+
   /// 获取应用
   @override
   Layout buildApplication() {
@@ -270,12 +291,6 @@ base class SystemBase extends ContextWrapper
         builder: pluginWidget,
       ),
     );
-  }
-
-  /// 构建ViewModel
-  @override
-  ViewModel buildViewModel(BuildContext context) {
-    return this;
   }
 
   /// 构建应用

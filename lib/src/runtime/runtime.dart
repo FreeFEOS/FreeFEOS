@@ -83,6 +83,24 @@ final class SystemRuntime extends SystemBase {
     await _initPlugins(plugins: plugins);
   }
 
+  /// 构建View Model
+  @override
+  ViewModel buildViewModel(
+    BuildContext context,
+    ContextAttacher attach,
+    Widget child,
+  ) {
+    return SystemViewModel(
+      context: context,
+      contextAttacher: attach,
+      pluginDetailsList: _pluginDetailsList,
+      pluginGetter: _getPlugin,
+      pluginWidgetGetter: _getPluginWidget,
+      runtimeChecker: _isRuntime,
+      child: child,
+    );
+  }
+
   /// 获取App
   @override
   Layout buildApplication() {
@@ -100,20 +118,6 @@ final class SystemRuntime extends SystemBase {
           return super.buildApplication();
         },
       ),
-    );
-  }
-
-  /// 构建View Model
-  @override
-  ViewModel buildViewModel(BuildContext context) {
-    return SystemViewModel(
-      context: context,
-      contextAttacher: super.attachContext,
-      pluginDetailsList: _pluginDetailsList,
-      pluginGetter: _getPlugin,
-      pluginWidgetGetter: _getPluginWidget,
-      runtimeChecker: _isRuntime,
-      child: super.child,
     );
   }
 

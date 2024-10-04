@@ -2,27 +2,35 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:freefeos/src/framework/context.dart';
 
+import '../framework/context.dart';
+
+/// 平台工具集
 final class PlatformUtil {
+  /// 无角标
   static bool get kNoBanner => !kDebugMode;
+
+  /// 是否在浏览器中
   static bool get kIsWebBrowser => kIsWeb || kIsWasm;
+
+  /// 是否有原生实现的平台潜入层
   static bool get kUseNative =>
       defaultTargetPlatform == TargetPlatform.android ||
       defaultTargetPlatform == TargetPlatform.iOS;
 
+  /// 是否为桌面平台
   static bool get kIsDesktop =>
       defaultTargetPlatform == TargetPlatform.windows ||
       defaultTargetPlatform == TargetPlatform.linux ||
       defaultTargetPlatform == TargetPlatform.macOS;
 }
 
-/// 心灵毒鸡汤
+/// 心灵鸡汤
 class PoemUtil {
   /// 随机抽取一句
   String get getPoem => _list[Random().nextInt(_list.length)];
 
-  /// 毒鸡汤
+  /// 鸡汤
   static const List<String> _list = [
     '不向焦虑与抑郁投降，这个世界终会有我们存在的地方。',
     '把喜欢的一切留在身边，这便是努力的意义。',
@@ -37,14 +45,15 @@ class PoemUtil {
   ];
 }
 
+///  Widget工具集
 final class WidgetUtil {
+  /// Widget转Widget列表
   static List<Widget> widget2WidgetList(Widget? child) {
-    return [
-      Container(
-        child: child,
-      ),
-    ];
+    return <Container>[Container(child: child)];
   }
 
-  static Widget layout2Widget(Layout layout) => layout;
+  /// Layout转Widget
+  static Widget layout2Widget(Layout layout) {
+    return LayoutFrame(layout: layout);
+  }
 }
