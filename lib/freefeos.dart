@@ -1,5 +1,5 @@
 /// 平台插件注册和API导出
-library freefeos;
+library;
 
 import 'src/export/export.dart';
 

@@ -1,5 +1,5 @@
 /// Web插件注册
-library freefeos_web;
+library;
 
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
