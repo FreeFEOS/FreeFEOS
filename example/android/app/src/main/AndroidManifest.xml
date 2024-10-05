@@ -9,10 +9,11 @@
     </queries>
 
     <application
-        android:name="${applicationName}"
+        android:name=".MainApp"
         android:enableOnBackInvokedCallback="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="freefeos_example"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.FreeFEOS"
         tools:ignore="UnusedAttribute">
 
         <meta-data
@@ -26,11 +27,10 @@
             android:hardwareAccelerated="true"
             android:launchMode="singleTop"
             android:taskAffinity=""
-            android:theme="@style/LaunchTheme"
             android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
-                android:resource="@style/NormalTheme" />
+                android:resource="@style/Theme.FreeFEOS" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
