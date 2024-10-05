@@ -15,6 +15,8 @@ import '../intl/l10n.dart';
 import '../plugin/plugin_details.dart';
 import '../values/route.dart';
 import '../viewmodel/system_mmvm.dart';
+import 'about.dart';
+import 'sheet.dart';
 
 class SystemManager extends StatefulWidget {
   const SystemManager({super.key});
@@ -125,10 +127,14 @@ class _SystemManagerState extends State<SystemManager> {
                 context,
               ).bottomSheetTooltip,
               child: IconButton(
-                onPressed: () async => await viewModel.launchBottomSheet(
-                  context,
-                  true,
-                ),
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) => const SystemSheet(
+                      isManager: true,
+                    ),
+                  );
+                },
                 icon: const Icon(Icons.more_vert),
               ),
             ),
@@ -383,9 +389,13 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     FilledButton.icon(
                                       onPressed: () async {
-                                        await viewModel.launchAboutDialog(
-                                          context,
-                                          false,
+                                        showDialog(
+                                          context: context,
+                                          useRootNavigator: true,
+                                          builder: (context) =>
+                                              const SystemAbout(
+                                            isPackage: false,
+                                          ),
                                         );
                                       },
                                       icon: const Icon(Icons.info_outline),

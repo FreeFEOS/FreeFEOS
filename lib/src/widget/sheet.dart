@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import '../intl/l10n.dart';
 import '../values/route.dart';
 import '../viewmodel/system_mmvm.dart';
+import 'about.dart';
+import 'exit.dart';
 
 class SystemSheet extends StatelessWidget {
   const SystemSheet({
@@ -38,14 +40,16 @@ class SystemSheet extends StatelessWidget {
                         ).bottomSheetAboutTooltip,
                         child: IconButton(
                           padding: EdgeInsets.zero,
-                          onPressed: () async {
+                          onPressed: () {
                             Navigator.of(
                               context,
                               rootNavigator: true,
                             ).pop();
-                            await viewModel.launchAboutDialog(
-                              context,
-                              false,
+                            showDialog(
+                              context: context,
+                              builder: (context) => SystemAbout(
+                                isPackage: false,
+                              ),
                             );
                           },
                           icon: const Icon(Icons.keyboard_arrow_right),
@@ -250,12 +254,16 @@ class SystemSheet extends StatelessWidget {
                             enabled: true,
                           ),
                           SheetButton(
-                            onTap: () async {
+                            onTap: () {
                               Navigator.of(
                                 context,
                                 rootNavigator: true,
                               ).pop();
-                              await viewModel.launchExitDialog(context);
+                              showDialog(
+                                context: context,
+                                useRootNavigator: true,
+                                builder: (context) => const SystemExit(),
+                              );
                             },
                             icon: Icons.exit_to_app,
                             label: IntlLocalizations.of(

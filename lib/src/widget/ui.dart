@@ -10,8 +10,11 @@ import '../utils/utils.dart';
 import '../values/route.dart';
 import '../values/strings.dart';
 import '../viewmodel/system_mmvm.dart';
+import 'about.dart';
+import 'exit.dart';
 import 'manager.dart';
 import 'plugin.dart';
+import 'sheet.dart';
 
 class SystemUI extends StatefulWidget {
   const SystemUI({
@@ -218,16 +221,22 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                             child: Row(
                               children: [
                                 InkWell(
-                                  onTap: () async {
-                                    return await viewModel.launchBottomSheet(
-                                      context,
-                                      false,
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      useRootNavigator: true,
+                                      builder: (context) => const SystemSheet(
+                                        isManager: false,
+                                      ),
                                     );
                                   },
-                                  onLongPress: () async {
-                                    return await viewModel.launchAboutDialog(
-                                      context,
-                                      false,
+                                  onLongPress: () {
+                                    showDialog(
+                                      context: context,
+                                      useRootNavigator: true,
+                                      builder: (context) => SystemAbout(
+                                        isPackage: false,
+                                      ),
                                     );
                                   },
                                   borderRadius: const BorderRadius.only(
@@ -255,9 +264,11 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                                   color: Colors.white.withOpacity(0.3),
                                 ),
                                 InkWell(
-                                  onTap: () async {
-                                    return await viewModel.launchExitDialog(
-                                      context,
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      useRootNavigator: true,
+                                      builder: (context) => const SystemExit(),
                                     );
                                   },
                                   onLongPress: () async {

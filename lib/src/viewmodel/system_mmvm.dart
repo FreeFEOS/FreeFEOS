@@ -14,27 +14,10 @@ import '../utils/utils.dart';
 import '../values/route.dart';
 import '../values/url.dart';
 import '../widget/about.dart';
-import '../widget/exit.dart';
-import '../widget/sheet.dart';
 
 abstract interface class ISystemViewModel {
   /// 附加构建上下文
   void attachBuildContext(BuildContext context);
-
-  /// 打开底部弹出菜单
-  Future<dynamic> launchBottomSheet(
-    BuildContext context,
-    bool isManager,
-  );
-
-  /// 打开应用信息
-  Future<dynamic> launchAboutDialog(
-    BuildContext context,
-    bool isPackage,
-  );
-
-  /// 打开退出应用对话框
-  Future<dynamic> launchExitDialog(BuildContext context);
 
   /// 获取应用名称
   Future<String> getAppName();
@@ -146,47 +129,6 @@ final class SystemViewModel extends ContextWrapper
   @override
   void attachBuildContext(BuildContext context) {
     return contextAttacher(context);
-  }
-
-  /// 打开底部弹出菜单
-  @override
-  Future<dynamic> launchBottomSheet(
-    BuildContext context,
-    bool isManager,
-  ) {
-    return showModalBottomSheet(
-      context: context,
-      useRootNavigator: true,
-      useSafeArea: true,
-      builder: (_) => SystemSheet(
-        isManager: isManager,
-      ),
-    );
-  }
-
-  /// 打开应用信息
-  @override
-  Future<dynamic> launchAboutDialog(
-    BuildContext context,
-    bool isPackage,
-  ) {
-    return showDialog(
-      context: context,
-      useRootNavigator: true,
-      builder: (_) => SystemAbout(
-        isPackage: isPackage,
-      ),
-    );
-  }
-
-  /// 打开退出应用对话框
-  @override
-  Future<dynamic> launchExitDialog(BuildContext context) {
-    return showDialog(
-      context: context,
-      useRootNavigator: true,
-      builder: (_) => const SystemExit(),
-    );
   }
 
   /// 获取应用名称
@@ -444,17 +386,23 @@ final class SystemViewModel extends ContextWrapper
   ) {
     // 无法打开的返回空
     return _isAllowPush(details)
-        ? () async {
+        ? () {
             if (!runtimeChecker(details)) {
               // 非运行时打开插件页面
               _currentDetails = details;
-              await Navigator.of(
+              Navigator.of(
                 context,
                 rootNavigator: true,
               ).pushNamed(routePlugin);
             } else {
               // 运行时打开关于对话框
-              await launchAboutDialog(context, true);
+              showDialog(
+                context: context,
+                useRootNavigator: true,
+                builder: (context) => const SystemAbout(
+                  isPackage: true,
+                ),
+              );
             }
           }
         : null;
