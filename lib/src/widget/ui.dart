@@ -234,7 +234,7 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                                     showDialog(
                                       context: context,
                                       useRootNavigator: true,
-                                      builder: (context) => SystemAbout(
+                                      builder: (context) => const SystemAbout(
                                         isPackage: false,
                                       ),
                                     );
