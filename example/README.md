@@ -1,4 +1,4 @@
-# freefeos_gallery
+# freefeos_example
 
 Demonstrates how to use the freefeos plugin.
 

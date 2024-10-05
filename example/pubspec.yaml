@@ -1,4 +1,4 @@
-name: freefeos_gallery
+name: freefeos_example
 description: "Demonstrates how to use the freefeos."
 publish_to: "none"
 version: 1.0.0+1
