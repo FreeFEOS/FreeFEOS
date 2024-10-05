@@ -189,42 +189,42 @@ class SystemSheet extends StatelessWidget {
                             ).bottomSheetManagerTooltip,
                             enabled: !isManager,
                           ),
-                          SheetButton(
-                            onTap: () async {
-                              Navigator.of(
-                                context,
-                                rootNavigator: true,
-                              ).pop();
-                              Navigator.of(
-                                context,
-                                rootNavigator: true,
-                              ).pushNamed(routeSettings);
-                            },
-                            icon: Icons.settings_outlined,
-                            label: IntlLocalizations.of(
-                              context,
-                            ).bottomSheetSettings,
-                            tooltip: IntlLocalizations.of(
-                              context,
-                            ).bottomSheetSettingsTooltip,
-                            enabled: true,
-                          ),
-                          SheetButton(
-                            onTap: () async {
-                              Navigator.of(
-                                context,
-                                rootNavigator: true,
-                              ).pop();
-                              Navigator.of(
-                                context,
-                                rootNavigator: true,
-                              ).pushNamed(routeInfo);
-                            },
-                            icon: Icons.info_outline,
-                            label: '应用信息',
-                            tooltip: '应用信息',
-                            enabled: true,
-                          ),
+                          // SheetButton(
+                          //   onTap: () async {
+                          //     Navigator.of(
+                          //       context,
+                          //       rootNavigator: true,
+                          //     ).pop();
+                          //     Navigator.of(
+                          //       context,
+                          //       rootNavigator: true,
+                          //     ).pushNamed(routeSettings);
+                          //   },
+                          //   icon: Icons.settings_outlined,
+                          //   label: IntlLocalizations.of(
+                          //     context,
+                          //   ).bottomSheetSettings,
+                          //   tooltip: IntlLocalizations.of(
+                          //     context,
+                          //   ).bottomSheetSettingsTooltip,
+                          //   enabled: true,
+                          // ),
+                          // SheetButton(
+                          //   onTap: () async {
+                          //     Navigator.of(
+                          //       context,
+                          //       rootNavigator: true,
+                          //     ).pop();
+                          //     Navigator.of(
+                          //       context,
+                          //       rootNavigator: true,
+                          //     ).pushNamed(routeInfo);
+                          //   },
+                          //   icon: Icons.info_outline,
+                          //   label: '应用信息',
+                          //   tooltip: '应用信息',
+                          //   enabled: true,
+                          // ),
                           SheetButton(
                             onTap: () async {
                               Navigator.of(
@@ -266,18 +266,18 @@ class SystemSheet extends StatelessWidget {
                             ).bottomSheetExitToolTip,
                             enabled: true,
                           ),
-                          SheetButton(
-                            onTap: () async {
-                              Navigator.of(
-                                context,
-                                rootNavigator: true,
-                              ).pop();
-                            },
-                            icon: Icons.close,
-                            label: '取消',
-                            tooltip: '取消',
-                            enabled: true,
-                          ),
+                          // SheetButton(
+                          //   onTap: () async {
+                          //     Navigator.of(
+                          //       context,
+                          //       rootNavigator: true,
+                          //     ).pop();
+                          //   },
+                          //   icon: Icons.close,
+                          //   label: '取消',
+                          //   tooltip: '取消',
+                          //   enabled: true,
+                          // ),
                         ],
                       ),
                     ),

@@ -15,7 +15,6 @@ import '../intl/l10n.dart';
 import '../plugin/plugin_details.dart';
 import '../values/route.dart';
 import '../viewmodel/system_mmvm.dart';
-import 'settings.dart';
 
 class SystemManager extends StatefulWidget {
   const SystemManager({super.key});
@@ -104,9 +103,7 @@ class _SystemManagerState extends State<SystemManager> {
             const HomePage(),
             const LogcatPage(),
             const PluginPage(),
-            const SystemSettings(
-              isManager: true,
-            ),
+            const SettingsPage(),
           ][_currentIndex]),
       transitionDuration: const Duration(
         milliseconds: 500,
@@ -741,6 +738,48 @@ class PluginCard extends StatelessWidget {
                 ],
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SettingsPage extends StatefulWidget {
+  const SettingsPage({super.key});
+
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      left: true,
+      top: false,
+      right: true,
+      bottom: false,
+      minimum: EdgeInsets.zero,
+      maintainBottomViewPadding: true,
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: Scrollbar(
+          controller: _scrollController,
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            padding: EdgeInsets.zero,
+            child: const Column(
+              children: [],
+            ),
           ),
         ),
       ),

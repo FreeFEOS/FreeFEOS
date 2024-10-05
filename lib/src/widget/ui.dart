@@ -10,10 +10,8 @@ import '../utils/utils.dart';
 import '../values/route.dart';
 import '../values/strings.dart';
 import '../viewmodel/system_mmvm.dart';
-import 'info.dart';
 import 'manager.dart';
 import 'plugin.dart';
-import 'settings.dart';
 
 class SystemUI extends StatefulWidget {
   const SystemUI({
@@ -302,23 +300,11 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
             child: SystemManager(),
           );
         },
-        routeSettings: (context) {
-          return const Material(
-            child: SystemSettings(
-              isManager: false,
-            ),
-          );
-        },
         routePlugin: (context) {
           return const Material(
             child: PluginUI(),
           );
         },
-        routeInfo: (context) {
-          return const Material(
-            child: InfoPage(),
-          );
-        }
       },
       builder: (context, child) => Theme(
         data: ThemeData(
