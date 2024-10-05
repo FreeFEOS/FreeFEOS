@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:freefeos/src/interface/config.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:window_manager/window_manager.dart';
 
 import '../framework/context.dart';
+import '../interface/config.dart';
 import '../intl/l10n.dart';
 import '../plugin/plugin_details.dart';
 import '../plugin/plugin_type.dart';
