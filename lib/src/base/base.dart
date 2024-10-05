@@ -20,8 +20,6 @@ import '../interface/system_interface.dart';
 import '../values/drawable.dart';
 import '../server/server.dart';
 
-// TODO: 完善注释
-// TODO: WebView页面
 /// 绑定层包装器
 abstract interface class BaseWrapper {
   /// 运行时入口
@@ -39,8 +37,14 @@ abstract interface class BaseWrapper {
   /// 用户App
   Widget get child;
 
+  /// 系统配置
+  SystemConfig get config;
+
   /// 导入用户App
-  Future<void> includeApp(Widget app);
+  Future<void> includeApp(
+    SystemConfig config,
+    Widget child,
+  );
 
   /// 获取带有导航主机的上下文
   BuildContext get context;
@@ -48,15 +52,16 @@ abstract interface class BaseWrapper {
   /// 附加带有导航主机的上下文
   void attachContext(BuildContext host);
 
+  /// 获取App
+  Layout findApplication();
+
   /// 构建View Model
   ViewModel buildViewModel(
     BuildContext context,
     ContextAttacher attach,
+    SystemConfig config,
     Widget child,
   );
-
-  /// 获取App
-  Layout buildApplication();
 
   /// 构建App
   Layout buildSystemUI(ViewModelBuilder builder);
@@ -78,15 +83,28 @@ abstract interface class BaseWrapper {
 /// 应用混入
 base mixin AppMixin implements BaseWrapper {
   /// 应用
-  static late Widget _app;
+  static late Widget _child;
+
+  /// 配置
+  static late SystemConfig _config;
 
   /// 获取应用
   @override
-  Widget get child => _app;
+  Widget get child => _child;
+
+  /// 获取配置
+  @override
+  SystemConfig get config => _config;
 
   /// 导入应用
   @override
-  Future<void> includeApp(Widget app) async => _app = app;
+  Future<void> includeApp(
+    SystemConfig config,
+    Widget child,
+  ) async {
+    _config = config;
+    _child = child;
+  }
 }
 
 /// 入口混入
@@ -159,6 +177,7 @@ base class SystemBase extends ContextWrapper
       (context) => buildViewModel(
         context,
         super.attachContext,
+        super.config,
         super.child,
       ),
     );
@@ -186,7 +205,7 @@ base class SystemBase extends ContextWrapper
     // 判断是否启用框架, 如果在浏览器中运行不启用.
     return (config.enabled ?? false) && (!PlatformUtil.kIsWebBrowser)
         // 导入App
-        ? includeApp(app).then(
+        ? includeApp(config, app).then(
             (_) async {
               try {
                 // 初始化日志
@@ -248,7 +267,7 @@ base class SystemBase extends ContextWrapper
                 }
                 // 调用运行器启动应用
                 return await (import.runner ?? (app) async => runApp(app))(
-                  WidgetUtil.layout2Widget(buildApplication()),
+                  WidgetUtil.layout2Widget(findApplication()),
                 );
               } catch (_) {
                 // 断言没有传入异常
@@ -273,24 +292,25 @@ base class SystemBase extends ContextWrapper
     return await null;
   }
 
-  /// 构建ViewModel
-  @override
-  ViewModel buildViewModel(
-    BuildContext context,
-    ContextAttacher attach,
-    Widget child,
-  ) {
-    return this;
-  }
-
   /// 获取应用
   @override
-  Layout buildApplication() {
+  Layout findApplication() {
     return resources.getLayout(
       layout: Builder(
         builder: pluginWidget,
       ),
     );
+  }
+
+  /// 构建ViewModel
+  @override
+  ViewModel buildViewModel(
+    BuildContext context,
+    ContextAttacher attach,
+    SystemConfig config,
+    Widget child,
+  ) {
+    return this;
   }
 
   /// 构建应用

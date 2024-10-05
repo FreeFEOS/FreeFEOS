@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:freefeos/src/interface/config.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:window_manager/window_manager.dart';
@@ -38,7 +39,10 @@ abstract interface class ISystemViewModel {
   List<PluginDetails> get getPluginDetailsList;
 
   /// 获取插件图标
-  Widget getPluginIcon(PluginDetails details);
+  Widget getPluginIcon(
+    BuildContext context,
+    PluginDetails details,
+  );
 
   /// 获取插件类型
   String getPluginType(
@@ -91,22 +95,24 @@ abstract interface class ISystemViewModel {
 final class SystemViewModel extends ContextWrapper
     with ViewModel
     implements ISystemViewModel {
+  /// 构造函数
   SystemViewModel({
-    required this.context,
+    required BuildContext context,
     required this.contextAttacher,
+    required this.config,
     required this.pluginDetailsList,
     required this.pluginGetter,
     required this.pluginWidgetGetter,
     required this.runtimeChecker,
     required this.child,
-  }) : super(attach: true);
-
-  /// 上下文
-  /// 切记, 在WidgetsApp完成创建之前传入, 无Navigator!
-  final BuildContext context;
+  }) : super(attach: true) {
+    attachBuildContext(context);
+  }
 
   /// 上下文附加器
   final ContextAttacher contextAttacher;
+
+  final SystemConfig config;
 
   /// 插件列表
   final List<PluginDetails> pluginDetailsList;
@@ -191,7 +197,10 @@ final class SystemViewModel extends ContextWrapper
 
   /// 获取插件图标
   @override
-  Widget getPluginIcon(PluginDetails details) {
+  Widget getPluginIcon(
+    BuildContext context,
+    PluginDetails details,
+  ) {
     switch (details.type) {
       case PluginType.base:
         return Icon(

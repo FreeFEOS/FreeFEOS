@@ -692,7 +692,10 @@ class PluginCard extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    child: viewModel.getPluginIcon(details),
+                    child: viewModel.getPluginIcon(
+                      context,
+                      details,
+                    ),
                   ),
                 ],
               ),

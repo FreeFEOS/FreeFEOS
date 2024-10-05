@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../base/base.dart';
 import '../framework/context.dart';
 import '../framework/log.dart';
+import '../interface/config.dart';
 import '../interface/system_interface.dart';
 import '../plugin/plugin_details.dart';
 import '../plugin/plugin_runtime.dart';
@@ -83,16 +84,38 @@ final class SystemRuntime extends SystemBase {
     await _initPlugins(plugins: plugins);
   }
 
+  /// 获取App
+  @override
+  Layout findApplication() {
+    for (var element in _pluginDetailsList) {
+      if (_isRuntime(element)) {
+        return resources.getLayout(
+          layout: Builder(
+            builder: (context) {
+              return _getPluginWidget(
+                context,
+                element,
+              );
+            },
+          ),
+        );
+      }
+    }
+    return super.findApplication();
+  }
+
   /// 构建View Model
   @override
   ViewModel buildViewModel(
     BuildContext context,
     ContextAttacher attach,
+    SystemConfig config,
     Widget child,
   ) {
     return SystemViewModel(
       context: context,
       contextAttacher: attach,
+      config: config,
       pluginDetailsList: _pluginDetailsList,
       pluginGetter: _getPlugin,
       pluginWidgetGetter: _getPluginWidget,
@@ -101,31 +124,13 @@ final class SystemRuntime extends SystemBase {
     );
   }
 
-  /// 获取App
-  @override
-  Layout buildApplication() {
-    return resources.getLayout(
-      layout: Builder(
-        builder: (context) {
-          for (var element in _pluginDetailsList) {
-            if (_isRuntime(element)) {
-              return _getPluginWidget(
-                context,
-                element,
-              );
-            }
-          }
-          return super.buildApplication();
-        },
-      ),
-    );
-  }
-
   /// 构建应用
   @override
   Layout buildSystemUI(ViewModelBuilder builder) {
     return resources.getLayout(
-      layout: SystemUI(builder: builder),
+      layout: SystemUI(
+        builder: builder,
+      ),
     );
   }
 
