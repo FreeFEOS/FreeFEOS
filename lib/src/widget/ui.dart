@@ -1,4 +1,6 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:toastification/toastification.dart';
@@ -13,7 +15,6 @@ import '../viewmodel/system_mmvm.dart';
 import 'about.dart';
 import 'exit.dart';
 import 'manager.dart';
-import 'plugin.dart';
 import 'sheet.dart';
 
 class SystemUI extends StatefulWidget {
@@ -30,7 +31,10 @@ class SystemUI extends StatefulWidget {
 
 class _SystemUIState extends State<SystemUI> with WindowListener {
   /// 最大化按钮的图标
-  IconData maxIcon = Icons.fullscreen;
+  IconData _maxIcon = Icons.fullscreen;
+
+  /// 当前页面
+  int _currentIndex = 0;
 
   @override
   void initState() {
@@ -48,7 +52,7 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
   void onWindowMaximize() {
     super.onWindowMaximize();
     setState(
-      () => maxIcon = Icons.fullscreen_exit,
+      () => _maxIcon = Icons.fullscreen_exit,
     );
   }
 
@@ -56,7 +60,7 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
   void onWindowUnmaximize() {
     super.onWindowUnmaximize();
     setState(
-      () => maxIcon = Icons.fullscreen,
+      () => _maxIcon = Icons.fullscreen,
     );
   }
 
@@ -159,7 +163,7 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                                         vertical: 3,
                                       ),
                                       child: Icon(
-                                        maxIcon,
+                                        _maxIcon,
                                         color: Theme.of(context).brightness ==
                                                 Brightness.light
                                             ? Colors.white
@@ -293,13 +297,131 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
       ),
       routes: {
         routeManager: (context) {
-          return const Material(
-            child: SystemManager(),
+          return AdaptiveScaffold(
+            destinations: [
+              NavigationDestination(
+                icon: const Icon(Icons.home_outlined),
+                selectedIcon: const Icon(Icons.home),
+                label: IntlLocalizations.of(
+                  context,
+                ).managerDestinationHome,
+                tooltip: IntlLocalizations.of(
+                  context,
+                ).managerDestinationHome,
+                enabled: true,
+              ),
+              NavigationDestination(
+                icon: const Icon(Icons.bug_report_outlined),
+                selectedIcon: const Icon(Icons.bug_report),
+                label: IntlLocalizations.of(
+                  context,
+                ).managerDestinationLog,
+                tooltip: IntlLocalizations.of(
+                  context,
+                ).managerDestinationLog,
+                enabled: true,
+              ),
+              NavigationDestination(
+                icon: const Icon(Icons.extension_outlined),
+                selectedIcon: const Icon(Icons.extension),
+                label: IntlLocalizations.of(
+                  context,
+                ).managerDestinationPlugin,
+                tooltip: IntlLocalizations.of(
+                  context,
+                ).managerDestinationPlugin,
+                enabled: true,
+              ),
+              NavigationDestination(
+                icon: const Icon(Icons.settings_outlined),
+                selectedIcon: const Icon(Icons.settings),
+                label: IntlLocalizations.of(
+                  context,
+                ).managerDestinationSetting,
+                tooltip: IntlLocalizations.of(
+                  context,
+                ).managerDestinationSetting,
+                enabled: true,
+              ),
+            ],
+            smallBreakpoint: const Breakpoint(
+              endWidth: 600,
+            ),
+            mediumBreakpoint: const Breakpoint(
+              beginWidth: 600,
+              endWidth: 840,
+            ),
+            largeBreakpoint: const Breakpoint(
+              beginWidth: 840,
+            ),
+            selectedIndex: _currentIndex,
+            body: (context) => PageTransitionSwitcher(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              transitionBuilder: (child, animation, secondaryAnimation) {
+                return SharedAxisTransition(
+                  animation: animation,
+                  secondaryAnimation: secondaryAnimation,
+                  transitionType: SharedAxisTransitionType.scaled,
+                  child: child,
+                );
+              },
+              child: [
+                const HomePage(),
+                const LogcatPage(),
+                const PluginPage(),
+                const SettingsPage(),
+              ][_currentIndex],
+            ),
+            transitionDuration: const Duration(
+              milliseconds: 500,
+            ),
+            onSelectedIndexChange: (index) => setState(
+              () => _currentIndex = index,
+            ),
+            useDrawer: false,
+            appBar: AppBar(
+              title: Text(
+                IntlLocalizations.of(
+                  context,
+                ).managerTitle,
+              ),
+              actions: [
+                Consumer<SystemViewModel>(
+                  builder: (context, viewModel, child) => Tooltip(
+                    message: IntlLocalizations.of(
+                      context,
+                    ).bottomSheetTooltip,
+                    child: IconButton(
+                      onPressed: () => showModalBottomSheet(
+                        context: context,
+                        builder: (context) => const SystemSheet(
+                          isManager: true,
+                        ),
+                      ),
+                      icon: const Icon(Icons.more_vert),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            appBarBreakpoint: Breakpoints.standard,
           );
         },
         routePlugin: (context) {
-          return const Material(
-            child: PluginUI(),
+          return Consumer<SystemViewModel>(
+            builder: (context, viewModel, child) => Scaffold(
+              appBar: AppBar(
+                title: Text(
+                  viewModel.getCurrentDetails.title,
+                ),
+              ),
+              body: viewModel.getPluginWidget(
+                context,
+                viewModel.getCurrentDetails,
+              ),
+            ),
           );
         },
       },

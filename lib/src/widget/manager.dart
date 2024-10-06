@@ -1,8 +1,6 @@
 import 'dart:collection';
 
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
@@ -16,135 +14,6 @@ import '../plugin/plugin_details.dart';
 import '../values/route.dart';
 import '../viewmodel/system_mmvm.dart';
 import 'about.dart';
-import 'sheet.dart';
-
-class SystemManager extends StatefulWidget {
-  const SystemManager({super.key});
-
-  @override
-  State<SystemManager> createState() => _SystemManagerState();
-}
-
-class _SystemManagerState extends State<SystemManager> {
-  /// 当前页面
-  int _currentIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return AdaptiveScaffold(
-      destinations: [
-        NavigationDestination(
-          icon: const Icon(Icons.home_outlined),
-          selectedIcon: const Icon(Icons.home),
-          label: IntlLocalizations.of(
-            context,
-          ).managerDestinationHome,
-          tooltip: IntlLocalizations.of(
-            context,
-          ).managerDestinationHome,
-          enabled: true,
-        ),
-        NavigationDestination(
-          icon: const Icon(Icons.bug_report_outlined),
-          selectedIcon: const Icon(Icons.bug_report),
-          label: IntlLocalizations.of(
-            context,
-          ).managerDestinationLog,
-          tooltip: IntlLocalizations.of(
-            context,
-          ).managerDestinationLog,
-          enabled: true,
-        ),
-        NavigationDestination(
-          icon: const Icon(Icons.extension_outlined),
-          selectedIcon: const Icon(Icons.extension),
-          label: IntlLocalizations.of(
-            context,
-          ).managerDestinationPlugin,
-          tooltip: IntlLocalizations.of(
-            context,
-          ).managerDestinationPlugin,
-          enabled: true,
-        ),
-        NavigationDestination(
-          icon: const Icon(Icons.settings_outlined),
-          selectedIcon: const Icon(Icons.settings),
-          label: IntlLocalizations.of(
-            context,
-          ).managerDestinationSetting,
-          tooltip: IntlLocalizations.of(
-            context,
-          ).managerDestinationSetting,
-          enabled: true,
-        ),
-      ],
-      smallBreakpoint: const Breakpoint(
-        endWidth: 600,
-      ),
-      mediumBreakpoint: const Breakpoint(
-        beginWidth: 600,
-        endWidth: 840,
-      ),
-      largeBreakpoint: const Breakpoint(
-        beginWidth: 840,
-      ),
-      selectedIndex: _currentIndex,
-      body: (context) => PageTransitionSwitcher(
-          duration: const Duration(
-            milliseconds: 300,
-          ),
-          transitionBuilder: (child, animation, secondaryAnimation) {
-            return SharedAxisTransition(
-              animation: animation,
-              secondaryAnimation: secondaryAnimation,
-              transitionType: SharedAxisTransitionType.scaled,
-              child: child,
-            );
-          },
-          child: [
-            const HomePage(),
-            const LogcatPage(),
-            const PluginPage(),
-            const SettingsPage(),
-          ][_currentIndex]),
-      transitionDuration: const Duration(
-        milliseconds: 500,
-      ),
-      onSelectedIndexChange: (index) => setState(
-        () => _currentIndex = index,
-      ),
-      useDrawer: false,
-      appBar: AppBar(
-        title: Text(
-          IntlLocalizations.of(
-            context,
-          ).managerTitle,
-        ),
-        actions: [
-          Consumer<SystemViewModel>(
-            builder: (context, viewModel, child) => Tooltip(
-              message: IntlLocalizations.of(
-                context,
-              ).bottomSheetTooltip,
-              child: IconButton(
-                onPressed: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) => const SystemSheet(
-                      isManager: true,
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.more_vert),
-              ),
-            ),
-          ),
-        ],
-      ),
-      appBarBreakpoint: Breakpoints.standard,
-    );
-  }
-}
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -281,7 +150,9 @@ class _HomePageState extends State<HomePage> {
                       child: Card(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              vertical: 12, horizontal: 6),
+                            vertical: 12,
+                            horizontal: 6,
+                          ),
                           child: Column(
                             children: [
                               ListTile(
@@ -365,10 +236,14 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               ListTile(
-                                title: Text(IntlLocalizations.of(
-                                  context,
-                                ).managerHomeInfoPlatform),
-                                subtitle: Text(Theme.of(context).platform.name),
+                                title: Text(
+                                  IntlLocalizations.of(
+                                    context,
+                                  ).managerHomeInfoPlatform,
+                                ),
+                                subtitle: Text(
+                                  Theme.of(context).platform.name,
+                                ),
                               ),
                               ListTile(
                                 title: Text(
@@ -376,7 +251,9 @@ class _HomePageState extends State<HomePage> {
                                     context,
                                   ).managerHomeInfoPluginCount,
                                 ),
-                                subtitle: Text(viewModel.pluginCount()),
+                                subtitle: Text(
+                                  viewModel.pluginCount(),
+                                ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
@@ -388,16 +265,13 @@ class _HomePageState extends State<HomePage> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     FilledButton.icon(
-                                      onPressed: () async {
-                                        showDialog(
-                                          context: context,
-                                          useRootNavigator: true,
-                                          builder: (context) =>
-                                              const SystemAbout(
-                                            isPackage: false,
-                                          ),
-                                        );
-                                      },
+                                      onPressed: () => showDialog(
+                                        context: context,
+                                        useRootNavigator: true,
+                                        builder: (context) => const SystemAbout(
+                                          isPackage: false,
+                                        ),
+                                      ),
                                       icon: const Icon(Icons.info_outline),
                                       label: Text(
                                         IntlLocalizations.of(
@@ -421,7 +295,7 @@ class _HomePageState extends State<HomePage> {
                         ).managerHomeLearnTooltip,
                         child: Card(
                           child: InkWell(
-                            onTap: () async => await viewModel.launchPubDev(),
+                            onTap: viewModel.launchPubDev,
                             borderRadius: BorderRadius.circular(12),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(

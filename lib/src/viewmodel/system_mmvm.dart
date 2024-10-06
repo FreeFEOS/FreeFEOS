@@ -33,7 +33,7 @@ abstract interface class ISystemViewModel {
   String pluginNames();
 
   /// 打开PubDev
-  Future<bool> launchPubDev();
+  void launchPubDev();
 
   /// 获取插件列表
   List<PluginDetails> get getPluginDetailsList;
@@ -183,8 +183,8 @@ final class SystemViewModel extends ContextWrapper
 
   /// 打开PubDev
   @override
-  Future<bool> launchPubDev() async {
-    return await launchUrl(
+  void launchPubDev() async {
+    await launchUrl(
       Uri.parse(pubDevUrl),
     );
   }
@@ -443,7 +443,7 @@ final class SystemViewModel extends ContextWrapper
   @override
   void closeWindow() async {
     if (PlatformUtil.kIsDesktop) {
-      return await windowManager.close();
+      return windowManager.close();
     }
   }
 
