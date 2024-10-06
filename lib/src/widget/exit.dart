@@ -5,9 +5,7 @@ import '../intl/l10n.dart';
 import '../viewmodel/system_mmvm.dart';
 
 class SystemExit extends StatelessWidget {
-  const SystemExit({
-    super.key,
-  });
+  const SystemExit({super.key});
 
   @override
   Widget build(BuildContext context) {
