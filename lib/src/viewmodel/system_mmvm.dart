@@ -69,19 +69,19 @@ abstract interface class ISystemViewModel {
   );
 
   /// 最大化窗口
-  Future<void> maximizeWindow();
+  void maximizeWindow();
 
   /// 拖动窗口
-  Future<void> startDragging();
+  void startDragging();
 
   /// 关闭窗口
-  Future<void> closeWindow();
+  void closeWindow();
 
   /// 最小化窗口
-  Future<void> minimizeWindow();
+  void minimizeWindow();
 
   /// 退出
-  Future<void> exitApp();
+  void exitApp();
 
   /// 获取当前插件的详细信息
   PluginDetails get getCurrentDetails;
@@ -425,7 +425,7 @@ final class SystemViewModel extends ContextWrapper
   }
 
   @override
-  Future<void> maximizeWindow() async {
+  void maximizeWindow() async {
     if (PlatformUtil.kIsDesktop) {
       return !await windowManager.isMaximized()
           ? await windowManager.maximize()
@@ -434,28 +434,28 @@ final class SystemViewModel extends ContextWrapper
   }
 
   @override
-  Future<void> startDragging() async {
+  void startDragging() async {
     if (PlatformUtil.kIsDesktop) {
       return await windowManager.startDragging();
     }
   }
 
   @override
-  Future<void> closeWindow() async {
+  void closeWindow() async {
     if (PlatformUtil.kIsDesktop) {
       return await windowManager.close();
     }
   }
 
   @override
-  Future<void> minimizeWindow() async {
+  void minimizeWindow() async {
     if (PlatformUtil.kIsDesktop) {
       return await windowManager.minimize();
     }
   }
 
   @override
-  Future<void> exitApp() async {
+  void exitApp() async {
     return PlatformUtil.kIsDesktop
         ? await windowManager.destroy()
         : await SystemNavigator.pop();

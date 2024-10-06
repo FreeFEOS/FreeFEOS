@@ -45,12 +45,12 @@ class SystemExit extends StatelessWidget {
               context,
             ).closeDialogExitButton,
             child: TextButton(
-              onPressed: () async {
+              onPressed: () {
                 Navigator.of(
                   context,
                   rootNavigator: true,
                 ).pop();
-                await viewModel.exitApp();
+                viewModel.exitApp();
               },
               child: Text(
                 IntlLocalizations.of(

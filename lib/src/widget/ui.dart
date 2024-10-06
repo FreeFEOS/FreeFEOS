@@ -126,9 +126,7 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                               child: Row(
                                 children: [
                                   InkWell(
-                                    onTap: () async {
-                                      return await viewModel.minimizeWindow();
-                                    },
+                                    onTap: viewModel.minimizeWindow,
                                     borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(20),
                                       bottomLeft: Radius.circular(20),
@@ -154,9 +152,7 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                                     color: Colors.white.withOpacity(0.3),
                                   ),
                                   InkWell(
-                                    onTap: () async {
-                                      return await viewModel.maximizeWindow();
-                                    },
+                                    onTap: viewModel.maximizeWindow,
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
                                         horizontal: 12,
@@ -178,9 +174,7 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                                     color: Colors.white.withOpacity(0.3),
                                   ),
                                   InkWell(
-                                    onTap: () async {
-                                      return await viewModel.closeWindow();
-                                    },
+                                    onTap: viewModel.closeWindow,
                                     borderRadius: const BorderRadius.only(
                                       topRight: Radius.circular(20),
                                       bottomRight: Radius.circular(20),
@@ -221,24 +215,20 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                             child: Row(
                               children: [
                                 InkWell(
-                                  onTap: () {
-                                    showModalBottomSheet(
-                                      context: context,
-                                      useRootNavigator: true,
-                                      builder: (context) => const SystemSheet(
-                                        isManager: false,
-                                      ),
-                                    );
-                                  },
-                                  onLongPress: () {
-                                    showDialog(
-                                      context: context,
-                                      useRootNavigator: true,
-                                      builder: (context) => const SystemAbout(
-                                        isPackage: false,
-                                      ),
-                                    );
-                                  },
+                                  onTap: () => showModalBottomSheet(
+                                    context: context,
+                                    useRootNavigator: true,
+                                    builder: (context) => const SystemSheet(
+                                      isManager: false,
+                                    ),
+                                  ),
+                                  onLongPress: () => showDialog(
+                                    context: context,
+                                    useRootNavigator: true,
+                                    builder: (context) => const SystemAbout(
+                                      isPackage: false,
+                                    ),
+                                  ),
                                   borderRadius: const BorderRadius.only(
                                     topLeft: Radius.circular(20),
                                     bottomLeft: Radius.circular(20),
@@ -264,16 +254,12 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                                   color: Colors.white.withOpacity(0.3),
                                 ),
                                 InkWell(
-                                  onTap: () {
-                                    showDialog(
-                                      context: context,
-                                      useRootNavigator: true,
-                                      builder: (context) => const SystemExit(),
-                                    );
-                                  },
-                                  onLongPress: () async {
-                                    return await viewModel.exitApp();
-                                  },
+                                  onTap: () => showDialog(
+                                    context: context,
+                                    useRootNavigator: true,
+                                    builder: (context) => const SystemExit(),
+                                  ),
+                                  onLongPress: viewModel.exitApp,
                                   borderRadius: const BorderRadius.only(
                                     topRight: Radius.circular(20),
                                     bottomRight: Radius.circular(20),
@@ -379,12 +365,8 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                         kToolbarHeight,
                       ),
                       child: GestureDetector(
-                        onPanStart: (_) async {
-                          return await viewModel.startDragging();
-                        },
-                        onDoubleTap: () async {
-                          return await viewModel.maximizeWindow();
-                        },
+                        onPanStart: (_) => viewModel.startDragging(),
+                        onDoubleTap: () => viewModel.maximizeWindow(),
                         behavior: HitTestBehavior.translucent,
                       ),
                     ),
