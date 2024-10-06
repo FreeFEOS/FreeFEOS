@@ -80,7 +80,7 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
         builder: (context, viewModel, child) {
           viewModel.attachBuildContext(context);
           return Stack(
-            children: [
+            children: <Positioned>[
               Positioned(
                 left: 0,
                 right: 0,
@@ -111,7 +111,7 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
+                    children: <Widget>[
                       Visibility(
                         visible: PlatformUtil.kIsDesktop,
                         child: Padding(
@@ -128,7 +128,7 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                             child: Material(
                               color: Colors.transparent,
                               child: Row(
-                                children: [
+                                children: <Widget>[
                                   InkWell(
                                     onTap: viewModel.minimizeWindow,
                                     borderRadius: const BorderRadius.only(
@@ -295,10 +295,10 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
           );
         },
       ),
-      routes: {
+      routes: <String, WidgetBuilder>{
         routeManager: (context) {
           return AdaptiveScaffold(
-            destinations: [
+            destinations: <NavigationDestination>[
               NavigationDestination(
                 icon: const Icon(Icons.home_outlined),
                 selectedIcon: const Icon(Icons.home),
@@ -367,7 +367,7 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
                   child: child,
                 );
               },
-              child: [
+              child: <Widget>[
                 const HomePage(),
                 const LogcatPage(),
                 const PluginPage(),
@@ -466,7 +466,7 @@ class _SystemUIState extends State<SystemUI> with WindowListener {
             },
             child: Consumer<SystemViewModel>(
               builder: (context, viewModel, child) => Stack(
-                children: [
+                children: <Positioned>[
                   Positioned(
                     left: 0,
                     top: 0,
