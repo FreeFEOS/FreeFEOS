@@ -255,33 +255,33 @@ class _HomePageState extends State<HomePage> {
                                   viewModel.pluginCount(),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 8,
-                                  horizontal: 24,
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    FilledButton.icon(
-                                      onPressed: () => showDialog(
-                                        context: context,
-                                        useRootNavigator: true,
-                                        builder: (context) => const SystemAbout(
-                                          isPackage: false,
-                                        ),
-                                      ),
-                                      icon: const Icon(Icons.info_outline),
-                                      label: Text(
-                                        IntlLocalizations.of(
-                                          context,
-                                        ).managerHomeInfoAbout,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              // Padding(
+                              //   padding: const EdgeInsets.symmetric(
+                              //     vertical: 8,
+                              //     horizontal: 24,
+                              //   ),
+                              //   child: Row(
+                              //     mainAxisSize: MainAxisSize.max,
+                              //     mainAxisAlignment: MainAxisAlignment.end,
+                              //     children: [
+                              //       FilledButton.icon(
+                              //         onPressed: () => showDialog(
+                              //           context: context,
+                              //           useRootNavigator: true,
+                              //           builder: (context) => const SystemAbout(
+                              //             isPackage: false,
+                              //           ),
+                              //         ),
+                              //         icon: const Icon(Icons.info_outline),
+                              //         label: Text(
+                              //           IntlLocalizations.of(
+                              //             context,
+                              //           ).managerHomeInfoAbout,
+                              //         ),
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),

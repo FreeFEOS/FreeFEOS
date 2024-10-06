@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -253,7 +254,7 @@ base class SystemBase extends ContextWrapper
                   await windowManager.waitUntilReadyToShow(
                     const WindowOptions(
                       center: true,
-                      minimumSize: Size(600, 400),
+                      minimumSize: kDebugMode ? Size(600, 400) : null,
                       alwaysOnTop: false,
                       skipTaskbar: false,
                       titleBarStyle: TitleBarStyle.hidden,
