@@ -482,131 +482,138 @@ class _PluginPageState extends State<PluginPage> {
                       right: 12,
                     ),
                     child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(24, 16, 24, 8),
-                        child: Consumer<SystemViewModel>(
-                          builder: (context, viewModel, child) => Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          details.title,
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                            fontSize: Theme.of(
-                                              context,
-                                            ).textTheme.titleMedium?.fontSize,
-                                            fontFamily: Theme.of(
-                                              context,
-                                            ).textTheme.titleMedium?.fontFamily,
-                                            height: Theme.of(
-                                              context,
-                                            ).textTheme.bodySmall?.height,
-                                            fontWeight: FontWeight.bold,
-                                            overflow: TextOverflow.ellipsis,
+                      child: InkWell(
+                        onTap: () {},
+                        borderRadius: BorderRadius.circular(12),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(24, 16, 24, 8),
+                          child: Consumer<SystemViewModel>(
+                            builder: (context, viewModel, child) => Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            details.title,
+                                            textAlign: TextAlign.start,
+                                            style: TextStyle(
+                                              fontSize: Theme.of(
+                                                context,
+                                              ).textTheme.titleMedium?.fontSize,
+                                              fontFamily: Theme.of(
+                                                context,
+                                              )
+                                                  .textTheme
+                                                  .titleMedium
+                                                  ?.fontFamily,
+                                              height: Theme.of(
+                                                context,
+                                              ).textTheme.bodySmall?.height,
+                                              fontWeight: FontWeight.bold,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
                                           ),
-                                        ),
-                                        Text(
-                                          '${IntlLocalizations.of(context).managerPluginChannel}: ${details.channel}',
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                            fontSize: Theme.of(
-                                              context,
-                                            ).textTheme.bodySmall?.fontSize,
-                                            fontFamily: Theme.of(
-                                              context,
-                                            ).textTheme.bodySmall?.fontFamily,
-                                            height: Theme.of(
-                                              context,
-                                            ).textTheme.bodySmall?.height,
+                                          Text(
+                                            '${IntlLocalizations.of(context).managerPluginChannel}: ${details.channel}',
+                                            textAlign: TextAlign.start,
+                                            style: TextStyle(
+                                              fontSize: Theme.of(
+                                                context,
+                                              ).textTheme.bodySmall?.fontSize,
+                                              fontFamily: Theme.of(
+                                                context,
+                                              ).textTheme.bodySmall?.fontFamily,
+                                              height: Theme.of(
+                                                context,
+                                              ).textTheme.bodySmall?.height,
+                                            ),
                                           ),
-                                        ),
-                                        Text(
-                                          '${IntlLocalizations.of(context).managerPluginAuthor}: ${details.author}',
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                            fontSize: Theme.of(
-                                              context,
-                                            ).textTheme.bodySmall?.fontSize,
-                                            fontFamily: Theme.of(
-                                              context,
-                                            ).textTheme.bodySmall?.fontFamily,
-                                            height: Theme.of(
-                                              context,
-                                            ).textTheme.bodySmall?.height,
+                                          Text(
+                                            '${IntlLocalizations.of(context).managerPluginAuthor}: ${details.author}',
+                                            textAlign: TextAlign.start,
+                                            style: TextStyle(
+                                              fontSize: Theme.of(
+                                                context,
+                                              ).textTheme.bodySmall?.fontSize,
+                                              fontFamily: Theme.of(
+                                                context,
+                                              ).textTheme.bodySmall?.fontFamily,
+                                              height: Theme.of(
+                                                context,
+                                              ).textTheme.bodySmall?.height,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                    child: viewModel.getPluginIcon(
-                                      context,
-                                      details,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 12),
-                              Text(
-                                details.description,
-                                textAlign: TextAlign.start,
-                                style: Theme.of(
-                                  context,
-                                ).textTheme.bodySmall?.apply(
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                maxLines: 4,
-                              ),
-                              const SizedBox(height: 16),
-                              const Divider(),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    flex: 1,
-                                    child: Text(
-                                      viewModel.getPluginType(
+                                    Container(
+                                      child: viewModel.getPluginIcon(
                                         context,
                                         details,
                                       ),
-                                      textAlign: TextAlign.start,
-                                      style: Theme.of(
-                                        context,
-                                      ).textTheme.bodySmall,
                                     ),
-                                  ),
-                                  Expanded(
-                                    flex: 0,
-                                    child: Tooltip(
-                                      message: viewModel.getPluginTooltip(
-                                        context,
-                                        details,
+                                  ],
+                                ),
+                                const SizedBox(height: 12),
+                                Text(
+                                  details.description,
+                                  textAlign: TextAlign.start,
+                                  style: Theme.of(
+                                    context,
+                                  ).textTheme.bodySmall?.apply(
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                      child: TextButton(
-                                        onPressed: viewModel.openPlugin(
+                                  maxLines: 4,
+                                ),
+                                const SizedBox(height: 16),
+                                const Divider(),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        viewModel.getPluginType(
                                           context,
                                           details,
                                         ),
-                                        child: Text(
-                                          viewModel.getPluginAction(
+                                        textAlign: TextAlign.start,
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.bodySmall,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 0,
+                                      child: Tooltip(
+                                        message: viewModel.getPluginTooltip(
+                                          context,
+                                          details,
+                                        ),
+                                        child: TextButton(
+                                          onPressed: viewModel.openPlugin(
                                             context,
                                             details,
+                                          ),
+                                          child: Text(
+                                            viewModel.getPluginAction(
+                                              context,
+                                              details,
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
