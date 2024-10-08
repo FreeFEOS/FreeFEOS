@@ -12,9 +12,7 @@ import '../plugin/plugin_details.dart';
 import '../plugin/plugin_type.dart';
 import '../type/types.dart';
 import '../utils/utils.dart';
-import '../values/route.dart';
 import '../values/url.dart';
-import '../widget/about.dart';
 
 abstract interface class ISystemViewModel {
   /// 附加构建上下文
@@ -50,12 +48,6 @@ abstract interface class ISystemViewModel {
     PluginDetails details,
   );
 
-  /// 获取插件的动作名
-  String getPluginAction(
-    BuildContext context,
-    PluginDetails details,
-  );
-
   /// 获取插件的提示
   String getPluginTooltip(
     BuildContext context,
@@ -63,9 +55,12 @@ abstract interface class ISystemViewModel {
   );
 
   /// 打开卡片
-  VoidCallback? openPlugin(
+  void clickPlugin(
     BuildContext context,
     PluginDetails details,
+    VoidCallback launchPlugin,
+    VoidCallback launchAbout,
+    VoidCallback launchTip,
   );
 
   /// 最大化窗口
@@ -349,25 +344,6 @@ final class SystemViewModel extends ContextWrapper
     }
   }
 
-  /// 获取插件的动作名
-  @override
-  String getPluginAction(
-    BuildContext context,
-    PluginDetails details,
-  ) {
-    return _isAllowPush(details)
-        ? runtimeChecker(details)
-            ? IntlLocalizations.of(
-                context,
-              ).managerPluginActionAbout
-            : IntlLocalizations.of(
-                context,
-              ).managerPluginActionOpen
-        : IntlLocalizations.of(
-            context,
-          ).managerPluginActionNoUI;
-  }
-
   /// 获取插件的提示
   @override
   String getPluginTooltip(
@@ -389,32 +365,26 @@ final class SystemViewModel extends ContextWrapper
 
   /// 打开卡片
   @override
-  VoidCallback? openPlugin(
+  void clickPlugin(
     BuildContext context,
     PluginDetails details,
+    VoidCallback launchPlugin,
+    VoidCallback launchAbout,
+    VoidCallback launchTip,
   ) {
-    // 无法打开的返回空
-    return _isAllowPush(details)
-        ? () {
-            if (!runtimeChecker(details)) {
-              // 非运行时打开插件页面
-              _currentDetails = details;
-              Navigator.of(
-                context,
-                rootNavigator: true,
-              ).pushNamed(routePlugin);
-            } else {
-              // 运行时打开关于对话框
-              showDialog(
-                context: context,
-                useRootNavigator: true,
-                builder: (context) => const SystemAbout(
-                  isPackage: true,
-                ),
-              );
-            }
-          }
-        : null;
+    if (!runtimeChecker(details)) {
+      if (_isAllowPush(details)) {
+        // 非运行时打开插件页面
+        _currentDetails = details;
+        launchPlugin();
+      } else {
+        // 插件无界面时打开提示
+        launchTip();
+      }
+    } else {
+      // 运行时打开关于对话框
+      launchAbout();
+    }
   }
 
   /// 插件是否可以打开

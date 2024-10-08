@@ -483,7 +483,30 @@ class _PluginPageState extends State<PluginPage> {
                     ),
                     child: Card(
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () => viewModel.clickPlugin(
+                          context,
+                          details,
+                          () => Navigator.of(
+                            context,
+                            rootNavigator: true,
+                          ).pushNamed(routePlugin),
+                          () => showDialog(
+                            context: context,
+                            useRootNavigator: true,
+                            builder: (context) => const SystemAbout(
+                              isPackage: true,
+                            ),
+                          ),
+                          () => showDialog(
+                            context: context,
+                            useRootNavigator: true,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text('打不开'),
+                              );
+                            },
+                          ),
+                        ),
                         borderRadius: BorderRadius.circular(12),
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(24, 16, 24, 8),
@@ -576,8 +599,10 @@ class _PluginPageState extends State<PluginPage> {
                                 const Divider(),
                                 Row(
                                   children: [
-                                    Expanded(
-                                      flex: 1,
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: 8,
+                                      ),
                                       child: Text(
                                         viewModel.getPluginType(
                                           context,
@@ -588,28 +613,7 @@ class _PluginPageState extends State<PluginPage> {
                                           context,
                                         ).textTheme.bodySmall,
                                       ),
-                                    ),
-                                    Expanded(
-                                      flex: 0,
-                                      child: Tooltip(
-                                        message: viewModel.getPluginTooltip(
-                                          context,
-                                          details,
-                                        ),
-                                        child: TextButton(
-                                          onPressed: viewModel.openPlugin(
-                                            context,
-                                            details,
-                                          ),
-                                          child: Text(
-                                            viewModel.getPluginAction(
-                                              context,
-                                              details,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                                    )
                                   ],
                                 ),
                               ],

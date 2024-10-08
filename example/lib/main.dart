@@ -57,8 +57,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-        title: const Text(Global.appName),
+        title: const Text('Home'),
       ),
       body: Center(
         child: Column(
@@ -112,7 +111,6 @@ class _DetailsPageState extends State<DetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         title: const Text('Details'),
       ),
       body: Center(
@@ -151,7 +149,7 @@ class Global {
   };
 
   /// 应用名称
-  static const String appName = 'FreeFEOS Gallery';
+  static const String appName = 'FreeFEOS 示例应用';
   static const String appDescription = '演示如何使用freefeos';
   static const String developerName = 'wyq0918dev';
   static final Uri officialWebsite = Uri.parse('');

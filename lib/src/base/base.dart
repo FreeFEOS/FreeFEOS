@@ -253,9 +253,9 @@ base class SystemBase extends ContextWrapper
                   await windowManager.ensureInitialized();
                   await windowManager.waitUntilReadyToShow(
                     const WindowOptions(
-                      center: true,
-                      minimumSize: kDebugMode ? Size(600, 400) : null,
-                      alwaysOnTop: false,
+                      center: !kDebugMode, // 非Debug模式将窗口置于屏幕中央
+                      minimumSize: Size(400, 700),
+                      alwaysOnTop: kDebugMode, // Debug模式中将窗口置于顶层方便调试
                       skipTaskbar: false,
                       titleBarStyle: TitleBarStyle.hidden,
                       windowButtonVisibility: true,
@@ -274,7 +274,7 @@ base class SystemBase extends ContextWrapper
                 // 断言没有传入异常
                 assert(() {
                   if (error != null) {
-                    throw FlutterError('?');
+                    throw FlutterError('error not is null.');
                   }
                   return true;
                 }());
