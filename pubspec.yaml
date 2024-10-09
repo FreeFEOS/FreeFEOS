@@ -19,7 +19,7 @@ dependencies:
     sdk: flutter
   plugin_platform_interface: ^2.1.8
   flutter_plugin_android_lifecycle: ^2.0.22
-  flutter_rust_bridge: ^2.4.0
+  flutter_rust_bridge: ^2.5.0
   irondash_engine_context: ^0.5.4
   irondash_message_channel: ^0.7.0
   vm_service: ^14.2.5
