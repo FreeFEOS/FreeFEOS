@@ -18,22 +18,21 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   plugin_platform_interface: ^2.1.8
-  flutter_plugin_android_lifecycle: ^2.0.22
+  flutter_plugin_android_lifecycle: ^2.0.23
   flutter_rust_bridge: ^2.5.0
   irondash_engine_context: ^0.5.4
   irondash_message_channel: ^0.7.0
   vm_service: ^14.2.5
   provider: ^6.1.2
   shared_preferences: ^2.3.2
-  package_info_plus: ^8.0.1
-  url_launcher: ^6.3.0
+  package_info_plus: ^8.0.3
+  url_launcher: ^6.3.1
   flutter_adaptive_scaffold: ^0.3.1
   animations: ^2.0.11
   logging: ^1.2.0
   stack_trace: ^1.11.1
-  super_clipboard: ^0.8.22
+  super_clipboard: ^0.8.23
   toastification: ^2.3.0
-  device_info_plus: ^10.1.2
   intl: ^0.19.0
   window_manager: ^0.4.2
 
