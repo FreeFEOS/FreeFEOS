@@ -253,9 +253,9 @@ base class SystemBase extends ContextWrapper
                   await windowManager.ensureInitialized();
                   await windowManager.waitUntilReadyToShow(
                     const WindowOptions(
-                      center: !kDebugMode, // 非Debug模式将窗口置于屏幕中央
+                      center: true,
                       minimumSize: Size(400, 700),
-                      alwaysOnTop: kDebugMode, // Debug模式中将窗口置于顶层方便调试
+                      alwaysOnTop: false,
                       skipTaskbar: false,
                       titleBarStyle: TitleBarStyle.hidden,
                       windowButtonVisibility: true,

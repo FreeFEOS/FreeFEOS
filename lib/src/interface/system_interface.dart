@@ -34,7 +34,7 @@ abstract class FreeFEOSInterface extends PlatformInterface {
     required dynamic error,
   }) async {
     if (error != null) {
-      throw FlutterError(error);
+      throw FlutterError(error.toString());
     } else {
       throw UnimplementedError('未实现runFreeFEOSApp方法');
     }
