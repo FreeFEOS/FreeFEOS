@@ -8,3 +8,6 @@ import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
 String greet({required String name}) =>
     RustLib.instance.api.crateExportGreet(name: name);
+
+Future<void> nativeMethod({required PlatformInt64 handle}) =>
+    RustLib.instance.api.crateExportNativeMethod(handle: handle);

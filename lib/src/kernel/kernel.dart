@@ -1,3 +1,6 @@
+import 'package:irondash_engine_context/irondash_engine_context.dart';
+
+import '../rust/export.dart';
 import '../rust/frb_generated.dart';
 
 /// 内核桥接混入
@@ -14,8 +17,12 @@ abstract class KernelModule {}
 
 /// 内核桥接
 final class KernelBridge extends KernelModule {
+  /// TODO: 内核相关操作
   Future<void> onCreateKernel() async {
-    // TODO: 内核相关操作
+    // pass the handle native code (i.e. through FFI).
+    await nativeMethod(
+      handle: await EngineContext.instance.getEngineHandle(),
+    );
   }
 }
 

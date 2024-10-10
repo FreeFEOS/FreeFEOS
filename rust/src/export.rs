@@ -6,6 +6,11 @@ pub fn greet(name: String) -> String {
     format!("Hello, {name}!")
 }
 
+#[frb]
+pub fn native_method(handle: i64) {
+    let _h = handle;
+}
+
 #[frb(init)]
 pub fn init_kernel() {
     // Default utilities - feel free to customize
