@@ -1,5 +1,5 @@
 // 导出接口
-pub(crate) mod export;
+pub mod export;
 
 // flutter_rust_bridge
 mod frb_generated;
